@@ -1,7 +1,7 @@
 npm start = start du serveur\
-npm run watch = start du serveur avec redémarrage a chaque sauvegarde\
+npm run watch = start du serveur avec redémarrage a chaque sauvegarde, si erreur : npm install -D nodemon\
 npm run client = start d'une session client\
-si vous n'arrivez pas a vous connecter sur la bdd changer les paramètres dans le fichier connect.js\
+si vous n'arrivez pas a vous connecter sur la bdd changer les paramètres dans le fichier connect.js
 
 
 
