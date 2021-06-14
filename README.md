@@ -1,3 +1,10 @@
+npm start = start du serveur
+npm run watch = start du serveur avec redémarrage a chaque sauvegarde
+npm run client = start d'une session client
+si vous n'arrivez pas a vous connecter sur la bdd changer les paramètres dans le fichier connect.js
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
