@@ -1,10 +1,7 @@
-import Logo from '../img/logo.PNG'
-
-const Header = ()=>{
-    return(
-        <header className='header'>
-            <img src={Logo} alt="EasyVoteLogo"></img>
-        </header>
+const Header = () => {
+    return (
+        <div className='header'>
+        </div>
     )
 }
 

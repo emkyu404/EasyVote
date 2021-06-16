@@ -1,9 +1,16 @@
 import "./css/App.css";
 import { useState } from "react";
 import Axios from "axios";
+import Menu from './components/Menu'
+import Header from './components/Header'
 
 function App() {
   const [citizens, setCitizens] = useState([""]);
+  const [showMenu, setShowMenu] = useState(true)
+
+  const toggleMenu = () => {
+    
+  }
 
   const getCitizens = () => {
     console.log("aaa");
@@ -14,8 +21,8 @@ function App() {
 
   return (
     <div className="App">
-      <button onClick={() => getCitizens()}>+</button>
-      {citizens[0].nomCitoyen}
+      <Header />
+      <Menu />
     </div>
   );
 }

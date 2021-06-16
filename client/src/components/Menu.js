@@ -1,16 +1,19 @@
-const Menu = ()=>{
-    return(
-        <nav class="nav-horizontal">
-            <div class="mask">
-                <ul class="list">
-                    <li><a href="#">Acceuil</a></li>
-                    <li><a href="#">Elections</a></li>
-                    <li><a href="#">Profil</a></li>
-                    <li><a href="#">Connexion</a></li>
-                    <li><a >Deconnexion</a></li>
-                </ul>
+import { findByLabelText } from "@testing-library/react"
+import MenuItem from './MenuItem'
+import MenuController from './MenuController'
+const Menu = () => {
+    return (
+        <div className='menu-container'>
+            <div className="menu-controller">
+                <MenuController />
             </div>
-        </nav>
+            <div className="menu-items">
+                <MenuItem text="Onglet 1"></MenuItem>
+                <MenuItem text="Onglet 2"></MenuItem>
+                <MenuItem text="Onglet 3"></MenuItem>
+                <MenuItem text="Onglet 4"></MenuItem>
+            </div>
+        </div>
     )
 }
 
