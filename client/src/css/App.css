@@ -1,3 +1,9 @@
+* {
+  margin :0;
+  padding : 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -35,9 +41,22 @@ body {
   cursor : pointer;
 }
 
-.header{
+.header {
   background-color: red;
   height : 10vh;
+  box-sizing: border-box;
+}
+
+.header-router {
+  height: 100%;
+  width: auto;
+}
+
+.header-logo {
+  height: 100%;
+}
+
+.log-btn {
 }
 
 .menu-items{
