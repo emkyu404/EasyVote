@@ -7,13 +7,8 @@ import {
 const Header = () => {
     return (
         <div className='header'>
-            <Router>
-                <Link className='header-link' to="/">
-                    <img className='header-logo' src={logo}/>
-                </Link>
-            </Router>
-
-            <button className='log-btn'>Se connecter</button>
+            <img className='header-logo' src={logo}/>
+            <button className='log-btn' style={{display: "none"}}>Se connecter</button>
             <button className='log-btn'>Se déconnecter</button>
         </div>
     )
