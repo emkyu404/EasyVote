@@ -37,7 +37,7 @@ body {
 .menu-item:hover{
   background-color : #CECECE;
   transition : 0.25s;
-  border-color : cyan;
+  border-color : #0b6ba8;
   cursor : pointer;
 }
 
@@ -66,9 +66,30 @@ body {
 .flex-row{
   display : flex;
   flex-direction : row;
+  position : absolute;
+  top : 10vh;
+  z-index : 2;
 }
 
 .page{
-  display : flex;
-  flex-direction : row;
+  z-index : -1;
+  background : green;
+  position :relative;
+  margin-left : 10vw;
+  margin-right : 10vw;
+}
+
+.hamburger-container{
+  background-color : rgba(229,229,229,0.5);
+  z-index : 50;
+}
+
+.hidden{
+  transform: translateX(-86%);
+  transition : transform ease-out 0.3s;
+}
+
+.shown{
+  transform: translateX(0);
+  transition : transform ease-in 0.3s;
 }
