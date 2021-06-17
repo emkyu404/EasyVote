@@ -44,9 +44,13 @@ function App() {
                         <Link to="/profil" style={{ textDecoration : "none" }}><div className="menu-item">Profil</div></Link>
                     </div> : ''}
           {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
-              <Hamburger color="#272729" onToggle={() => {
-                toggleMenu()
-              }}  />
+              <div className="hamburger-column">
+                <div className="hamburger-container">
+                  <Hamburger color="#272729" onToggle={() => {
+                    toggleMenu()
+                  }}  />
+                </div>
+              </div>
             </div>
           <div className="page">
             <Switch>

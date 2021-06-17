@@ -50,7 +50,14 @@ body {
 }
 
 .page{
+  z-index : -1;
+  margin-left : 10vw;
+  margin-right : 10vw;
   margin-top : -48px; /* Nécessaire pour que la page commence bien en dessous du header */
 }
 
+.hamburger-container{
+  background-color : rgba(229,229,229,0.5);
+  z-index : 50;
+}
 
