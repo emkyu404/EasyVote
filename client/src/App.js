@@ -36,13 +36,13 @@ function App() {
 
        {/* Tout ce qu'il y a sous la page */}
           <Router>
-          <div className="flex-row">
+          <div className={"flex-row "+ (showMenu ? "shown" : "hidden")}>
             {/* Si le state showMenu vrai, affiche le menu */}
-            {showMenu? <div className="menu-container">
+            <div className="menu-container ">
                         <Link to="/" style={{ textDecoration : "none" }}><div className="menu-item">Accueil</div></Link>
                         <Link to="/elections" style={{ textDecoration : "none" }}><div className="menu-item">Elections</div></Link>
                         <Link to="/profil" style={{ textDecoration : "none" }}><div className="menu-item">Profil</div></Link>
-                    </div> : ''}
+            </div>
           {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
               <div className="hamburger-column">
                 <div className="hamburger-container">
@@ -63,7 +63,7 @@ function App() {
                   <Route exact path="/profil">
                     <Profil />
                   </Route>
-                </Switch>
+            </Switch>
           </div>
         </Router>
     </div>
