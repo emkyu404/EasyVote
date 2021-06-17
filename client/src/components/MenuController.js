@@ -1,6 +1,9 @@
 const MenuController = () => {
     return (
-      <button>open</button>
+      <div className="flex-row">
+        <p style={{margin : 'none', padding : 'none', float : 'left', flex : '6'}}> Menu </p>
+     
+      </div>
     )
 }
 

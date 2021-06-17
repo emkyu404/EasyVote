@@ -16,7 +16,8 @@ body {
 .menu-container{
   background-color: #DEDEDE;
   display : flex;
-  max-width : 20vw;
+  width : 20vw;
+  min-width : 300px;
   flex-direction: column;
   height : 90vh;
   
@@ -39,12 +40,16 @@ body {
   height : 10vh;
 }
 
-.menu-controller{
-  flex : 2;
-  min-height : 10px;
-}
-
 .menu-items{
   flex : 20;
 }
 
+.flex-row{
+  display : flex;
+  flex-direction : row;
+}
+
+.page{
+  display : flex;
+  flex-direction : row;
+}
