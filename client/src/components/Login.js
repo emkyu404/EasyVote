@@ -8,6 +8,8 @@ const Login = () => {
 
             <label for="password">Votre email : </label>
             <input type="password" id="password" name="password" required />
+
+            <button>Se connecter</button>
         </div>
     )
 }
