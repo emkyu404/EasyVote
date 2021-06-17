@@ -74,12 +74,3 @@ body {
   transform: translateX(0);
   transition : transform ease-in 0.3s;
 }
-
-.hamburger-button-menu-open{
-  transform: translateX(0);
-}
-
-.hamburger-button-menu-close{
-  transform: translateX(-500%);
-}
-
