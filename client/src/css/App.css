@@ -42,9 +42,12 @@ body {
 }
 
 .header {
-  background-color: red;
-  height : 10vh;
+  background-color: #f9f9f9;
+  height : 15vh;
   box-sizing: border-box;
+  display: flex;
+  padding: 10px;
+  width: 100%;
 }
 
 .header-router {
@@ -54,9 +57,7 @@ body {
 
 .header-logo {
   height: 100%;
-}
-
-.log-btn {
+  flex: 8;
 }
 
 .menu-items{
@@ -67,7 +68,7 @@ body {
   display : flex;
   flex-direction : row;
   position : absolute;
-  top : 10vh;
+  top : 15vh;
   z-index : 2;
 }
 
