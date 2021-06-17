@@ -47,13 +47,17 @@ body {
 .flex-row{
   display : flex;
   flex-direction : row;
+  position : absolute;
+  top : 10vh;
+  z-index : 2;
 }
 
 .page{
   z-index : -1;
+  background : green;
+  position :relative;
   margin-left : 10vw;
   margin-right : 10vw;
-  margin-top : -48px; /* Nécessaire pour que la page commence bien en dessous du header */
 }
 
 .hamburger-container{

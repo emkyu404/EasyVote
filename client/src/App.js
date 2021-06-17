@@ -46,7 +46,7 @@ function App() {
           {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
               <div className="hamburger-column">
                 <div className="hamburger-container">
-                  <Hamburger color="#272729" onToggle={() => {
+                  <Hamburger label="Show Menu" size={20} color="#272729" onToggle={() => {
                     toggleMenu()
                   }}  />
                 </div>
