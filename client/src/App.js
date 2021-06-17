@@ -35,34 +35,33 @@ function App() {
       <Header />
 
        {/* Tout ce qu'il y a sous la page */}
-      <div className="flex-row">
           <Router>
+          <div className="flex-row">
             {/* Si le state showMenu vrai, affiche le menu */}
-          {showMenu? <div className="menu-container">
-                <Link to="/" style={{ textDecoration : "none" }}><div className="menu-item">Accueil</div></Link>
-                <Link to="/elections" style={{ textDecoration : "none" }}><div className="menu-item">Elections</div></Link>
-                <Link to="/profil" style={{ textDecoration : "none" }}><div className="menu-item">Profil</div></Link>
-             </div> : ''}
+            {showMenu? <div className="menu-container">
+                        <Link to="/" style={{ textDecoration : "none" }}><div className="menu-item">Accueil</div></Link>
+                        <Link to="/elections" style={{ textDecoration : "none" }}><div className="menu-item">Elections</div></Link>
+                        <Link to="/profil" style={{ textDecoration : "none" }}><div className="menu-item">Profil</div></Link>
+                    </div> : ''}
           {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
-            <div className="page">
-              <Hamburger onToggle={() => {
+              <Hamburger color="#272729" onToggle={() => {
                 toggleMenu()
               }}  />
-              <Switch>
-                <Route exact path="/">
-                  <Home />
-                </Route>
-                <Route exact path="/elections">
-                  <Elections />
-                </Route>
-                <Route exact path="/profil">
-                  <Profil />
-                </Route>
-              </Switch>
             </div>
+          <div className="page">
+            <Switch>
+                  <Route exact path="/">
+                    <Home />
+                  </Route>
+                  <Route exact path="/elections">
+                    <Elections />
+                  </Route>
+                  <Route exact path="/profil">
+                    <Profil />
+                  </Route>
+                </Switch>
+          </div>
         </Router>
-       
-      </div>
     </div>
   );
 }

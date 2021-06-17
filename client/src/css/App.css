@@ -31,7 +31,7 @@ body {
 .menu-item:hover{
   background-color : #CECECE;
   transition : 0.25s;
-  border-color : cyan;
+  border-color : #0b6ba8;
   cursor : pointer;
 }
 
@@ -50,6 +50,7 @@ body {
 }
 
 .page{
-  display : flex;
-  flex-direction : row;
+  margin-top : -48px; /* Nécessaire pour que la page commence bien en dessous du header */
 }
+
+
