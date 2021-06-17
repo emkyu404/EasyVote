@@ -1,8 +1,4 @@
 import logo from '../img/header-logo.png';
-import {
-    BrowserRouter as Router,
-    Link
-} from "react-router-dom";
 
 const Header = () => {
     return (
