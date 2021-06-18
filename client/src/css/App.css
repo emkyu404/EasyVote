@@ -1,7 +1,7 @@
 html { font-size:100%; }
 @media (min-width: 640px) { body {font-size:1rem;}} 
-@media (min-width:960px) { body {font-size:1.2rem;} } 
-@media (min-width:1100px) { body {font-size:1.5rem;} }
+@media (min-width:960px) { body {font-size:1rem;}} 
+@media (min-width:1100px) { body {font-size:1.5rem;}}
 
 
 
@@ -35,10 +35,9 @@ body {
 .menu-container{
   background-color: #DEDEDE;
   display : flex;
-  width : 10vw;
-  min-width : 150px;
+  width : 250px;
   flex-direction: column;
-  height : 85vh;
+  height : 100vh;
   
 }
 
@@ -62,6 +61,10 @@ body {
   padding: 10px;
   width: 100%;
   justify-content: space-between;
+  position : fixed;
+  top : 0;
+  z-index : 10;
+  box-shadow: 0 0 5px #999;
 }
 
 .flex-row-wrap{
@@ -86,7 +89,7 @@ body {
 .flex-row{
   display : flex;
   flex-direction : row;
-  position : absolute;
+  position : fixed;
   top : 15vh;
   z-index : 2;
 }
@@ -97,7 +100,7 @@ body {
 }
 
 .hidden{
-  transform: translateX(-80%);
+  transform: translateX(-250px);
   transition : transform ease-out 0.3s;
 }
 
@@ -113,18 +116,23 @@ body {
 
 .main-container{
   margin: 0 auto;
+  margin-top:15vh;
   max-width: 1200px;
   width: 80%;
   background-color: #E9F1F7;
   /*box-shadow: 0 0 10px #999;*/
-
   padding: 25px;
   display: flex;
   justify-content: left;
   flex-wrap: wrap;
   flex-direction: row;
-  height: 85vh;
-  margin-bottom: 0px;
+  min-height: 85vh;
+  height : fit-content;
+}
+
+.main-home {
+  position: relative;
+  width : 100%;
 }
 
 .main-home > h1 {
@@ -140,7 +148,6 @@ body {
   flex:2;
   margin : 20px;
   text-align: justify;
-  min-width : 400px;
 }
 
 .flex-row-wrap > div {
@@ -156,4 +163,7 @@ body {
   margin : 0px 20px 0px 20px;
 }
 
-@media (max-width: 640px) { .main-container{width: 100%;}} 
+@media (max-width: 640px) { 
+  .main-container{width: 100%;}
+  .flex-row-wrap > div > img{margin : 0;}
+} 

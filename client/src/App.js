@@ -30,7 +30,7 @@ function App() {
 
   const desactivateMenu = () => {
     if(showMenu){
-      setShowMenu(false)
+      document.querySelector('div[class="hamburger-react"').click()
     }
   }
 

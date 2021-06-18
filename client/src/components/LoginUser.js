@@ -16,7 +16,7 @@ const LoginUser = () => {
                 <label class="login-label" for="password" style={loginLabelStyle}>Votre mot de passe : </label>
                 <input class="login-input" type="password" id="password" name="password" style={loginInputStyle} required />
 
-                <button class="login-button">Se connecter</button>
+                <input type="submit" class="login-button" value="Se connecter"/>
             
                 <p>Mot de passe oublié ?</p>
             </form>
