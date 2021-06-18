@@ -10,9 +10,12 @@ const BoutonConnexionDeconnexion = () => {
 const BoutonConnexionDeconnexionStyle = {
     position : "relative",
     backgroundColor: "#0B6BA8",
-    padding : "10px",
+    padding : "15px",
     top : "50%",
-    transform : "translateY(-50%)"
+    transform : "translateY(-50%)",
+    border : "none",
+    color : "white",
+    cursor : "pointer"
 }
 
 const buttonContainerStyle = {
