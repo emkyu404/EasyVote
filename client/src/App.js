@@ -1,5 +1,5 @@
 import "./css/App.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Axios from "axios";
 import Header from './components/Header'
 import Home from './components/Home'
@@ -16,9 +16,15 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [citizens, setCitizens] = useState([""])
+  const [currentUser, setCurrentUser] = useState({idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "a", idAdresse: "", idElecteur: ""})
+  const [loginError, setLoginError] = useState("")
+
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
+
+  useEffect(() => {
+    login("j-f.tang@email.com", "tanga");
+  }, [])
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -30,10 +36,15 @@ function App() {
     }
   }
 
-  const getCitizens = () => {
-    console.log("aaa");
-    Axios.get("http://localhost:3001/citizens").then((response) => {
-      setCitizens(response.data);
+  const login = (email, password)=>{
+    Axios.post("http://localhost:3001/login", {email : email, password : password}).then((response)=>{
+      console.log("reponse");
+      if (response.data.message){
+        setLoginError(response.data.message);
+      }else{
+        console.log(response.data);
+        setCurrentUser(response.data);
+      }
     });
   };
 
@@ -41,7 +52,6 @@ function App() {
     <div className="App">
       {/* Header */}
       <Header />
-
        {/* Tout ce qu'il y a sous la page */}
           <Router>
           <ClickAwayListener onClickAway={desactivateMenu}>
