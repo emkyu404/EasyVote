@@ -16,7 +16,6 @@ const db = mysql.createConnection({
 });
 
 app.get("/citizens", (req, res) => {
-  console.log("test");
   db.query("SELECT * FROM citoyen", (err, result) => {
     if (err) {
       console.log(err);
@@ -61,22 +60,47 @@ app.post("/login", (req, res) => {
                   idAdresse :resultMail[0].idAdresse,
                   idElecteur :resultPassword[0].idElecteur
                 }
-                res.send(req.session.currentUser)
+                res.json(req.session.currentUser)
               }
               else {
-                res.json({message : "Compte introuvable ou mot de passe incorrect"})
+                res.json({message : "Email ou mot de passe incorrect"})
               }
             }
           }
         )
       }
       else {
-        res.json({message : "Email introuvable"})
+        res.json({message : "Email ou mot de passe incorrect"})
       }
     }
   }) 
 });
 
+app.post("/loginAdmin", (req, res) => {
+  const email = req.body.email
+  const password = req.body.password
+
+  db.query(
+    "SELECT * FROM admin WHERE emailAdmin=? AND motDePasseAdmin=?",
+    [email, password],
+  (err, result) => {
+    if (err){
+      console.log(err);
+    }
+    else{
+      if(result.length ==1){
+        req.session.currentUser = {
+          idAdmin : result[0].idAdmin,
+          emailAdmin :result[0].emailAdmin,
+        }
+        res.json(req.session.currentUser)
+      }
+      else {
+        res.json({message : "Email ou mot de passe incorrect"})
+      }
+    }
+  })
+});
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

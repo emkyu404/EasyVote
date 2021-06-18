@@ -25,23 +25,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `administrateur`
+-- Structure de la table `admin`
 --
 
-DROP TABLE IF EXISTS `administrateur`;
-CREATE TABLE IF NOT EXISTS `administrateur` (
-  `idAdministrateur` int(11) NOT NULL AUTO_INCREMENT,
-  `motdePasseAdmnistrateur` varchar(50) NOT NULL,
-  `emailAdmnistrateur` varchar(50) NOT NULL,
-  PRIMARY KEY (`idAdministrateur`),
-  UNIQUE KEY `emailAdmnistrateur` (`emailAdmnistrateur`)
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
+  `motdePasseAdmin` varchar(50) NOT NULL,
+  `emailAdmin` varchar(50) NOT NULL,
+  PRIMARY KEY (`idAdmin`),
+  UNIQUE KEY `emailAdmin` (`emailAdmin`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Déchargement des données de la table `administrateur`
+-- Déchargement des données de la table `admin`
 --
 
-INSERT INTO `administrateur` (`idAdministrateur`, `motdePasseAdmnistrateur`, `emailAdmnistrateur`) VALUES
+INSERT INTO `admin` (`idAdmin`, `motdePasseAdmin`, `emailAdmin`) VALUES
 (1, 'admin', 'admin@email.fr');
 
 -- --------------------------------------------------------
@@ -218,9 +218,9 @@ CREATE TABLE IF NOT EXISTS `election` (
   `dateFinElection` datetime NOT NULL,
   `dateDebutElection` datetime NOT NULL,
   `descriptionElection` varchar(200) NOT NULL,
-  `idAdministrateur` int(11) NOT NULL,
+  `idAdmin` int(11) NOT NULL,
   PRIMARY KEY (`idElection`),
-  KEY `idAdministrateur` (`idAdministrateur`)
+  KEY `idAdmin` (`idAdmin`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------

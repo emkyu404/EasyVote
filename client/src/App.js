@@ -8,23 +8,20 @@ import Profil from './components/Profil'
 import Login from './components/LoginUser'
 import { Sling as Hamburger } from 'hamburger-react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""})
+  const [currentUser, setCurrentUser] = useState({idAdmin : "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""})
   const [loginError, setLoginError] = useState("");
 
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
   useEffect(() => {
-    login("j-f.tang@email.com", "tang");
-    disconnect();
+    //login("j-f.tang@email.com", "tang");
+    //loginAdmin("admin@email.fr", "admin");
+    
+    //disconnect();
   }, [])
 
   const toggleMenu = () => {
@@ -47,12 +44,21 @@ function App() {
     });
   };
 
+  const loginAdmin = (email, password)=>{
+    Axios.post("http://localhost:3001/loginAdmin", {email : email, password : password}).then((response)=>{
+      if (response.data.message){
+        setLoginError(response.data.message);
+      }else{
+        setCurrentUser(response.data);
+      }
+    });
+  };
+
   const disconnect = ()=>{
     Axios.post("http://localhost:3001/disconnect").then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
         setCurrentUser("");
-        console.log(currentUser);
       }else{
         console.log("Vous n'avez pas réussi à vous deconnecter");
       }
