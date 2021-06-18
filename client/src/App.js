@@ -52,7 +52,7 @@ function App() {
                         <Link to="/" style={{ textDecoration : "none" }}><div className="menu-item">Accueil</div></Link>
                         <Link to="/elections" style={{ textDecoration : "none" }}><div className="menu-item">Elections</div></Link>
                         <Link to="/profil" style={{ textDecoration : "none" }}><div className="menu-item">Profil</div></Link>
-                        {/* <Link to="/login" style={{ textDecoration : "none" }}><div className="menu-item">Connexion</div></Link> */}
+                        <Link to="/login" style={{ textDecoration : "none" }}><div className="menu-item">Connexion</div></Link>
             </div>
             
           {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
@@ -65,7 +65,7 @@ function App() {
               </div>
             </div>
             </ClickAwayListener>
-          <div className="page">
+          <div className="main-container">
             <Switch>
                   <Route exact path="/">
                     <Home />
@@ -76,9 +76,9 @@ function App() {
                   <Route exact path="/profil">
                     <Profil />
                   </Route>
-                  {/* <Route exact path="/login">
+                  <Route exact path="/login">
                     <Login />
-                  </Route> */}
+                  </Route>
             </Switch>
           </div>
         </Router>

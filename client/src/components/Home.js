@@ -1,7 +1,7 @@
 
 const Home = ({onClick}) => {
     return (
-        <div className='main-container' onClick={onClick}>
+        <div onClick={onClick}>
                 <h1>Bienvenue sur la page d'accueil</h1>
         </div>
     )
