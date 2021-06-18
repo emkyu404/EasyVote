@@ -1,5 +1,5 @@
 const LoginAdmin = () => {
-    
+
     const handleSubmit = function (e) {
         e.preventDefault();
         console.log("default");

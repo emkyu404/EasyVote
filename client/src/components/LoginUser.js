@@ -1,5 +1,5 @@
 const LoginUser = () => {
-    
+
     const handleSubmit = function (e) {
         e.preventDefault();
         console.log("default");
@@ -17,6 +17,8 @@ const LoginUser = () => {
                 <input class="login-input" type="password" id="password" name="password" style={loginInputStyle} required />
 
                 <button class="login-button">Se connecter</button>
+            
+                <p>Mot de passe oublié ?</p>
             </form>
         </div>
     )
