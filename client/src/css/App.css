@@ -1,7 +1,9 @@
 html { font-size:100%; }
-@media (min-width: 640px) { body {font-size:1rem;} } 
+@media (min-width: 640px) { body {font-size:1rem;}} 
 @media (min-width:960px) { body {font-size:1.2rem;} } 
 @media (min-width:1100px) { body {font-size:1.5rem;} }
+
+
 
 @font-face {
   font-family: "Open Sans";
@@ -36,7 +38,7 @@ body {
   width : 10vw;
   min-width : 150px;
   flex-direction: column;
-  height : 90vh;
+  height : 85vh;
   
 }
 
@@ -121,7 +123,8 @@ body {
   justify-content: left;
   flex-wrap: wrap;
   flex-direction: row;
-  height: 100vh;
+  height: 85vh;
+  margin-bottom: 0px;
 }
 
 .main-home > h1 {
@@ -152,3 +155,5 @@ body {
   width : 400px;
   margin : 0px 20px 0px 20px;
 }
+
+@media (max-width: 640px) { .main-container{width: 100%;}} 
