@@ -52,7 +52,7 @@ function App() {
                 </div>
               </div>
             </div>
-          <div className="page">
+          <div className="main-container">
             <Switch>
                   <Route exact path="/">
                     <Home />
