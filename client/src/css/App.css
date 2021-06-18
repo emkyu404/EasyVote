@@ -82,21 +82,13 @@ body {
   z-index : 2;
 }
 
-.page{
-  z-index : -1;
-  background : white;
-  position :relative;
-  margin-left : 10vw;
-  margin-right : 10vw;
-}
-
 .hamburger-container{
-  background-color : rgba(229,229,229,0.5);
+  background-color : rgba(229,229,229,0.75);
   z-index : 50;
 }
 
 .hidden{
-  transform: translateX(-76%);
+  transform: translateX(-80%);
   transition : transform ease-out 0.3s;
 }
 
@@ -105,6 +97,9 @@ body {
   transition : transform ease-in 0.3s;
 }
 
+.button-close-active:hover{
+  background-color : rgba(205,92,92, 0.75);
+}
 /* css de la page d'accueil*/
 
 .main-container{

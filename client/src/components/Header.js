@@ -1,13 +1,27 @@
 import logo from '../img/header-logo.png';
+import BoutonConnexionDeconnexion from './BoutonConnexionDeconnexion';
 
 const Header = () => {
     return (
         <div className='header'>
-            <img className='header-logo' src={logo}/>
-            <button className='log-btn' style={{display: "none"}}>Se connecter</button>
-            <button className='log-btn'>Se déconnecter</button>
+            <div className="logo-container" style={logoContainerStyle}>
+                <img className='header-logo' style={headerLogoStyle} src={logo}/>
+            </div>
+            <BoutonConnexionDeconnexion />
         </div>
     )
+}
+
+const logoContainerStyle = {
+    height : "100%"
+}
+
+const headerLogoStyle = {
+    position : "relative",
+    top : "50%",
+    transform : "translateY(-50%)",
+    width : "auto",
+    height : "70%"
 }
 
 export default Header

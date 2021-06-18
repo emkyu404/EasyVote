@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le :  mar. 15 juin 2021 à 14:32
+-- Généré le :  ven. 18 juin 2021 à 08:22
 -- Version du serveur :  5.7.26
 -- Version de PHP :  7.2.18
 
@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `candidat` (
   `idCandidat` int(11) NOT NULL AUTO_INCREMENT,
   `titreCandidat` varchar(50) NOT NULL,
   `descriptionCandidat` varchar(200) DEFAULT NULL,
+  `urlImage` varchar(255) NOT NULL,
   `idElection` int(11) NOT NULL,
   PRIMARY KEY (`idCandidat`),
   KEY `idElection` (`idElection`)
@@ -190,6 +191,7 @@ DROP TABLE IF EXISTS `electeur`;
 CREATE TABLE IF NOT EXISTS `electeur` (
   `idElecteur` int(11) NOT NULL AUTO_INCREMENT,
   `motDePasseElecteur` varchar(50) NOT NULL,
+  `premiereConnexion` tinyint(1) NOT NULL DEFAULT '1',
   `idCitoyen` int(11) NOT NULL,
   PRIMARY KEY (`idElecteur`),
   UNIQUE KEY `idCitoyen` (`idCitoyen`)
@@ -199,9 +201,9 @@ CREATE TABLE IF NOT EXISTS `electeur` (
 -- Déchargement des données de la table `electeur`
 --
 
-INSERT INTO `electeur` (`idElecteur`, `motDePasseElecteur`, `idCitoyen`) VALUES
-(1, 'tang', 4),
-(2, 'zhang', 5);
+INSERT INTO `electeur` (`idElecteur`, `motDePasseElecteur`, `premiereConnexion`, `idCitoyen`) VALUES
+(1, 'tang', 1, 4),
+(2, 'zhang', 1, 5);
 
 -- --------------------------------------------------------
 

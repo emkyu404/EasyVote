@@ -1,6 +1,6 @@
 import vote from '../img/vote.jpg';
 
-const Home = () => {
+const Home = ({onClick}) => {
     return (
         <div className='main-home'>
                 <h1>Le vote à distance maintenant disponible</h1>
