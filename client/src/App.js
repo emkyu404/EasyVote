@@ -16,14 +16,15 @@ import {
 } from "react-router-dom";
 
 function App() {
-  const [currentUser, setCurrentUser] = useState({idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "a", idAdresse: "", idElecteur: ""})
-  const [loginError, setLoginError] = useState("")
+  const [currentUser, setCurrentUser] = useState({idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""})
+  const [loginError, setLoginError] = useState("");
 
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
   useEffect(() => {
-    login("j-f.tang@email.com", "tanga");
+    login("j-f.tang@email.com", "tang");
+    disconnect();
   }, [])
 
   const toggleMenu = () => {
@@ -38,12 +39,22 @@ function App() {
 
   const login = (email, password)=>{
     Axios.post("http://localhost:3001/login", {email : email, password : password}).then((response)=>{
-      console.log("reponse");
       if (response.data.message){
         setLoginError(response.data.message);
       }else{
-        console.log(response.data);
         setCurrentUser(response.data);
+      }
+    });
+  };
+
+  const disconnect = ()=>{
+    Axios.post("http://localhost:3001/disconnect").then((response)=>{
+      if (response.data.message){
+        console.log(response.data.message);
+        setCurrentUser("");
+        console.log(currentUser);
+      }else{
+        console.log("Vous n'avez pas réussi à vous deconnecter");
       }
     });
   };

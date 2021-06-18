@@ -26,6 +26,11 @@ app.get("/citizens", (req, res) => {
   });
 });
 
+app.post("/disconnect", (req, res) => {
+  req.session.destroy()
+  res.status(200).json({message: "Vous êtes déconnecté"})
+});
+
 app.post("/login", (req, res) => {
   const email = req.body.email
   const password = req.body.password
