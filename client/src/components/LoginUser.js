@@ -1,7 +1,13 @@
 const LoginUser = () => {
+    
+    const handleSubmit = function (e) {
+        e.preventDefault();
+        console.log("default");
+    }
+
     return (
         <div>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <h1 class="login-title" style={loginTitleStyle}>Connexion</h1>
 
                 <label class="login-label" for="email" style={loginLabelStyle}>Votre email : </label>
