@@ -1,29 +1,23 @@
-import styled from 'styled-components';
-
-const Title = styled.h1`
-  color: #0d1a26;
-  font-weight: 400;
-`;
-
-const Label = styled.label`
-  color: #0d1a26;
-  font-weight: 400;
-`;
-
 const LoginAdmin = () => {
     return (
         <div>
-            <Title>Connexion administrateur</Title>
+            <h1 class="login-title" style={loginTitleStyle}>Connexion administrateur</h1>
 
-            <Label class="login-label" for="email">Votre email : </Label>
-            <input class="login-input" type="email" id="email" name="email" required />
+            <label class="login-label" for="email" style={loginLabelStyle}>Votre email : </label>
+            <input class="login-input" type="email" id="email" name="email" style={loginInputStyle} required />
 
-            <Label class="login-label" for="password">Votre mot de passe : </Label>
-            <input class="login-input" type="password" id="password" name="password" required />
+            <label class="login-label" for="password" style={loginLabelStyle}>Votre mot de passe : </label>
+            <input class="login-input" type="password" id="password" name="password" style={loginInputStyle} required />
 
             <button class="login-button">Se connecter</button>
         </div>
     )
 }
+
+const loginTitleStyle = {}
+
+const loginLabelStyle = {}
+
+const loginInputStyle = {}
 
 export default LoginAdmin
