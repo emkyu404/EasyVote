@@ -82,17 +82,6 @@ body {
   z-index : 2;
 }
 
-.page{
-  z-index : -1;
-  background : white;
-  position :relative;
-  margin-left : 10vw;
-  margin-right : 10vw;
-  min-height : 90vh;
-  padding : 10vw;
-  padding-top : 15px;
-}
-
 .hamburger-container{
   background-color : rgba(229,229,229,0.75);
   z-index : 50;
