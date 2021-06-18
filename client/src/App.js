@@ -5,6 +5,7 @@ import Header from './components/Header'
 import Home from './components/Home'
 import Elections from './components/Elections'
 import Profil from './components/Profil'
+import Login from './components/LoginUser'
 import { Sling as Hamburger } from 'hamburger-react'
 import {
   BrowserRouter as Router,
@@ -42,6 +43,7 @@ function App() {
                         <Link to="/" style={{ textDecoration : "none" }}><div className="menu-item">Accueil</div></Link>
                         <Link to="/elections" style={{ textDecoration : "none" }}><div className="menu-item">Elections</div></Link>
                         <Link to="/profil" style={{ textDecoration : "none" }}><div className="menu-item">Profil</div></Link>
+                        {/* <Link to="/login" style={{ textDecoration : "none" }}><div className="menu-item">Connexion</div></Link> */}
             </div>
           {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
               <div className="hamburger-column">
@@ -63,6 +65,9 @@ function App() {
                   <Route exact path="/profil">
                     <Profil />
                   </Route>
+                  {/* <Route exact path="/login">
+                    <Login />
+                  </Route> */}
             </Switch>
           </div>
         </Router>
