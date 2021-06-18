@@ -121,7 +121,8 @@ body {
   justify-content: left;
   flex-wrap: wrap;
   flex-direction: row;
-  height: 100vh;
+  min-height: 100vh;
+  height : fit-content;
 }
 
 .main-home > h1 {
