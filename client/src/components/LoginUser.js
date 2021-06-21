@@ -21,29 +21,53 @@ const LoginUser = ({ onLogin }) => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div style={{width : "100%"}}>
+            <form onSubmit={handleSubmit} style={formStyle}>
                 <h1 className="login-title" style={loginTitleStyle}>Connexion</h1>
 
-                <label className="login-label" style={loginLabelStyle}>Votre email : 
-                    <input className="login-input" type="email" id="email" name="email" style={loginInputStyle} required onBlur={handleEmailOnChange} />
-                </label>
+                <label className="login-label" style={loginLabelStyle}>Votre email : </label>
+                <input className="login-input" type="email" id="email" name="email" style={loginInputStyle} required onBlur={handleEmailOnChange} />
+                
 
-                <label className="login-label" style={loginLabelStyle}>Votre mot de passe : 
-                    <input className="login-input" type="password" id="password" name="password" style={loginInputStyle} required onBlur={handlePasswordOnChange} />
-                </label>
-                <input type="submit" className="login-button" value="Se connecter"/>
+                <label className="login-label" style={loginLabelStyle}>Votre mot de passe : </label>
+                <input className="login-input" type="password" id="password" name="password" style={loginInputStyle} required onBlur={handlePasswordOnChange} />
+                
+                <input type="submit" className="login-button" value="Se connecter" style={loginSubmitStyle  }/>
             
-                <p>Mot de passe oublié ?</p>
+                <p style={{fontSize : "10px"}}>Mot de passe oublié ?</p>
             </form>
         </div>
     )
 }
 
-const loginTitleStyle = {}
+const formStyle = {
+    display : "flex",
+    flexDirection : "column",
+    width : "100%",
+    maxWidth :"300px",
+    margin : "auto"
+}
+
+const loginTitleStyle = {
+    fontSize : "20px",
+    textAlign : "center",
+    marginBottom : "20px"
+}
 
 const loginLabelStyle = {}
 
-const loginInputStyle = {}
+const loginInputStyle = {
+    padding : "5px",
+    marginTop : "5px"
+}
+
+const loginSubmitStyle = {
+    padding : "15px",
+    marginTop : "20px",
+    backgroundColor: "#0B6BA8",
+    border : "none",
+    color : "white",
+    cursor : "pointer"
+}
 
 export default LoginUser
