@@ -1,8 +1,8 @@
-const BoutonConnexionDeconnexion = () => {
+const BoutonConnexionDeconnexion = ({ onDisconnection }) => {
     return (
         <div className='button-container' style={buttonContainerStyle}>
           <button className='log-btn' style={{display: "none"}}>Se connecter</button>
-            <button className='log-btn' style={BoutonConnexionDeconnexionStyle}>Se déconnecter</button>  
+          <button className='log-btn' style={BoutonConnexionDeconnexionStyle} onClick={onDisconnection}>Se déconnecter</button>  
         </div>
     )
 }

@@ -1,13 +1,13 @@
 import logo from '../img/header-logo.png';
 import BoutonConnexionDeconnexion from './BoutonConnexionDeconnexion';
 
-const Header = () => {
+const Header = ({ onDisconnection }) => {
     return (
         <div className='header'>
             <div className="logo-container" style={logoContainerStyle}>
                 <a href="/"><img className='header-logo clickable' style={headerLogoStyle} src={logo}/></a>
             </div>
-            <BoutonConnexionDeconnexion />
+            <BoutonConnexionDeconnexion onDisconnection = {onDisconnection} />
         </div>
     )
 }

@@ -67,9 +67,10 @@ function App() {
 
   return (
     <div className="App">
+      
         <Router>
           {/* Header */}
-         <Header />
+         <Header onDisconnection={disconnect}/>
        {/* Tout ce qu'il y a sous la page */}
           <ClickAwayListener onClickAway={desactivateMenu}>
           <div className={"flex-row "+ (showMenu ? "shown" : "hidden")}>
@@ -104,7 +105,8 @@ function App() {
                     <Profil />
                   </Route>
                   <Route exact path="/login">
-                    <Login />
+                    {/* <Login /> */}
+                    <Login onLogin={login}/>
                   </Route>
             </Switch>
           </div>
