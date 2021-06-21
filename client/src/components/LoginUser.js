@@ -32,7 +32,7 @@ const LoginUser = ({ onLogin }) => {
                 <label className="login-label" style={loginLabelStyle}>Votre mot de passe : </label>
                 <input className="login-input" type="password" id="password" name="password" style={loginInputStyle} required onBlur={handlePasswordOnChange} />
                 
-                <input type="submit" className="login-button" value="Se connecter" style={loginSubmitStyle  }/>
+                <input type="submit" className="login-button" value="Se connecter" style={loginSubmitStyle}/>
             
                 <p style={{fontSize : "10px"}}>Mot de passe oublié ?</p>
             </form>
