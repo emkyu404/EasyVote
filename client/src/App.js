@@ -6,23 +6,41 @@ import Home from './components/Home'
 import Elections from './components/Elections'
 import Profil from './components/Profil'
 import Login from './components/LoginUser'
+import NotConnected from "./components/NotConnected";
 import { Sling as Hamburger } from 'hamburger-react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 
 function App() {
-
   const [currentUser, setCurrentUser] = useState({idAdmin : "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""})
   const [loginError, setLoginError] = useState("");
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
+  /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
+  const [connected, setConnected] = useState(false)
+
   useEffect(() => {
     //login("j-f.tang@email.com", "tang");
     //loginAdmin("admin@email.fr", "admin");
-    
     //disconnect();
+    handleConnected()
   }, [])
+
+
+  /**
+   * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
+   */
+  const handleConnected = () => {
+    if(currentUser.idCitoyen == "" && currentUser.idAdmin == ""){
+      console.log("User not connected")
+      setConnected(false)
+    } else{
+      console.log("User connected : " + currentUser.idCitoyen)
+      setConnected(true)
+    }
+  }
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -38,9 +56,14 @@ function App() {
     Axios.post("http://localhost:3001/login", {email : email, password : password}).then((response)=>{
       if (response.data.message){
         setLoginError(response.data.message);
+        console.log(currentUser)
       }else{
         setCurrentUser(response.data);
+        console.log(currentUser)
       }
+    }).finally(() => {
+      handleConnected()
+      //window.location.replace("/")
     });
   };
 
@@ -58,10 +81,13 @@ function App() {
     Axios.post("http://localhost:3001/disconnect").then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
-        setCurrentUser("");
+        setCurrentUser({idAdmin : "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""});
+        console.log(currentUser)
       }else{
         console.log("Vous n'avez pas réussi à vous deconnecter");
       }
+    }).finally(() => {
+      handleConnected()
     });
   };
 
@@ -70,7 +96,7 @@ function App() {
       
         <Router>
           {/* Header */}
-         <Header onDisconnection={disconnect}/>
+         <Header onDisconnection={disconnect} isConnected={connected}/>
        {/* Tout ce qu'il y a sous la page */}
           <ClickAwayListener onClickAway={desactivateMenu}>
           <div className={"flex-row "+ (showMenu ? "shown" : "hidden")}>
@@ -80,7 +106,6 @@ function App() {
                         <Link to="/" style={{ textDecoration : "none" }}><div className="menu-item">Accueil</div></Link>
                         <Link to="/elections" style={{ textDecoration : "none" }}><div className="menu-item">Elections</div></Link>
                         <Link to="/profil" style={{ textDecoration : "none" }}><div className="menu-item">Profil</div></Link>
-                        <Link to="/login" style={{ textDecoration : "none" }}><div className="menu-item">Connexion</div></Link>
             </div>
             
           {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
@@ -96,16 +121,16 @@ function App() {
           <div className="main-container">
             <Switch>
                   <Route exact path="/">
+                  
                     <Home />
                   </Route>
                   <Route exact path="/elections">
-                    <Elections />
+                    {connected? <Elections /> : <NotConnected />}
                   </Route>
                   <Route exact path="/profil">
-                    <Profil />
+                    {connected? <Profil /> : <NotConnected />}
                   </Route>
                   <Route exact path="/login">
-                    {/* <Login /> */}
                     <Login onLogin={login}/>
                   </Route>
             </Switch>
