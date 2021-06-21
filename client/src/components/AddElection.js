@@ -34,39 +34,39 @@ const AddElection = () => {
                 <div>
                     {electionType === "election_regionale" &&
                         <label className="add-election-label" style={addElectionLabel}>Nom de la région : 
-                            <input type="text" required />
+                            <input type="text" className="add-election-input" style={addElectionInput} required />
                         </label>
                     }
 
                     {electionType === "election_departementale" &&
                         <label className="add-election-label" style={addElectionLabel}>Code du département : 
-                            <input type="text" required />
+                            <input type="text" className="add-election-input" style={addElectionInput} required />
                         </label>
                     }
 
                     {electionType === "election_municipale" &&
                         <label className="add-election-label" style={addElectionLabel}>Code postal : 
-                            <input type="text" required />
+                            <input type="text" className="add-election-input" style={addElectionInput} required />
                         </label>
                     }
 
                     <label className="add-election-label" style={addElectionLabel}>Titre de l'élection : 
-                        <input type="text" required />
+                        <input type="text" className="add-election-input" style={addElectionInput} required />
                     </label>
 
                     <label className="add-election-label" style={addElectionLabel}>Date de début : 
-                        <input type="date" required />
+                        <input type="date" className="add-election-input" style={addElectionInput} required />
                     </label>
 
                     <label className="add-election-label" style={addElectionLabel}>Date de fin : 
-                        <input type="date" required />
+                        <input type="date" className="add-election-input" style={addElectionInput} required />
                     </label>
 
                     <label className="add-election-label" style={addElectionLabel}>Description de l'élection : 
-                        <textarea type="text" required></textarea>
+                        <textarea type="text" className="add-election-input" style={addElectionInput} required></textarea>
                     </label>
 
-                    <input type="submit" value="Ajouter" />
+                    <input type="submit" className="add-election-submit" style={addElectionSubmit} value="Ajouter" />
                 </div>
             }
         </form>
@@ -74,5 +74,9 @@ const AddElection = () => {
 }
 
 const addElectionLabel = {}
+
+const addElectionInput = {}
+
+const addElectionSubmit = {}
 
 export default AddElection
