@@ -11,9 +11,9 @@ import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
 
 function App() {
+
   const [currentUser, setCurrentUser] = useState({idAdmin : "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""})
   const [loginError, setLoginError] = useState("");
-
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
@@ -67,10 +67,10 @@ function App() {
 
   return (
     <div className="App">
-      {/* Header */}
-      <Header />
+        <Router>
+          {/* Header */}
+         <Header />
        {/* Tout ce qu'il y a sous la page */}
-          <Router>
           <ClickAwayListener onClickAway={desactivateMenu}>
           <div className={"flex-row "+ (showMenu ? "shown" : "hidden")}>
            

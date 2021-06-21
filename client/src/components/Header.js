@@ -5,7 +5,7 @@ const Header = () => {
     return (
         <div className='header'>
             <div className="logo-container" style={logoContainerStyle}>
-                <img className='header-logo' style={headerLogoStyle} src={logo}/>
+                <a href="/"><img className='header-logo clickable' style={headerLogoStyle} src={logo}/></a>
             </div>
             <BoutonConnexionDeconnexion />
         </div>
