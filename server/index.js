@@ -132,7 +132,25 @@ app.get("/profile", (req, res) => {
   }
 });
 app.post('/addElection', (req, res) => {
+  const titreElection = req.body.titreElection
+  const dateDebut = req.body.dateDebut
+  const dateFin = req.body.dateFin
+  const descriptionEleciton = req.body.descriptionEleciton
+
   const type = req.body.electionType
+
+  switch (type) {
+    case 'Oranges':
+      console.log('Oranges are $0.59 a pound.');
+      break;
+    case 'Mangoes':
+    case 'Papayas':
+      console.log('Mangoes and papayas are $2.79 a pound.');
+      // expected output: "Mangoes and papayas are $2.79 a pound."
+      break;
+    default:
+      console.log(`Sorry, we are out of ${expr}.`);
+  }
   // const autor = req.body.auteur
   // const description = req.body.resume
 
