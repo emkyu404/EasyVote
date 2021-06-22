@@ -6,7 +6,8 @@ import Home from './components/Home'
 import Elections from './components/Elections'
 import Profil from './components/Profil'
 import Login from './components/LoginUser'
-import NotConnected from "./components/NotConnected";
+import Footer from './components/Footer'
+import NotConnected from './components/NotConnected'
 import { Sling as Hamburger } from 'hamburger-react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
@@ -93,6 +94,8 @@ function App() {
     });
   };
 
+  
+
   return (
     <div className="App">
       
@@ -137,6 +140,7 @@ function App() {
                   </Route>
             </Switch>
           </div>
+          <Footer />
         </Router>
     </div>
   );

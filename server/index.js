@@ -131,6 +131,35 @@ app.get("/profile", (req, res) => {
     });
   }
 });
+app.post('/addElection', (req, res) => {
+  const type = req.body.electionType
+  // const autor = req.body.auteur
+  // const description = req.body.resume
+
+  // console.log(req.body)
+
+  // if (typeof name !== 'string' || name === '' ||
+  //     typeof autor !== 'string' || autor === '' ||
+  //     typeof description !== 'string' || description === '') {
+  //   res.status(400).json({ message: 'bad format' })
+  //   return
+  // }
+
+  // const sqlVerifLivre = db.query({
+  //   text: "SELECT idElection FROM election WHERE titreElection=$1",
+  //   values: [name, autor] 
+  // })
+
+  // if(sqlVerifLivre.rowCount == 0) {
+  //   await client.query({
+  //     text: 'INSERT INTO public.livre(IdLivre, Nom, Auteur, Resume) VALUES (DEFAULT, $1, $2, $3);',
+  //     values: [name, autor, description] 
+  //   })
+  //   res.status(200).json({ nom: name, auteur: autor, resume: description })
+  // }else {
+  //   res.status(401).json({ message: 'Le livre existe déjà' })
+  // }
+})
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
