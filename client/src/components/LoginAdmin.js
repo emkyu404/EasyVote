@@ -15,7 +15,7 @@ const LoginAdmin = () => {
 
                 <label class="login-label" for="password" style={loginLabelStyle}>Votre mot de passe : </label>
                 <input class="login-input" type="password" id="password" name="password" style={loginInputStyle} required />
-
+                
                 <input type="submit" class="login-button" value="Se connecter"/>
             </form>
         </div>
