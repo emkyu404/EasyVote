@@ -27,7 +27,11 @@ function App() {
     //loginAdmin("admin@email.fr", "admin");
     //disconnect();
     handleConnected()
-  }, [currentUser, connected])
+  }, [currentUser])
+
+  useEffect(() => {
+    console.log(connected)
+  }, [connected])
 
 
   /**
@@ -41,7 +45,6 @@ function App() {
       console.log("User connected : " + currentUser.idCitoyen)
       setConnected(true)
     }
-    console.log(connected)
   }
 
   const toggleMenu = () => {
@@ -56,16 +59,11 @@ function App() {
 
   const login = async (email, password) => {
     const response = await Axios.post("http://localhost:3001/login", {email : email, password : password})
-
-    console.log(response.data);
-
     if (response.data.message){
       setLoginError(response.data.message);
-      console.log(currentUser)
     }else{
       setCurrentUser(response.data)
     }
-    
     //window.location.replace("/")
   };
 
@@ -85,12 +83,9 @@ function App() {
       if (response.data.message){
         console.log(response.data.message);
         setCurrentUser({idAdmin : "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""});
-        console.log(currentUser)
       }else{
         console.log("Vous n'avez pas réussi à vous deconnecter");
       }
-    }).finally(() => {
-      handleConnected()
     });
   };
 
