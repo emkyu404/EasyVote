@@ -1,4 +1,4 @@
-const LoginAdmin = (loginError) => {
+const LoginAdmin = () => {
 
     const handleSubmit = function (e) {
         e.preventDefault();
@@ -15,7 +15,7 @@ const LoginAdmin = (loginError) => {
 
                 <label class="login-label" for="password" style={loginLabelStyle}>Votre mot de passe : </label>
                 <input class="login-input" type="password" id="password" name="password" style={loginInputStyle} required />
-                {loginError}
+                
                 <input type="submit" class="login-button" value="Se connecter"/>
             </form>
         </div>

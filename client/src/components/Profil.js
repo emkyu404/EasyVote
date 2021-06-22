@@ -64,7 +64,7 @@ const styles = {
 
     information: {
         borderBottom: "groove",
-        bordeColor: "red",
+        borderColor: "red",
         marginTop: "5px",
         justifyContent: "center",
 
