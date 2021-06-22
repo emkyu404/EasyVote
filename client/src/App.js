@@ -166,10 +166,10 @@ function App() {
               <Home />
             </Route>
             <Route exact path="/elections">
-              {connected ? <Elections /> : <NotConnected />}
+              <Elections />
             </Route>
             <Route exact path="/profil">
-              {connected ? <Profil /> : <NotConnected />}
+              <Profil />
             </Route>
             <Route exact path="/contact">
               <Contact />
