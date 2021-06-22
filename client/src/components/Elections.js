@@ -1,4 +1,5 @@
-import AddElection from "./AddElection"
+import AddElection from "./AddElection";
+import Radium from 'radium';
 
 const Elections = () => {
     return (
@@ -39,7 +40,8 @@ const styles = {
     divElections: {
         backgroundColor: "white",
         padding: "40px",
-        paddingBottom: "10px"
+        paddingBottom: "10px",
+        boxShadow: "0 0 10px #999"
     },
     divElection: {
         border: "1px solid",
@@ -75,7 +77,7 @@ const styles = {
         border: "none",
         color: "white",
         cursor: "pointer"
-    }
+    },
 }
 
-export default Elections
+export default Radium(Elections)

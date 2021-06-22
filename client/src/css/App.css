@@ -46,6 +46,10 @@ body {
   padding : 10px;
 }
 
+a:visited {
+  color: #272729;
+}
+
 .menu-item:hover{
   background-color : #CECECE;
   transition : 0.25s;
