@@ -107,7 +107,6 @@ function App() {
       if (response.data.message) {
         console.log(response.data.message);
         setCurrentUser({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" });
-        setCurrentUser(response.data)
         addToast("Utilisateur déconnecté", {
           appearance: 'success',
           autoDismiss: true,
@@ -121,6 +120,17 @@ function App() {
       }
     });
   };
+
+  const profile = (idCitoyen) => {
+    Axios.post("http://localhost:3001/profile", {idCitoyen : idCitoyen})
+    .then((response)=>{
+      if (response.data.message){
+        console.log(response.data.message);
+      }else{
+        setCurrentUser(...currentUser, response.data);
+      }
+    });
+  }            
 
   const addElection = (email, password) => {
     // Axios.post("http://localhost:3001/loginAdmin", {email : email, password : password}).then((response)=>{
@@ -169,7 +179,7 @@ function App() {
               {connected ? <Elections /> : <NotConnected />}
             </Route>
             <Route exact path="/profil">
-              {connected ? <Profil /> : <NotConnected />}
+              {connected ? <Profil onProfile = {profile} currentUser = {currentUser} /> : <NotConnected />}
             </Route>
             <Route exact path="/contact">
               <Contact />

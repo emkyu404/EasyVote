@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom'
 import '../css/App.css'
 
@@ -9,7 +9,11 @@ const mail = 'robert.dupont@hotmail.fr'
 const adresse = '20 rue des bois'
 const codeP = '75001'
 
-const Profil = () => {
+const Profil = (onProfile, currentUser) => {
+    useEffect(() => {
+        onProfile()
+      }, [])
+
     const history = useHistory();
 
     const handleClick = () => {
