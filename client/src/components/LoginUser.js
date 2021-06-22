@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 const LoginUser = ({ onLogin }) => {
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
@@ -17,6 +16,7 @@ const LoginUser = ({ onLogin }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+       
         await onLogin(email, password)
     }
 
