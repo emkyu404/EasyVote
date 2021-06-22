@@ -130,9 +130,6 @@ body {
   height : fit-content;
 }
 
-.clickable:hover{
-  cursor : pointer;
-}
 
 .main-home {
   position: relative;

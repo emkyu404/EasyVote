@@ -13,6 +13,7 @@ import { Sling as Hamburger } from 'hamburger-react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
+import Radium from 'radium'
 
 
 function App() {
@@ -156,6 +157,15 @@ function App() {
         </Router>
     </div>
   );
+}
+
+
+/*-------------------------------------
+ *      Style du component App.js
+ * ----------------------------------- */ 
+
+const styles = {
+ 
 }
 
 export default App;
