@@ -1,5 +1,5 @@
 import "./css/App.css";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import Header from './components/Header'
 import Home from './components/Home'
@@ -26,20 +26,21 @@ function App() {
     //loginAdmin("admin@email.fr", "admin");
     //disconnect();
     handleConnected()
-  }, [])
+  }, [currentUser, connected])
 
 
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
   const handleConnected = () => {
-    if(currentUser.idCitoyen == "" && currentUser.idAdmin == ""){
+    if(currentUser.idCitoyen === "" && currentUser.idAdmin === ""){
       console.log("User not connected")
       setConnected(false)
     } else{
       console.log("User connected : " + currentUser.idCitoyen)
       setConnected(true)
     }
+    console.log(connected)
   }
 
   const toggleMenu = () => {
@@ -52,20 +53,21 @@ function App() {
     }
   }
 
-  const login = (email, password)=>{
-    Axios.post("http://localhost:3001/login", {email : email, password : password}).then((response)=>{
-      if (response.data.message){
-        setLoginError(response.data.message);
-        console.log(currentUser)
-      }else{
-        setCurrentUser(response.data);
-        console.log(currentUser)
-      }
-    }).finally(() => {
-      handleConnected()
-      //window.location.replace("/")
-    });
+  const login = async (email, password) => {
+    const response = await Axios.post("http://localhost:3001/login", {email : email, password : password})
+
+    console.log(response.data);
+
+    if (response.data.message){
+      setLoginError(response.data.message);
+      console.log(currentUser)
+    }else{
+      setCurrentUser(response.data)
+    }
+    
+    //window.location.replace("/")
   };
+
 
   const loginAdmin = (email, password)=>{
     Axios.post("http://localhost:3001/loginAdmin", {email : email, password : password}).then((response)=>{
@@ -77,8 +79,8 @@ function App() {
     });
   };
 
-  const disconnect = ()=>{
-    Axios.post("http://localhost:3001/disconnect").then((response)=>{
+  const disconnect = async () => {
+    await Axios.post("http://localhost:3001/disconnect").then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
         setCurrentUser({idAdmin : "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: ""});
