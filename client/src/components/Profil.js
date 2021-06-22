@@ -3,8 +3,8 @@ import { useHistory } from 'react-router-dom'
 import '../css/App.css'
 
 
-const nom = 'dupont'
-const prenom = 'robert'
+const nom = 'Dupont'
+const prenom = 'Robert'
 const mail = 'robert.dupont@hotmail.fr'
 const adresse = '20 rue des bois'
 const codeP = '75001'
@@ -16,7 +16,7 @@ const Profil = () => {
         history.push("./Contact");
     }
     return (
-        <div className='profil'>
+        <div>
             <h1>Profil</h1>
             <div className='profil-form'>
                 <div className="information">
@@ -24,23 +24,23 @@ const Profil = () => {
                 </div>
                 <div className="block-align">
                     <div className='left-block'>
-                        <p>Nom : </p>
-                        <p>Prénom : </p>
-                        <p>Email : </p>
-                        <p>Adresse : </p>
-                        <p>Code postal : </p>
+                        <p className="br">Nom : </p>
+                        <p className="br">Prénom : </p>
+                        <p className="br"> Email : </p>
+                        <p className="br">Adresse : </p>
+                        <p className="br">Code postal : </p>
                     </div>
                     <div className="right-block">
-                        <p>{nom}</p>
-                        <p>{prenom}</p>
-                        <p>{mail}</p>
-                        <p>{adresse}</p>
-                        <p>{codeP}</p>
+                        <p className="br1">{nom}</p>
+                        <p className="br1">{prenom}</p>
+                        <p className="br1">{mail}</p>
+                        <p className="br1">{adresse}</p>
+                        <p className="br1">{codeP}</p>
                     </div>
                 </div>
             </div>
 
-            <h3>Changer mes informations</h3>
+            <h3 className="h3">Changer mes informations</h3>
             <button onClick={handleClick} className="buttonProfil">Contactez nous</button>
         </div>
 

@@ -123,7 +123,7 @@ body {
   /*box-shadow: 0 0 10px #999;*/
   padding: 25px;
   display: flex;
-  justify-content: left;
+  justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
   min-height: 85vh;
@@ -246,44 +246,33 @@ body {
   cursor: pointer;
 }
 
-@media (max-width: 640px) { 
-  .main-container{width: 100%;}
-  .flex-row-wrap > div > img{margin : 0;}
-  .main-home {margin-right: 0px;
-  margin-right: 0px;}
-  .btn-vote {width: 100%;}
-  .btn-result {width: 100%;}
-  .btn-soon {width: 100%;}
-} 
-
 .information {
   border-bottom: groove;
   border-color: red;
-  position: relative; margin-top: 10px;
+  margin-top: 5px;
+  justify-content: center;
   
 }
 
 .profil-form {
-  background: white;
-  padding: 20px 10px 10px;
-  border-width: 0.40em;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: white;
   border: 1px solid;
   border-color: #0B6BA8;
   padding: 30px;
-  padding-bottom: 80px;
-  margin-bottom: 30px;
+  margin-bottom: 100px;
+  background-color: white;
+  padding-bottom: 30px;
+  margin: auto;
+  position: relative;
 }
 
 .left-block {
   margin-right: auto;
   resize: none;
-  font-style: bold;
 }
 
   .right-block {
- margin-left: auto;
-  
+  position:absolute; right:0;
 } 
 
 * {
@@ -311,6 +300,7 @@ body {
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 10px 2em;
   margin-top: 40px;
+  position: relative;
 }
 
  .block-align :first-child {
@@ -384,7 +374,7 @@ textarea {
 
 .buttonProfil {
   margin-top: 30px;
-  width: 15%;
+  width: 30%;
   background-color: #0B6BA8;
   padding: 15px;
   border: none;
@@ -411,3 +401,16 @@ textarea {
   box-shadow: 0 0 2px rgba(51, 51, 51, 0.3);
 }
 
+.br {
+  padding-bottom: 20px;
+  padding-right: 100px;
+}
+
+.br1 {
+padding-bottom: 20px;
+padding-right: 20px;
+}
+
+.h3 {
+  margin-top: 40px;
+}
