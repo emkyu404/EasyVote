@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const LoginUser = ({ onLogin }) => {
+const LoginUser = ({ onLogin, loginError }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -31,7 +31,7 @@ const LoginUser = ({ onLogin }) => {
 
                 <label className="login-label" style={loginLabelStyle}>Votre mot de passe : </label>
                 <input className="login-input" type="password" id="password" name="password" style={loginInputStyle} required onBlur={handlePasswordOnChange} />
-                
+                {loginError}
                 <input type="submit" className="login-button" value="Se connecter" style={loginSubmitStyle}/>
             
                 <p style={{fontSize : "10px"}}>Mot de passe oublié ?</p>
