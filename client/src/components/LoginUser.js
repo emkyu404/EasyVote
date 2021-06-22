@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Radium from 'radium'
 
-const LoginUser = ({ onLogin, loginError }) => {
+const LoginUser = ({ onLogin }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -32,7 +32,7 @@ const LoginUser = ({ onLogin, loginError }) => {
 
                 <label className="login-label" style={styles.loginLabelStyle}>Votre mot de passe : </label>
                 <input className="login-input" type="password" id="password" name="password" style={styles.loginInputStyle} required onBlur={handlePasswordOnChange} />
-                {loginError}
+                
                 <input type="submit" className="login-button" value="Se connecter" style={styles.loginSubmitStyle}/>
             
                 <p style={{fontSize : "10px"}}>Mot de passe oublié ?</p>
