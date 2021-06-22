@@ -1,8 +1,9 @@
 import AddElection from "./AddElection"
 
-const Elections = () => {
+const Elections = ({ onAddElection }) => {
     return (
         <div className='main-elections'>
+            <AddElection onAddElection={onAddElection} />
             <h1 className='main-title'>Listes des élections</h1>
             
                 <button className='btn-filtre-vote'>En cours</button>

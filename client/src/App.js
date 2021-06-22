@@ -102,14 +102,14 @@ function App() {
     });
   };
 
-  const addElection = (email, password)=>{
-    // Axios.post("http://localhost:3001/loginAdmin", {email : email, password : password}).then((response)=>{
-    //   if (response.data.message){
-    //     setLoginError(response.data.message);
-    //   }else{
-    //     setCurrentUser(response.data);
-    //   }
-    // });
+  const addElection = (titreElection, dateDebut, dateFin, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
+    Axios.post("http://localhost:3001/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
+      if (response.data.message){
+        console.log(response.data.message);
+      }else{
+        console.log(response.data);
+      }
+    });
   };
 
   return (
@@ -146,7 +146,8 @@ function App() {
                 <Home />
               </Route>
               <Route exact path="/elections">
-                {connected ? <Elections /> : <NotConnected />}
+                <Elections onAddElection={addElection} />
+                {/* {connected ? <Elections /> : <NotConnected />} */}
               </Route>
               <Route exact path="/profil">
                 {connected ? <Profil /> : <NotConnected />}

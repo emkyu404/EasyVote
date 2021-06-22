@@ -6,8 +6,6 @@ const LoginUser = ({ onLogin }) => {
 
     const handleEmailOnChange = (e) => {
         setEmail(e.target.value)
-        setTimeout(function() {console.log(email)}, 1000)
-        
     }
 
     const handlePasswordOnChange = (e) => {
@@ -16,7 +14,6 @@ const LoginUser = ({ onLogin }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-       
         await onLogin(email, password)
     }
 
