@@ -174,33 +174,80 @@ app.get("/profile", (req, res) => {
 });
 
 app.post('/addElection', (req, res) => {
+  const titreElection = req.body.titreElection
+  const dateDebut = req.body.dateDebut
+  const dateFin = req.body.dateFin
+  const descriptionEleciton = req.body.descriptionEleciton
+  const idAdmin = req.session.currentUser.idAdmin
+
   const type = req.body.electionType
-  // const autor = req.body.auteur
-  // const description = req.body.resume
 
-  // console.log(req.body)
+  if (typeof titreElection !== 'string' || titreElection === '' ||
+      typeof dateDebut !== 'date' || dateDebut === '' ||
+      typeof dateFin !== 'date' || dateFin === '' ||
+      typeof descriptionEleciton !== 'string' || descriptionEleciton === '' ||
+      typeof idAdmin !== 'int' || idAdmin === '') {
+    res.status(400).json({ message: 'bad format' })
+    return
+  }
 
-  // if (typeof name !== 'string' || name === '' ||
-  //     typeof autor !== 'string' || autor === '' ||
-  //     typeof description !== 'string' || description === '') {
-  //   res.status(400).json({ message: 'bad format' })
-  //   return
-  // }
+  const sqlVerifElection = db.query({
+    text: "SELECT idElection FROM election WHERE titreElection=$1",
+    values: [titreElection] 
+  })
 
-  // const sqlVerifLivre = db.query({
-  //   text: "SELECT idElection FROM election WHERE titreElection=$1",
-  //   values: [name, autor] 
-  // })
+  if(sqlVerifElection.rowCount === 0) {
+    db.query({
+      text: 'INSERT INTO election(`idElection`, `titreElection`,`dateDebutElection`, `dateFinElection`, `descriptionElection`, `idAdministrateur`) '
+      + 'VALUES (NULL,$1,$2,$3,$4,$5)',
+      values: [titreElection, dateDebut, dateFin, descriptionEleciton, idAdmin]
+    })
+    res.status(200).json({ titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionEleciton: descriptionEleciton, idAdmin: idAdmin })
+  }else {
+    res.status(401).json({ message: 'L\'élection existe déjà' })
+  }
 
-  // if(sqlVerifLivre.rowCount == 0) {
-  //   await client.query({
-  //     text: 'INSERT INTO public.livre(IdLivre, Nom, Auteur, Resume) VALUES (DEFAULT, $1, $2, $3);',
-  //     values: [name, autor, description] 
-  //   })
-  //   res.status(200).json({ nom: name, auteur: autor, resume: description })
-  // }else {
-  //   res.status(401).json({ message: 'Le livre existe déjà' })
-  // }
+  const sqlGetElection = db.query({
+    text: "SELECT idElection FROM election WHERE titreElection=$1",
+    values: [titreElection] 
+  })
+  
+  if(sqlGetElection.rowCount === 1) {
+    const idElection = sqlGetElection.rows[0].idElection
+    switch (type) {
+      case 'election_regionale':
+        console.log('election_regionale');
+        const nomRegion = req.body.nomRegion
+        db.query({
+          text: "INSERT INTO election_regionale(`idElection`, `nomRegion`) VALUES ($1,$2)",
+          values: [idElection, nomRegion] 
+        })
+        break;
+      case 'election_departementale':
+        console.log('election_departementale');
+        const codeDepartement = req.body.codeDepartement
+        db.query({
+          text: "INSERT INTO election_departementale(`idElection`, `codeDepartement`) VALUES ($1,$2)",
+          values: [idElection, codeDepartement] 
+        })
+        break;
+      case 'election_municipale':
+        console.log('election_municipale');
+        const codePostal = req.body.codePostal
+        db.query({
+          text: "INSERT INTO election_municipale(`idElection`, `codePostal`) VALUES ($1,$2)",
+          values: [idElection, codePostal] 
+        })
+        break;
+      default:
+        console.log("election_nationale");
+        db.query({
+          text: "INSERT INTO election_nationale(`idElection`) VALUES ($1)",
+          values: [idElection] 
+        })
+        break;
+    }
+  }
 })
 
 app.listen(3001, () => {
