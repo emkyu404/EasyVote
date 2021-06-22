@@ -22,19 +22,19 @@ export default function ContactUs() {
                 <h2>Contactez-nous</h2>
                 <div className="form-content">
                     <div>
-                        <input type="text" placeholder="nom" name="lastName" />
+                        <input type="text" placeholder="Nom" name="lastName" />
                     </div>
                     <div>
-                        <input type="text" placeholder="prénom" name="name" />
+                        <input type="text" placeholder="Prénom" name="name" />
                     </div>
                     <div>
-                        <input type="email" placeholder="email" name="email" />
+                        <input type="email" placeholder="Email" name="email" />
                     </div>
                     <div>
-                        <input type="text" placeholder="numéro de téléphone" name="phone" />
+                        <input type="text" placeholder="Numéro de téléphone" name="phone" />
                     </div>
                     <div>
-                        <input type="text" placeholder="sujet" name="subject" />
+                        <input type="text" placeholder="Sujet" name="subject" />
                     </div>
                     <div>
                         <textarea id="" cols="30" rows="8" placeholder="Message" name="message"></textarea>

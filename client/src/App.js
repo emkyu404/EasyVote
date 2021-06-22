@@ -3,8 +3,8 @@ import Axios from "axios";
 
 import { Sling as Hamburger } from 'hamburger-react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import {BrowserRouter as Router, Switch, Route, Link} from "react-router-dom";
-import {useHistory} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 import Radium from 'radium'
 
@@ -20,12 +20,12 @@ import NotConnected from './components/NotConnected'
 function App() {
   Axios.defaults.withCredentials = true;
 
-  const {addToast} = useToasts()
+  const { addToast } = useToasts()
   const [currentUser, setCurrentUser] = useState({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" })
   const [loginError, setLoginError] = useState("");
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
-  
+
   /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
   const [connected, setConnected] = useState(false)
 
@@ -68,7 +68,7 @@ function App() {
 
   const token = async () => {
     const response = await Axios.get("http://localhost:3001/token")
-    response.data.message ? console.log(response.data.message) : setCurrentUser(response.data)  
+    response.data.message ? console.log(response.data.message) : setCurrentUser(response.data)
   }
 
   const login = async (email, password) => {
@@ -79,13 +79,13 @@ function App() {
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
         autoDismiss: true,
-     })
-      
+      })
+
     } else {
       setCurrentUser(response.data)
-         addToast("Utilisateur connecté", {
-         appearance: 'success',
-         autoDismiss: true,
+      addToast("Utilisateur connecté", {
+        appearance: 'success',
+        autoDismiss: true,
       })
     }
     //window.location.replace("/")
@@ -107,21 +107,22 @@ function App() {
       if (response.data.message) {
         console.log(response.data.message);
         setCurrentUser({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" });
+        setCurrentUser(response.data)
         addToast("Utilisateur déconnecté", {
-        appearance: 'success',
-        autoDismiss: true,
-      })
+          appearance: 'success',
+          autoDismiss: true,
+        })
 
       } else {
         addToast("Erreur : La déconnexion à échouer " + response.data.message, {
           appearance: 'error',
           autoDismiss: true,
-       })
+        })
       }
     });
   };
 
-  const addElection = (email, password)=>{
+  const addElection = (email, password) => {
     // Axios.post("http://localhost:3001/loginAdmin", {email : email, password : password}).then((response)=>{
     //   if (response.data.message){
     //     setLoginError(response.data.message);
@@ -133,53 +134,53 @@ function App() {
 
   return (
     <div className="App">
-        <Router>
-          {/* Header */}
-          <Header onDisconnection={disconnect} isConnected={connected} />
-          {/* Tout ce qu'il y a sous la page */}
-          <ClickAwayListener onClickAway={desactivateMenu}>
-            <div className={"flex-row " + (showMenu ? "shown" : "hidden")}>
+      <Router>
+        {/* Header */}
+        <Header onDisconnection={disconnect} isConnected={connected} />
+        {/* Tout ce qu'il y a sous la page */}
+        <ClickAwayListener onClickAway={desactivateMenu}>
+          <div className={"flex-row " + (showMenu ? "shown" : "hidden")}>
 
-              {/* Si le state showMenu vrai, affiche le menu */}
-              <div className="menu-container ">
-                <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item">Accueil</div></Link>
-                <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item">Elections</div></Link>
-                <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item">Profil</div></Link>
-                <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item">Contact</div></Link>
-              </div>
+            {/* Si le state showMenu vrai, affiche le menu */}
+            <div className="menu-container ">
+              <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item">Accueil</div></Link>
+              <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item">Elections</div></Link>
+              <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item">Profil</div></Link>
+              <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item">Contact</div></Link>
+            </div>
 
-              {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
-              <div className="hamburger-column">
-                <div className={"hamburger-container " + (showMenu ? "button-close-active" : "button-close-inactive")}>
-                  <Hamburger label="Show Menu" size={20} color="#272729" onToggle={() => {
-                    toggleMenu()
-                  }} />
-                </div>
+            {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
+            <div className="hamburger-column">
+              <div className={"hamburger-container " + (showMenu ? "button-close-active" : "button-close-inactive")}>
+                <Hamburger label="Show Menu" size={20} color="#272729" onToggle={() => {
+                  toggleMenu()
+                }} />
               </div>
             </div>
-          </ClickAwayListener>
-          
-          <div className="main-container">
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/elections">
-                {connected ? <Elections /> : <NotConnected />}
-              </Route>
-              <Route exact path="/profil">
-                {connected ? <Profil /> : <NotConnected />}
-              </Route>
-              <Route exact path="/contact">
-                <Contact />
-              </Route>
-              <Route exact path="/login">
-                <Login onLogin={login} loginError={loginError}/>
-              </Route>
-            </Switch>
           </div>
-          <Footer />
-        </Router>
+        </ClickAwayListener>
+
+        <div className="main-container">
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route exact path="/elections">
+              {connected ? <Elections /> : <NotConnected />}
+            </Route>
+            <Route exact path="/profil">
+              {connected ? <Profil /> : <NotConnected />}
+            </Route>
+            <Route exact path="/contact">
+              <Contact />
+            </Route>
+            <Route exact path="/login">
+              <Login onLogin={login} />
+            </Route>
+          </Switch>
+        </div>
+        <Footer />
+      </Router>
     </div>
   );
 }
@@ -187,10 +188,10 @@ function App() {
 
 /*-------------------------------------
  *      Style du component App.js
- * ----------------------------------- */ 
+ * ----------------------------------- */
 
 const styles = {
- 
+
 }
 
 export default App;
