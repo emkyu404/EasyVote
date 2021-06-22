@@ -255,3 +255,159 @@ body {
   .btn-result {width: 100%;}
   .btn-soon {width: 100%;}
 } 
+
+.information {
+  border-bottom: groove;
+  border-color: red;
+  position: relative; margin-top: 10px;
+  
+}
+
+.profil-form {
+  background: white;
+  padding: 20px 10px 10px;
+  border-width: 0.40em;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: 1px solid;
+  border-color: #0B6BA8;
+  padding: 30px;
+  padding-bottom: 80px;
+  margin-bottom: 30px;
+}
+
+.left-block {
+  margin-right: auto;
+  resize: none;
+  font-style: bold;
+}
+
+  .right-block {
+ margin-left: auto;
+  
+} 
+
+* {
+  padding: 0;
+  border: none;
+  outline: none;
+}
+
+.contact-form {
+  margin: 10rem auto 0;
+  margin-top: -2px;
+  margin-bottom: 15%;
+  max-width: 50%;
+  max-width: 500px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  border: 1px solid #0B6BA8;
+  background: white;
+  padding: 30px 30px 10px;
+  box-shadow: 0px 4px 10px rgba(51, 51, 51, 0.637);
+  border-width: 0.30em;
+}
+
+.block-align {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px 2em;
+  margin-top: 40px;
+}
+
+ .block-align :first-child {
+      align-self: center;
+  }
+
+h2 {
+  margin-top: 25px;
+  text-align: center;
+}
+
+.form-content {
+  display: grid;
+}
+
+input,
+textarea {
+  background: none;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.1rem;
+  border-bottom: 1px solid#18dcff;
+  color: #18dcff;
+}
+
+input::placeholder, 
+textarea::placeholder {
+ color: rgb(190, 188, 188);
+}
+
+input,
+.email-content,
+textarea {
+  width: 100%;
+  margin: 0 auto;
+}
+
+input {
+  padding: 24px 0 12px;
+}
+
+.email-content {
+  position: relative;
+}
+.email-content input {
+  width: 100%;
+}
+#not-mail {
+  display: none;
+  position: absolute;
+  top: 4px;
+  color: #ff4d4d;
+  right: 0;
+  transform-origin: 50% 50%;
+}
+
+textarea {
+  resize: none;
+  padding: 24px 0;
+}
+
+.button {
+  margin-left: 33%;
+  margin-top: 20px;
+  width: 33%;
+  background-color: #0B6BA8;
+  padding: 15px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.buttonProfil {
+  margin-top: 30px;
+  width: 15%;
+  background-color: #0B6BA8;
+  padding: 15px;
+  border: none;
+  color: white;
+  cursor: pointer;
+
+}
+
+.button:hover {
+  letter-spacing: 1px;
+}
+
+.error::placeholder {
+  color: #ff4d4d;
+}
+
+.form-message {
+  margin-top: 10px;
+  padding: 12px;
+  opacity: 0;
+  transition: 0.2s ease;
+  color: black;
+  border-radius: 4px;
+  box-shadow: 0 0 2px rgba(51, 51, 51, 0.3);
+}
+
