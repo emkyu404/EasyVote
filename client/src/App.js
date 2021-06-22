@@ -89,7 +89,15 @@ function App() {
     });
   };
 
-  
+  const addElection = (email, password)=>{
+    // Axios.post("http://localhost:3001/loginAdmin", {email : email, password : password}).then((response)=>{
+    //   if (response.data.message){
+    //     setLoginError(response.data.message);
+    //   }else{
+    //     setCurrentUser(response.data);
+    //   }
+    // });
+  };
 
   return (
     <div className="App">
