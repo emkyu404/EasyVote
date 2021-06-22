@@ -147,6 +147,9 @@ function App() {
               <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item">Elections</div></Link>
               <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item">Profil</div></Link>
               <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item">Contact</div></Link>
+              {/* Code temporaire */}
+              <Link to="/elections-test" style={{ textDecoration: "none" }}><div className="menu-item">Elections-test</div></Link>
+                {/* Code temporaire */}
             </div>
 
             {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
@@ -177,6 +180,11 @@ function App() {
             <Route exact path="/login">
               <Login onLogin={login} />
             </Route>
+            {/* Code temporaire */}
+            <Route exact path="/elections-test">
+                <Elections />
+              </Route>
+              {/* Code temporaire */}
           </Switch>
         </div>
         <Footer />

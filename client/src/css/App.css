@@ -112,8 +112,8 @@ body {
 .button-close-active:hover{
   background-color : rgba(205,92,92, 0.75);
 }
-/* css de la page d'accueil*/
 
+/* css de la page d'accueil*/
 .main-container{
   margin: 0 auto;
   margin-top:15vh;
@@ -128,83 +128,6 @@ body {
   flex-direction: row;
   min-height: 85vh;
   height : fit-content;
-}
-
-
-.div-elections {
-  background-color: white;
-  padding: 40px;
-  padding-bottom: 10px;
-}
-
-.div-election {
-  background-color: white;
-  border: 1px solid;
-  border-color: #0B6BA8;
-  padding: 30px;
-  padding-bottom: 80px;
-  margin-bottom: 30px;
-}
-
-.btn-vote {
-  min-width: 200px;
-  background-color: #0B6BA8;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  float: right;
-  margin-top: 15px;
-}
-
-.btn-result {
-  min-width: 200px;
-  background-color: #009F79;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  float: right;
-  margin-top: 15px;
-}
-
-.btn-soon {
-  min-width: 200px;
-  background-color: #A63950;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  float: right;
-  margin-top: 15px;
-}
-
-.btn-filtre-vote{
-  width: 33%;
-  background-color: #0B6BA8;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.btn-filtre-result{
-  width: 34%;
-  background-color: #009F79;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-
-.btn-filtre-soon{
-  width: 33%;
-  background-color: #A63950;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
 }
 
 .information {
@@ -268,10 +191,10 @@ body {
       align-self: center;
   }
 
-h2 {
+/* h2 {
   margin-top: 25px;
   text-align: center;
-}
+} */
 
 .form-content {
   display: grid;
