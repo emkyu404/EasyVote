@@ -21,10 +21,10 @@ const styles = {
         border : "none",
         color : "white",
         cursor : "pointer",
-        ':hover': {
-            color: "#0B6BA8",
-            backgroundColor: "red"
-        }
+        // ':hover': {
+        //     color: "#0B6BA8",
+        //     backgroundColor: "red"
+        // }
     },
     buttonContainerStyle: {
         height : "100%",
