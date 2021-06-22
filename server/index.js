@@ -102,6 +102,35 @@ app.post("/loginAdmin", (req, res) => {
   })
 });
 
+function checkConnected(idCitoyen){
+  console.log(req.session.idCitoyen)
+
+  return idCitoyen===req.session.idCitoyen
+}
+
+app.get("/profile", (req, res) => {
+  if(checkConnected(req.idCitoyen)===true){
+    const idCitoyen = req.session.idCitoyen
+
+    db.query("SELECT * FROM citoyen WHERE idCitoyen=?", 
+    [idCitoyen],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } 
+      else if(result.length ==1){
+        req.session.currentUser = {
+          nomCitoyen : result[0].nomCitoyen,
+          prenomCitoyen : result[0].prenomCitoyen,
+          emailCitoyen :result[0].emailCitoyen,
+          idAdresse :result[0].idAdresse,
+        }
+        console.log(req.session.currentUser + "Modif")
+        res.json(req.session.currentUser)
+      }
+    });
+  }
+});
 app.post('/addElection', (req, res) => {
   const type = req.body.electionType
   // const autor = req.body.auteur
@@ -135,3 +164,5 @@ app.post('/addElection', (req, res) => {
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });
+
+module.exports = app

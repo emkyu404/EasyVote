@@ -15,9 +15,9 @@ const LoginUser = ({ onLogin }) => {
         setPassword(e.target.value)
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        onLogin(email, password)
+        await onLogin(email, password)
     }
 
     return (
