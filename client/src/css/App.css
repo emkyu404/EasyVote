@@ -41,6 +41,10 @@ body {
   
 }
 
+a:visited{
+  color: #272729;
+}
+
 .menu-item{
   border-right : 3px solid #DEDEDE;
   padding : 10px;
@@ -130,84 +134,6 @@ body {
   height : fit-content;
 }
 
-
-.div-elections {
-  background-color: white;
-  padding: 40px;
-  padding-bottom: 10px;
-}
-
-.div-election {
-  background-color: white;
-  border: 1px solid;
-  border-color: #0B6BA8;
-  padding: 30px;
-  padding-bottom: 80px;
-  margin-bottom: 30px;
-}
-
-.btn-vote {
-  min-width: 200px;
-  background-color: #0B6BA8;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  float: right;
-  margin-top: 15px;
-}
-
-.btn-result {
-  min-width: 200px;
-  background-color: #009F79;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  float: right;
-  margin-top: 15px;
-}
-
-.btn-soon {
-  min-width: 200px;
-  background-color: #A63950;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-  float: right;
-  margin-top: 15px;
-}
-
-.btn-filtre-vote{
-  width: 33%;
-  background-color: #0B6BA8;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-.btn-filtre-result{
-  width: 34%;
-  background-color: #009F79;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-
-.btn-filtre-soon{
-  width: 33%;
-  background-color: #A63950;
-  padding: 15px;
-  border: none;
-  color: white;
-  cursor: pointer;
-}
-
-
 .left-block {
   margin-right: auto;
   resize: none;
@@ -267,7 +193,6 @@ textarea {
   resize: none;
   padding: 24px 0;
 }
-
 
 .error::placeholder {
   color: #ff4d4d;
