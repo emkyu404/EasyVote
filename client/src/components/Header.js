@@ -1,27 +1,33 @@
 import logo from '../img/header-logo.png';
 import BoutonConnexionDeconnexion from './BoutonConnexionDeconnexion';
+import {Link} from "react-router-dom";
+import Radium from 'radium'
 
 const Header = ({ onDisconnection, isConnected }) => {
     return (
         <div className='header'>
-            <div className="logo-container" style={logoContainerStyle}>
-                <a href="/"><img className='header-logo clickable' style={headerLogoStyle} src={logo} alt="Logo"/></a>
+            <div className="logo-container" style={styles.logoContainerStyle}>
+                <Link to="/"><img className='header-logo clickable' style={styles.headerLogoStyle} src={logo} alt="Logo"/></Link>
             </div>
             <BoutonConnexionDeconnexion onDisconnection = {onDisconnection} isConnected={isConnected} />
         </div>
     )
 }
 
-const logoContainerStyle = {
-    height : "100%"
+const styles = {
+    logoContainerStyle : {
+        height : "100%"
+    },
+    headerLogoStyle : {
+        position : "relative",
+        top : "50%",
+        transform : "translateY(-50%)",
+        width : "auto",
+        height : "70%",
+        ':hover' : {
+            cursor : "pointer",
+        }
+    }
 }
 
-const headerLogoStyle = {
-    position : "relative",
-    top : "50%",
-    transform : "translateY(-50%)",
-    width : "auto",
-    height : "70%"
-}
-
-export default Header
+export default Radium(Header)

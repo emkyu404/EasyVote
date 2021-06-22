@@ -3,9 +3,11 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ToastProvider } from 'react-toast-notifications'
+import {StyleRoot} from "radium";
 
 ReactDOM.render(
   <React.StrictMode>
+    <StyleRoot>
      <ToastProvider
         autoDismiss
         autoDismissTimeout={5000}
@@ -13,6 +15,7 @@ ReactDOM.render(
       >
     <App />
     </ToastProvider>
+    </StyleRoot>
   </React.StrictMode>,
   document.getElementById("root")
 );

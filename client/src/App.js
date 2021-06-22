@@ -1,6 +1,13 @@
-import "./css/App.css";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+
+import { Sling as Hamburger } from 'hamburger-react'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
+import { useToasts } from 'react-toast-notifications'
+import Radium from 'radium'
+
 import Header from './components/Header'
 import Home from './components/Home'
 import Elections from './components/Elections'
@@ -9,13 +16,10 @@ import Contact from './components/Contact'
 import Login from './components/LoginUser'
 import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
-import { Sling as Hamburger } from 'hamburger-react'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useToasts } from 'react-toast-notifications'
-
 
 function App() {
+  Axios.defaults.withCredentials = true;
+
   const { addToast } = useToasts()
   const [currentUser, setCurrentUser] = useState({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" })
   const [loginError, setLoginError] = useState("");
@@ -26,9 +30,11 @@ function App() {
   const [connected, setConnected] = useState(false)
 
   useEffect(() => {
-    //login("j-f.tang@email.com", "tang");
-    //loginAdmin("admin@email.fr", "admin");
-    //disconnect();
+    token();
+  }, [])
+
+  //On vérifie si un utilisateur est connecté a chaque changement de currentUser
+  useEffect(() => {
     handleConnected()
   }, [currentUser])
 
@@ -58,6 +64,11 @@ function App() {
     if (showMenu) {
       document.querySelector('div[class="hamburger-react"').click()
     }
+  }
+
+  const token = async () => {
+    const response = await Axios.get("http://localhost:3001/token")
+    response.data.message ? console.log(response.data.message) : setCurrentUser(response.data)
   }
 
   const login = async (email, password) => {
@@ -96,14 +107,30 @@ function App() {
       if (response.data.message) {
         console.log(response.data.message);
         setCurrentUser({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" });
+        setCurrentUser(response.data)
+        addToast("Utilisateur déconnecté", {
+          appearance: 'success',
+          autoDismiss: true,
+        })
+
       } else {
-        console.log("Vous n'avez pas réussi à vous deconnecter");
+        addToast("Erreur : La déconnexion à échouer " + response.data.message, {
+          appearance: 'error',
+          autoDismiss: true,
+        })
       }
     });
   };
 
-
-
+  const addElection = (email, password) => {
+    // Axios.post("http://localhost:3001/loginAdmin", {email : email, password : password}).then((response)=>{
+    //   if (response.data.message){
+    //     setLoginError(response.data.message);
+    //   }else{
+    //     setCurrentUser(response.data);
+    //   }
+    // });
+  };
 
   return (
     <div className="App">
@@ -156,6 +183,15 @@ function App() {
       </Router>
     </div>
   );
+}
+
+
+/*-------------------------------------
+ *      Style du component App.js
+ * ----------------------------------- */
+
+const styles = {
+
 }
 
 export default App;
