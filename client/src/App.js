@@ -107,8 +107,17 @@ function App() {
       if (response.data.message) {
         console.log(response.data.message);
         setCurrentUser({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" });
+        setCurrentUser(response.data)
+         addToast("Utilisateur déconnecté", {
+         appearance: 'success',
+         autoDismiss: true,
+      })
+
       } else {
-        console.log("Vous n'avez pas réussi à vous deconnecter");
+        addToast("Erreur : La déconnexion à échouer " + response.data.message, {
+          appearance: 'error',
+          autoDismiss: true,
+       })
       }
     });
   };
