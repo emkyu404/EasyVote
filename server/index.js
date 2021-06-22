@@ -177,78 +177,185 @@ app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection
   const dateDebut = req.body.dateDebut
   const dateFin = req.body.dateFin
-  const descriptionEleciton = req.body.descriptionEleciton
+  const descriptionElection = req.body.descriptionElection
   const idAdmin = req.session.currentUser.idAdmin
+  // const idAdmin = 1 // __________________________________A CHANGER_______________________
 
   const type = req.body.electionType
 
-  if (typeof titreElection !== 'string' || titreElection === '' ||
-      typeof dateDebut !== 'date' || dateDebut === '' ||
-      typeof dateFin !== 'date' || dateFin === '' ||
-      typeof descriptionEleciton !== 'string' || descriptionEleciton === '' ||
-      typeof idAdmin !== 'int' || idAdmin === '') {
-    res.status(400).json({ message: 'bad format' })
-    return
-  }
 
-  const sqlVerifElection = db.query({
-    text: "SELECT idElection FROM election WHERE titreElection=$1",
-    values: [titreElection] 
-  })
+  // if (typeof titreElection !== 'string' || titreElection === '' ||
+  //     // typeof dateDebut !== 'date' || dateDebut === '' ||
+  //     // typeof dateFin !== 'date' || dateFin === '' ||
+  //     typeof descriptionElection !== 'string' || descriptionElection === '' ||
+  //     typeof idAdmin !== 'number' || idAdmin === 0) {
+  //   res.status(400).json({ message: 'bad format' })
+  //   return
+  // }
 
-  if(sqlVerifElection.rowCount === 0) {
-    db.query({
-      text: 'INSERT INTO election(`idElection`, `titreElection`,`dateDebutElection`, `dateFinElection`, `descriptionElection`, `idAdministrateur`) '
-      + 'VALUES (NULL,$1,$2,$3,$4,$5)',
-      values: [titreElection, dateDebut, dateFin, descriptionEleciton, idAdmin]
-    })
-    res.status(200).json({ titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionEleciton: descriptionEleciton, idAdmin: idAdmin })
-  }else {
-    res.status(401).json({ message: 'L\'élection existe déjà' })
-  }
-
-  const sqlGetElection = db.query({
-    text: "SELECT idElection FROM election WHERE titreElection=$1",
-    values: [titreElection] 
-  })
-  
-  if(sqlGetElection.rowCount === 1) {
-    const idElection = sqlGetElection.rows[0].idElection
-    switch (type) {
-      case 'election_regionale':
-        console.log('election_regionale');
-        const nomRegion = req.body.nomRegion
-        db.query({
-          text: "INSERT INTO election_regionale(`idElection`, `nomRegion`) VALUES ($1,$2)",
-          values: [idElection, nomRegion] 
-        })
-        break;
-      case 'election_departementale':
-        console.log('election_departementale');
-        const codeDepartement = req.body.codeDepartement
-        db.query({
-          text: "INSERT INTO election_departementale(`idElection`, `codeDepartement`) VALUES ($1,$2)",
-          values: [idElection, codeDepartement] 
-        })
-        break;
-      case 'election_municipale':
-        console.log('election_municipale');
-        const codePostal = req.body.codePostal
-        db.query({
-          text: "INSERT INTO election_municipale(`idElection`, `codePostal`) VALUES ($1,$2)",
-          values: [idElection, codePostal] 
-        })
-        break;
-      default:
-        console.log("election_nationale");
-        db.query({
-          text: "INSERT INTO election_nationale(`idElection`) VALUES ($1)",
-          values: [idElection] 
-        })
-        break;
+  db.query(
+    "SELECT idElection FROM election WHERE titreElection=?",
+    [titreElection],
+    (err, resultIdElection) => {
+      if (err){
+        console.log(err);
+      }
+      else{
+        if(resultIdElection.length == 0) {
+          db.query(
+            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection, idAdministrateur) VALUES (NULL,?,?,?,?,?)",
+            [titreElection, dateDebut, dateFin, descriptionElection, idAdmin],
+            (err) => {
+              if (err){
+                console.log(err);
+              } else {
+                switch (type) {
+                  case 'election_nationale':
+                    addElectionNationale(res, titreElection)
+                    break;
+                  case 'election_regionale':
+                    addElectionRegionale(req, res, titreElection)
+                    break;
+                  case 'election_departementale':
+                    addElectionDepartementale(req, res, titreElection)
+                    break;
+                  case 'election_municipale':
+                    addElectionMunicipale(req, res, titreElection)
+                    break;
+                  default:
+                    res.status(401).json({ message: 'Le type d\'élection n\'existe pas' })
+                    break;
+                }  
+                res.status(200).json({ titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, idAdmin: idAdmin })
+              }
+            }
+          )
+        } else {
+          res.status(401).json({ message: 'L\'élection existe déjà' })
+        }
+      }
     }
-  }
+  )
 })
+
+async function addElectionNationale(res, titreElection) {
+  db.query(
+    "SELECT idElection FROM election WHERE titreElection=?",
+    [titreElection],
+    (err, resultIdElection) => {
+      if(err) {
+        console.log(err);
+      } else {
+        if(resultIdElection.length === 1) {
+          const idElection = resultIdElection[0].idElection
+          db.query(
+            "INSERT INTO election_nationale(`idElection`) VALUES (?)",
+            [idElection],
+            (error) => {
+              if(error) {
+                console.log(error);
+              } else {
+                res.status(200).json({ idElection: idElection })
+              }
+            }
+          )
+        } else {
+          res.status(401).json({ message: 'L\'élection n\'existe pas' })
+        }
+      }
+    }
+  )
+}
+
+async function addElectionRegionale(req, res, titreElection) {
+  db.query(
+    "SELECT idElection FROM election WHERE titreElection=?",
+    [titreElection],
+    (err, resultIdElection) => {
+      if(err) {
+        console.log(err);
+      } else {
+        if(resultIdElection.length === 1) {
+          const idElection = resultIdElection[0].idElection
+          const nomRegion = req.body.nomRegion
+          db.query(
+            "INSERT INTO election_regionale(`idElection`, `nomRegion`) VALUES (?,?)",
+            [idElection, nomRegion],
+            (error) => {
+              if(error) {
+                console.log(error);
+              } else {
+                res.status(200).json({ idElection: idElection, nomRegion: nomRegion })
+              }
+            }
+          )
+        } else {
+          res.status(401).json({ message: 'L\'élection n\'existe pas' })
+        }
+      }
+    }
+  )
+}
+
+async function addElectionDepartementale(req, res, titreElection) {
+  db.query(
+    "SELECT idElection FROM election WHERE titreElection=?",
+    [titreElection],
+    (err, resultIdElection) => {
+      if(err) {
+        console.log(err);
+      } else {
+        if(resultIdElection.length === 1) {
+          const idElection = resultIdElection[0].idElection
+          const codeDepartement = req.body.codeDepartement
+          db.query(
+            "INSERT INTO election_departementale(`idElection`, `codeDepartement`) VALUES (?,?)",
+            [idElection, codeDepartement],
+            (error) => {
+              if(error) {
+                console.log(error);
+              } else {
+                res.status(200).json({ idElection: idElection, codeDepartement: codeDepartement })
+              }
+            }
+          )
+        } else {
+          res.status(401).json({ message: 'L\'élection n\'existe pas' })
+        }
+      }
+    }
+  )
+}
+
+async function addElectionMunicipale(req, res, titreElection) {
+  db.query(
+    "SELECT idElection FROM election WHERE titreElection=?",
+    [titreElection],
+    (err, resultIdElection) => {
+      if(err) {
+        console.log(err);
+      } else {
+        if(resultIdElection.length === 1) {
+          const idElection = resultIdElection[0].idElection
+          const codePostal = req.body.codePostal
+          db.query(
+            "INSERT INTO election_municipale(`idElection`, `codePostal`) VALUES (?,?)",
+            [idElection, codePostal],
+            (error) => {
+              if(error) {
+                console.log(error);
+              } else {
+                res.status(200).json({ idElection: idElection, codePostal: codePostal })
+              }
+            }
+          )
+        } else {
+          res.status(401).json({ message: 'L\'élection n\'existe pas' })
+        }
+      }
+    }
+  )
+}
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

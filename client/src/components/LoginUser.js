@@ -8,8 +8,6 @@ const LoginUser = ({ onLogin }) => {
 
     const handleEmailOnChange = (e) => {
         setEmail(e.target.value)
-        setTimeout(function() {console.log(email)}, 1000)
-        
     }
 
     const handlePasswordOnChange = (e) => {
