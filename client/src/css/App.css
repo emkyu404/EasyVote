@@ -130,9 +130,6 @@ body {
   height : fit-content;
 }
 
-.clickable:hover{
-  cursor : pointer;
-}
 
 .div-elections {
   background-color: white;
