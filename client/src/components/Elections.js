@@ -40,15 +40,12 @@ const styles = {
     },
     divElections: {
         backgroundColor: "white",
-        padding: "40px",
-        paddingBottom: "10px",
+        padding: "40px 40px 10px 40px",
         boxShadow: "0 0 10px #999"
     },
     divElection: {
-        border: "1px solid",
-        borderColor: "#0B6BA8",
-        padding: "30px",
-        paddingBottom: "80px",
+        border: "1px solid #0B6BA8",
+        padding: "30px 30px 80px 30px",
         marginBottom: "30px"
     },
     text: {
