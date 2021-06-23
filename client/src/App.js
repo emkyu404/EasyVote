@@ -169,8 +169,7 @@ function App() {
                 <Home />
               </Route>
               <Route exact path="/elections">
-                <Elections onAddElection={addElection} />
-                {connected ? <Elections /> : <NotConnected />}
+                {connected ? <Elections onAddElection={addElection}/> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
                 {connected ? <Profil onProfile={profile} currentUser={currentUser} /> : <NotConnected />}
