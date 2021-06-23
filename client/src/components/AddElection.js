@@ -1,4 +1,6 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import arrow from '../img/down-arrow.svg';
+import Radium from 'radium';
 
 const AddElection = ({ onAddElection }) => {
 
@@ -52,78 +54,169 @@ const AddElection = ({ onAddElection }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} style={styles.formStyle}>
-            <h2 className="add-election-title">Ajouter une nouvelle élection</h2>
-
-            <label className="add-election-label" style={styles.addElectionLabel}>Type de l'élection : 
-                <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange}>
+        <div>
+            <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
+            <form onSubmit={handleSubmit}>
+                <label className="add-election-label">Type de l'élection : 
+                <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
+                    <optgroup style={styles.option}>
                     <option value="">Sélectionner un type</option>
                     <option value="election_nationale">Election nationale</option>
                     <option value="election_regionale">Election régionale</option>
                     <option value="election_departementale">Election départementale</option>
                     <option value="election_municipale">Election municipale</option>
+                    </optgroup>
                 </select>
-            </label>
+                </label>
 
-            {electionType !== "" &&
-                <div>
-                    {electionType === "election_regionale" &&
-                        <label className="add-election-label" style={styles.addElectionLabel}>Nom de la région : 
-                            <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleRegionOnChange} required />
-                        </label>
-                    }
+                {electionType !== "" &&
+                    <div style={styles.divForm}>
+                        {electionType === "election_regionale" &&
+                            <div>
+                            <label className="add-election-label" style={styles.label}>Nom de la région : </label>
+                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required /></span>
+                            </div>
+                        }
 
-                    {electionType === "election_departementale" &&
-                        <label className="add-election-label" style={styles.addElectionLabel}>Code du département : 
-                            <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleDepartementOnChange} required />
-                        </label>
-                    }
+                        {electionType === "election_departementale" &&
+                            <div>
+                            <label className="add-election-label" style={styles.label}>Code du département : </label>
+                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required /></span>
+                            </div>
+                        }
 
-                    {electionType === "election_municipale" &&
-                        <label className="add-election-label" style={styles.addElectionLabel}>Code postal : 
-                            <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleCodePostalOnChange} required />
-                        </label>
-                    }
+                        {electionType === "election_municipale" &&
+                            <div>
+                            <label className="add-election-label" style={styles.label}>Code postal : </label>
+                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required /></span>
+                            </div>
+                        }
+                       
+                        <label className="add-election-label" style={styles.label}>Titre de l'élection : </label>
+                        <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleTitreOnChange} required /></span>
+                        
+                        <label className="add-election-label" style={styles.label}>Date de début : </label>
+                        <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
+                        
+                        <label className="add-election-label" style={styles.label}>Date de fin : </label>
+                        <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required /></span>
+                        
 
-                    <label className="add-election-label" style={styles.addElectionLabel}>Titre de l'élection : 
-                        <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleTitreOnChange} required />
-                    </label>
-
-                    <label className="add-election-label" style={styles.addElectionLabel}>Date de début : 
-                        <input type="date" className="add-election-input" style={styles.addElectionInput} onBlur={handleDateDebutOnChange} required />
-                    </label>
-
-                    <label className="add-election-label" style={styles.addElectionLabel}>Date de fin : 
-                        <input type="date" className="add-election-input" style={styles.addElectionInput} onBlur={handleDateFinOnChange} required />
-                    </label>
-
-                    <label className="add-election-label" style={styles.addElectionLabel}>Description de l'élection : 
-                        <textarea type="text" className="add-election-input" style={styles.addElectionTextarea} onBlur={handleDescriptionOnChange} required></textarea>
-                    </label>
-
-                    <input type="submit" className="add-election-submit" style={styles.addElectionSubmit} value="Ajouter" />
-                </div>
-            }
-        </form>
+                        <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
+                        <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
+                
+                        <input type="submit" className="add-election-submit" style={styles.Submit} value="Ajouter" />
+                    </div>
+                    
+                }
+            </form>
+            <hr style={styles.rounded}></hr>
+        </div>
     )
 }
 
 const styles = {
-    formStyle: {
-
+    mainTitle: {
+        color: "#0B6BA8",
+        height: "fit-content",
+        width: "100%",
+        paddingBottom: "15px",
+        textAlign: "center"
     },
-    addElectionLabel: {
-
+    select: {
+        WebkitAppearance: "none",
+        MozAppearance: "none",
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        marginLeft: "15px",
+        backgroundColor : "#ffffff",
+        backgroundImage : "url("+arrow+")",
+        backgroundRepeat : "no-repeat",
+        backgroundPosition : "95%",
+        backgroundSize : "15px",
+        transition: "0.5s",
+        fontFamily: "Open Sans",
+        '@media (min-width: 640px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 960px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 1100px)': { 
+            fontSize: "1.5rem"
+        },
+        ':hover': {
+            border: "1px solid #0B6BA8",
+        },
+        ':focus': {
+            border: "1px solid #0B6BA8",
+        }
     },
-    addElectionInput: {
-
+    option: {
+        fontFamily: "Open Sans",
+        '@media (min-width: 640px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 960px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 1100px)': { 
+            fontSize: "1.5rem"
+        }
     },
-    addElectionSubmit: {
-
+    divForm: {
+        backgroundColor: "white",
+        padding: "40px 40px 70px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
     },
-    addElectionTextarea: {
-
+    rounded: {
+        borderTop: "5px solid #0B6BA8",
+        margin: "50px"
+    },
+    label: {
+        float: "left",
+        height: "50px",
+        lineHeight: "50px",
+        textAlign: "center",
+        verticalAlign: "middle",
+        '@media (max-width: 400px)': { 
+            float: "none"
+        }
+    },
+    input: {
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        width: "100%",
+        height: "50px",
+        marginBottom: "10px"
+    },
+    Submit: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        minWidth: "200px",
+        float: "right"
+    },
+    span: {
+        display: "block",
+        overflow: "hidden",
+        paddingLeft: "15px",
+        '@media (max-width: 400px)': { 
+            paddingLeft: "0px"
+        }
+    },
+    textArea: {
+        resize: "none",
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        width: "100%",
+        height: "200px",
+        marginBottom: "10px"
     }
 }
 
-export default AddElection
+export default Radium(AddElection)

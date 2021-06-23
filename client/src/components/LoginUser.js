@@ -65,7 +65,11 @@ const styles = {
         backgroundColor: "#0B6BA8",
         border : "none",
         color : "white",
-        cursor : "pointer"
+        cursor : "pointer",
+        ':hover': {
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
+        }
     }
 }
 
