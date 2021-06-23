@@ -11,16 +11,14 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+SET FOREIGN_KEY_CHECKS=1;
 
 --
 -- Base de données :  `easyvote`
 --
+DROP DATABASE IF EXISTS easyvote;
+CREATE DATABASE easyvote;
+USE easyvote;
 
 -- --------------------------------------------------------
 
@@ -35,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `emailAdmin` varchar(50) NOT NULL,
   PRIMARY KEY (`idAdmin`),
   UNIQUE KEY `emailAdmin` (`emailAdmin`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `admin`
@@ -43,6 +41,129 @@ CREATE TABLE IF NOT EXISTS `admin` (
 
 INSERT INTO `admin` (`idAdmin`, `motdePasseAdmin`, `emailAdmin`) VALUES
 (1, 'admin', 'admin@email.fr');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `region`
+--
+
+DROP TABLE IF EXISTS `region`;
+CREATE TABLE IF NOT EXISTS `region` (
+  `nomRegion` varchar(50) NOT NULL,
+  PRIMARY KEY (`nomRegion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `region`
+--
+
+INSERT INTO `region` (`nomRegion`) VALUES
+('Auvergne-Rhône-Alpes'),
+('Bourgogne-Franche-Comté'),
+('Bretagne'),
+('Centre-Val de Loire'),
+('Corse'),
+('Grand Est'),
+('Hauts-de-France'),
+('Ile-de-France'),
+('Normandie'),
+('Nouvelle-Aquitaine'),
+('Occitanie'),
+('Pays de la Loire'),
+('Provence-Alpes-Côte d’Azur');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `departement`
+--
+
+DROP TABLE IF EXISTS `departement`;
+CREATE TABLE IF NOT EXISTS `departement` (
+  `codeDepartement` varchar(2) NOT NULL,
+  `nomDepartement` varchar(50) NOT NULL,
+  `nomRegion` varchar(50) NOT NULL,
+  PRIMARY KEY (`codeDepartement`),
+  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `departement`
+--
+
+INSERT INTO `departement` (`codeDepartement`, `nomDepartement`, `nomRegion`) VALUES
+('1', 'Ain', 'Auvergne-Rhône-Alpes'),
+('3', 'Allier', 'Auvergne-Rhône-Alpes'),
+('2', 'Aisne', 'Hauts-de-France'),
+('60', 'Oise', 'Hauts-de-France'),
+('4', 'Alpes-de-Haute-Provence', 'Provence-Alpes-Côte d’Azur'),
+('6', 'Alpes-Maritimes', 'Provence-Alpes-Côte d’Azur'),
+('8', 'Ardennes', 'Grand Est'),
+('10', 'Aube', 'Grand Est'),
+('11', 'Aude', 'Occitanie'),
+('12', 'Aveyron', 'Occitanie'),
+('50', 'Manche', 'Normandie'),
+('14', 'Calvados', 'Normandie'),
+('17', 'Charente-Maritime', 'Nouvelle-Aquitaine'),
+('16', 'Charente', 'Nouvelle-Aquitaine'),
+('18', 'Cher', 'Centre-Val de Loire'),
+('28', 'Eure-et-Loir', 'Centre-Val de Loire'),
+('21', 'Côte-d’Or', 'Bourgogne-Franche-Comté'),
+('25', 'Doubs', 'Bourgogne-Franche-Comté'),
+('22', 'Côtes d’Armor', 'Bretagne'),
+('29', 'Finistère', 'Bretagne'),
+('2A', '	Corse-du-Sud', 'Corse'),
+('2B', 'Haute-Corse', 'Corse'),
+('30', 'Gard', 'Occitanie'),
+('31', 'Haute-Garonne', 'Occitanie'),
+('75', 'Paris', 'Ile-de-France'),
+('77', 'Seine-et-Marne', 'Ile-de-France'),
+('72', 'Sarthe', 'Pays de la Loire'),
+('85', 'Vendée', 'Pays de la Loire');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `ville`
+--
+
+DROP TABLE IF EXISTS `ville`;
+CREATE TABLE IF NOT EXISTS `ville` (
+  `codePostal` int(5) NOT NULL,
+  `nomVille` varchar(50) NOT NULL,
+  `codeDepartement` varchar(2) NOT NULL,
+  PRIMARY KEY (`codePostal`),
+  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `ville`
+--
+
+INSERT INTO `ville` (`codePostal`, `nomVille`, `codeDepartement`) VALUES
+(75000, 'Paris', '75'),
+(75001, 'Paris 1e arrondissement', '75'),
+(75002, 'Paris 2e arrondissement', '75'),
+(75003, 'Paris 3e arrondissement', '75'),
+(75004, 'Paris 4e arrondissement', '75'),
+(75005, 'Paris 5e arrondissement', '75'),
+(75006, 'Paris 6e arrondissement', '75'),
+(75007, 'Paris 7e arrondissement', '75'),
+(75008, 'Paris 8e arrondissement', '75'),
+(75009, 'Paris 9e arrondissement', '75'),
+(75015, 'Paris Vaugirard 15e arrondissement', '75'),
+(75020, 'Paris Ménilmontant 20e arrondissement', '75'),
+(75018, 'Paris Butte-Montmartre 18e arrondissement', '75'),
+(75019, 'Paris Buttes-Chaumont 19e arrondissement', '75'),
+(75013, 'Paris Gobelins 13e arrondissement', '75'),
+(75017, 'Paris Batignolles-Monceaux 17e arrondissement', '75'),
+(75016, 'Paris Passy 16e arrondissement', '75'),
+(75011, 'Paris Popincourt 11e arrondissement', '75'),
+(75012, 'Paris Reuilly 12e arrondissement', '75'),
+(75014, 'Paris Observatoire 14e arrondissement', '75'),
+(75010, 'Paris Entrepôt 10e arrondissement', '75'),
+(60000, 'Beauvais', '60');
 
 -- --------------------------------------------------------
 
@@ -55,10 +176,10 @@ CREATE TABLE IF NOT EXISTS `adresse` (
   `idAdresse` int(11) NOT NULL AUTO_INCREMENT,
   `numRue` int(11) NOT NULL,
   `rue` varchar(75) NOT NULL,
-  `codePostal` int(11) NOT NULL,
+  `codePostal` int(5) NOT NULL,
   PRIMARY KEY (`idAdresse`),
   FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `adresse`
@@ -88,22 +209,6 @@ INSERT INTO `adresse` (`idAdresse`, `numRue`, `rue`, `codePostal`) VALUES
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `candidat`
---
-
-DROP TABLE IF EXISTS `candidat`;
-CREATE TABLE IF NOT EXISTS `candidat` (
-  `idCandidat` int(11) NOT NULL AUTO_INCREMENT,
-  `titreCandidat` varchar(50) NOT NULL,
-  `descriptionCandidat` varchar(200) DEFAULT NULL,
-  `urlImage` varchar(255) NOT NULL,
-  `idElection` int(11) NOT NULL,
-  PRIMARY KEY (`idCandidat`),
-  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
 
 --
 -- Structure de la table `citoyen`
@@ -119,7 +224,7 @@ CREATE TABLE IF NOT EXISTS `citoyen` (
   PRIMARY KEY (`idCitoyen`),
   UNIQUE KEY `emailCitoyen` (`emailCitoyen`),
   FOREIGN KEY (`idAdresse`) REFERENCES `adresse`(`idAdresse`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `citoyen`
@@ -135,55 +240,6 @@ INSERT INTO `citoyen` (`idCitoyen`, `nomCitoyen`, `prenomCitoyen`, `emailCitoyen
 -- --------------------------------------------------------
 
 --
--- Structure de la table `departement`
---
-
-DROP TABLE IF EXISTS `departement`;
-CREATE TABLE IF NOT EXISTS `departement` (
-  `codeDepartement` varchar(3) NOT NULL,
-  `nomDepartement` varchar(50) NOT NULL,
-  `nomRegion` varchar(50) NOT NULL,
-  PRIMARY KEY (`codeDepartement`),
-  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `departement`
---
-
-INSERT INTO `departement` (`codeDepartement`, `nomDepartement`, `nomRegion`) VALUES
-('1', 'Ain', 'Auvergne-Rhône-Alpes'),
-('3', 'Allier', 'Auvergne-Rhône-Alpes'),
-('2', 'Aisne', 'Hauts-de-France'),
-('60', 'Oise', 'Hauts-de-France'),
-('4', 'Alpes-de-Haute-Provence', 'Provence-Alpes-Côte d\'Azur'),
-('6', 'Alpes-Maritimes', 'Provence-Alpes-Côte d\'Azur'),
-('8', 'Ardennes', 'Grand Est'),
-('10', 'Aube', 'Grand Est'),
-('11', 'Aude', 'Occitanie'),
-('12', 'Aveyron', 'Occitanie'),
-('50', 'Manche', 'Normandie'),
-('14', 'Calvados', 'Normandie'),
-('17', 'Charente-Maritime', 'Nouvelle-Aquitaine'),
-('16', 'Charente', 'Nouvelle-Aquitaine'),
-('18', 'Cher', 'Centre-Val de Loire'),
-('28', 'Eure-et-Loir', 'Centre-Val de Loire'),
-('21', 'Côte-d\'Or', 'Bourgogne-Franche-Comté'),
-('25', 'Doubs', 'Bourgogne-Franche-Comté'),
-('22', 'Côtes d\'Armor', 'Bretagne'),
-('29', 'Finistère', 'Bretagne'),
-('2A', '	Corse-du-Sud', 'Corse'),
-('2B', 'Haute-Corse', 'Corse'),
-('30', 'Gard', 'Occitanie'),
-('31', 'Haute-Garonne', 'Occitanie'),
-('75', 'Paris', 'Ile-de-France'),
-('77', 'Seine-et-Marne', 'Ile-de-France'),
-('72', 'Sarthe', 'Pays de la Loire'),
-('85', 'Vendée', 'Pays de la Loire');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `electeur`
 --
 
@@ -195,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `electeur` (
   `idCitoyen` int(11) NOT NULL,
   PRIMARY KEY (`idElecteur`),
   UNIQUE KEY `idCitoyen` (`idCitoyen`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `electeur`
@@ -220,8 +276,25 @@ CREATE TABLE IF NOT EXISTS `election` (
   `descriptionElection` varchar(200) NOT NULL,
   `idAdmin` int(11) NOT NULL,
   PRIMARY KEY (`idElection`),
-  FOREIGN KEY (`idAdmin`) REFERENCES `administrateur`(`idAdmin`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  FOREIGN KEY (`idAdmin`) REFERENCES `admin`(`idAdmin`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `candidat`
+--
+
+DROP TABLE IF EXISTS `candidat`;
+CREATE TABLE IF NOT EXISTS `candidat` (
+  `idCandidat` int(11) NOT NULL AUTO_INCREMENT,
+  `titreCandidat` varchar(50) NOT NULL,
+  `descriptionCandidat` varchar(200) DEFAULT NULL,
+  `urlImage` varchar(255) NOT NULL,
+  `idElection` int(11) NOT NULL,
+  PRIMARY KEY (`idCandidat`),
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -232,10 +305,10 @@ CREATE TABLE IF NOT EXISTS `election` (
 DROP TABLE IF EXISTS `election_departementale`;
 CREATE TABLE IF NOT EXISTS `election_departementale` (
   `idElection` int(11) NOT NULL,
-  `codeDepartement` int(11) NOT NULL,
+  `codeDepartement` varchar(2) NOT NULL,
   PRIMARY KEY (`idElection`),
   FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -246,10 +319,10 @@ CREATE TABLE IF NOT EXISTS `election_departementale` (
 DROP TABLE IF EXISTS `election_municipale`;
 CREATE TABLE IF NOT EXISTS `election_municipale` (
   `idElection` int(11) NOT NULL,
-  `codePostal` int(11) NOT NULL,
+  `codePostal` int(5) NOT NULL,
   PRIMARY KEY (`idElection`),
   FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -261,7 +334,7 @@ DROP TABLE IF EXISTS `election_nationale`;
 CREATE TABLE IF NOT EXISTS `election_nationale` (
   `idElection` int(11) NOT NULL,
   PRIMARY KEY (`idElection`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -275,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `election_regionale` (
   `nomRegion` varchar(50) NOT NULL,
   PRIMARY KEY (`idElection`),
   FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -289,72 +362,7 @@ CREATE TABLE IF NOT EXISTS `participer` (
   `idElection` int(11) NOT NULL,
   PRIMARY KEY (`idElecteur`,`idElection`),
   FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `région`
---
-
-DROP TABLE IF EXISTS `région`;
-CREATE TABLE IF NOT EXISTS `région` (
-  `nomRegion` varchar(50) NOT NULL,
-  PRIMARY KEY (`nomRegion`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `région`
---
-
-INSERT INTO `région` (`nomRegion`) VALUES
-('Auvergne-Rhône-Alpes'),
-('Bourgogne-Franche-Comté'),
-('Bretagne'),
-('Centre-Val de Loire'),
-('Corse'),
-('Grand Est'),
-('Hauts-de-France'),
-('Ile-de-France'),
-('Normandie'),
-('Nouvelle-Aquitaine'),
-('Occitanie'),
-('Pays de la Loire'),
-('Provence-Alpes-Côte d’Azur');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `ville`
---
-
-DROP TABLE IF EXISTS `ville`;
-CREATE TABLE IF NOT EXISTS `ville` (
-  `codePostal` int(11) NOT NULL,
-  `nomVille` varchar(50) NOT NULL,
-  `codeDepartement` varchar(3) NOT NULL,
-  PRIMARY KEY (`codePostal`),
-  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Déchargement des données de la table `ville`
---
-
-INSERT INTO `ville` (`codePostal`, `nomVille`, `codeDepartement`) VALUES
-(75000, 'Paris', '75'),
-(75015, 'Paris Vaugirard 15e arrondissement', '75'),
-(75020, 'Paris Ménilmontant 20e arrondissement', '75'),
-(75018, 'Paris Butte-Montmartre 18e arrondissement', '75'),
-(75019, 'Paris Buttes-Chaumont 19e arrondissement', '75'),
-(75013, 'Paris Gobelins 13e arrondissement', '75'),
-(75017, 'Paris Batignolles-Monceaux 17e arrondissement', '75'),
-(75016, 'Paris Passy 16e arrondissement', '75'),
-(75011, 'Paris Popincourt 11e arrondissement', '75'),
-(75012, 'Paris Reuilly 12e arrondissement', '75'),
-(75014, 'Paris Observatoire 14e arrondissement', '75'),
-(75010, 'Paris Entrepôt 10e arrondissement', '75'),
-(60000, 'Beauvais', '60');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -368,9 +376,5 @@ CREATE TABLE IF NOT EXISTS `voter` (
   `idCandidat` int(11) NOT NULL,
   PRIMARY KEY (`idElection`,`idCandidat`),
   FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
