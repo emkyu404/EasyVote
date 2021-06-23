@@ -14,6 +14,7 @@ import Contact from './components/Contact'
 import Login from './components/LoginUser'
 import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
+import Election from './components/Election'
 
 
 function App() {
@@ -179,6 +180,10 @@ function App() {
               </Route>
               <Route exact path="/login">
                 {connected ? <Home/> : <Login onLogin={login} />}
+              </Route>
+
+              <Route exact path="/election">
+                <Election></Election>
               </Route>
             </Switch>
           </div>
