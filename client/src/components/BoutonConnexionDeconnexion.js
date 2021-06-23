@@ -1,4 +1,5 @@
 import Radium from 'radium';
+import Button from '@material-ui/core/Button'
 
 const BoutonConnexionDeconnexion = ({ onDisconnection, isConnected }) => {
     return (
@@ -6,6 +7,7 @@ const BoutonConnexionDeconnexion = ({ onDisconnection, isConnected }) => {
             {isConnected ?
                 <button className='log-btn' style={styles.boutonConnexionDeconnexionStyle} onClick={onDisconnection}>Se déconnecter</button> :
                 <a href="/login"><button className='log-btn' style={styles.boutonConnexionDeconnexionStyle}>Se connecter</button></a>
+                
             }
         </div>
     )
@@ -21,10 +23,10 @@ const styles = {
         border: "none",
         color: "white",
         cursor: "pointer",
-        // ':hover': {
-        //     color: "#0B6BA8",
-        //     backgroundColor: "red"
-        // }
+        ':hover': {
+             backgroundColor: "#074E7B",
+             transition: "0.2s"
+         }
     },
     buttonContainerStyle: {
         height: "100%",
