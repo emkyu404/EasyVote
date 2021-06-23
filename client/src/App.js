@@ -114,7 +114,7 @@ function App() {
     Axios.post("http://localhost:3001/profile", {idCitoyen : currentUser.idCitoyen})
     .then((response)=>{
       if (response.data.message){
-        addToast("Erreur" +response.data.message, {
+        addToast("Erreur" + response.data.message, {
           appearance: 'error',
           autoDismiss: true,
         })
