@@ -1,6 +1,11 @@
 import "./css/App.css";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import { Sling as Hamburger } from 'hamburger-react'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { useToasts } from 'react-toast-notifications'
+
 import Header from './components/Header'
 import Home from './components/Home'
 import Elections from './components/Elections'
@@ -9,16 +14,13 @@ import Contact from './components/Contact'
 import Login from './components/LoginUser'
 import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
-import { Sling as Hamburger } from 'hamburger-react'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import { useToasts } from 'react-toast-notifications'
 
 
 function App() {
+  Axios.defaults.withCredentials = true
+
   const {addToast} = useToasts()
   const [currentUser, setCurrentUser] = useState({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" })
-  const [loginError, setLoginError] = useState("");
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
@@ -26,26 +28,22 @@ function App() {
   const [connected, setConnected] = useState(false)
 
   useEffect(() => {
-    //login("j-f.tang@email.com", "tang");
-    //loginAdmin("admin@email.fr", "admin");
-    //disconnect();
-    handleConnected()
-  }, [currentUser])
+    token();
+  },[])
 
   useEffect(() => {
-    console.log(connected)
-  }, [connected])
-
+    //login("j-f.tang@email.com", "tang");
+    //loginAdmin("admin@email.fr", "admin");
+    handleConnected()
+  }, [currentUser])
 
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
   const handleConnected = () => {
     if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
-      console.log("User not connected")
       setConnected(false)
     } else {
-      console.log("User connected : " + currentUser.idCitoyen)
       setConnected(true)
     }
   }
@@ -60,21 +58,24 @@ function App() {
     }
   }
 
+  const token = async () => {
+    const response = await Axios.get("http://localhost:3001/token")
+    response.data.message ? console.log(response.data.message) : setCurrentUser(response.data); 
+  }
+
+
   const login = async (email, password) => {
     const response = await Axios.post("http://localhost:3001/login", { email: email, password: password })
     if (response.data.message) {
-      setLoginError(response.data.message);
-      console.log("hey")
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
         autoDismiss: true,
      })
-      
     } else {
       setCurrentUser(response.data)
-         addToast("Utilisateur connecté", {
-         appearance: 'success',
-         autoDismiss: true,
+      addToast("Bonjour " + currentUser.nomCitoyen, {
+        appearance: 'success',
+        autoDismiss: true,
       })
     }
     //window.location.replace("/")
@@ -84,7 +85,7 @@ function App() {
   const loginAdmin = (email, password) => {
     Axios.post("http://localhost:3001/loginAdmin", { email: email, password: password }).then((response) => {
       if (response.data.message) {
-        setLoginError(response.data.message);
+
       } else {
         setCurrentUser(response.data);
       }
@@ -94,7 +95,6 @@ function App() {
   const disconnect = async () => {
     await Axios.post("http://localhost:3001/disconnect").then((response) => {
       if (response.data.message) {
-        console.log(response.data.message);
         setCurrentUser({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" });
         addToast("Utilisateur déconnecté", {
           appearance: 'success',
@@ -102,19 +102,25 @@ function App() {
         })
 
       } else {
-        console.log("Vous n'avez pas réussi à vous deconnecter");
+        addToast("Vous n'avez pas réussi à vous deconnecter", {
+          appearance: 'error',
+          autoDismiss: true,
+        })
       }
     });
   };
 
-  const profile = (idCitoyen) => {
-    Axios.post("http://localhost:3001/profile", {idCitoyen : idCitoyen})
+  const profile = () => {
+    Axios.post("http://localhost:3001/profile", {idCitoyen : currentUser.idCitoyen})
     .then((response)=>{
       if (response.data.message){
-        console.log(response.data.message);
+        addToast("Erreur" +response.data.message, {
+          appearance: 'error',
+          autoDismiss: true,
+        })
       }else{
-        setCurrentUser(...currentUser, response.data);
-      }
+        setCurrentUser(response.data);
+      } 
     });
   }            
 
@@ -166,13 +172,13 @@ function App() {
                 {connected ? <Elections /> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
-                {connected ? <Profil /> : <NotConnected />}
+                {connected ? <Profil onProfile={profile} currentUser={currentUser} /> : <NotConnected />}
               </Route>
               <Route exact path="/contact">
                 <Contact />
               </Route>
               <Route exact path="/login">
-                <Login onLogin={login} />
+                {connected ? <Home/> : <Login onLogin={login} />}
               </Route>
             </Switch>
           </div>

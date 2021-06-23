@@ -2,14 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from 'react-router-dom'
 import '../css/App.css'
 
-
-const nom = 'Dupont'
-const prenom = 'Robert'
-const mail = 'robert.dupont@hotmail.fr'
-const adresse = '20 rue des bois'
-const codeP = '75001'
-
-const Profil = (onProfile, currentUser) => {
+const Profil = ({onProfile, currentUser}) => {
     useEffect(() => {
         onProfile()
       }, [])
@@ -30,16 +23,16 @@ const Profil = (onProfile, currentUser) => {
                     <div className='left-block' style={styles.leftBlock}>
                         <p className="br" style={styles.br}>Nom : </p>
                         <p className="br" style={styles.br}>Prénom : </p>
-                        <p className="br" style={styles.br}> Email : </p>
+                        <p className="br" style={styles.br}>Email : </p>
                         <p className="br" style={styles.br}>Adresse : </p>
                         <p className="br" style={styles.br}>Code postal : </p>
                     </div>
                     <div className="right-block" style={styles.rightBlock}>
-                        <p className="br1" style={styles.br1}>{nom}</p>
-                        <p className="br1" style={styles.br1}>{prenom}</p>
-                        <p className="br1" style={styles.br1}>{mail}</p>
-                        <p className="br1" style={styles.br1}>{adresse}</p>
-                        <p className="br1" style={styles.br1}>{codeP}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.nomCitoyen}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.prenomCitoyen}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.emailCitoyen}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.idAdresse}</p>
+                        {/* <p className="br1" style={styles.br1}>{currentUser.codePostal}</p> */}
                     </div>
                 </div>
             </div>

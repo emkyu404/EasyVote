@@ -11,24 +11,24 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(session({ key : 'token', secret: 'EZSTONKS', saveUninitialized: false, resave: false, cookie: { expires: 600000 } }));
 app.use(cookieParser());
-app.use((req, res, next) => {
-  if (req.cookies.token && !req.session.user) {
-    res.clearCookie("token");
-  }
-  next();
-});
+// app.use((req, res, next) => {
+//   if (req.cookies.token && !req.session.user) {
+//     res.clearCookie("token");
+//   }
+//   next();
+// });
 
-var sessionChecker = (req, res, next) => {
-  if (req.session.user && req.cookies.token) {
-    res.redirect("/elections");
-  } else {
-    next();
-  }
-};
+// var sessionChecker = (req, res, next) => {
+//   if (req.session.user && req.cookies.token) {
+//     res.redirect("/elections");
+//   } else {
+//     next();
+//   }
+// };
 
-app.get("/", sessionChecker, (req, res) => {
-  res.redirect("/login");
-});
+// app.get("/", sessionChecker, (req, res) => {
+//   res.redirect("/login");
+// });
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -77,11 +77,11 @@ app.post("/login", (req, res) => {
                 if(resultPassword.length ==1){
                   req.session.user = {
                     idCitoyen : resultPassword[0].idCitoyen,
-                    nomCitoyen : resultMail[0].nomCitoyen,
-                    prenomCitoyen : resultMail[0].prenomCitoyen,
-                    emailCitoyen :resultMail[0].emailCitoyen,
-                    idAdresse :resultMail[0].idAdresse,
-                    idElecteur :resultPassword[0].idElecteur
+                    //nomCitoyen : resultMail[0].nomCitoyen,
+                    //prenomCitoyen : resultMail[0].prenomCitoyen,
+                    //emailCitoyen :resultMail[0].emailCitoyen,
+                    //idAdresse :resultMail[0].idAdresse,
+                    //idElecteur :resultPassword[0].idElecteur
                   }
                   res.json(req.session.user)
                 }
@@ -143,12 +143,12 @@ function checkConnected(req){
 }
 
 function checkSameAccount(req){
-  return req.idCitoyen===req.session.user.idCitoyen
+  return req.body.idCitoyen===req.session.user.idCitoyen
 }
 
-app.get("/profile", (req, res) => {
+app.post("/profile", (req, res) => {
   if(checkSameAccount(req)===true){
-    const idCitoyen = req.session.idCitoyen
+    const idCitoyen = req.session.user.idCitoyen
 
     db.query("SELECT * FROM citoyen WHERE idCitoyen=?", 
     [idCitoyen],
@@ -157,13 +157,11 @@ app.get("/profile", (req, res) => {
         console.log(err);
       } 
       else if(result.length ==1){
-        req.session.user = {
-          nomCitoyen : result[0].nomCitoyen,
-          prenomCitoyen : result[0].prenomCitoyen,
-          emailCitoyen :result[0].emailCitoyen,
-          idAdresse :result[0].idAdresse,
-        }
-        console.log(req.session.user + "Modif")
+        req.session.user.nomCitoyen = result[0].nomCitoyen,
+        req.session.user.prenomCitoyen = result[0].prenomCitoyen
+        req.session.user.emailCitoyen = result[0].emailCitoyen
+        req.session.user.idAdresse = result[0].idAdresse
+
         res.json(req.session.user)
       }
       else {
