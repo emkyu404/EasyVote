@@ -5,7 +5,7 @@ import '../css/App.css'
 const Profil = ({onProfile, currentUser}) => {
     useEffect(() => {
             onProfile();
-      }, [onProfile])
+      }, [])
 
     const history = useHistory();
 
@@ -31,8 +31,8 @@ const Profil = ({onProfile, currentUser}) => {
                         <p className="br1" style={styles.br1}>{currentUser.nomCitoyen}</p>
                         <p className="br1" style={styles.br1}>{currentUser.prenomCitoyen}</p>
                         <p className="br1" style={styles.br1}>{currentUser.emailCitoyen}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.idAdresse}</p>
-                        {/* <p className="br1" style={styles.br1}>{currentUser.codePostal}</p> */}
+                        <p className="br1" style={styles.br1}>{currentUser.numRue} {currentUser.rue}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.codePostal}</p>
                     </div>
                 </div>
             </div>
