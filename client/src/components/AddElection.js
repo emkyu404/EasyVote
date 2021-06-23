@@ -52,10 +52,10 @@ const AddElection = ({ onAddElection }) => {
     }
 
     return (
-        <form onSubmit={handleSubmit} style={formStyle}>
+        <form onSubmit={handleSubmit} style={styles.formStyle}>
             <h2 className="add-election-title">Ajouter une nouvelle élection</h2>
 
-            <label className="add-election-label" style={addElectionLabel}>Type de l'élection : 
+            <label className="add-election-label" style={styles.addElectionLabel}>Type de l'élection : 
                 <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange}>
                     <option value="">Sélectionner un type</option>
                     <option value="election_nationale">Election nationale</option>
@@ -68,52 +68,62 @@ const AddElection = ({ onAddElection }) => {
             {electionType !== "" &&
                 <div>
                     {electionType === "election_regionale" &&
-                        <label className="add-election-label" style={addElectionLabel}>Nom de la région : 
-                            <input type="text" className="add-election-input" style={addElectionInput} onBlur={handleRegionOnChange} required />
+                        <label className="add-election-label" style={styles.addElectionLabel}>Nom de la région : 
+                            <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleRegionOnChange} required />
                         </label>
                     }
 
                     {electionType === "election_departementale" &&
-                        <label className="add-election-label" style={addElectionLabel}>Code du département : 
-                            <input type="text" className="add-election-input" style={addElectionInput} onBlur={handleDepartementOnChange} required />
+                        <label className="add-election-label" style={styles.addElectionLabel}>Code du département : 
+                            <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleDepartementOnChange} required />
                         </label>
                     }
 
                     {electionType === "election_municipale" &&
-                        <label className="add-election-label" style={addElectionLabel}>Code postal : 
-                            <input type="text" className="add-election-input" style={addElectionInput} onBlur={handleCodePostalOnChange} required />
+                        <label className="add-election-label" style={styles.addElectionLabel}>Code postal : 
+                            <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleCodePostalOnChange} required />
                         </label>
                     }
 
-                    <label className="add-election-label" style={addElectionLabel}>Titre de l'élection : 
-                        <input type="text" className="add-election-input" style={addElectionInput} onBlur={handleTitreOnChange} required />
+                    <label className="add-election-label" style={styles.addElectionLabel}>Titre de l'élection : 
+                        <input type="text" className="add-election-input" style={styles.addElectionInput} onBlur={handleTitreOnChange} required />
                     </label>
 
-                    <label className="add-election-label" style={addElectionLabel}>Date de début : 
-                        <input type="date" className="add-election-input" style={addElectionInput} onBlur={handleDateDebutOnChange} required />
+                    <label className="add-election-label" style={styles.addElectionLabel}>Date de début : 
+                        <input type="date" className="add-election-input" style={styles.addElectionInput} onBlur={handleDateDebutOnChange} required />
                     </label>
 
-                    <label className="add-election-label" style={addElectionLabel}>Date de fin : 
-                        <input type="date" className="add-election-input" style={addElectionInput} onBlur={handleDateFinOnChange} required />
+                    <label className="add-election-label" style={styles.addElectionLabel}>Date de fin : 
+                        <input type="date" className="add-election-input" style={styles.addElectionInput} onBlur={handleDateFinOnChange} required />
                     </label>
 
-                    <label className="add-election-label" style={addElectionLabel}>Description de l'élection : 
-                        <textarea type="text" className="add-election-input" style={addElectionInput} onBlur={handleDescriptionOnChange} required></textarea>
+                    <label className="add-election-label" style={styles.addElectionLabel}>Description de l'élection : 
+                        <textarea type="text" className="add-election-input" style={styles.addElectionTextarea} onBlur={handleDescriptionOnChange} required></textarea>
                     </label>
 
-                    <input type="submit" className="add-election-submit" style={addElectionSubmit} value="Ajouter" />
+                    <input type="submit" className="add-election-submit" style={styles.addElectionSubmit} value="Ajouter" />
                 </div>
             }
         </form>
     )
 }
 
-const formStyle = {}
+const styles = {
+    formStyle: {
 
-const addElectionLabel = {}
+    },
+    addElectionLabel: {
 
-const addElectionInput = {}
+    },
+    addElectionInput: {
 
-const addElectionSubmit = {}
+    },
+    addElectionSubmit: {
+
+    },
+    addElectionTextarea: {
+
+    }
+}
 
 export default AddElection

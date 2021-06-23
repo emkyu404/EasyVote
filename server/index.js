@@ -357,10 +357,10 @@ async function addElectionMunicipale(req, res, titreElection) {
 
 app.post('/addCandidat', (req, res) => {
   const titreCandidat = req.body.titreCandidat
-  const idElection = req.body.idElection
   const descriptionCandidat = req.body.descriptionCandidat
   const urlImage = req.body.urlImage
-  const idElection = req.body.idElection
+  // const idElection = req.body.idElection
+  const idElection = req.session.currentUser.idAdmin
 
   db.query(
     "SELECT idCandidat FROM candidat WHERE titreCandidat=? AND idElection=?",
