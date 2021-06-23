@@ -355,6 +355,40 @@ async function addElectionMunicipale(req, res, titreElection) {
   )
 }
 
+app.post('/addCandidat', (req, res) => {
+  const titreCandidat = req.body.titreCandidat
+  const idElection = req.body.idElection
+  const descriptionCandidat = req.body.descriptionCandidat
+  const urlImage = req.body.urlImage
+  const idElection = req.body.idElection
+
+  db.query(
+    "SELECT idCandidat FROM candidat WHERE titreCandidat=? AND idElection=?",
+    [titreCandidat, idElection],
+    (err, resultIdCandidat) => {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        if(resultIdCandidat.length == 0) {
+          db.query(
+            "INSERT INTO `candidat`(`idCandidat`, `titreCandidat`, `descriptionCandidat`, `urlImage`, `idElection`) VALUES (NULL,?,?,?,?)",
+            [titreCandidat, descriptionCandidat, urlImage, idElection],
+            (err) => {
+              if (err){
+                console.log(err);
+              }
+              else {
+                res.status(200).json({ titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection })
+              }
+            }
+          )
+        }
+      }
+    }
+  )
+});
+
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });

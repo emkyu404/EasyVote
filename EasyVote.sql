@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `adresse` (
   `rue` varchar(75) NOT NULL,
   `codePostal` int(11) NOT NULL,
   PRIMARY KEY (`idAdresse`),
-  KEY `codePostal_1` (`codePostal`)
+  FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`)
 ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `candidat` (
   `urlImage` varchar(255) NOT NULL,
   `idElection` int(11) NOT NULL,
   PRIMARY KEY (`idCandidat`),
-  KEY `idElection` (`idElection`)
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS `citoyen` (
   `idAdresse` int(11) NOT NULL,
   PRIMARY KEY (`idCitoyen`),
   UNIQUE KEY `emailCitoyen` (`emailCitoyen`),
-  KEY `idAdresse` (`idAdresse`)
+  FOREIGN KEY (`idAdresse`) REFERENCES `adresse`(`idAdresse`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
@@ -144,7 +144,7 @@ CREATE TABLE IF NOT EXISTS `departement` (
   `nomDepartement` varchar(50) NOT NULL,
   `nomRegion` varchar(50) NOT NULL,
   PRIMARY KEY (`codeDepartement`),
-  KEY `nomRegion` (`nomRegion`)
+  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -220,7 +220,7 @@ CREATE TABLE IF NOT EXISTS `election` (
   `descriptionElection` varchar(200) NOT NULL,
   `idAdmin` int(11) NOT NULL,
   PRIMARY KEY (`idElection`),
-  KEY `idAdmin` (`idAdmin`)
+  FOREIGN KEY (`idAdmin`) REFERENCES `administrateur`(`idAdmin`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `election_departementale` (
   `idElection` int(11) NOT NULL,
   `codeDepartement` int(11) NOT NULL,
   PRIMARY KEY (`idElection`),
-  KEY `codeDepartement` (`codeDepartement`)
+  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -248,7 +248,7 @@ CREATE TABLE IF NOT EXISTS `election_municipale` (
   `idElection` int(11) NOT NULL,
   `codePostal` int(11) NOT NULL,
   PRIMARY KEY (`idElection`),
-  KEY `codePostal` (`codePostal`)
+  FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -274,7 +274,7 @@ CREATE TABLE IF NOT EXISTS `election_regionale` (
   `idElection` int(11) NOT NULL,
   `nomRegion` varchar(50) NOT NULL,
   PRIMARY KEY (`idElection`),
-  KEY `nomRegion` (`nomRegion`)
+  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `participer` (
   `idElecteur` int(11) NOT NULL,
   `idElection` int(11) NOT NULL,
   PRIMARY KEY (`idElecteur`,`idElection`),
-  KEY `idElection` (`idElection`)
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -334,7 +334,7 @@ CREATE TABLE IF NOT EXISTS `ville` (
   `nomVille` varchar(50) NOT NULL,
   `codeDepartement` varchar(3) NOT NULL,
   PRIMARY KEY (`codePostal`),
-  KEY `codeDepartement` (`codeDepartement`)
+  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
@@ -367,7 +367,7 @@ CREATE TABLE IF NOT EXISTS `voter` (
   `idElection` int(11) NOT NULL,
   `idCandidat` int(11) NOT NULL,
   PRIMARY KEY (`idElection`,`idCandidat`),
-  KEY `idCandidat` (`idCandidat`)
+  FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 COMMIT;
 
