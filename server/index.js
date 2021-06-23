@@ -150,17 +150,21 @@ app.post("/profile", (req, res) => {
   if(checkSameAccount(req)===true){
     const idCitoyen = req.session.user.idCitoyen
 
-    db.query("SELECT * FROM citoyen WHERE idCitoyen=?", 
+    db.query("SELECT * FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse WHERE ci.idCitoyen=?", 
     [idCitoyen],
     (err, result) => {
       if (err) {
         console.log(err);
       } 
+      
       else if(result.length ==1){
+        console.log(result);
         req.session.user.nomCitoyen = result[0].nomCitoyen,
         req.session.user.prenomCitoyen = result[0].prenomCitoyen
         req.session.user.emailCitoyen = result[0].emailCitoyen
-        req.session.user.idAdresse = result[0].idAdresse
+        req.session.user.numRue = result[0].numRue
+        req.session.user.rue = result[0].rue
+        req.session.user.codePostal = result[0].codePostal
 
         res.json(req.session.user)
       }
@@ -354,6 +358,40 @@ async function addElectionMunicipale(req, res, titreElection) {
     }
   )
 }
+
+app.post('/addCandidat', (req, res) => {
+  const titreCandidat = req.body.titreCandidat
+  const idElection = req.body.idElection
+  const descriptionCandidat = req.body.descriptionCandidat
+  const urlImage = req.body.urlImage
+  const idElection = req.body.idElection
+
+  db.query(
+    "SELECT idCandidat FROM candidat WHERE titreCandidat=? AND idElection=?",
+    [titreCandidat, idElection],
+    (err, resultIdCandidat) => {
+      if (err) {
+        console.log(err);
+      }
+      else {
+        if(resultIdCandidat.length == 0) {
+          db.query(
+            "INSERT INTO `candidat`(`idCandidat`, `titreCandidat`, `descriptionCandidat`, `urlImage`, `idElection`) VALUES (NULL,?,?,?,?)",
+            [titreCandidat, descriptionCandidat, urlImage, idElection],
+            (err) => {
+              if (err){
+                console.log(err);
+              }
+              else {
+                res.status(200).json({ titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection })
+              }
+            }
+          )
+        }
+      }
+    }
+  )
+});
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
