@@ -105,7 +105,7 @@ const AddElection = ({ onAddElection }) => {
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
                 
-                        <input type="submit" className="add-election-submit" style={styles.Submit} value="Ajouter" />
+                        <input type="submit" className="add-election-submit" style={styles.submit} value="Ajouter" />
                     </div>
                     
                 }
@@ -191,7 +191,7 @@ const styles = {
         height: "50px",
         marginBottom: "10px"
     },
-    Submit: {
+    submit: {
         backgroundColor: "#0B6BA8",
         border: "none",
         color: "white",

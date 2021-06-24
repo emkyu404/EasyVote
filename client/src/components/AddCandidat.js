@@ -1,35 +1,152 @@
 import { useState } from 'react'
 
-const AddCandidat = () => {
+const AddCandidat = (idElection) => {
+
+    const [titreCandidat, setCandidatTitle] = useState("")
+    const [descriptionCandidat, setDescriptionCandidat] = useState("")
+    const [urlCandidat, setUrlCandidat] = useState("")
+
+    const handleTitreOnChange = (e) => {
+        setCandidatTitle(e.target.value)
+    }
+
+    const handleUrlOnChange = (e) => {
+        setUrlCandidat(e.target.value)
+    }
+
+    const handleDescriptionOnChange = (e) => {
+        setDescriptionCandidat(e.target.value)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // await onAddElection(titreElection, dateDebut, dateFin, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
+        await onAddCandidat(titreCandidat, descriptionCandidat, urlCandidat, idElection)
     }
 
     return (
-        <form onSubmit={handleSubmit} style={styles.formStyle}>
+        <div>
+            <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
+            <form onSubmit={handleSubmit} style={styles.formStyle}>
 
-            <input type="submit" className="add-election-submit" style={addElectionSubmit} value="Ajouter" />  
-        </form>
+                <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
+                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onBlur={handleTitreOnChange} required /></span>    
+
+                <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
+                <textarea type="text" className="add-candidat-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
+
+                <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
+                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onBlur={handleUrlOnChange} required /></span>           
+
+                <input type="submit" className="add-candidat-submit" style={styles.submit} value="Ajouter" />
+            </form>
+        </div>
     )
 }
 
 const styles = {
-    formStyle: {
-
+    mainTitle: {
+        color: "#0B6BA8",
+        height: "fit-content",
+        width: "100%",
+        paddingBottom: "15px",
+        textAlign: "center"
     },
-    addCandidatLabel: {
-
+    select: {
+        WebkitAppearance: "none",
+        MozAppearance: "none",
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        marginLeft: "15px",
+        backgroundColor : "#ffffff",
+        backgroundImage : "url("+arrow+")",
+        backgroundRepeat : "no-repeat",
+        backgroundPosition : "95%",
+        backgroundSize : "15px",
+        transition: "0.5s",
+        fontFamily: "Open Sans",
+        '@media (min-width: 640px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 960px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 1100px)': { 
+            fontSize: "1.5rem"
+        },
+        ':hover': {
+            border: "1px solid #0B6BA8",
+        },
+        ':focus': {
+            border: "1px solid #0B6BA8",
+        }
     },
-    addCandidatInput: {
-
+    option: {
+        fontFamily: "Open Sans",
+        '@media (min-width: 640px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 960px)': { 
+            fontSize: "1rem"
+        },
+        '@media (min-width: 1100px)': { 
+            fontSize: "1.5rem"
+        }
     },
-    addCandidatSubmit: {
-
+    divForm: {
+        backgroundColor: "white",
+        padding: "40px 40px 70px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
     },
-    addCandidatTextarea: {
-
+    rounded: {
+        borderTop: "5px solid #0B6BA8",
+        margin: "50px"
+    },
+    label: {
+        float: "left",
+        height: "50px",
+        lineHeight: "50px",
+        textAlign: "center",
+        verticalAlign: "middle",
+        '@media (max-width: 400px)': { 
+            float: "none"
+        }
+    },
+    input: {
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        width: "100%",
+        height: "50px",
+        marginBottom: "10px"
+    },
+    submit: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        minWidth: "200px",
+        float: "right"
+    },
+    span: {
+        display: "block",
+        overflow: "hidden",
+        paddingLeft: "15px",
+        '@media (max-width: 400px)': { 
+            paddingLeft: "0px"
+        }
+    },
+    textArea: {
+        resize: "none",
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        width: "100%",
+        height: "200px",
+        marginBottom: "10px"
+    },
+    inputIdElection: {
+        display: "none"
     }
 }
 

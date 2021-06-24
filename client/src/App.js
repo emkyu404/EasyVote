@@ -135,8 +135,19 @@ function App() {
     Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
+      } 
+      else {
+        console.log(response.data);
       }
-      else{
+    });
+  }
+
+  const addCandidat = (titreCandidat, descriptionCandidat, urlImage, idElection) => {
+    Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection }).then((response)=>{
+      if (response.data.message){
+        console.log(response.data.message);
+      } 
+      else {
         console.log(response.data);
       }
     });
@@ -190,6 +201,7 @@ function App() {
                 <Home />
               </Route>
               <Route exact path="/elections">
+              <Elections onAddElection={addElection}/>
                 {connected ? <Elections onAddElection={addElection} getElections={getElections}/> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
