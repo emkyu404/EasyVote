@@ -16,7 +16,9 @@ const Elections = ({ onAddElection, getElections, elections }) => {
                 <button style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})}>A venir</button>
                 <button style={Object.assign({},styles.btnFiltre, styles.red)}>Terminées</button>
             <div style={styles.divElections}>
-                {/* <ElectionCard elections={elections}/> */}
+                {elections.map((electionCard) => (
+                    <ElectionCard key={electionCard.id} electionCard={electionCard}/>
+                ))}
             </div>
         </div>
     )

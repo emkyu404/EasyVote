@@ -24,7 +24,7 @@ function App() {
 
   const {addToast} = useToasts()
   const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: ""})
-  const [elections, setElections] = useState({})
+  const [elections, setElections] = useState([])
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 

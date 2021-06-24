@@ -199,7 +199,7 @@ app.post('/getElections', (req, res) => {
         res.json({message : "Impossible de récupérer les élections"})
       } 
       else if(result.length != 0){
-        console.log(result)
+        res.json(result)
       }
       else {
         res.json({message : "Vous ne pouvez accèder à aucune élection"})
