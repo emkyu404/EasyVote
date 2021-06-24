@@ -2,9 +2,9 @@ import React, { useEffect } from "react";
 import { useHistory } from 'react-router-dom'
 import '../css/App.css'
 
-const Profil = ({onProfile, currentUser}) => {
+const Profil = ({getProfile, currentUser}) => {
     useEffect(() => {
-            onProfile();
+        getProfile();
       }, [])
 
     const history = useHistory();

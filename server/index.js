@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt')
 //Permet l'utilisation des cookies
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
-app.use(session({ key : 'token', secret: 'EZSTONKS', saveUninitialized: false, resave: false, cookie: { expires: 600000 } }));
+app.use(session({ key : 'token', secret: 'EZSTONKS', saveUninitialized: false, resave: false, cookie: { expires: 14400000 } }));
 app.use(cookieParser());
 // app.use((req, res, next) => {
 //   if (req.cookies.token && !req.session.user) {
@@ -72,6 +72,7 @@ app.post("/login", (req, res) => {
             (err, resultPassword) => {
               if (err){
                 console.log(err);
+                res.json({message : "Impossible de se connecter"})
               }
               else{
                 if(resultPassword.length ==1){
@@ -115,6 +116,7 @@ app.post("/loginAdmin", (req, res) => {
     (err, result) => {
       if (err){
         console.log(err);
+        res.json({message : "Impossible de se connecter"})
       }
       else{
         if(result.length ==1){
@@ -143,7 +145,10 @@ function checkConnected(req){
 }
 
 function checkSameAccount(req){
-  return req.body.idCitoyen===req.session.user.idCitoyen
+  if(req.session.user){
+    return req.body.idCitoyen===req.session.user.idCitoyen
+  }
+  return false
 }
 
 app.post("/profile", (req, res) => {
@@ -155,10 +160,10 @@ app.post("/profile", (req, res) => {
     (err, result) => {
       if (err) {
         console.log(err);
+        res.json({message : "Impossible de récupérer votre profil"})
       } 
       
       else if(result.length ==1){
-        console.log(result);
         req.session.user.nomCitoyen = result[0].nomCitoyen,
         req.session.user.prenomCitoyen = result[0].prenomCitoyen
         req.session.user.emailCitoyen = result[0].emailCitoyen
@@ -173,7 +178,31 @@ app.post("/profile", (req, res) => {
         res.json(req.session.user)
       }
       else {
-        res.json({message : "Compte introuvable"})
+        res.json({message : "Profil introuvable"})
+      }
+    });
+  }
+  else {
+    res.json({message : "Vous n'êtes pas connecté"})
+  }
+});
+
+app.post('/getElections', (req, res) => {
+  if(checkSameAccount(req)===true){
+    const idCitoyen = req.session.user.idCitoyen
+
+    db.query("SELECT * FROM Election",
+    [],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.json({message : "Impossible de récupérer les élections"})
+      } 
+      else if(result.length != 0){
+        console.log(result)
+      }
+      else {
+        res.json({message : "Vous ne pouvez accèder à aucune élection"})
       }
     });
   }

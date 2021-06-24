@@ -23,7 +23,8 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" })
+  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: ""})
+  const [elections, setElections] = useState({})
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
@@ -63,7 +64,7 @@ function App() {
 
   const token = async () => {
     const response = await Axios.get(baseUrl+"/token")
-    response.data.message ? console.log(response.data.message) : setCurrentUser(response.data); 
+    response.data.message ? setCurrentUser({idAdmin: "", idCitoyen: ""}) : setCurrentUser(response.data); 
   }
 
 
@@ -74,7 +75,8 @@ function App() {
         appearance: 'error',
         autoDismiss: true,
      })
-    } else {
+    } 
+    else {
       setCurrentUser(response.data)
       addToast("Bonjour " + currentUser.nomCitoyen, {
         appearance: 'success',
@@ -89,22 +91,24 @@ function App() {
     Axios.post(baseUrl+"/loginAdmin", { email: email, password: password }).then((response) => {
       if (response.data.message) {
 
-      } else {
+      } 
+      else {
         setCurrentUser(response.data);
       }
     });
   };
 
-  const disconnect = async () => {
-    await Axios.post(baseUrl+"/disconnect").then((response) => {
+  const disconnect = () => {
+    Axios.post(baseUrl+"/disconnect").then((response) => {
       if (response.data.message) {
-        setCurrentUser({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" });
+        setCurrentUser({ idAdmin: "", idCitoyen: "" });
         addToast("Utilisateur déconnecté", {
           appearance: 'success',
           autoDismiss: true,
         })
 
-      } else {
+      } 
+      else {
         addToast("Vous n'avez pas réussi à vous deconnecter", {
           appearance: 'error',
           autoDismiss: true,
@@ -114,14 +118,14 @@ function App() {
   };
 
   const profile = () => {
-    Axios.post(baseUrl+"/profile", {idCitoyen : currentUser.idCitoyen})
-    .then((response)=>{
+    Axios.post(baseUrl+"/profile", {idCitoyen : currentUser.idCitoyen}).then((response)=>{
       if (response.data.message){
-        addToast("Erreur" + response.data.message, {
+        addToast("Erreur : " + response.data.message, {
           appearance: 'error',
           autoDismiss: true,
         })
-      }else{
+      }
+      else{
         setCurrentUser(response.data);
       } 
     });
@@ -131,12 +135,27 @@ function App() {
     Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
-      }else{
+      }
+      else{
         console.log(response.data);
       }
     });
   }
   
+  const getElections= () => {
+    Axios.post(baseUrl+"/getElections", {idCitoyen : currentUser.idCitoyen}).then((response)=>{
+        if (response.data.message){
+          addToast("Erreur : " + response.data.message, {
+            appearance: 'error',
+            autoDismiss: true,
+          })
+        }
+        else{
+          console.log(response.data);
+          setElections(response.data);
+        }
+    })
+  }
   return (
     <div className="App">
         <Router>
@@ -171,10 +190,10 @@ function App() {
                 <Home />
               </Route>
               <Route exact path="/elections">
-                {connected ? <Elections onAddElection={addElection}/> : <NotConnected />}
+                {connected ? <Elections onAddElection={addElection} getElections={getElections}/> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
-                {connected ? <Profil onProfile={profile} currentUser={currentUser} /> : <NotConnected />}
+                {connected ? <Profil getProfile={profile} currentUser={currentUser} /> : <NotConnected />}
               </Route>
               <Route exact path="/contact">
                 <Contact />

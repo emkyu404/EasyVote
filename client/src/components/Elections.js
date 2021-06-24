@@ -1,7 +1,13 @@
 import AddElection from "./AddElection";
+import ElectionCard from "./ElectionCard";
+import React, { useEffect } from "react";
 import Radium from 'radium';
 
-const Elections = ({ onAddElection }) => {
+const Elections = ({ onAddElection, getElections }) => {
+    useEffect(() => {
+        getElections();
+  }, [])
+
     return (
         <div>
             <AddElection onAddElection={onAddElection} />
@@ -10,21 +16,7 @@ const Elections = ({ onAddElection }) => {
                 <button style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})}>A venir</button>
                 <button style={Object.assign({},styles.btnFiltre, styles.red)}>Terminées</button>
             <div style={styles.divElections}>
-                <div style={styles.divElection}>
-                    <h2>Nike dro ?</h2>
-                    <p style={styles.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris maximus egestas nisi at pretium. Nullam vel urna a tortor egestas egestas. Sed luctus vestibulum risus ut condimentum. Morbi libero ipsum, volutpat et volutpat at, sollicitudin porttitor lectus. Praesent eu massa quis lacus fermentum sollicitudin sed vel massa. Etiam finibus libero volutpat sollicitudin sodales. Integer a dui sed odio gravida auctor. Integer sed lobortis felis.</p>
-                    <button style={Object.assign({},styles.btn, styles.blue)}>Répondre à l'élection</button>
-                </div>
-                <div style={styles.divElection}>
-                    <h2>Nike dro ?</h2>
-                    <p style={styles.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris maximus egestas nisi at pretium. Nullam vel urna a tortor egestas egestas. Sed luctus vestibulum risus ut condimentum. Morbi libero ipsum, volutpat et volutpat at, sollicitudin porttitor lectus. Praesent eu massa quis lacus fermentum sollicitudin sed vel massa. Etiam finibus libero volutpat sollicitudin sodales. Integer a dui sed odio gravida auctor. Integer sed lobortis felis.</p>
-                    <button style={Object.assign({},styles.btn, styles.green)}>Voir les résultats</button>
-                </div>
-                <div style={styles.divElection}>
-                    <h2>Nike dro ?</h2>
-                    <p style={styles.text}>Integer a dui sed odio gravida auctor. Integer sed lobortis felis.</p>
-                    <button style={Object.assign({},styles.btn, styles.red)}>A venir</button>
-                </div>
+                <ElectionCard/>
             </div>
         </div>
     )
