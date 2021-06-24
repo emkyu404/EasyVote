@@ -184,8 +184,8 @@ app.post('/addElection', (req, res) => {
   const dateDebut = req.body.dateDebut
   const dateFin = req.body.dateFin
   const descriptionElection = req.body.descriptionElection
-  const idAdmin = req.session.currentUser.idAdmin
-  // const idAdmin = 1 // __________________________________A CHANGER_______________________
+  // const idAdmin = req.session.currentUser.idAdmin
+  const idAdmin = 1 // __________________________________A CHANGER_______________________
 
   const type = req.body.electionType
 
@@ -209,7 +209,7 @@ app.post('/addElection', (req, res) => {
       else{
         if(resultIdElection.length == 0) {
           db.query(
-            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection, idAdministrateur) VALUES (NULL,?,?,?,?,?)",
+            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection, idAdmin) VALUES (NULL,?,?,?,?,?)",
             [titreElection, dateDebut, dateFin, descriptionElection, idAdmin],
             (err) => {
               if (err){
