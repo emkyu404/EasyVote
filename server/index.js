@@ -150,7 +150,7 @@ app.post("/profile", (req, res) => {
   if(checkSameAccount(req)===true){
     const idCitoyen = req.session.user.idCitoyen
 
-    db.query("SELECT * FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse WHERE ci.idCitoyen=?", 
+    db.query("SELECT * FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?", 
     [idCitoyen],
     (err, result) => {
       if (err) {
@@ -165,6 +165,10 @@ app.post("/profile", (req, res) => {
         req.session.user.numRue = result[0].numRue
         req.session.user.rue = result[0].rue
         req.session.user.codePostal = result[0].codePostal
+        req.session.user.nomVille = result[0].nomVille
+        req.session.user.codeDepartement = result[0].codeDepartement
+        req.session.user.nomDepartement = result[0].nomDepartement
+        req.session.user.nomRegion = result[0].nomRegion
 
         res.json(req.session.user)
       }
