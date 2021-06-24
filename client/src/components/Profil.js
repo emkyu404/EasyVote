@@ -26,6 +26,10 @@ const Profil = ({onProfile, currentUser}) => {
                         <p className="br" style={styles.br}>Email : </p>
                         <p className="br" style={styles.br}>Adresse : </p>
                         <p className="br" style={styles.br}>Code postal : </p>
+                        <p className="br" style={styles.br}>Ville : </p>
+                        <p className="br" style={styles.br}>Code département : </p>
+                        <p className="br" style={styles.br}>Département : </p>
+                        <p className="br" style={styles.br}>Région : </p>
                     </div>
                     <div className="right-block" style={styles.rightBlock}>
                         <p className="br1" style={styles.br1}>{currentUser.nomCitoyen}</p>
@@ -33,6 +37,10 @@ const Profil = ({onProfile, currentUser}) => {
                         <p className="br1" style={styles.br1}>{currentUser.emailCitoyen}</p>
                         <p className="br1" style={styles.br1}>{currentUser.numRue} {currentUser.rue}</p>
                         <p className="br1" style={styles.br1}>{currentUser.codePostal}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.nomVille}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.codeDepartement}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.nomDepartement}</p>
+                        <p className="br1" style={styles.br1}>{currentUser.nomRegion}</p>
                     </div>
                 </div>
             </div>
