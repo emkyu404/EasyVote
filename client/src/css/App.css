@@ -126,86 +126,9 @@ a:visited{
   background-color: #E9F1F7;
   /*box-shadow: 0 0 10px #999;*/
   padding: 25px;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
   min-height: 85vh;
   height : fit-content;
 }
-
-/* .left-block {
-  margin-right: auto;
-  resize: none;
-}
-
-  .right-block {
-  position:absolute; right:0;
-} 
-
-* {
-  padding: 0;
-  border: none;
-  outline: none;
-}
-
-input,
-textarea {
-  background: none;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1.1rem;
-  border-bottom: 1px solid#18dcff;
-  color: #18dcff;
-}
-
-input::placeholder, 
-textarea::placeholder {
- color: rgb(190, 188, 188);
-}
-
-input,
-.email-content,
-textarea {
-  width: 100%;
-  margin: 0 auto;
-}
-
-input {
-  padding: 24px 0 12px;
-}
-
-.email-content {
-  position: relative;
-}
-.email-content input {
-  width: 100%;
-}
-#not-mail {
-  display: none;
-  position: absolute;
-  top: 4px;
-  color: #ff4d4d;
-  right: 0;
-  transform-origin: 50% 50%;
-}
-
-textarea {
-  resize: none;
-  padding: 24px 0;
-}
-
-.error::placeholder {
-  color: #ff4d4d;
-}
-
-.form-message {
-  margin-top: 10px;
-  padding: 12px;
-  opacity: 0;
-  transition: 0.2s ease;
-  color: black;
-  border-radius: 4px;
-  box-shadow: 0 0 2px rgba(51, 51, 51, 0.3);
-} */
 
 @media (max-width: 640px) { 
   .main-container{width: 100%;}
