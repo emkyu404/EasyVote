@@ -5,7 +5,7 @@ import '../css/App.css'
 const Profil = ({getProfile, currentUser}) => {
     useEffect(() => {
         getProfile();
-      }, [])
+    }, [])
 
     const history = useHistory();
 
