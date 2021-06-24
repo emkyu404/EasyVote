@@ -139,7 +139,10 @@ const styles = {
         textDecoration: "none",
         cursor: "pointer",
         minWidth: "200px",
-        float: "right"
+        float: "right",
+        '@media (max-width: 400px)': {
+            width: "100%"
+        }
     }
 }
 
