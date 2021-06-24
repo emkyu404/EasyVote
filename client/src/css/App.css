@@ -127,7 +127,6 @@ a:visited{
   /*box-shadow: 0 0 10px #999;*/
   padding: 25px;
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
   min-height: 85vh;
