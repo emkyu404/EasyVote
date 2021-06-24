@@ -1,11 +1,20 @@
 import React from 'react'
 import {Link} from "react-router-dom";
+import DialogComponent from './DialogComponent'
 
 const NotConnected = () => {
+    const handleClick = () => {
+        window.location.replace('login')
+    }
     return (
         <div>
-            <h1> Vous n'êtes pas connecté, veuillez vous connecter pour pouvoir utiliser la plateforme EasyVote </h1>
-            <Link to="/login"><p> Se connecter </p></Link>
+            <DialogComponent 
+                dialogText={"Vous n'êtes pas connecté à la plateforme EasyVote, veuillez vous connecter pour pouvoir accéder à cette page"}
+                dialogTitle={"Utilisateur non connecté"}
+                openOnRender={true}
+                handleClickBehavior = {handleClick}
+                yesNo={false}
+            />
         </div>
     )
 }
