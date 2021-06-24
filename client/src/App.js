@@ -16,6 +16,8 @@ import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
 import Election from './components/Election'
 
+// URL de base, à changer lorsque l'url change
+const baseUrl = "http://localhost:3001"
 
 function App() {
   Axios.defaults.withCredentials = true
@@ -60,13 +62,13 @@ function App() {
   }
 
   const token = async () => {
-    const response = await Axios.get("http://localhost:3001/token")
+    const response = await Axios.get(baseUrl+"/token")
     response.data.message ? console.log(response.data.message) : setCurrentUser(response.data); 
   }
 
 
   const login = async (email, password) => {
-    const response = await Axios.post("http://localhost:3001/login", { email: email, password: password })
+    const response = await Axios.post(baseUrl+"/login", { email: email, password: password })
     if (response.data.message) {
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
@@ -84,7 +86,7 @@ function App() {
 
 
   const loginAdmin = (email, password) => {
-    Axios.post("http://localhost:3001/loginAdmin", { email: email, password: password }).then((response) => {
+    Axios.post(baseUrl+"/loginAdmin", { email: email, password: password }).then((response) => {
       if (response.data.message) {
 
       } else {
@@ -94,7 +96,7 @@ function App() {
   };
 
   const disconnect = async () => {
-    await Axios.post("http://localhost:3001/disconnect").then((response) => {
+    await Axios.post(baseUrl+"/disconnect").then((response) => {
       if (response.data.message) {
         setCurrentUser({ idAdmin: "", emailAdmin: "", idCitoyen: "", nomCitoyen: "", prenomCitoyen: "", emailCitoyen: "", idAdresse: "", idElecteur: "" });
         addToast("Utilisateur déconnecté", {
@@ -112,7 +114,7 @@ function App() {
   };
 
   const profile = () => {
-    Axios.post("http://localhost:3001/profile", {idCitoyen : currentUser.idCitoyen})
+    Axios.post(baseUrl+"/profile", {idCitoyen : currentUser.idCitoyen})
     .then((response)=>{
       if (response.data.message){
         addToast("Erreur" + response.data.message, {
@@ -126,7 +128,7 @@ function App() {
   }            
 
   const addElection = (titreElection, dateDebut, dateFin, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
-    Axios.post("http://localhost:3001/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
+    Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
       }else{
