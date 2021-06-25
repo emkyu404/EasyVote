@@ -21,6 +21,7 @@ const Contact = ({ Contact }) => {
             <h1 style={styles.mainTitle}>Contactez-nous</h1>
             <form onSubmit={sendEmail} className='contactForm'>
                 <div style={styles.divForm}>
+                <h2 style={styles.secondTitle}>Formulaire de contact</h2>
                 <div>
                     <div style={styles.alignleft}>
                         <label style={styles.label}>Nom : </label>
@@ -43,9 +44,9 @@ const Contact = ({ Contact }) => {
                 <label style={styles.label}>Message : </label>
                 <textarea name="message" style={styles.textArea}></textarea>
 
-                <input type="submit" className="button" style={styles.Submit} value="Envoyer"></input>
+                <input type="submit" className="button" style={styles.submit} value="Envoyer"></input>
                 </div>
-        </form>
+            </form>
         </div>
     )
 }
@@ -81,9 +82,13 @@ const styles = {
         paddingBottom: "15px",
         textAlign: "center"
     },
+    secondTitle:{
+        margin:"0px 0px 20px 0px",
+        textAlign: "center"
+    },
     divForm: {
         backgroundColor: "white",
-        padding: "40px 40px 70px 40px",
+        padding: "20px 40px 70px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
         width: "100%"
@@ -131,7 +136,7 @@ const styles = {
         height: "200px",
         marginBottom: "10px"
     },
-    Submit: {
+    submit: {
         backgroundColor: "#0B6BA8",
         border: "none",
         color: "white",
@@ -139,10 +144,7 @@ const styles = {
         textDecoration: "none",
         cursor: "pointer",
         minWidth: "200px",
-        float: "right",
-        '@media (max-width: 400px)': {
-            width: "100%"
-        }
+        float: "right"
     }
 }
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import { useHistory } from 'react-router-dom'
-import '../css/App.css'
+import { useHistory } from 'react-router-dom';
+import '../css/App.css';
+import Radium from 'radium';
 
 const Profil = ({getProfile, currentUser}) => {
     useEffect(() => {
@@ -14,113 +15,170 @@ const Profil = ({getProfile, currentUser}) => {
     }
     return (
         <div>
-            <h1>Profil</h1>
-            <div className='profil-form' style={styles.profilForm}>
-                <div className="information" style={styles.information}>
-                    <h2 style={styles.h2}>Mes informations</h2>
-                </div>
-                <div className="block-align" style={styles.blockAlign}>
-                    <div className='left-block' style={styles.leftBlock}>
-                        <p className="br" style={styles.br}>Nom : </p>
-                        <p className="br" style={styles.br}>Prénom : </p>
-                        <p className="br" style={styles.br}>Email : </p>
-                        <p className="br" style={styles.br}>Adresse : </p>
-                        <p className="br" style={styles.br}>Code postal : </p>
-                        <p className="br" style={styles.br}>Ville : </p>
-                        <p className="br" style={styles.br}>Code département : </p>
-                        <p className="br" style={styles.br}>Département : </p>
-                        <p className="br" style={styles.br}>Région : </p>
-                    </div>
-                    <div className="right-block" style={styles.rightBlock}>
-                        <p className="br1" style={styles.br1}>{currentUser.nomCitoyen}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.prenomCitoyen}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.emailCitoyen}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.numRue} {currentUser.rue}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.codePostal}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.nomVille}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.codeDepartement}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.nomDepartement}</p>
-                        <p className="br1" style={styles.br1}>{currentUser.nomRegion}</p>
-                    </div>
+            <h1 style={styles.mainTitle}>Profil</h1>
+            <div className='profil-form' style={styles.divForm}>
+                <h2 style={styles.secondTitle}>Mes informations</h2>
+                <table style={styles.table}>
+                    <tr>
+                        <th style={styles.th}>Nom</th>
+                        <td style={styles.td}>{currentUser.nomCitoyen}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Prénom</th>
+                        <td style={styles.td}>{currentUser.prenomCitoyen}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Email</th>
+                        <td style={styles.td}>{currentUser.emailCitoyen}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Adresse</th>
+                        <td style={styles.td}>{currentUser.numRue} {currentUser.rue}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Code postal</th>
+                        <td style={styles.td}>{currentUser.codePostal}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Ville</th>
+                        <td style={styles.td}>{currentUser.nomVille}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Code département</th>
+                        <td style={styles.td}>{currentUser.codeDepartement}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Département</th>
+                        <td style={styles.td}>{currentUser.nomDepartement}</td>
+                    </tr>
+                    <tr>
+                        <th style={styles.th}>Région</th>
+                        <td style={styles.td}>{currentUser.nomRegion}</td>
+                    </tr>
+                </table>
+                <div style={styles.divContact}>
+                    <h2 style={styles.thirdTitle}>Des informations sont incorrectes ?</h2>
+                    <button style={styles.btn} onClick={contact}>Contactez nous</button>
                 </div>
             </div>
 
-            <h3 className="h3" style={styles.h3}>Changer mes informations</h3>
-            <button style={styles.contactButton} onClick={contact} className="buttonProfil">Contactez nous</button>
+            <hr style={styles.rounded}></hr>
+
+            <form onSubmit={null} className='passwordForm'>
+                <div style={styles.divForm}>
+                <h2 style={styles.secondTitle}>Changer de mot de passe</h2>
+
+                <label style={styles.label}>Ancien mot de passe : </label>
+                <span style={styles.span}><input type="text" name="old-pass" required style={styles.input}/></span>
+
+                <label style={styles.label}>Nouveau mot de passe : </label>
+                <span style={styles.span}><input type="text" name="new-pass" required style={styles.input}/></span>
+
+                <label style={styles.label}>Confirmation nouveau mot de passe : </label>
+                <span style={styles.span}><input type="text" name="confirm-pass" required style={styles.input}/></span>
+
+                <input type="submit" className="button" style={styles.submit} value="Envoyer"></input>
+                </div>
+            </form>
         </div>
     )
 }
 
 const styles = {
-    contactButton: {
-        marginTop: "30px",
-        width: "30%",
+    table: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        width: "auto",
+        marginBottom: "40px"
+    },
+    th: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        backgroundColor: "#fafafa",
+        padding: "5px 20px 5px 20px",
+        whiteSpace: "nowrap"
+    },
+    td: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        padding: "5px 20px 5px 20px",
+        width: "100%"
+    },
+    btn: {
         backgroundColor: "#0B6BA8",
-        padding: "15px",
         border: "none",
         color: "white",
+        padding: "15px",
+        textDecoration: "none",
         cursor: "pointer",
-
-
-        ':hover': {
-            letterSpacing: "1px",
+        minWidth: "200px",
+        verticalAlign: "middle"
+    },
+    rounded: {
+        borderTop: "5px solid #0B6BA8",
+        margin: "50px",
+        borderRadius: "5px"
+    },
+    divForm: {
+        backgroundColor: "white",
+        padding: "40px 40px 70px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px"
+    },
+    mainTitle: {
+        color: "#0B6BA8",
+        height: "fit-content",
+        width: "100%",
+        paddingBottom: "15px",
+        textAlign: "center"
+    },
+    secondTitle:{
+        margin:"0px 0px 20px 0px",
+        textAlign: "center"
+    },
+    thirdTitle: {
+        display: "inline-block",
+        marginRight: "20px",
+        verticalAlign: "middle"
+    },
+    divContact: {
+        textAlign: "center"
+    },
+    label: {
+        float: "left",
+        height: "50px",
+        lineHeight: "50px",
+        textAlign: "center",
+        verticalAlign: "middle",
+        '@media (max-width: 400px)': { 
+            float: "none"
         }
     },
-
-    information: {
-        borderBottom: "groove",
-        borderColor: "red",
-        marginTop: "5px",
-        justifyContent: "center",
-
+    input: {
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        width: "100%",
+        height: "50px",
+        marginBottom: "10px"
     },
-
-    profilForm: {
-        backgroundColor: "white",
-        border: "1px solid",
-        borderColor: "#0B6BA8",
-        padding: "30px",
-        marginottom: "100px",
-        paddingBottom: "30px",
-        margin: "auto",
-        position: "relative",
+    submit: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        minWidth: "200px",
+        float: "right"
     },
-
-    blockAlign: {
-        display: "grid",
-        gridTemplateColumns: "1fr 1fr 1fr",
-        gridGap: "10px 2em",
-        marginTop: "40px",
-        position: "relative",
-    },
-
-    blockAlignfirstChild: {
-        alignSelf: "center",
-    },
-
-    h2: {
-        marginTop: "25px",
-        textAlign: "center",
-    },
-
-    formContent: {
-        display: "grid",
-    },
-
-    br: {
-        paddingBottom: "20px",
-        paddingRight: "100px",
-    },
-
-    br1: {
-        paddingBottom: "20px",
-        paddingRight: "20px",
-    },
-
-    h3: {
-        marginTop: "40px",
-    },
+    span: {
+        display: "block",
+        overflow: "hidden",
+        paddingLeft: "15px",
+        '@media (max-width: 400px)': { 
+            paddingLeft: "0px"
+        }
+    }
 }
 
-
-export default Profil
+export default Radium(Profil)

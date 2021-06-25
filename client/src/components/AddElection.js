@@ -172,7 +172,8 @@ const styles = {
     },
     rounded: {
         borderTop: "5px solid #0B6BA8",
-        margin: "50px"
+        margin: "50px",
+        borderRadius: "5px"
     },
     label: {
         float: "left",
