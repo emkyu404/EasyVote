@@ -15,6 +15,7 @@ import Login from './components/LoginUser'
 import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
 import Election from './components/Election'
+import Test from './components/Test'
 
 // URL de base, à changer lorsque l'url change
 const baseUrl = "http://localhost:3001"
@@ -216,6 +217,10 @@ function App() {
 
               <Route exact path="/election">
                 <Election></Election>
+              </Route>
+
+              <Route exact path="/test">
+                <Test />
               </Route>
             </Switch>
           </div>
