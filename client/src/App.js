@@ -16,6 +16,7 @@ import LoginAdmin from './components/LoginAdmin'
 import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
 import Election from './components/Election'
+import Test from './components/Test'
 
 // import AddCandidat from './components/AddCandidat'
 
@@ -233,6 +234,9 @@ function App() {
 
               <Route exact path="/addCandidat">
                 {/* <AddCandidat onAddCandidat={addCandidat} idElectionChoisi={ idElection } /> */}
+              </Route>
+              <Route exact path="/test">
+                <Test />
               </Route>
             </Switch>
           </div>
