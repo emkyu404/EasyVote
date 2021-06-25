@@ -27,7 +27,6 @@ const LoginUser = ({ onLogin }) => {
                 <label className="login-label" style={styles.loginLabelStyle}>Votre email : </label>
                 <input className="login-input" type="email" id="email" name="email" style={styles.loginInputStyle} required onBlur={handleEmailOnChange} />
                 
-
                 <label className="login-label" style={styles.loginLabelStyle}>Votre mot de passe : </label>
                 <input className="login-input" type="password" id="password" name="password" style={styles.loginInputStyle} required onBlur={handlePasswordOnChange} />
                 

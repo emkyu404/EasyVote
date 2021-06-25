@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const AddCandidat = (idElection) => {
+const AddCandidat = ({ onAddCandidat, idElectionChoisi }) => {
 
     const [titreCandidat, setCandidatTitle] = useState("")
     const [descriptionCandidat, setDescriptionCandidat] = useState("")
@@ -20,7 +20,7 @@ const AddCandidat = (idElection) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await onAddCandidat(titreCandidat, descriptionCandidat, urlCandidat, idElection)
+        await onAddCandidat(titreCandidat, descriptionCandidat, urlCandidat, idElectionChoisi)
     }
 
     return (
@@ -51,56 +51,11 @@ const styles = {
         paddingBottom: "15px",
         textAlign: "center"
     },
-    select: {
-        WebkitAppearance: "none",
-        MozAppearance: "none",
-        border: "1px solid #E5E5E5",
-        padding: "15px",
-        marginLeft: "15px",
-        backgroundColor : "#ffffff",
-        backgroundImage : "url("+arrow+")",
-        backgroundRepeat : "no-repeat",
-        backgroundPosition : "95%",
-        backgroundSize : "15px",
-        transition: "0.5s",
-        fontFamily: "Open Sans",
-        '@media (min-width: 640px)': { 
-            fontSize: "1rem"
-        },
-        '@media (min-width: 960px)': { 
-            fontSize: "1rem"
-        },
-        '@media (min-width: 1100px)': { 
-            fontSize: "1.5rem"
-        },
-        ':hover': {
-            border: "1px solid #0B6BA8",
-        },
-        ':focus': {
-            border: "1px solid #0B6BA8",
-        }
-    },
-    option: {
-        fontFamily: "Open Sans",
-        '@media (min-width: 640px)': { 
-            fontSize: "1rem"
-        },
-        '@media (min-width: 960px)': { 
-            fontSize: "1rem"
-        },
-        '@media (min-width: 1100px)': { 
-            fontSize: "1.5rem"
-        }
-    },
     divForm: {
         backgroundColor: "white",
         padding: "40px 40px 70px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
-    },
-    rounded: {
-        borderTop: "5px solid #0B6BA8",
-        margin: "50px"
     },
     label: {
         float: "left",

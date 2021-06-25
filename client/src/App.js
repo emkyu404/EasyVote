@@ -12,9 +12,12 @@ import Elections from './components/Elections'
 import Profil from './components/Profil'
 import Contact from './components/Contact'
 import Login from './components/LoginUser'
+import LoginAdmin from './components/LoginAdmin'
 import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
 import Election from './components/Election'
+
+// import AddCandidat from './components/AddCandidat'
 
 // URL de base, à changer lorsque l'url change
 const baseUrl = "http://localhost:3001"
@@ -28,11 +31,14 @@ function App() {
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
+  // const [idElection, setIdElection] = useState(0)
+
   /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
   const [connected, setConnected] = useState(false)
 
   useEffect(() => {
     token();
+    // setIdElection(1)
   },[])
 
   useEffect(() => {
@@ -87,15 +93,21 @@ function App() {
   };
 
 
-  const loginAdmin = (email, password) => {
-    Axios.post(baseUrl+"/loginAdmin", { email: email, password: password }).then((response) => {
-      if (response.data.message) {
-
-      } 
-      else {
-        setCurrentUser(response.data);
-      }
-    });
+  const loginAdmin = async (email, password) => {
+    const response = await Axios.post(baseUrl+"/loginAdmin", { email: email, password: password })
+    if (response.data.message) {
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+     })
+    } 
+    else {
+      setCurrentUser(response.data)
+      addToast("Bonjour " + currentUser.idAdmin, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
+    }
   };
 
   const disconnect = () => {
@@ -212,9 +224,15 @@ function App() {
               <Route exact path="/login">
                 {connected ? <Home/> : <Login onLogin={login} />}
               </Route>
-
+              <Route exact path="/loginAdmin">
+                {connected ? <Home/> : <LoginAdmin onLogin={loginAdmin} />}
+              </Route>
               <Route exact path="/election">
                 <Election></Election>
+              </Route>
+
+              <Route exact path="/addCandidat">
+                {/* <AddCandidat onAddCandidat={addCandidat} idElectionChoisi={ idElection } /> */}
               </Route>
             </Switch>
           </div>

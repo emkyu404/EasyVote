@@ -119,7 +119,7 @@ app.post("/loginAdmin", (req, res) => {
         res.json({message : "Impossible de se connecter"})
       }
       else{
-        if(result.length ==1){
+        if(result.length == 1){
           req.session.user = {
             idAdmin : result[0].idAdmin,
             emailAdmin :result[0].emailAdmin,
@@ -396,8 +396,8 @@ app.post('/addCandidat', (req, res) => {
   const titreCandidat = req.body.titreCandidat
   const descriptionCandidat = req.body.descriptionCandidat
   const urlImage = req.body.urlImage
-  // const idElection = req.body.idElection
-  const idElection = req.session.currentUser.idAdmin
+  const idElection = req.body.idElection
+  // const idElection = req.session.currentUser.idAdmin
 
   db.query(
     "SELECT idCandidat FROM candidat WHERE titreCandidat=? AND idElection=?",
