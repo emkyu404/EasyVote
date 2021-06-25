@@ -88,10 +88,13 @@ const styles = {
     },
     divForm: {
         backgroundColor: "white",
-        padding: "20px 40px 70px 40px",
+        padding: "20px 40px 75px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
-        width: "100%"
+        width: "100%",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 60px 20px"
+        }
     },
     label: {
         float: "left",
@@ -99,8 +102,9 @@ const styles = {
         lineHeight: "50px",
         textAlign: "center",
         verticalAlign: "middle",
-        '@media (max-width: 400px)': { 
-            float: "none"
+        '@media (max-width: 640px)': { 
+            float: "none",
+            lineHeight: "30px",
         }
     },
     input: {
@@ -110,21 +114,24 @@ const styles = {
         height: "50px",
         marginBottom: "10px"
     },
-    Submit: {
+    submit: {
         backgroundColor: "#0B6BA8",
         border: "none",
         color: "white",
         padding: "15px",
         textDecoration: "none",
         cursor: "pointer",
-        minWidth: "200px",
-        float: "right"
+        width: "200px",
+        float: "right",
+        '@media (max-width: 640px)': { 
+            width: "100%"
+        }
     },
     span: {
         display: "block",
         overflow: "hidden",
         paddingLeft: "15px",
-        '@media (max-width: 400px)': { 
+        '@media (max-width: 640px)': { 
             paddingLeft: "0px"
         }
     },
@@ -135,16 +142,6 @@ const styles = {
         width: "100%",
         height: "200px",
         marginBottom: "10px"
-    },
-    submit: {
-        backgroundColor: "#0B6BA8",
-        border: "none",
-        color: "white",
-        padding: "15px",
-        textDecoration: "none",
-        cursor: "pointer",
-        minWidth: "200px",
-        float: "right"
     }
 }
 

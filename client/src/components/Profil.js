@@ -16,9 +16,10 @@ const Profil = ({getProfile, currentUser}) => {
     return (
         <div>
             <h1 style={styles.mainTitle}>Profil</h1>
-            <div className='profil-form' style={styles.divForm}>
+            <div className='profil-form' style={styles.divProfil}>
                 <h2 style={styles.secondTitle}>Mes informations</h2>
                 <table style={styles.table}>
+                <tbody>
                     <tr>
                         <th style={styles.th}>Nom</th>
                         <td style={styles.td}>{currentUser.nomCitoyen}</td>
@@ -55,6 +56,7 @@ const Profil = ({getProfile, currentUser}) => {
                         <th style={styles.th}>Région</th>
                         <td style={styles.td}>{currentUser.nomRegion}</td>
                     </tr>
+                </tbody>
                 </table>
                 <div style={styles.divContact}>
                     <h2 style={styles.thirdTitle}>Des informations sont incorrectes ?</h2>
@@ -89,7 +91,9 @@ const styles = {
         border: "1px solid #eee",
         borderCollapse: "collapse",
         width: "auto",
-        marginBottom: "40px"
+        marginBottom: "25px",
+        display: "block",
+        overflow: "auto"
     },
     th: {
         border: "1px solid #eee",
@@ -111,19 +115,36 @@ const styles = {
         padding: "15px",
         textDecoration: "none",
         cursor: "pointer",
-        minWidth: "200px",
-        verticalAlign: "middle"
+        width: "200px",
+        verticalAlign: "middle",
+        marginTop: "15px",
+        '@media (max-width: 640px)': { 
+            width: "100%"
+        }
     },
     rounded: {
         borderTop: "5px solid #0B6BA8",
         margin: "50px",
-        borderRadius: "5px"
+        borderRadius: "5px",
+        '@media (max-width: 640px)': { 
+            margin: "30px 50px 30px 50px"
+        }
+    },
+    divProfil: {
+        backgroundColor: "white",
+        padding: "20px 40px 30px 40px",
+        boxShadow: "0 0 10px #999",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 20px 20px"
+        }
     },
     divForm: {
         backgroundColor: "white",
-        padding: "40px 40px 70px 40px",
+        padding: "20px 40px 75px 40px",
         boxShadow: "0 0 10px #999",
-        margin: "20px 0px 20px 0px"
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 65px 20px"
+        }
     },
     mainTitle: {
         color: "#0B6BA8",
@@ -139,7 +160,8 @@ const styles = {
     thirdTitle: {
         display: "inline-block",
         marginRight: "20px",
-        verticalAlign: "middle"
+        verticalAlign: "middle",
+        marginTop: "15px"
     },
     divContact: {
         textAlign: "center"
@@ -150,8 +172,9 @@ const styles = {
         lineHeight: "50px",
         textAlign: "center",
         verticalAlign: "middle",
-        '@media (max-width: 400px)': { 
-            float: "none"
+        '@media (max-width: 920px)': { 
+            float: "none",
+            lineHeight: "30px"
         }
     },
     input: {
@@ -168,14 +191,17 @@ const styles = {
         padding: "15px",
         textDecoration: "none",
         cursor: "pointer",
-        minWidth: "200px",
-        float: "right"
+        width: "200px",
+        float: "right",
+        '@media (max-width: 640px)': { 
+            width: "100%"
+        }
     },
     span: {
         display: "block",
         overflow: "hidden",
         paddingLeft: "15px",
-        '@media (max-width: 400px)': { 
+        '@media (max-width: 920px)': { 
             paddingLeft: "0px"
         }
     }
