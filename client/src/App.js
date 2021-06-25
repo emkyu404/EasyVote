@@ -25,7 +25,7 @@ function App() {
 
   const {addToast} = useToasts()
   const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: ""})
-  const [elections, setElections] = useState({})
+  const [elections, setElections] = useState([])
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
 
@@ -202,8 +202,7 @@ function App() {
                 <Home />
               </Route>
               <Route exact path="/elections">
-              <Elections onAddElection={addElection}/>
-                {connected ? <Elections onAddElection={addElection} getElections={getElections}/> : <NotConnected />}
+                {connected ? <Elections onAddElection={addElection} getElections={getElections} elections={elections}/> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
                 {connected ? <Profil getProfile={profile} currentUser={currentUser} /> : <NotConnected />}

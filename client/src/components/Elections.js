@@ -3,10 +3,10 @@ import ElectionCard from "./ElectionCard";
 import React, { useEffect } from "react";
 import Radium from 'radium';
 
-const Elections = ({ onAddElection, getElections }) => {
+const Elections = ({ onAddElection, getElections, elections }) => {
     useEffect(() => {
         getElections();
-  }, [])
+    }, [])
 
     return (
         <div>
@@ -16,7 +16,9 @@ const Elections = ({ onAddElection, getElections }) => {
                 <button style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})}>A venir</button>
                 <button style={Object.assign({},styles.btnFiltre, styles.red)}>Terminées</button>
             <div style={styles.divElections}>
-                <ElectionCard/>
+                {elections.map((electionCard) => (
+                    <ElectionCard key={electionCard.id} electionCard={electionCard}/>
+                ))}
             </div>
         </div>
     )

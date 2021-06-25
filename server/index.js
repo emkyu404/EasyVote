@@ -199,7 +199,7 @@ app.post('/getElections', (req, res) => {
         res.json({message : "Impossible de récupérer les élections"})
       } 
       else if(result.length != 0){
-        console.log(result)
+        res.json(result)
       }
       else {
         res.json({message : "Vous ne pouvez accèder à aucune élection"})
@@ -238,8 +238,8 @@ app.post('/addElection', (req, res) => {
       else{
         if(resultIdElection.length == 0) {
           db.query(
-            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection, idAdmin) VALUES (NULL,?,?,?,?,?)",
-            [titreElection, dateDebut, dateFin, descriptionElection, idAdmin],
+            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection) VALUES (NULL,?,?,?,?)",
+            [titreElection, dateDebut, dateFin, descriptionElection],
             (err) => {
               if (err){
                 console.log(err);

@@ -168,7 +168,7 @@ const styles = {
         backgroundColor: "white",
         padding: "40px 40px 70px 40px",
         boxShadow: "0 0 10px #999",
-        margin: "20px 0px 20px 0px",
+        margin: "20px 0px 20px 0px"
     },
     rounded: {
         borderTop: "5px solid #0B6BA8",

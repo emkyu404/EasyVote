@@ -1,12 +1,14 @@
 import React from 'react';
 import Radium from 'radium';
 
-const ElectionCard = () => {
+const ElectionCard = ({electionCard}) => {
     return (
         <div>
             <div style={styles.divElection}>
-                <h2>Nike dro ?</h2>
-                <p style={styles.text}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris maximus egestas nisi at pretium. Nullam vel urna a tortor egestas egestas. Sed luctus vestibulum risus ut condimentum. Morbi libero ipsum, volutpat et volutpat at, sollicitudin porttitor lectus. Praesent eu massa quis lacus fermentum sollicitudin sed vel massa. Etiam finibus libero volutpat sollicitudin sodales. Integer a dui sed odio gravida auctor. Integer sed lobortis felis.</p>
+                <h2>{electionCard.idElection}</h2>
+                <p style={styles.text}>{electionCard.titreElection}</p>
+                Date début : {electionCard.dateDebutElection} Date fin : {electionCard.dateFinElection}<br></br><br></br>
+                {electionCard.descriptionElection}
                 <button style={Object.assign({},styles.btn, styles.blue)}>Répondre à l'élection</button>
             </div>
         </div>

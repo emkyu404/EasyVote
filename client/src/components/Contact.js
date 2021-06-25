@@ -1,7 +1,8 @@
 import emailjs from "emailjs-com";
 import React from 'react';
+import Radium from 'radium';
 
-export default function ContactUs() {
+const Contact = ({ Contact }) => {
 
     function sendEmail(e) {
         e.preventDefault();
@@ -16,74 +17,133 @@ export default function ContactUs() {
     }
 
     return (
-
-        <div className='contact-form'>
-            <form onSubmit={sendEmail} className='contactForm' style={styles.contactForm}>
-                <h2 style={styles.h2}>Contactez-nous</h2>
-                <div className="form-content">
-                    <div>
-                        <input type="text" placeholder="Nom" name="lastName" required />
+        <div style={styles.fullWidth}>
+            <h1 style={styles.mainTitle}>Contactez-nous</h1>
+            <form onSubmit={sendEmail} className='contactForm'>
+                <div style={styles.divForm}>
+                <div>
+                    <div style={styles.alignleft}>
+                        <label style={styles.label}>Nom : </label>
+                        <span style={styles.span}><input type="text" name="lastName" required style={styles.input}/></span>
                     </div>
-                    <div>
-                        <input type="text" placeholder="Prénom" name="name" required />
-                    </div>
-                    <div>
-                        <input type="email" placeholder="Email" name="email" required />
-                    </div>
-                    <div>
-                        <input type="text" placeholder="Numéro de téléphone" name="phone" required />
-                    </div>
-                    <div>
-                        <input type="text" placeholder="Sujet" name="subject" required />
-                    </div>
-                    <div>
-                        <textarea id="" cols="30" rows="8" placeholder="Message" name="message"></textarea>
-                    </div>
-                    <div>
-                        <input type="submit" className="button" style={styles.button} value="Envoyer"></input>
+                    <div style={styles.alignright}>
+                        <label style={styles.label}>Prénom : </label>
+                        <span style={styles.span}><input type="text" name="name" required style={styles.input}/></span>
                     </div>
                 </div>
-            </form>
+                <label style={styles.label}>Email : </label>
+                <span style={styles.span}><input type="email" name="email" required style={styles.input}/></span>
+
+                <label style={styles.label}>Numéro de téléphone : </label>
+                <span style={styles.span}><input type="text" name="phone" required style={styles.input}/></span>
+
+                <label style={styles.label}>Sujet: </label>
+                <span style={styles.span}><input type="text" name="subject" required style={styles.input}/></span>
+
+                <label style={styles.label}>Message : </label>
+                <textarea name="message" style={styles.textArea}></textarea>
+
+                <input type="submit" className="button" style={styles.Submit} value="Envoyer"></input>
+                </div>
+        </form>
         </div>
     )
 }
 
 const styles = {
-    button: {
-        marginLeft: "33%",
-        marginTop: "20px",
-        width: "33%",
-        backgroundColor: "#0B6BA8",
+    fullWidth: {
+        width: "100%"
+    },
+    alignleft: {
+        width: "47.5%",
+        float: "left",
+        marginRight: "2.5%",
+        '@media (max-width: 960px)': { 
+            float: "none",
+            width: "100%",
+            marginRight: "0%",
+        }
+    },
+    alignright: {
+        width: "47.5%",
+        float: "right",
+        marginLeft: "2.5%",
+        '@media (max-width: 960px)': { 
+            float: "none",
+            width: "100%",
+            marginLeft: "0%",
+        }
+    },
+    mainTitle: {
+        color: "#0B6BA8",
+        height: "fit-content",
+        width: "100%",
+        paddingBottom: "15px",
+        textAlign: "center"
+    },
+    divForm: {
+        backgroundColor: "white",
+        padding: "40px 40px 70px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
+        width: "100%"
+    },
+    label: {
+        float: "left",
+        height: "50px",
+        lineHeight: "50px",
+        textAlign: "center",
+        verticalAlign: "middle",
+        '@media (max-width: 400px)': { 
+            float: "none"
+        }
+    },
+    input: {
+        border: "1px solid #E5E5E5",
         padding: "15px",
+        width: "100%",
+        height: "50px",
+        marginBottom: "10px"
+    },
+    Submit: {
+        backgroundColor: "#0B6BA8",
         border: "none",
         color: "white",
+        padding: "15px",
+        textDecoration: "none",
         cursor: "pointer",
+        minWidth: "200px",
+        float: "right"
     },
-
-    contactForm: {
-        margin: "10rem auto 0",
-        marginTop: "-2px",
-        marginBottom: "15%",
-        fontFamily: "Verdana, Geneva, Tahoma, sans-serif",
-        border: "1px solid #0B6BA8",
-        background: "white",
-        padding: "30px 30px 10px",
-        boxShadow: "0px 4px 10px rgba(51, 51, 51, 0.637)",
-        borderWidth: "0.25em",
+    span: {
+        display: "block",
+        overflow: "hidden",
+        paddingLeft: "15px",
+        '@media (max-width: 400px)': { 
+            paddingLeft: "0px"
+        }
     },
-
-    blockAlignFirstChild: {
-        alignSelf: "center",
+    textArea: {
+        resize: "none",
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        width: "100%",
+        height: "200px",
+        marginBottom: "10px"
     },
-
-    h2: {
-        marginTop: "25px",
-        textAlign: "center",
-    },
-
-    formContent: {
-        display: "grid",
+    Submit: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        minWidth: "200px",
+        float: "right",
+        '@media (max-width: 400px)': {
+            width: "100%"
+        }
     }
-
-
 }
+
+export default Radium(Contact)
