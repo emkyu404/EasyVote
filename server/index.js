@@ -238,8 +238,8 @@ app.post('/addElection', (req, res) => {
       else{
         if(resultIdElection.length == 0) {
           db.query(
-            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection, idAdmin) VALUES (NULL,?,?,?,?,?)",
-            [titreElection, dateDebut, dateFin, descriptionElection, idAdmin],
+            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection) VALUES (NULL,?,?,?,?)",
+            [titreElection, dateDebut, dateFin, descriptionElection],
             (err) => {
               if (err){
                 console.log(err);
