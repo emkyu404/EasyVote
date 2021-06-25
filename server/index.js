@@ -213,11 +213,8 @@ app.post('/addElection', (req, res) => {
   const dateDebut = req.body.dateDebut
   const dateFin = req.body.dateFin
   const descriptionElection = req.body.descriptionElection
-  // const idAdmin = req.session.currentUser.idAdmin
-  const idAdmin = 1 // __________________________________A CHANGER_______________________
 
   const type = req.body.electionType
-
 
   // if (typeof titreElection !== 'string' || titreElection === '' ||
   //     // typeof dateDebut !== 'date' || dateDebut === '' ||
@@ -261,7 +258,7 @@ app.post('/addElection', (req, res) => {
                     res.status(401).json({ message: 'Le type d\'élection n\'existe pas' })
                     break;
                 }  
-                res.status(200).json({ titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, idAdmin: idAdmin })
+                res.status(200).json({ titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection })
               }
             }
           )
