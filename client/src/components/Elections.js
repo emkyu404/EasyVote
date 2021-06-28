@@ -2,14 +2,22 @@ import AddElection from "./AddElection";
 import ElectionCard from "./ElectionCard";
 import React, { useEffect } from "react";
 import Radium from 'radium';
+import { useHistory } from 'react-router-dom';
 
 const Elections = ({ onAddElection, getElections, elections }) => {
     useEffect(() => {
         getElections();
     }, [])
 
+    const history = useHistory();
+
+    const election = () => {
+        history.push("./Election");
+    }
+
     return (
         <div>
+            <button onClick={election}>OUI</button>
             <AddElection onAddElection={onAddElection} />
             <h1 style={styles.mainTitle}>Listes des élections</h1>
                 <button style={Object.assign({},styles.btnFiltre, styles.blue)}>En cours</button>
