@@ -274,19 +274,18 @@ CREATE TABLE IF NOT EXISTS `election` (
   `dateDebutElection` datetime NOT NULL,
   `dateFinElection` datetime NOT NULL,
   `descriptionElection` varchar(200) NOT NULL,
-  `idAdmin` int(11) NOT NULL,
-  PRIMARY KEY (`idElection`, `titreElection`, `dateDebutElection`, `dateFinElection`),
-  -- FOREIGN KEY (`idAdmin`) REFERENCES `admin`(`idAdmin`)
+  PRIMARY KEY (`idElection`, `titreElection`, `dateDebutElection`, `dateFinElection`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `election`
 --
 
-INSERT INTO `election` (`idElection`, `titreElection`, `dateDebutElection`, `dateFinElection`, `descriptionElection`, `idAdmin`) VALUES
+INSERT INTO `election` (`idElection`, `titreElection`, `dateDebutElection`, `dateFinElection`, `descriptionElection`) VALUES
 (1, 'Election présidentiel 2022 - 1er tour', '2022-04-10 00:00:00', '2022-04-23 00:00:00', '1er tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
 (2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:00:00', '2022-05-07 00:00:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
-(3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-06-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.');
+(3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-06-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.'),
+(4, 'Election test', '2021-06-20 00:00:00', '2021-06-27 20:00:00', 'Election Test');
 -- (1, 'Election présidentiel 2022 - 1er tour', '2022-04-10 00:00:00', '2022-04-23 00:00:00', '1er tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.', 1),
 -- (2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:00:00', '2022-05-07 00:00:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.', 1),
 -- (3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-06-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.', 1);
@@ -307,6 +306,14 @@ CREATE TABLE IF NOT EXISTS `candidat` (
   PRIMARY KEY (`idCandidat`),
   FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `candidat`
+--
+
+INSERT INTO `candidat` (`idCandidat`, `titreCandidat`, `descriptionCandidat`, `urlImage`, `idElection`) VALUES
+(1, 'Candidat test 1', 'Candidat test 1', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Emmanuel_Macron_%28cropped%29.jpg', 4),
+(2, 'Candidat test 2', 'Candidat test 2', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg%2C_2016_%28cropped%29.jpg', 4);
 
 -- --------------------------------------------------------
 
@@ -376,6 +383,14 @@ CREATE TABLE IF NOT EXISTS `participer` (
   FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `participer`
+--
+
+INSERT INTO `participer` (`idElecteur`, `idElection`) VALUES
+(1, 4),
+(2, 4);
+
 -- --------------------------------------------------------
 
 --
@@ -384,9 +399,11 @@ CREATE TABLE IF NOT EXISTS `participer` (
 
 DROP TABLE IF EXISTS `voter`;
 CREATE TABLE IF NOT EXISTS `voter` (
+  `idVote` int(11) NOT NULL AUTO_INCREMENT,
   `idElection` int(11) NOT NULL,
   `idCandidat` int(11) NOT NULL,
-  PRIMARY KEY (`idElection`,`idCandidat`),
+  PRIMARY KEY (`idVote`,`idElection`,`idCandidat`),
+  FOREIGN KEY (`idElection`) REFERENCES `candidat`(`idElection`),
   FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 COMMIT;
