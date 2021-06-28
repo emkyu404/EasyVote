@@ -3,14 +3,13 @@ import ElectionCard from "./ElectionCard";
 import React, { useEffect } from "react";
 import Radium from 'radium';
 
-const Elections = ({ onAddElection, getElections, elections }) => {
+const Elections = ({ getElections, elections }) => {
     useEffect(() => {
         getElections();
     }, [])
 
     return (
         <div>
-            <AddElection onAddElection={onAddElection} />
             <h1 style={styles.mainTitle}>Listes des élections</h1>
                 <button style={Object.assign({},styles.btnFiltre, styles.blue)}>En cours</button>
                 <button style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})}>A venir</button>

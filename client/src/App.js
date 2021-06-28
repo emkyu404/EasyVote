@@ -17,6 +17,7 @@ import Footer from './components/Footer'
 import NotConnected from './components/NotConnected'
 import Election from './components/Election'
 import Test from './components/Test'
+import AddElection from "./components/AddElection";
 
 // import AddCandidat from './components/AddCandidat'
 
@@ -31,8 +32,8 @@ function App() {
   const [elections, setElections] = useState([])
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
+  const [idElection, setIdElection] = useState(0)
 
-  // const [idElection, setIdElection] = useState(0)
 
   /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
   const [connected, setConnected] = useState(false)
@@ -142,18 +143,30 @@ function App() {
         setCurrentUser(response.data);
       } 
     });
-  }            
-
-  const addElection = (titreElection, dateDebut, dateFin, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
-    Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
+  }   
+  
+  const getIdElection = (titreElection, dateDebutElection, dateFinElection) => {
+    Axios.post(baseUrl+"/getIdElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection }).then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
       } 
       else {
-        console.log(response.data);
+        console.log(response.data[0].idElection);
+        setIdElection(response.data[0].idElection)
       }
     });
   }
+
+  const addElection = (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal, titreCandidat, descriptionCandidat, urlImage, idElection) => {
+      Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
+        if (response.data.message){
+          console.log(response.data.message);
+        } 
+        else {
+          console.log(response.data);
+        }
+      })
+    }
 
   const addCandidat = (titreCandidat, descriptionCandidat, urlImage, idElection) => {
     Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection }).then((response)=>{
@@ -192,6 +205,7 @@ function App() {
               {/* Si le state showMenu vrai, affiche le menu */}
               <div className="menu-container ">
                 <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item">Accueil</div></Link>
+                <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item">Ajouter une élection</div></Link>
                 <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item">Elections</div></Link>
                 <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item">Profil</div></Link>
                 <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item">Contact</div></Link>
@@ -213,8 +227,11 @@ function App() {
               <Route exact path="/">
                 <Home />
               </Route>
+              <Route exact path="/addElection">
+                {connected ? <AddElection idElection={idElection} getIdElection={getIdElection} onAddCandidat={addCandidat} onAddElection={addElection} /> : <NotConnected />}
+              </Route>
               <Route exact path="/elections">
-                {connected ? <Elections onAddElection={addElection} getElections={getElections} elections={elections}/> : <NotConnected />}
+                {connected ? <Elections getElections={getElections} elections={elections}/> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
                 {connected ? <Profil getProfile={profile} currentUser={currentUser} /> : <NotConnected />}

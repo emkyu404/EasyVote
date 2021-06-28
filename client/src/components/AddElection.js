@@ -2,17 +2,24 @@ import { useState } from 'react';
 import arrow from '../img/down-arrow.svg';
 import Radium from 'radium';
 
-const AddElection = ({ onAddElection }) => {
+const AddElection = ({ idElection, getIdElection, onAddCandidat, onAddElection }) => {
 
     const [titreElection, setElectionTitle] = useState("")
-    const [dateDebut, setDateDebut] = useState("")
-    const [dateFin, setDateFin] = useState("")
+    const [dateDebutElection, setDateDebutElection] = useState("")
+    const [dateFinElection, setDateFinElection] = useState("")
     const [descriptionElection, setDescriptionElection] = useState("")
     const [electionType, setElectionType] = useState("")
 
     const [nomRegion, setNomRegion] = useState("")
     const [codeDepartement, setCodeDepartement] = useState("")
     const [codePostal, setCodePostal] = useState("")
+
+    const [titreCandidat, setCandidatTitle] = useState("")
+    const [descriptionCandidat, setDescriptionCandidat] = useState("")
+    const [urlCandidat, setUrlCandidat] = useState("")
+
+    const [showAddCandidat, setShowAddCandidat] = useState(false)
+    const [listeCandidats, setListeCandidats] = useState([])
 
     const handleChange = (e) => {
         if(electionType !== undefined) {
@@ -37,20 +44,82 @@ const AddElection = ({ onAddElection }) => {
         setElectionTitle(e.target.value)
     }
     const handleDateDebutOnChange = (e) => {
-        setDateDebut(e.target.value)
-        console.log(dateDebut)
+        setDateDebutElection(e.target.value)
     }
     const handleDateFinOnChange = (e) => {
-        setDateFin(e.target.value)
-        console.log(dateFin)
+        setDateFinElection(e.target.value)
     }
     const handleDescriptionOnChange = (e) => {
         setDescriptionElection(e.target.value)
     }
 
+    const handleTitreCandidatOnChange = (e) => {
+        setCandidatTitle(e.target.value)
+    }
+
+    const handleUrlOnChange = (e) => {
+        setUrlCandidat(e.target.value)
+    }
+
+    const handleDescriptionCandidatOnChange = (e) => {
+        setDescriptionCandidat(e.target.value)
+    }
+
+    const handleOnClickShow = (e) => {
+        e.preventDefault()
+        setShowAddCandidat(!showAddCandidat)
+    }
+
+    function containsObject(obj, list) {
+        var x;
+        for (x in list) {
+            if (list.hasOwnProperty(x) && list[x] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const handleOnAddCandidat = (e) => {
+        e.preventDefault()
+
+        const newCandidat = {
+            titreCandidat: titreCandidat,
+            descriptionCandidat: descriptionCandidat,
+            urlCandidat: urlCandidat
+        }
+
+        if(listeCandidats.indexOf(newCandidat) === -1) {
+            setListeCandidats([...listeCandidats].concat(newCandidat))
+        }
+        setCandidatTitle("")
+        setDescriptionCandidat("")
+        setUrlCandidat("")
+        setShowAddCandidat(false)
+        
+    }
+
+    const addCandidat = async (e, titreCandidat, descriptionCandidat, urlCandidat, idElection) => {
+        e.preventDefault()
+        await onAddCandidat(titreCandidat, descriptionCandidat, urlCandidat, idElection)
+    }
+
+    // A REGLER (NE RECUPERE PAS L ID ELECTION IMMEDIATEMENT, DOIT VALIDER 2 FOIS LE FORM)
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await onAddElection(titreElection, dateDebut, dateFin, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
+        if(listeCandidats.length >= 2) {
+            await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal, titreElection, dateDebutElection, dateFinElection);
+            await getIdElection(titreElection, dateDebutElection, dateFinElection);
+
+            listeCandidats.forEach(
+                candidat => addCandidat(e, candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat, idElection)
+            )
+            
+            alert("Ajout")
+        }
+        else {
+            alert('Ajouter au moins 2 candidats')
+        }
     }
 
     return (
@@ -105,9 +174,39 @@ const AddElection = ({ onAddElection }) => {
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
                 
+                        {/* Ajouter un candidat */}
+                        {!showAddCandidat &&
+                            <input type="button" className="add-candidat-button" style={styles.button} onClick={handleOnClickShow} value="Ajouter un candidat" />
+                        }
+
+                        {showAddCandidat &&
+                            <input type="button" className="add-candidat-button" style={styles.button} onClick={handleOnClickShow} value="Annuler" />
+                        }
+
+                        {showAddCandidat && 
+                            <div>
+                                <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
+
+                                <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
+                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onBlur={handleTitreCandidatOnChange} required /></span>    
+
+                                <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
+                                <textarea type="text" className="add-candidat-input" style={styles.textArea} onBlur={handleDescriptionCandidatOnChange} required></textarea>
+
+                                <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
+                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onBlur={handleUrlOnChange} required /></span>           
+
+                                {(titreCandidat !== "" && descriptionCandidat !== "" && urlCandidat !== "") &&
+                                    <input type="button" className="add-candidat-button" style={styles.button} onClick={handleOnAddCandidat} value="Ajouter un candidat" />
+                                }
+                            </div>
+                        }
+                        {/* Fin ajouter un candidat */}
+
+                        {listeCandidats.map((candidat) => <div> {candidat.titreCandidat} </div> )}
+
                         <input type="submit" className="add-election-submit" style={styles.submit} value="Ajouter" />
                     </div>
-                    
                 }
             </form>
             <hr style={styles.rounded}></hr>
@@ -202,6 +301,16 @@ const styles = {
         minWidth: "200px",
         float: "right"
     },
+    button: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        minWidth: "200px",
+        float: "right"
+    },
     span: {
         display: "block",
         overflow: "hidden",
@@ -217,6 +326,9 @@ const styles = {
         width: "100%",
         height: "200px",
         marginBottom: "10px"
+    },
+    inputIdElection: {
+        display: "none"
     }
 }
 
