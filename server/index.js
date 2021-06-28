@@ -208,6 +208,23 @@ app.post('/getElections', (req, res) => {
   }
 });
 
+app.post('/getIdElection', titreElection, dateDebut, dateFin, (req, res) => {
+  db.query(
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebut=? AND dateFin=?",
+    [titreElection, dateDebut, dateFin],
+    (err, resultIdElection) => {
+      if (err){
+        console.log(err);
+      }
+      else{
+        if(resultIdElection.length == 1) {
+          res.status(200).json({ idElection: idElection })
+        }
+      }
+    }
+  )
+})
+
 app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection
   const dateDebut = req.body.dateDebut
@@ -226,8 +243,8 @@ app.post('/addElection', (req, res) => {
   // }
 
   db.query(
-    "SELECT idElection FROM election WHERE titreElection=?",
-    [titreElection],
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebut=? AND dateFin=?",
+    [titreElection, dateDebut, dateFin],
     (err, resultIdElection) => {
       if (err){
         console.log(err);
