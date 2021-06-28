@@ -217,7 +217,7 @@ app.post('/getIdElection', titreElection, dateDebut, dateFin, (req, res) => {
         console.log(err);
       }
       else{
-        if(resultIdElection.length == 1) {
+        if(resultIdElection.length === 1) {
           res.status(200).json({ idElection: idElection })
         }
       }
@@ -250,7 +250,7 @@ app.post('/addElection', (req, res) => {
         console.log(err);
       }
       else{
-        if(resultIdElection.length == 0) {
+        if(resultIdElection.length === 0) {
           db.query(
             "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection) VALUES (NULL,?,?,?,?)",
             [titreElection, dateDebut, dateFin, descriptionElection],
@@ -421,7 +421,7 @@ app.post('/addCandidat', (req, res) => {
         console.log(err);
       }
       else {
-        if(resultIdCandidat.length == 0) {
+        if(resultIdCandidat.length === 0) {
           db.query(
             "INSERT INTO `candidat`(`idCandidat`, `titreCandidat`, `descriptionCandidat`, `urlImage`, `idElection`) VALUES (NULL,?,?,?,?)",
             [titreCandidat, descriptionCandidat, urlImage, idElection],
