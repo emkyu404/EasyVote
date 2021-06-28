@@ -275,7 +275,7 @@ CREATE TABLE IF NOT EXISTS `election` (
   `dateFinElection` datetime NOT NULL,
   `descriptionElection` varchar(200) NOT NULL,
   `idAdmin` int(11) NOT NULL,
-  PRIMARY KEY (`idElection`),
+  PRIMARY KEY (`idElection`, `titreElection`, `dateDebutElection`, `dateFinElection`),
   -- FOREIGN KEY (`idAdmin`) REFERENCES `admin`(`idAdmin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
