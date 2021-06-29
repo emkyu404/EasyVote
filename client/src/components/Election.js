@@ -7,14 +7,6 @@ import Chart from "react-google-charts";
 const Election = () => {
     return (
         <div>
-            {/* <PieChart
-                data={[
-                    { title: 'One', value: 10, color: '#E38627' },
-                    { title: 'Two', value: 15, color: '#C13C37' },
-                    { title: 'Three', value: 20, color: '#6A2135' },
-                ]}
-            /> */}
-
             <h1 style={styles.mainTitle}>Résultat du vote</h1>
             <div style={styles.electionDiv}>
                 <h2 style={styles.secondTitle}>Nike dro ?</h2>
@@ -36,15 +28,9 @@ const Election = () => {
                                 height: '80%',
                                 width: '100%',
                             },
-<<<<<<< Updated upstream
-                            legend: {
-                                position: 'top',
-                                alignment: 'center'
-=======
                             legend: { 
                                 position: 'bottom', 
                                 alignment: 'center' 
->>>>>>> Stashed changes
                             }
                         }}
                     />
