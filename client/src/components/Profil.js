@@ -1,18 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import '../css/App.css';
 import Radium from 'radium';
+
+import DialogComponent from './DialogComponent'
 
 const Profil = ({getProfile, currentUser}) => {
     useEffect(() => {
         getProfile();
     }, [])
 
+    const [triggerDialog, setTriggerDialog] = useState(false)
+    const [numberOfCalls, setNumberOfCalls] = useState(0)
+
+
     const history = useHistory();
 
     const contact = () => {
         history.push("./Contact");
     }
+    
+    const handlePasswordChange = (e) => {
+        e.preventDefault()
+        setNumberOfCalls(numberOfCalls+1)
+    }
+
     return (
         <div>
             <h1 style={styles.mainTitle}>Profil</h1>
@@ -66,22 +78,32 @@ const Profil = ({getProfile, currentUser}) => {
 
             <hr style={styles.rounded}></hr>
 
-            <form onSubmit={null} className='passwordForm'>
+            <form onSubmit={handlePasswordChange} className='passwordForm'>
                 <div style={styles.divForm}>
                 <h2 style={styles.secondTitle}>Changer de mot de passe</h2>
 
                 <label style={styles.label}>Ancien mot de passe : </label>
-                <span style={styles.span}><input type="text" name="old-pass" required style={styles.input}/></span>
+                <span style={styles.span}><input type="password" name="old-pass" required style={styles.input}/></span>
 
                 <label style={styles.label}>Nouveau mot de passe : </label>
-                <span style={styles.span}><input type="text" name="new-pass" required style={styles.input}/></span>
+                <span style={styles.span}><input type="password" name="new-pass" required style={styles.input}/></span>
 
                 <label style={styles.label}>Confirmation nouveau mot de passe : </label>
-                <span style={styles.span}><input type="text" name="confirm-pass" required style={styles.input}/></span>
+                <span style={styles.span}><input type="password" name="confirm-pass" required style={styles.input}/></span>
 
                 <input type="submit" className="button" style={styles.submit} value="Envoyer"></input>
                 </div>
             </form>
+
+            <DialogComponent 
+                dialogText={"Êtes-vous sûr de vouloir changer votre mot de passe ?"}
+                dialogTitle={"Changement de mot de passe ?"}
+                openOnRender={false}
+                handleClickYes = {() => {alert("password change function called")}}
+                handleClickNo = {() => {alert("cancel")}}
+                yesNo={true}
+                numberOfCall    ={numberOfCalls}
+            />
         </div>
     )
 }

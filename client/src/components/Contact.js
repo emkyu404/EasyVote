@@ -1,19 +1,28 @@
 import emailjs from "emailjs-com";
 import React from 'react';
 import Radium from 'radium';
+import { useToasts } from 'react-toast-notifications'
 
 const Contact = ({ Contact }) => {
+    const {addToast} = useToasts()
 
     function sendEmail(e) {
         e.preventDefault();
 
         emailjs.sendForm('service_btyu4pb', 'template_nd7o35g', e.target, 'user_i6c320cLnwcR81VHCJfhi')
             .then((result) => {
-                console.log(result.text);
+                addToast("Message envoyé avec succès !", {
+                    appearance: 'success',
+                    autoDismiss: true,
+                })
             }, (error) => {
-                console.log(error.text);
+                addToast("Erreur : " + error.text, {
+                    appearance: 'error',
+                    autoDismiss: true,
+                })
             });
         e.target.reset()
+        
     }
 
     return (
