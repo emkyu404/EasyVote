@@ -7,21 +7,14 @@ import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-r
 import { useToasts } from 'react-toast-notifications'
 
 import Header from './components/Header'
-import Home from './components/Home'
-import Elections from './components/Elections'
-import Profil from './components/Profil'
-import Contact from './components/Contact'
-import Login from './components/LoginUser'
-import LoginAdmin from './components/LoginAdmin'
 import Footer from './components/Footer'
-import NotConnected from './components/NotConnected'
-import Election from './components/Election'
-import Test from './components/Test'
+import Menu from './components/Menu'
+import Pages from './components/Pages'
 
 // import AddCandidat from './components/AddCandidat'
 
 // URL de base, à changer lorsque l'url change
-const baseUrl = "http://localhost:3001"
+const baseUrl = "http://localhost:3001";
 
 function App() {
   Axios.defaults.withCredentials = true
@@ -37,8 +30,8 @@ function App() {
   const [currentFilter, setCurrentFilter] = useState("");
   const [filteredElections, setFilteredElections] = useState([])
 
+  const [idElection, setIdElection] = useState(0)
 
-  // const [idElection, setIdElection] = useState(0)
 
   /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
   const [connected, setConnected] = useState(false)
@@ -173,15 +166,28 @@ function App() {
     } 
   }            
 
-  const addElection = (titreElection, dateDebut, dateFin, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
-    const response = Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal })
+  const getIdElection = (titreElection, dateDebutElection, dateFinElection) => {
+    Axios.post(baseUrl+"/getIdElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection }).then((response)=>{
       if (response.data.message){
         console.log(response.data.message);
       } 
       else {
-        console.log(response.data);
+        console.log(response.data[0].idElection);
+        setIdElection(response.data[0].idElection)
       }
+    })
   }
+
+  const addElection = (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal, titreCandidat, descriptionCandidat, urlImage, idElection) => {
+      Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
+        if (response.data.message){
+          console.log(response.data.message);
+        } 
+        else {
+          console.log(response.data);
+        }
+      })
+    }
 
   const addCandidat = (titreCandidat, descriptionCandidat, urlImage, idElection) => {
     Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection }).then((response)=>{
@@ -253,64 +259,41 @@ function App() {
           {/* Header */}
           <Header onDisconnection={disconnect} isConnected={connected} />
           {/* Tout ce qu'il y a sous la page */}
-          <ClickAwayListener onClickAway={desactivateMenu}>
-            <div className={"flex-row " + (showMenu ? "shown" : "hidden")}>
+          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu}/>
+          <Pages 
+            connected={connected}
+            //AddElection + AddCandidat
+            idElection={idElection}
+            getIdElection={getIdElection}
+            addCandidat={addCandidat}
+            addElection={addElection}
+            
+            //Elections
+            getElections={getElections}
+            getCurrentDate={getCurrentDate}
+            filteredElections={filteredElections} 
+            filterElection={filterElection}
 
-              {/* Si le state showMenu vrai, affiche le menu */}
-              <div className="menu-container ">
-                <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item">Accueil</div></Link>
-                <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item">Elections</div></Link>
-                <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item">Profil</div></Link>
-                <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item">Contact</div></Link>
-              </div>
+            //Profile
+            profile={profile}
+            currentUser={currentUser}
 
-              {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
-              <div className="hamburger-column">
-                <div className={"hamburger-container " + (showMenu ? "button-close-active" : "button-close-inactive")}>
-                  <Hamburger label="Show Menu" size={20} color="#272729" onToggle={() => {
-                    toggleMenu()
-                  }} />
-                </div>
-              </div>
-            </div>
-          </ClickAwayListener>
-          
-          <div className="main-container">
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route exact path="/elections">
-                {connected ? <Elections onAddElection={addElection} getCurrentDate={getCurrentDate} getElections={getElections} filteredElections={filteredElections} filterElection={filterElection} /> : <NotConnected />}
-              </Route>
-              <Route exact path="/profil">
-                {connected ? <Profil getProfile={profile} currentUser={currentUser} /> : <NotConnected />}
-              </Route>
-              <Route exact path="/contact">
-                <Contact />
-              </Route>
-              <Route exact path="/login">
-                {connected ? <Home/> : <Login onLogin={login} />}
-              </Route>
-              <Route exact path="/loginAdmin">
-                {connected ? <Home/> : <LoginAdmin onLogin={loginAdmin} />}
-              </Route>
-              <Route exact path="/election:idElection">
-                {connected ? <Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} /> : <LoginAdmin onLogin={loginAdmin} />}
-              </Route>
+            //Login
+            login={login}
 
-              <Route exact path="/addCandidat">
-                {/* <AddCandidat onAddCandidat={addCandidat} idElectionChoisi={ idElection } /> */}
-              </Route>
-              <Route exact path="/test">
-                <Test />
-              </Route>
-            </Switch>
-          </div>
-          <Footer />
+            //LoginAdmin
+            loginAdmin={loginAdmin}
+
+            //Election:idElection
+            getElection={getElection} 
+            election={election} 
+            getCandidats={getCandidats} 
+            candidats={candidats}
+          />
+          <Footer/>
         </Router>
     </div>
   );
 }
 
-export default App;
+export default App

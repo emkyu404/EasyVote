@@ -226,6 +226,27 @@ app.post('/getElection', (req, res) => {
   })
 });
 
+app.post('/getIdElection', (req, res) => {
+  const titreElection = req.body.titreElection
+  const dateDebutElection = req.body.dateDebutElection
+  const dateFinElection = req.body.dateFinElection 
+
+  db.query(
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
+    [titreElection, dateDebutElection, dateFinElection],
+    (err, resultIdElection) => {
+      if (err){
+        console.log(err);
+        res.json({message : "Impossible de récupérer l'id de l'élection"})
+      }
+      else{
+        if(resultIdElection.length === 1) {
+          res.status(200).json(resultIdElection)
+        }
+      }
+    }
+  )
+});
 
 app.get('/currentDate', (req, res) => {
   var today = new Date();
@@ -254,8 +275,8 @@ app.get('/currentDate', (req, res) => {
 
 app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection
-  const dateDebut = req.body.dateDebut
-  const dateFin = req.body.dateFin
+  const dateDebutElection = req.body.dateDebutElection
+  const dateFinElection = req.body.dateFinElection
   const descriptionElection = req.body.descriptionElection
 
   const type = req.body.electionType
@@ -270,8 +291,8 @@ app.post('/addElection', (req, res) => {
   // }
 
   db.query(
-    "SELECT idElection FROM election WHERE titreElection=? AND dateDebut=? AND dateFin=?",
-    [titreElection, dateDebut, dateFin],
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
+    [titreElection, dateDebutElection, dateFinElection],
     (err, resultIdElection) => {
       if (err){
         console.log(err);
@@ -280,29 +301,29 @@ app.post('/addElection', (req, res) => {
         if(resultIdElection.length === 0) {
           db.query(
             "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection) VALUES (NULL,?,?,?,?)",
-            [titreElection, dateDebut, dateFin, descriptionElection],
+            [titreElection, dateDebutElection, dateFinElection, descriptionElection],
             (err) => {
               if (err){
                 console.log(err);
               } else {
                 switch (type) {
                   case 'election_nationale':
-                    addElectionNationale(res, titreElection)
+                    addElectionNationale(res, titreElection, dateDebutElection, dateFinElection)
                     break;
                   case 'election_regionale':
-                    addElectionRegionale(req, res, titreElection)
+                    addElectionRegionale(req, res, titreElection, dateDebutElection, dateFinElection)
                     break;
                   case 'election_departementale':
-                    addElectionDepartementale(req, res, titreElection)
+                    addElectionDepartementale(req, res, titreElection, dateDebutElection, dateFinElection)
                     break;
                   case 'election_municipale':
-                    addElectionMunicipale(req, res, titreElection)
+                    addElectionMunicipale(req, res, titreElection, dateDebutElection, dateFinElection)
                     break;
                   default:
                     res.status(401).json({ message: 'Le type d\'élection n\'existe pas' })
                     break;
                 }  
-                res.status(200).json({ titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection })
+                res.status(200).json({ titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection })
               }
             }
           )
@@ -314,10 +335,10 @@ app.post('/addElection', (req, res) => {
   )
 })
 
-async function addElectionNationale(res, titreElection) {
+async function addElectionNationale(res, titreElection, dateDebutElection, dateFinElection) {
   db.query(
-    "SELECT idElection FROM election WHERE titreElection=?",
-    [titreElection],
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
+    [titreElection, dateDebutElection, dateFinElection],
     (err, resultIdElection) => {
       if(err) {
         console.log(err);
@@ -331,7 +352,7 @@ async function addElectionNationale(res, titreElection) {
               if(error) {
                 console.log(error);
               } else {
-                res.status(200).json({ idElection: idElection })
+                res.status(200)
               }
             }
           )
@@ -343,10 +364,10 @@ async function addElectionNationale(res, titreElection) {
   )
 }
 
-async function addElectionRegionale(req, res, titreElection) {
+async function addElectionRegionale(req, res, titreElection, dateDebutElection, dateFinElection) {
   db.query(
-    "SELECT idElection FROM election WHERE titreElection=?",
-    [titreElection],
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
+    [titreElection, dateDebutElection, dateFinElection],
     (err, resultIdElection) => {
       if(err) {
         console.log(err);
@@ -361,7 +382,7 @@ async function addElectionRegionale(req, res, titreElection) {
               if(error) {
                 console.log(error);
               } else {
-                res.status(200).json({ idElection: idElection, nomRegion: nomRegion })
+                res.status(200)
               }
             }
           )
@@ -373,10 +394,10 @@ async function addElectionRegionale(req, res, titreElection) {
   )
 }
 
-async function addElectionDepartementale(req, res, titreElection) {
+async function addElectionDepartementale(req, res, titreElection, dateDebutElection, dateFinElection) {
   db.query(
-    "SELECT idElection FROM election WHERE titreElection=?",
-    [titreElection],
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
+    [titreElection, dateDebutElection, dateFinElection],
     (err, resultIdElection) => {
       if(err) {
         console.log(err);
@@ -391,7 +412,7 @@ async function addElectionDepartementale(req, res, titreElection) {
               if(error) {
                 console.log(error);
               } else {
-                res.status(200).json({ idElection: idElection, codeDepartement: codeDepartement })
+                res.status(200)
               }
             }
           )
@@ -403,10 +424,10 @@ async function addElectionDepartementale(req, res, titreElection) {
   )
 }
 
-async function addElectionMunicipale(req, res, titreElection) {
+async function addElectionMunicipale(req, res, titreElection, dateDebutElection, dateFinElection) {
   db.query(
-    "SELECT idElection FROM election WHERE titreElection=?",
-    [titreElection],
+    "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
+    [titreElection, dateDebutElection, dateFinElection],
     (err, resultIdElection) => {
       if(err) {
         console.log(err);
@@ -421,7 +442,7 @@ async function addElectionMunicipale(req, res, titreElection) {
               if(error) {
                 console.log(error);
               } else {
-                res.status(200).json({ idElection: idElection, codePostal: codePostal })
+                res.status(200)
               }
             }
           )
