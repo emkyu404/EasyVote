@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt')
 //Permet l'utilisation des cookies
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
-app.use(session({ key : 'token', secret: 'EZSTONKS', saveUninitialized: false, resave: false, cookie: { expires: 14400000 } }));
+app.use(session({ key : 'token', secret: 'EZSTONKS', saveUninitialized: false, resave: false, cookie: { expires: 33300000 } }));
 app.use(cookieParser());
 // app.use((req, res, next) => {
 //   if (req.cookies.token && !req.session.user) {
@@ -35,6 +35,7 @@ const db = mysql.createConnection({
   user: "root",
   password: "",
   database: "easyvote",
+  multipleStatements: true
 });
 
 app.get("/token", (req, res) => {
@@ -78,11 +79,6 @@ app.post("/login", (req, res) => {
                 if(resultPassword.length ==1){
                   req.session.user = {
                     idCitoyen : resultPassword[0].idCitoyen,
-                    //nomCitoyen : resultMail[0].nomCitoyen,
-                    //prenomCitoyen : resultMail[0].prenomCitoyen,
-                    //emailCitoyen :resultMail[0].emailCitoyen,
-                    //idAdresse :resultMail[0].idAdresse,
-                    //idElecteur :resultPassword[0].idElecteur
                   }
                   res.json(req.session.user)
                 }
@@ -121,8 +117,7 @@ app.post("/loginAdmin", (req, res) => {
       else{
         if(result.length == 1){
           req.session.user = {
-            idAdmin : result[0].idAdmin,
-            emailAdmin :result[0].emailAdmin,
+            idAdmin : result[0].idAdmin
           }
           res.json(req.session.user)
         }
@@ -199,6 +194,7 @@ app.post('/getElections', (req, res) => {
         res.json({message : "Impossible de récupérer les élections"})
       } 
       else if(result.length != 0){
+        result.forEach(election => election.dateDebutElection = new Date(election.dateDebutElection).toISOString().slice(0, 19).replace('T', ' '))
         res.json(result)
       }
       else {
@@ -226,27 +222,27 @@ app.post('/getElection', (req, res) => {
   })
 });
 
-app.post('/getIdElection', (req, res) => {
-  const titreElection = req.body.titreElection
-  const dateDebutElection = req.body.dateDebutElection
-  const dateFinElection = req.body.dateFinElection 
+// app.post('/getIdElection', (req, res) => {
+//   const titreElection = req.body.titreElection
+//   const dateDebutElection = req.body.dateDebutElection
+//   const dateFinElection = req.body.dateFinElection 
 
-  db.query(
-    "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
-    [titreElection, dateDebutElection, dateFinElection],
-    (err, resultIdElection) => {
-      if (err){
-        console.log(err);
-        res.json({message : "Impossible de récupérer l'id de l'élection"})
-      }
-      else{
-        if(resultIdElection.length === 1) {
-          res.status(200).json(resultIdElection)
-        }
-      }
-    }
-  )
-});
+//   db.query(
+//     "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
+//     [titreElection, dateDebutElection, dateFinElection],
+//     (err, resultIdElection) => {
+//       if (err){
+//         console.log(err);
+//         res.json({message : "Impossible de récupérer l'id de l'élection"})
+//       }
+//       else{
+//         if(resultIdElection.length === 1) {
+//           res.status(200).json(resultIdElection)
+//         }
+//       }
+//     }
+//   )
+// });
 
 app.get('/currentDate', (req, res) => {
   var today = new Date();
@@ -300,9 +296,9 @@ app.post('/addElection', (req, res) => {
       else{
         if(resultIdElection.length === 0) {
           db.query(
-            "INSERT INTO election(idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection) VALUES (NULL,?,?,?,?)",
+            "INSERT INTO election(titreElection, dateDebutElection, dateFinElection, descriptionElection) VALUES (?,?,?,?); SELECT * FROM election WHERE idElection=LAST_INSERT_ID();",
             [titreElection, dateDebutElection, dateFinElection, descriptionElection],
-            (err) => {
+            (err, result) => {
               if (err){
                 console.log(err);
               } else {
@@ -323,7 +319,8 @@ app.post('/addElection', (req, res) => {
                     res.status(401).json({ message: 'Le type d\'élection n\'existe pas' })
                     break;
                 }  
-                res.status(200).json({ titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection })
+                console.log(result)
+                res.status(200).json(result)
               }
             }
           )

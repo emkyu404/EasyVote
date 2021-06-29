@@ -21,14 +21,13 @@ function App() {
   const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: ""})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
-  const [election, setElection] = useState([])
+  const [election, setElection] = useState({idElection : 0})
+  const [idElection, setIdElection] = useState({})
   const [candidats, setCandidats] = useState([])
   const [showMenu, setShowMenu] = useState(false)
   //const [render, setRender] = useState(false)
-  const [currentFilter, setCurrentFilter] = useState("");
+  const [currentFilter, setCurrentFilter] = useState(""); 
   const [filteredElections, setFilteredElections] = useState([])
-
-  const [idElection, setIdElection] = useState(0)
 
 
   /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
@@ -164,42 +163,46 @@ function App() {
     } 
   }            
 
-  const getIdElection = (titreElection, dateDebutElection, dateFinElection) => {
-    Axios.post(baseUrl+"/getIdElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection }).then((response)=>{
+  // const getIdElection = (titreElection, dateDebutElection, dateFinElection) => {
+  //   Axios.post(baseUrl+"/getIdElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection }).then((response)=>{
+  //     if (response.data.message){
+  //       console.log(response.data.message);
+  //     } 
+  //     else {
+  //       console.log(response.data[0].idElection);
+  //       setIdElection(response.data[0].idElection)
+  //     }
+  //   })
+  // }
+
+  const addElection = async (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
+      const response = await Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal })
       if (response.data.message){
-        console.log(response.data.message);
+        addToast("Erreur : " + response.data.message, {
+          appearance: 'error',
+          autoDismiss: true,
+        })
       } 
       else {
-        console.log(response.data[0].idElection);
-        setIdElection(response.data[0].idElection)
+        setIdElection(response.data[1][0].idElection);
       }
-    })
-  }
-
-  const addElection = (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal, titreCandidat, descriptionCandidat, urlImage, idElection) => {
-      Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
-        if (response.data.message){
-          console.log(response.data.message);
-        } 
-        else {
-          console.log(response.data);
-        }
-      })
     }
 
-  const addCandidat = (titreCandidat, descriptionCandidat, urlImage, idElection) => {
-    Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection }).then((response)=>{
-      if (response.data.message){
-        console.log(response.data.message);
-      } 
-      else {
-        console.log(response.data);
-      }
-    });
+  const addCandidat = async (titreCandidat, descriptionCandidat, urlImage) => {
+    console.log(election.idElection)
+    const response = await Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection })
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else {
+      console.log(response.data);
+    }
   }
   
   const getCurrentDate = async () => {
-    console.log("aze")
     const response = await Axios.get(baseUrl+"/currentDate")
     if (response.data.message){
       addToast("Impossible de récuperer la date du jour", {
@@ -226,7 +229,6 @@ function App() {
   }
 
   const getElection = async () => {
-    console.log("test")
     const response = await Axios.post(baseUrl+"/getElection", {idElection : 1})
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
@@ -262,10 +264,9 @@ function App() {
           <Pages 
             connected={connected}
             //AddElection + AddCandidat
-            idElection={idElection}
-            getIdElection={getIdElection}
             addCandidat={addCandidat}
             addElection={addElection}
+            idElection={idElection}
             
             //Elections
             getElections={getElections}

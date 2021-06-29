@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import arrow from '../img/down-arrow.svg';
 import Radium from 'radium';
 
-const AddElection = ({ idElection, getIdElection, onAddCandidat, onAddElection }) => {
+const AddElection = ({addCandidat, onAddElection, idElection }) => {
+
+    useEffect(()=>{
+        listeCandidats.forEach(
+            candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
+        )
+      },[idElection])
 
     const [titreElection, setElectionTitle] = useState("")
     const [dateDebutElection, setDateDebutElection] = useState("")
@@ -99,25 +105,13 @@ const AddElection = ({ idElection, getIdElection, onAddCandidat, onAddElection }
         
     }
 
-    const addCandidat = async (e, titreCandidat, descriptionCandidat, urlCandidat, idElection) => {
-        e.preventDefault()
-        await onAddCandidat(titreCandidat, descriptionCandidat, urlCandidat, idElection)
-    }
-
-    // A REGLER (NE RECUPERE PAS L ID ELECTION IMMEDIATEMENT, DOIT VALIDER 2 FOIS LE FORM)
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(listeCandidats.length >= 2) {
-            await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal, titreElection, dateDebutElection, dateFinElection);
-            
-            
-            await getIdElection(titreElection, dateDebutElection, dateFinElection);
-
+        if(listeCandidats.length >= 0) {
+            await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             listeCandidats.forEach(
-                candidat => addCandidat(e, candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat, idElection)
+                candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
             )
-            
-            console.log("Ajout")
         }
         else {
             alert('Ajouter au moins 2 candidats')

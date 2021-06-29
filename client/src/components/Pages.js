@@ -11,7 +11,7 @@ import Election from './Election'
 import Test from './Test'
 import AddElection from "./AddElection"
 
-const Pages = ({connected, idElection, getIdElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats}) => {
+const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats}) => {
     return(
         <div className="main-container">
             <Switch>
@@ -19,7 +19,7 @@ const Pages = ({connected, idElection, getIdElection, addCandidat, addElection, 
                 <Home />
               </Route>
               <Route exact path="/addElection">
-                {connected ? <AddElection idElection={idElection} getIdElection={getIdElection} onAddCandidat={addCandidat} onAddElection={addElection} /> : <NotConnected />}
+                {connected ? <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection}/> : <NotConnected />}
               </Route>
               <Route exact path="/elections">
                 {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection}/> : <NotConnected />}

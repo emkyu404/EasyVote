@@ -17,7 +17,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
     const history = useHistory();
 
     const election = () => {
-        history.push("./Election");
+        history.push("./election");
     }
 
     return (
