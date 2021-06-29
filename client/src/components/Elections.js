@@ -24,17 +24,17 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
 
     function switchBtn(btnName) {
         if(btnName === "Ongoing"){
-            document.getElementById("Ongoing").style.borderBottom = "5px solid #0B6BA8";
-            document.getElementById("Soon").style.borderBottom = "5px solid white";
-            document.getElementById("Finished").style.borderBottom = "5px solid white";
+            document.getElementById("Ongoing").style.flex="2";
+            document.getElementById("Soon").style.flex="1";
+            document.getElementById("Finished").style.flex="1";
         } else if(btnName === "Soon") {
-            document.getElementById("Ongoing").style.borderBottom = "5px solid white";
-            document.getElementById("Soon").style.borderBottom = "5px solid #009F79";
-            document.getElementById("Finished").style.borderBottom = "5px solid white";
+            document.getElementById("Ongoing").style.flex="1";
+            document.getElementById("Soon").style.flex="2";
+            document.getElementById("Finished").style.flex="1";
         } else if(btnName === "Finished") {
-            document.getElementById("Ongoing").style.borderBottom = "5px solid white";
-            document.getElementById("Soon").style.borderBottom = "5px solid white";
-            document.getElementById("Finished").style.borderBottom = "5px solid #A63950";
+            document.getElementById("Ongoing").style.flex="1";
+            document.getElementById("Soon").style.flex="1";
+            document.getElementById("Finished").style.flex="2";
         }
 
     }
@@ -43,9 +43,11 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
         <div>
             <button onClick={election}>OUI</button>
             <h1 style={styles.mainTitle}>Listes des élections</h1>
+            <div style={styles.flexContainer}>
             <button id="Ongoing" style={Object.assign({},styles.btnFiltre, styles.blue)} onClick={ () => {filterElection("Ongoing"); switchBtn("Ongoing");}}>En cours</button>
-            <button id="Soon" style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})} onClick={ () => {filterElection("Soon"); switchBtn("Soon");}}>A venir</button>
+            <button id="Soon" style={Object.assign({},styles.btnFiltre, styles.green)} onClick={ () => {filterElection("Soon"); switchBtn("Soon");}}>A venir</button>
             <button id="Finished" style={Object.assign({},styles.btnFiltre, styles.red)} onClick={ () => {filterElection("Finished"); switchBtn("Finished");}}>Terminées</button>
+            </div>
             <div style={styles.divElections}>
                 {typeof(filteredElections)==="undefined" || filteredElections.length===0 ? 
                 <div style={styles.emptyDiv}>
@@ -64,6 +66,11 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
 }
 
 const styles = {
+    flexContainer:{
+        display: "flex",
+        flexDirection: "row",
+        flexWrap: "no-wrap",
+    },
     mainTitle: {
         color: "#0B6BA8",
         height: "fit-content",
@@ -86,12 +93,12 @@ const styles = {
         backgroundColor: "#A63950",
     },
     btnFiltre: {
-        width: "33%",
+        flex: 1,
         padding: "15px",
         border: "none",
         color: "white",
         cursor: "pointer",
-        borderBottom: "5px solid white"
+        transition: "0.5s"
     },
     emptyImg: {
         maxWidth: "150px"
