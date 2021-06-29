@@ -1,5 +1,4 @@
 import Radium from 'radium';
-import Button from '@material-ui/core/Button'
 
 const BoutonConnexionDeconnexion = ({ onDisconnection, isConnected }) => {
     return (

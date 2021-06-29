@@ -46,7 +46,7 @@ app.get("/token", (req, res) => {
   }
 })
 
-app.post("/disconnect", (req, res) => {
+app.get("/disconnect", (req, res) => {
   req.session.destroy()
   res.clearCookie("token");
   res.status(200).json({message: "Vous êtes déconnecté"})
@@ -208,6 +208,24 @@ app.post('/getElections', (req, res) => {
   }
 });
 
+app.post('/getElection', (req, res) => {
+  const idElection = req.body.idElection
+  db.query("SELECT el.idElection, el.titreElection, el.dateDebutElection, el.dateFinElection, el.dateFinElection, el.descriptionElection, el.idAdmin, count(pa.idElection)as 'nbVotes' FROM Election el INNER JOIN  Participer pa WHERE el.idElection = ?",
+  [idElection],
+  (err, result) => {
+    if (err) {
+      console.log(err);
+      res.json({message : "Impossible de récupérer l'élection"})
+    } 
+    else if(result.length != 0){
+      res.json(result)
+    }
+    else {
+      res.json({message : "Élection introuvable"})
+    }
+  })
+});
+
 app.post('/getIdElection', (req, res) => {
   const titreElection = req.body.titreElection
   const dateDebutElection = req.body.dateDebutElection
@@ -228,7 +246,32 @@ app.post('/getIdElection', (req, res) => {
       }
     }
   )
-})
+});
+
+app.get('/currentDate', (req, res) => {
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+  res.json(dateTime);
+});
+
+// app.post('/getIdElection', titreElection, dateDebut, dateFin, (req, res) => {
+//   db.query(
+//     "SELECT idElection FROM election WHERE titreElection=? AND dateDebut=? AND dateFin=?",
+//     [titreElection, dateDebut, dateFin],
+//     (err, resultIdElection) => {
+//       if (err){
+//         console.log(err);
+//       }
+//       else{
+//         if(resultIdElection.length === 1) {
+//           res.status(200).json({ idElection: idElection })
+//         }
+//       }
+//     }
+//   )
+// })
 
 app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection

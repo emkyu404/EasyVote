@@ -1,16 +1,15 @@
 import React from 'react';
-import Radium from 'radium';
+import { Link }  from "react-router-dom";
 
 const ElectionCard = ({electionCard}) => {
     return (
-        <div>
-            <div style={styles.divElection}>
-                <h2>{electionCard.idElection}</h2>
-                <p style={styles.text}>{electionCard.titreElection}</p>
+        <div style={styles.divElection}>
+                <h2>{electionCard.titreElection}</h2>
                 Date début : {electionCard.dateDebutElection} Date fin : {electionCard.dateFinElection}<br></br><br></br>
-                {electionCard.descriptionElection}
-                <button style={Object.assign({},styles.btn, styles.blue)}>Répondre à l'élection</button>
-            </div>
+                
+                <p style={styles.text}>{electionCard.descriptionElection}</p>
+                
+                <Link to={`/election/${electionCard.idElection}`} style={Object.assign({},styles.btn, styles.blue)}> Consulter l'élection </Link>
         </div>
     )
 }

@@ -1,12 +1,17 @@
-import AddElection from "./AddElection";
 import ElectionCard from "./ElectionCard";
 import React, { useEffect } from "react";
 import Radium from 'radium';
 import { useHistory } from 'react-router-dom';
 
-const Elections = ({ getElections, elections }) => {
-    useEffect(() => {
-        getElections();
+const Elections = ({getCurrentDate, getElections, filteredElections, filterElection }) => {
+
+    useEffect( () => {
+        async function prepareElections(){
+            await getCurrentDate();
+            await getElections();
+            await filterElection("Ongoing");
+        }
+        prepareElections();
     }, [])
 
     const history = useHistory();
@@ -19,13 +24,16 @@ const Elections = ({ getElections, elections }) => {
         <div>
             <button onClick={election}>OUI</button>
             <h1 style={styles.mainTitle}>Listes des élections</h1>
-                <button style={Object.assign({},styles.btnFiltre, styles.blue)}>En cours</button>
-                <button style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})}>A venir</button>
-                <button style={Object.assign({},styles.btnFiltre, styles.red)}>Terminées</button>
+            <button style={Object.assign({},styles.btnFiltre, styles.blue)} onClick={ () => filterElection("Ongoing")}>En cours</button>
+            <button style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})} onClick={ () => filterElection("Soon")}>A venir</button>
+            <button style={Object.assign({},styles.btnFiltre, styles.red)} onClick={ () => filterElection("Finished")}>Terminées</button>
             <div style={styles.divElections}>
-                {elections.map((electionCard) => (
-                    <ElectionCard key={electionCard.id} electionCard={electionCard}/>
-                ))}
+                {typeof(filteredElections)==="undefined" || filteredElections.length===0 ? "Aucune élection" : filteredElections.map((electionCard) => (
+                    <div key={electionCard.idElection}>
+                        <ElectionCard electionCard={electionCard}/>
+                    </div>
+                )) }
+                
             </div>
         </div>
     )
@@ -43,23 +51,6 @@ const styles = {
         backgroundColor: "white",
         padding: "40px 40px 10px 40px",
         boxShadow: "0 0 10px #999"
-    },
-    divElection: {
-        border: "1px solid #0B6BA8",
-        padding: "30px 30px 80px 30px",
-        marginBottom: "30px"
-    },
-    text: {
-        textAlign: "justify"
-    },
-    btn: {
-        minWidth: "200px",
-        padding: "15px",
-        border: "none",
-        color: "white",
-        cursor: "pointer",        
-        float: "right",
-        marginTop: "15px"
     },
     blue : {
         backgroundColor: "#0B6BA8"
