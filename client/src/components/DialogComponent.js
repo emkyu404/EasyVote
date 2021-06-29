@@ -1,4 +1,5 @@
 import React from 'react'
+import { useEffect } from 'react';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,13 +12,29 @@ const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const DialogComponent = ({ dialogText, dialogTitle, openOnRender, handleClickBehavior, yesNo }) => {
+const DialogComponent = ({ dialogText, dialogTitle, openOnRender, handleClickBehavior, handleClickYes, handleClickNo, yesNo, numberOfCall}) => {
     /* utile */
     const [open, setOpen] = React.useState(openOnRender);
+
+    useEffect(() => {
+        if(numberOfCall > 0){
+            handleClickOpen()
+        }
+    }, [numberOfCall])
 
     const handleClickOpen = () => {
         setOpen(true);
     };
+
+    const handleYes = () => {
+        setOpen(false)
+        handleClickYes()
+    }
+
+    const handleNo = () => {
+        setOpen(false)
+        handleClickNo()
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -41,7 +58,7 @@ const DialogComponent = ({ dialogText, dialogTitle, openOnRender, handleClickBeh
                 </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                {yesNo ? <div><Button onClick={handleClose} color="primary">Oui</Button><Button onClick={handleClose} color="primary">Non</Button></div> : <Button onClick={handleClose} color="primary">Ok</Button>}
+                {yesNo ? <div><Button onClick={handleYes} color="primary">Oui</Button><Button onClick={handleNo} color="primary">Non</Button></div> : <Button onClick={handleClose} color="primary">Ok</Button>}
                 
                 </DialogActions>
             </Dialog>
