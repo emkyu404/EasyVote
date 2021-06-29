@@ -29,15 +29,22 @@ const Election = () => {
                             ['Yes', 30],
                             ['Oui aussi', 30],
                         ]}
-                        height="600px"
+                        height="100%"
+                        width="100%"
                         options={{
                             chartArea: {
                                 height: '80%',
                                 width: '100%',
                             },
+<<<<<<< Updated upstream
                             legend: {
                                 position: 'top',
                                 alignment: 'center'
+=======
+                            legend: { 
+                                position: 'bottom', 
+                                alignment: 'center' 
+>>>>>>> Stashed changes
                             }
                         }}
                     />
@@ -209,7 +216,13 @@ const styles = {
         paddingBottom: "10px"
     },
     chartContainer: {
-
+        height: "600px",
+        '@media (max-width: 960px)': { 
+            height: "450px",
+        },
+        '@media (max-width: 640px)': { 
+            height: "300px",
+        }
     }
 }
 
