@@ -11,7 +11,9 @@ const Election = () => {
             <div style={styles.electionDiv}>
                 <h2 style={styles.secondTitle}>Nike dro ?</h2>
                 <p>🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔 Nike dro ? 🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔</p>
-                <div style={styles.chartContainer}>
+                <p>Description : Wow really nice graphe</p>
+                <p>🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔 Nike dro ? 🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔</p>
+                <div style={styles.pieChartContainer}>
                     <Chart
                         chartType="PieChart"
                         data={[
@@ -35,7 +37,28 @@ const Election = () => {
                         }}
                     />
                 </div>
-                <p>🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔 Nike dro ? 🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔🤔</p>
+                <div style={styles.columnChartContainer}>
+                <Chart
+                    chartType="ColumnChart"
+                    data={[
+                        ['Choix', 'Oui', { role: 'annotation' }, 'Non', { role: 'annotation' }, 'Yes', { role: 'annotation' }, 'Oui aussi', { role: 'annotation' }],
+                        ['', 30, "30", 10, "10", 30, "30", 30, "30"],
+                    ]}
+                    height="100%"
+                    width="100%"
+                    options={{
+                        chartArea: {
+                            height: '80px',
+                            width: '80%',
+                        },
+                        legend: { 
+                            position: 'bottom', 
+                            alignment: 'center' 
+                        },
+                        bar: { groupWidth: "90%" }
+                    }}
+                    />
+                </div>
             </div>
 
 
@@ -201,7 +224,16 @@ const styles = {
         textAlign: "center",
         paddingBottom: "10px"
     },
-    chartContainer: {
+    pieChartContainer: {
+        height: "600px",
+        '@media (max-width: 960px)': { 
+            height: "450px",
+        },
+        '@media (max-width: 640px)': { 
+            height: "300px",
+        }
+    },
+    columnChartContainer: {
         height: "600px",
         '@media (max-width: 960px)': { 
             height: "450px",
