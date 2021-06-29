@@ -1,29 +1,71 @@
 import React from 'react'
-import { useEffect } from 'react';
 import * as XLSX from 'xlsx'
-import {useState } from 'react'
+import { useToasts } from 'react-toast-notifications'
 
 const Test = () => {
+
+    const {addToast} = useToasts()
+    let candidatsArray = []
+    let election = {}
 
     const handleNewFile = (e) => {
         var name = e.name;
         console.log(name)
         const reader = new FileReader()
         reader.onload = (evt) => {
-            const bstr = evt.target.result
-            const wb = XLSX.read(bstr, {type:'binary'})
-            console.log(wb)
+            try{
+                const bstr = evt.target.result
+                const wb = XLSX.read(bstr, {type:'binary'})
+                if(wb.SheetNames.length != 2){
+                    throw 'Format incorrect, la lecture du fichier à échouer'
+                }
+                const wsname = wb.SheetNames[0]
+                if(wsname != "Candidats"){
+                    throw 'Format incorrect, la lecture du fichier à échouer'
+                }
+                const ws = wb.Sheets[wsname]
+                const data = XLSX.utils.sheet_to_json(ws, {raw: false})
+                // Lecture d'un fichier excel, contenu est dans DATA
+                let newCandidatsArray = []
+                data.forEach(element => {
+                    let newElement = {Titre:element.Titre, Description:element.Description, url:element.URL}
+                    newCandidatsArray.push(newElement)
+                    console.log(newCandidatsArray)
+                });
+                candidatsArray = newCandidatsArray
+                console.log(candidatsArray)
 
-            const wsname = wb.SheetNames[0]
-            console.log(wsname)
-            const ws = wb.Sheets[wsname]
-            console.log(ws)
+                const wsname2 = wb.SheetNames[1]
+                if(wsname2 != "Election"){
+                    throw 'Format incorrect, la lecture du fichier à échouer'
+                }
+                const ws2 = wb.Sheets[wsname2]
+                const data2 = XLSX.utils.sheet_to_json(ws2, {raw: false})
 
-            const data = XLSX.utils.sheet_to_json(ws)
-             
-            // Lecture d'un fichier excel, contenu est dans DATA
-            console.log(data)
+                console.log(data2)
+                let newElection
+
+                data2.forEach(element => {
+                    newElection = {titre: element.Titre, dateDebut: element.dateDebut, dateFin: element.dateFin, description : element.description, échelle: element.échelle, zone: element.zone}
+                })
+                election = newElection
+                console.log(newElection)
+
+                addToast("Lecture du fichier réalisé avec succès",{
+                    appearance: 'success',
+                    autoDismiss: true,
+                })
+            }catch(e){
+                addToast("Erreur : " + e, {
+                    appearance: 'error',
+                    autoDismiss: true,
+                })
+            }
+            //Lecture de la seconde feuille
         }
+
+        reader.readAsBinaryString(e)
+        
     }
 
 
@@ -32,8 +74,6 @@ const Test = () => {
         <div>
             <input type="file" id="input" onChange={e => handleNewFile(e.target.files[0])}></input>
             <table id="tbl-data"></table>
-
-
         </div>
     )
 }
