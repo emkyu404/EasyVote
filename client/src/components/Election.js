@@ -33,7 +33,11 @@ const Election = () => {
                             legend: { 
                                 position: 'bottom', 
                                 alignment: 'center' 
-                            }
+                            },
+                            tooltip: {
+                                trigger:'none'
+                            },
+                            enableInteractivity: false
                         }}
                     />
                 </div>
@@ -48,7 +52,7 @@ const Election = () => {
                     width="100%"
                     options={{
                         chartArea: {
-                            height: '80px',
+                            height: '80%',
                             width: '80%',
                         },
                         legend: { 
@@ -56,6 +60,11 @@ const Election = () => {
                             alignment: 'center' 
                         },
                         bar: { groupWidth: "90%" }
+                        ,
+                        tooltip: {
+                            trigger:'none'
+                        },
+                        enableInteractivity: false
                     }}
                     />
                 </div>
@@ -65,7 +74,7 @@ const Election = () => {
             <div className="container" style={styles.container}>
                 <div className="card" style={styles.card}>
                     <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={thierry} />
+                        <img className="img" style={styles.img} src={thierry} alt="candidat"/>
                     </div>
                     <div className="team">
                         <h4 className="name">Thierry Pilote</h4>
@@ -78,7 +87,7 @@ const Election = () => {
 
                 <div className="card" style={styles.card}>
                     <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} />
+                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
                     </div>
                     <div className="team">
                         <h4 className="name">Amaury Saiyan</h4>
@@ -91,7 +100,7 @@ const Election = () => {
 
                 <div className="card" style={styles.card}>
                     <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} />
+                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
                     </div>
                     <div className="team">
                         <h4 className="name">Amaury Saiyan</h4>
@@ -104,7 +113,7 @@ const Election = () => {
 
                 <div className="card" style={styles.card}>
                     <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} />
+                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
                     </div>
                     <div className="team">
                         <h4 className="name">Amaury Saiyan</h4>
@@ -117,7 +126,7 @@ const Election = () => {
 
                 <div className="card" style={styles.card}>
                     <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} />
+                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
                     </div>
                     <div className="team">
                         <h4 className="name">Amaury Saiyan</h4>
@@ -130,7 +139,7 @@ const Election = () => {
 
                 <div className="card" style={styles.card}>
                     <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} />
+                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
                     </div>
                     <div className="team">
                         <h4 className="name">Amaury Saiyan</h4>
@@ -158,8 +167,7 @@ const styles = {
         position: "relative",
         borderRadius: "0.2em",
         border: "solid #0B6BA8",
-        paddingLeft: "15px",
-        paddingRight: "15px",
+        padding: "0px 15px 0px 15px",
         width: "240px",
         topMax: "200px",
         bottomMax: "200px",

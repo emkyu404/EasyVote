@@ -19,6 +19,9 @@ const styles = {
         textAlign: "justify"
     },
     btn: {
+        font: "400 13.3333px Arial",
+        textAlign: "center",
+        textDecoration: "none",
         minWidth: "200px",
         padding: "15px",
         border: "none",

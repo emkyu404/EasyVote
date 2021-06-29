@@ -71,7 +71,7 @@ const Profil = ({getProfile, currentUser}) => {
                 </tbody>
                 </table>
                 <div style={styles.divContact}>
-                    <h2 style={styles.thirdTitle}>Des informations sont incorrectes ?</h2>
+                    <p>Des informations sont incorrectes ?</p>
                     <button style={styles.btn} onClick={contact}>Contactez nous</button>
                 </div>
             </div>
