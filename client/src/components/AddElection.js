@@ -109,13 +109,15 @@ const AddElection = ({ idElection, getIdElection, onAddCandidat, onAddElection }
         e.preventDefault()
         if(listeCandidats.length >= 2) {
             await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal, titreElection, dateDebutElection, dateFinElection);
+            
+            
             await getIdElection(titreElection, dateDebutElection, dateFinElection);
 
             listeCandidats.forEach(
                 candidat => addCandidat(e, candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat, idElection)
             )
             
-            alert("Ajout")
+            console.log("Ajout")
         }
         else {
             alert('Ajouter au moins 2 candidats')
@@ -129,11 +131,11 @@ const AddElection = ({ idElection, getIdElection, onAddCandidat, onAddElection }
                 <label className="add-election-label">Type de l'élection : 
                 <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
                     <optgroup style={styles.option}>
-                    <option value="">Sélectionner un type</option>
-                    <option value="election_nationale">Election nationale</option>
-                    <option value="election_regionale">Election régionale</option>
-                    <option value="election_departementale">Election départementale</option>
-                    <option value="election_municipale">Election municipale</option>
+                        <option key={0} value="">Sélectionner un type</option>
+                        <option key={1} value="election_nationale">Election nationale</option>
+                        <option key={2} value="election_regionale">Election régionale</option>
+                        <option key={3} value="election_departementale">Election départementale</option>
+                        <option key={4} value="election_municipale">Election municipale</option>
                     </optgroup>
                 </select>
                 </label>
@@ -188,13 +190,13 @@ const AddElection = ({ idElection, getIdElection, onAddCandidat, onAddElection }
                                 <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
 
                                 <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
-                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onBlur={handleTitreCandidatOnChange} required /></span>    
+                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
 
                                 <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
-                                <textarea type="text" className="add-candidat-input" style={styles.textArea} onBlur={handleDescriptionCandidatOnChange} required></textarea>
+                                <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
 
                                 <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onBlur={handleUrlOnChange} required /></span>           
+                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
 
                                 {(titreCandidat !== "" && descriptionCandidat !== "" && urlCandidat !== "") &&
                                     <input type="button" className="add-candidat-button" style={styles.button} onClick={handleOnAddCandidat} value="Ajouter un candidat" />
@@ -203,7 +205,7 @@ const AddElection = ({ idElection, getIdElection, onAddCandidat, onAddElection }
                         }
                         {/* Fin ajouter un candidat */}
 
-                        {listeCandidats.map((candidat) => <div> {candidat.titreCandidat} </div> )}
+                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div> )}
 
                         <input type="submit" className="add-election-submit" style={styles.submit} value="Ajouter" />
                     </div>
