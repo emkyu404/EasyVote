@@ -1,9 +1,7 @@
 import "./css/App.css";
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
-import { Sling as Hamburger } from 'hamburger-react'
-import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 
 import Header from './components/Header'
@@ -26,7 +24,7 @@ function App() {
   const [election, setElection] = useState([])
   const [candidats, setCandidats] = useState([])
   const [showMenu, setShowMenu] = useState(false)
-  const [render, setRender] = useState(false)
+  //const [render, setRender] = useState(false)
   const [currentFilter, setCurrentFilter] = useState("");
   const [filteredElections, setFilteredElections] = useState([])
 
@@ -201,6 +199,7 @@ function App() {
   }
   
   const getCurrentDate = async () => {
+    console.log("aze")
     const response = await Axios.get(baseUrl+"/currentDate")
     if (response.data.message){
       addToast("Impossible de récuperer la date du jour", {

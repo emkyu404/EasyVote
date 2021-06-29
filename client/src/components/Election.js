@@ -36,15 +36,9 @@ const Election = () => {
                                 height: '80%',
                                 width: '100%',
                             },
-<<<<<<< Updated upstream
-                            legend: {
-                                position: 'top',
-                                alignment: 'center'
-=======
                             legend: { 
                                 position: 'bottom', 
                                 alignment: 'center' 
->>>>>>> Stashed changes
                             }
                         }}
                     />

@@ -28,11 +28,11 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
             <button style={Object.assign({},styles.btnFiltre, styles.green, {width: "34%"})} onClick={ () => filterElection("Soon")}>A venir</button>
             <button style={Object.assign({},styles.btnFiltre, styles.red)} onClick={ () => filterElection("Finished")}>Terminées</button>
             <div style={styles.divElections}>
-                {filteredElections.length!==0 ? filteredElections.map((electionCard) => (
+                {typeof(filteredElections)==="undefined" || filteredElections.length===0 ? "Aucune élection" : filteredElections.map((electionCard) => (
                     <div key={electionCard.idElection}>
                         <ElectionCard electionCard={electionCard}/>
                     </div>
-                )) : "Aucune élection"}
+                )) }
                 
             </div>
         </div>
