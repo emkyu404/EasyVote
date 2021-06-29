@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { Sling as Hamburger } from 'hamburger-react'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Link, useParams } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
 
 import Header from './components/Header'
@@ -28,14 +28,22 @@ function App() {
 
   const {addToast} = useToasts()
   const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: ""})
+  const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
+  const [election, setElection] = useState([])
+  const [candidats, setCandidats] = useState([])
   const [showMenu, setShowMenu] = useState(false)
   const [render, setRender] = useState(false)
+  const [currentFilter, setCurrentFilter] = useState("");
+  const [filteredElections, setFilteredElections] = useState([])
+
 
   // const [idElection, setIdElection] = useState(0)
 
   /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
   const [connected, setConnected] = useState(false)
+
+  //const {idElection} = useParams()
 
   useEffect(() => {
     token();
@@ -43,11 +51,32 @@ function App() {
   },[])
 
   useEffect(() => {
-    //login("j-f.tang@email.com", "tang");
-    //loginAdmin("admin@email.fr", "admin");
     handleConnected()
   }, [currentUser])
 
+  useEffect(() => {
+    var aFilteredelections
+    switch (currentFilter){
+      case "Ongoing" : 
+        aFilteredelections = elections.filter(election => new Date(election.dateDebutElection) < currentDate && new Date(election.dateFinElection) > currentDate)
+        break;
+      case "Soon" : 
+        aFilteredelections = elections.filter(election => new Date(election.dateDebutElection) > currentDate)
+        break;
+      case "Finished" : 
+        aFilteredelections = elections.filter(election => new Date(election.dateFinElection) < currentDate)
+        break;
+      default : 
+        aFilteredelections = elections.filter(election => new Date(election.dateDebutElection) < currentDate && new Date(election.dateFinElection) > currentDate)
+        break;
+    }
+    
+    setFilteredElections(aFilteredelections)
+  }, [currentFilter])
+
+  useEffect(() => {
+    //console.log(filteredElections)
+  },[filteredElections])
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
@@ -69,11 +98,14 @@ function App() {
     }
   }
 
+  const filterElection = (filter) => {
+    setCurrentFilter(filter)
+  }
+
   const token = async () => {
     const response = await Axios.get(baseUrl+"/token")
     response.data.message ? setCurrentUser({idAdmin: "", idCitoyen: ""}) : setCurrentUser(response.data); 
   }
-
 
   const login = async (email, password) => {
     const response = await Axios.post(baseUrl+"/login", { email: email, password: password })
@@ -93,7 +125,6 @@ function App() {
     //window.location.replace("/")
   };
 
-
   const loginAdmin = async (email, password) => {
     const response = await Axios.post(baseUrl+"/loginAdmin", { email: email, password: password })
     if (response.data.message) {
@@ -111,48 +142,45 @@ function App() {
     }
   };
 
-  const disconnect = () => {
-    Axios.post(baseUrl+"/disconnect").then((response) => {
-      if (response.data.message) {
-        setCurrentUser({ idAdmin: "", idCitoyen: "" });
-        addToast("Utilisateur déconnecté", {
-          appearance: 'success',
-          autoDismiss: true,
-        })
+  const disconnect = async () => {
+    const response = await Axios.get(baseUrl+"/disconnect")
+    if (response.data.message) {
+      setCurrentUser({ idAdmin: "", idCitoyen: "" });
+      addToast("Utilisateur déconnecté", {
+        appearance: 'success',
+        autoDismiss: true,
+      })
 
-      } 
-      else {
-        addToast("Vous n'avez pas réussi à vous deconnecter", {
-          appearance: 'error',
-          autoDismiss: true,
-        })
-      }
-    });
+    } 
+    else {
+      addToast("Vous n'avez pas réussi à vous deconnecter", {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
   };
 
-  const profile = () => {
-    Axios.post(baseUrl+"/profile", {idCitoyen : currentUser.idCitoyen}).then((response)=>{
-      if (response.data.message){
-        addToast("Erreur : " + response.data.message, {
-          appearance: 'error',
-          autoDismiss: true,
-        })
-      }
-      else{
-        setCurrentUser(response.data);
-      } 
-    });
+  const profile = async () => {
+    const response = await Axios.post(baseUrl+"/profile", {idCitoyen : currentUser.idCitoyen})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      setCurrentUser(response.data);
+    } 
   }            
 
   const addElection = (titreElection, dateDebut, dateFin, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
-    Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal }).then((response)=>{
+    const response = Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebut: dateDebut, dateFin: dateFin, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal })
       if (response.data.message){
         console.log(response.data.message);
       } 
       else {
         console.log(response.data);
       }
-    });
   }
 
   const addCandidat = (titreCandidat, descriptionCandidat, urlImage, idElection) => {
@@ -166,20 +194,59 @@ function App() {
     });
   }
   
-  const getElections= () => {
-    Axios.post(baseUrl+"/getElections", {idCitoyen : currentUser.idCitoyen}).then((response)=>{
-        if (response.data.message){
-          addToast("Erreur : " + response.data.message, {
-            appearance: 'error',
-            autoDismiss: true,
-          })
-        }
-        else{
-          console.log(response.data);
-          setElections(response.data);
-        }
-    })
+  const getCurrentDate = async () => {
+    const response = await Axios.get(baseUrl+"/currentDate")
+    if (response.data.message){
+      addToast("Impossible de récuperer la date du jour", {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else {
+      setCurrentDate(new Date(response.data))
+    }
   }
+
+  const getElections = async () => {
+    const response = await Axios.post(baseUrl+"/getElections", {idCitoyen : currentUser.idCitoyen})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      setElections(response.data);
+    }
+  }
+
+  const getElection = async () => {
+    console.log("test")
+    const response = await Axios.post(baseUrl+"/getElection", {idElection : 1})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      setElection(response.data);
+    }
+  }
+
+  const getCandidats = async () => {
+    const response = await Axios.post(baseUrl+"/getCandidats", {idElection : election.idElection})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      setCandidats(response.data);
+    }
+  }
+
   return (
     <div className="App">
         <Router>
@@ -214,7 +281,7 @@ function App() {
                 <Home />
               </Route>
               <Route exact path="/elections">
-                {connected ? <Elections onAddElection={addElection} getElections={getElections} elections={elections}/> : <NotConnected />}
+                {connected ? <Elections onAddElection={addElection} getCurrentDate={getCurrentDate} getElections={getElections} filteredElections={filteredElections} filterElection={filterElection} /> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
                 {connected ? <Profil getProfile={profile} currentUser={currentUser} /> : <NotConnected />}
@@ -228,8 +295,8 @@ function App() {
               <Route exact path="/loginAdmin">
                 {connected ? <Home/> : <LoginAdmin onLogin={loginAdmin} />}
               </Route>
-              <Route exact path="/election">
-                <Election></Election>
+              <Route exact path="/election:idElection">
+                {connected ? <Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} /> : <LoginAdmin onLogin={loginAdmin} />}
               </Route>
 
               <Route exact path="/addCandidat">
