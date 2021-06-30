@@ -80,15 +80,40 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
     }
 
     const onFileRead = (electionObj, candidatsArray) => {
-
+        try{
         // Changement des informations de l'élection
         document.getElementById('electionType').value=electionObj.electionType
         setElectionType(electionObj.electionType)
         document.getElementById('electionTitle').value=electionObj.titreElection
         setElectionTitle(electionObj.titreElection)
+        switch(electionObj.electionType){
+            case 'election_nationale' : break;
+            case 'election_municipale' : document.getElementById('codePostalElection').value=electionObj.codePostal; setCodePostal(electionObj.codePostal); break;
+            case 'election_departementale': document.getElementById('codeDepartementElection').value=electionObj.codeDepartement; setCodeDepartement(electionObj.codeDepartement);break;
+            case 'election_regionale' : document.getElementById('regionElection').value=electionObj.nomRegion;setNomRegion(electionObj.nomRegion);break;
+            default : throw 'Erreur';
+        }
+        document.getElementById('dateDebut').valueAsDate = getDateObjFromString(electionObj.dateDebutElection)
+        setDateDebutElection(electionObj.dateDebutElection)
+        document.getElementById('dateFin').valueAsDate = getDateObjFromString(electionObj.dateFinElection)
+        setDateFinElection(electionObj.dateFinElection)
+        document.getElementById('descriptionElection').value=electionObj.descriptionElection
+        setDescriptionElection(electionObj.descriptionElection)
 
         //Changement des informations de la liste des candidats
         setListeCandidats([...listeCandidats].concat(candidatsArray))
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    function getDateObjFromString(string){
+        var dateTab = string.split('-')
+        var newDate = new Date()
+        newDate.setFullYear(dateTab[0])
+        newDate.setMonth(dateTab[1])
+        newDate.setDate(dateTab[2])
+        return newDate
     }
 
     function containsObject(obj, list) {
