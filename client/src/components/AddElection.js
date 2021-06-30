@@ -118,7 +118,7 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         setNomRegion("")
         setCodeDepartement("")
         setCodePostal("")
-        document.getElementById("add-candidat-form").reset()
+        document.getElementById("add-election-form").reset()
     }
 
     const handleOnAddCandidat = (e) => {
@@ -136,11 +136,9 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(listeCandidats.length >= 0) {        // Remettre à 2
+        if(listeCandidats.length >= 2) {
             await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
-            // listeCandidats.forEach(
-            //     candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
-            // )
+            resetFormElection()
         }
         else {
             alert('Ajouter au moins 2 candidats')
@@ -271,7 +269,7 @@ const styles = {
             fontSize: "1rem"
         },
         '@media (min-width: 1100px)': { 
-            fontSize: "1.5rem"
+            fontSize: "1rem"
         },
         ':hover': {
             border: "1px solid #0B6BA8",
@@ -289,12 +287,12 @@ const styles = {
             fontSize: "1rem"
         },
         '@media (min-width: 1100px)': { 
-            fontSize: "1.5rem"
+            fontSize: "1rem"
         }
     },
     divForm: {
         backgroundColor: "white",
-        padding: "40px 40px 70px 40px",
+        padding: "40px 40px 50px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px"
     },
