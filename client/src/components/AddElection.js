@@ -190,17 +190,17 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
             <form id="add-election-form" onSubmit={handleSubmit}>
-                <label className="add-election-label">Type de l'élection :
-                    <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
-                        <optgroup style={styles.option}>
-                            <option key={0} value="">Sélectionner un type</option>
-                            <option key={1} value="election_nationale">Election nationale</option>
-                            <option key={2} value="election_regionale">Election régionale</option>
-                            <option key={3} value="election_departementale">Election départementale</option>
-                            <option key={4} value="election_municipale">Election municipale</option>
-                        </optgroup>
-                    </select>
-                </label>
+                <label className="add-election-label" style={styles.selectLabel}>Type de l'élection :</label>
+                <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
+                    <optgroup style={styles.option}>
+                        <option key={0} value="">Sélectionner un type</option>
+                        <option key={1} value="election_nationale">Election nationale</option>
+                        <option key={2} value="election_regionale">Election régionale</option>
+                        <option key={3} value="election_departementale">Election départementale</option>
+                        <option key={4} value="election_municipale">Election municipale</option>
+                    </optgroup>
+                </select>
+                
 
                 {electionType !== "" &&
                     <div style={styles.divForm}>
@@ -258,7 +258,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
                         <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
 
                         <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>
                         <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>
 
                         <input type="submit" className="add-candidat-button" style={styles.button} key="btnSubmitCandidat" value="Ajouter un candidat" />
@@ -278,12 +277,15 @@ const styles = {
         paddingBottom: "15px",
         textAlign: "center"
     },
+    selectLabel: {
+        marginRight: "15px",
+        lineHeight: "30px",
+    },
     select: {
         WebkitAppearance: "none",
         MozAppearance: "none",
         border: "1px solid #E5E5E5",
         padding: "15px",
-        marginLeft: "15px",
         backgroundColor: "#ffffff",
         backgroundImage: "url(" + arrow + ")",
         backgroundRepeat: "no-repeat",
@@ -326,6 +328,9 @@ const styles = {
         margin: "20px 0px 20px 0px",
         '@media (max-width: 960px)':{
             padding: "40px 40px 120px 40px",
+        },
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 120px 20px"
         }
     },
     label: {
@@ -334,8 +339,9 @@ const styles = {
         lineHeight: "50px",
         textAlign: "center",
         verticalAlign: "middle",
-        '@media (max-width: 400px)': {
-            float: "none"
+        '@media (max-width: 640px)': { 
+            float: "none",
+            lineHeight: "30px",
         }
     },
     input: {
@@ -352,7 +358,7 @@ const styles = {
         padding: "15px",
         textDecoration: "none",
         cursor: "pointer",
-        minWidth: "200px",
+        width: "200px",
         float: "right",
         margin: "0px 0px 10px 10px",
         ':hover': {
@@ -371,7 +377,7 @@ const styles = {
         padding: "15px",
         textDecoration: "none",
         cursor: "pointer",
-        minWidth: "200px",
+        width: "200px",
         float: "right",
         ':hover': {
             backgroundColor: "#074E7B",
@@ -385,7 +391,7 @@ const styles = {
         display: "block",
         overflow: "hidden",
         paddingLeft: "15px",
-        '@media (max-width: 400px)': {
+        '@media (max-width: 640px)': {
             paddingLeft: "0px"
         }
     },
@@ -418,7 +424,11 @@ const styles = {
         margin: "auto",
         padding: "40px 40px 70px 40px",
         border: "1px solid #888",
-        width: "80%"
+        width: "calc(80% - 50px)",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 70px 20px",
+            width: "calc(100% - 50px)",
+        }
     },
     close: {
         color: "#aaaaaa",
