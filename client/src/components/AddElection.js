@@ -80,15 +80,40 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
     }
 
     const onFileRead = (electionObj, candidatsArray) => {
-
+        try{
         // Changement des informations de l'élection
         document.getElementById('electionType').value=electionObj.electionType
         setElectionType(electionObj.electionType)
         document.getElementById('electionTitle').value=electionObj.titreElection
         setElectionTitle(electionObj.titreElection)
+        switch(electionObj.electionType){
+            case 'election_nationale' : break;
+            case 'election_municipale' : document.getElementById('codePostalElection').value=electionObj.codePostal; setCodePostal(electionObj.codePostal); break;
+            case 'election_departementale': document.getElementById('codeDepartementElection').value=electionObj.codeDepartement; setCodeDepartement(electionObj.codeDepartement);break;
+            case 'election_regionale' : document.getElementById('regionElection').value=electionObj.nomRegion;setNomRegion(electionObj.nomRegion);break;
+            default : throw 'Erreur';
+        }
+        document.getElementById('dateDebut').valueAsDate = getDateObjFromString(electionObj.dateDebutElection)
+        setDateDebutElection(electionObj.dateDebutElection)
+        document.getElementById('dateFin').valueAsDate = getDateObjFromString(electionObj.dateFinElection)
+        setDateFinElection(electionObj.dateFinElection)
+        document.getElementById('descriptionElection').value=electionObj.descriptionElection
+        setDescriptionElection(electionObj.descriptionElection)
 
         //Changement des informations de la liste des candidats
         setListeCandidats([...listeCandidats].concat(candidatsArray))
+        }catch(e){
+            console.log(e)
+        }
+    }
+
+    function getDateObjFromString(string){
+        var dateTab = string.split('-')
+        var newDate = new Date()
+        newDate.setFullYear(dateTab[0])
+        newDate.setMonth(dateTab[1])
+        newDate.setDate(dateTab[2])
+        return newDate
     }
 
     function containsObject(obj, list) {
@@ -180,36 +205,36 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         {electionType === "election_regionale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Nom de la région : </label>
-                            <span style={styles.span}><input id="regionElection" type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required /></span>
+                            <span style={styles.span}><input id="regionElection" type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required value={nomRegion}/></span>
                             </div>
                         }
 
                         {electionType === "election_departementale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Code du département : </label>
-                            <span style={styles.span}><input id="codeDepartementElection" type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required /></span>
+                            <span style={styles.span}><input id="codeDepartementElection" type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required value={codeDepartement}/></span>
                             </div>
                         }
 
                         {electionType === "election_municipale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Code postal : </label>
-                            <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required /></span>
+                            <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required value={codePostal}/></span>
                             </div>
                         }
                        
                         <label className="add-election-label" style={styles.label}>Titre de l'élection : </label>
-                        <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required /></span>
+                        <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required value={titreElection}/></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
-                        <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
+                        <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required value={dateDebutElection} /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
-                        <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required /></span>
+                        <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required value={dateFinElection}/></span>
                         
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
-                        <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
+                        <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type= "button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={ () => btnFunction()}>Open Modal</button>

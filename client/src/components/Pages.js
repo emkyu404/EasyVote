@@ -9,6 +9,7 @@ import LoginAdmin from './LoginAdmin'
 import NotConnected from './NotConnected'
 import Election from './Election'
 import AddElection from "./AddElection"
+import PageNotFound from './PageNotFound'
 
 const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats}) => {
     return(
@@ -42,6 +43,10 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
 
               <Route exact path="/addCandidat">
                 {/* <AddCandidat onAddCandidat={addCandidat} idElectionChoisi={ idElection } /> */}
+              </Route>
+
+              <Route path="*" >
+                <PageNotFound />
               </Route>
             </Switch>
           </div>
