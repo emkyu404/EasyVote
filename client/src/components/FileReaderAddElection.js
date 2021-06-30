@@ -9,10 +9,15 @@ const FileReaderAddElection = ({onFileRead}) => {
     let election = {}
 
     function convertDateFormat(string){
-        console.log(string)
-        let stringTab = string.split('/')
-        let newString = '20'+stringTab[2] + '-' + stringTab[0] + '-' + stringTab[1]
+        let date = string.split(' ')
+        let stringTab = date[0].split('/')
+        let newString = '20'+stringTab[2] + '-' + transformDayMonthFormat(stringTab[0]) + '-' + transformDayMonthFormat(stringTab[1])
+        console.log(newString)
         return newString
+    }
+
+    function transformDayMonthFormat(string){
+        return parseInt(string) < 10 ? "0"+string: string
     }
 
     const handleNewFile = (e) => {

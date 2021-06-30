@@ -80,15 +80,40 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
     }
 
     const onFileRead = (electionObj, candidatsArray) => {
+        try {
+            // Changement des informations de l'élection
+            document.getElementById('electionType').value = electionObj.electionType
+            setElectionType(electionObj.electionType)
+            document.getElementById('electionTitle').value = electionObj.titreElection
+            setElectionTitle(electionObj.titreElection)
+            switch (electionObj.electionType) {
+                case 'election_nationale': break;
+                case 'election_municipale': document.getElementById('codePostalElection').value = electionObj.codePostal; setCodePostal(electionObj.codePostal); break;
+                case 'election_departementale': document.getElementById('codeDepartementElection').value = electionObj.codeDepartement; setCodeDepartement(electionObj.codeDepartement); break;
+                case 'election_regionale': document.getElementById('regionElection').value = electionObj.nomRegion; setNomRegion(electionObj.nomRegion); break;
+                default: throw 'Erreur';
+            }
+            document.getElementById('dateDebut').valueAsDate = getDateObjFromString(electionObj.dateDebutElection)
+            setDateDebutElection(electionObj.dateDebutElection)
+            document.getElementById('dateFin').valueAsDate = getDateObjFromString(electionObj.dateFinElection)
+            setDateFinElection(electionObj.dateFinElection)
+            document.getElementById('descriptionElection').value = electionObj.descriptionElection
+            setDescriptionElection(electionObj.descriptionElection)
 
-        // Changement des informations de l'élection
-        document.getElementById('electionType').value = electionObj.electionType
-        setElectionType(electionObj.electionType)
-        document.getElementById('electionTitle').value = electionObj.titreElection
-        setElectionTitle(electionObj.titreElection)
+            //Changement des informations de la liste des candidats
+            setListeCandidats([...listeCandidats].concat(candidatsArray))
+        } catch (e) {
+            console.log(e)
+        }
+    }
 
-        //Changement des informations de la liste des candidats
-        setListeCandidats([...listeCandidats].concat(candidatsArray))
+    function getDateObjFromString(string) {
+        var dateTab = string.split('-')
+        var newDate = new Date()
+        newDate.setFullYear(dateTab[0])
+        newDate.setMonth(dateTab[1])
+        newDate.setDate(dateTab[2])
+        return newDate
     }
 
     function containsObject(obj, list) {
@@ -101,6 +126,26 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
         return false;
     }
 
+    function resetFormCandidat() {
+        setCandidatTitle("")
+        setDescriptionCandidat("")
+        setUrlCandidat("")
+        document.getElementById("add-candidat-form").reset()
+    }
+
+    function resetFormElection() {
+        setElectionTitle("")
+        setDateDebutElection("")
+        setDateFinElection("")
+        setDescriptionElection("")
+        setElectionType("")
+
+        setNomRegion("")
+        setCodeDepartement("")
+        setCodePostal("")
+        document.getElementById("add-election-form").reset()
+    }
+
     const handleOnAddCandidat = (e) => {
         e.preventDefault()
 
@@ -111,22 +156,14 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
         }
 
         setListeCandidats([...listeCandidats].concat(newCandidat))
-        setCandidatTitle("")
-        setDescriptionCandidat("")
-        setUrlCandidat("")
-        setShowAddCandidat(false)
-
-        e.target.reset()
-
+        resetFormCandidat()
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if (listeCandidats.length >= 0) {
+        if (listeCandidats.length >= 2) {
             await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
-            listeCandidats.forEach(
-                candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
-            )
+            resetFormElection()
         }
         else {
             alert('Ajouter au moins 2 candidats')
@@ -152,7 +189,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
     return (
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
-            <form onSubmit={handleSubmit}>
+            <form id="add-election-form" onSubmit={handleSubmit}>
                 <label className="add-election-label">Type de l'élection :
                     <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
                         <optgroup style={styles.option}>
@@ -170,36 +207,36 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
                         {electionType === "election_regionale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Nom de la région : </label>
-                                <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required /></span>
+                                <span style={styles.span}><input id="regionElection" type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required value={nomRegion} /></span>
                             </div>
                         }
 
                         {electionType === "election_departementale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Code du département : </label>
-                                <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required /></span>
+                                <span style={styles.span}><input id="codeDepartementElection" type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required value={codeDepartement} /></span>
                             </div>
                         }
 
                         {electionType === "election_municipale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Code postal : </label>
-                                <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required /></span>
+                                <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required value={codePostal} /></span>
                             </div>
                         }
 
                         <label className="add-election-label" style={styles.label}>Titre de l'élection : </label>
-                        <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required /></span>
+                        <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required value={titreElection} /></span>
 
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
-                        <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
+                        <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required value={dateDebutElection} /></span>
 
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
-                        <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required /></span>
+                        <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required value={dateFinElection} /></span>
 
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
-                        <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
+                        <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Open Modal</button>
@@ -207,20 +244,21 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
                     </div>
                 }
             </form>
-            <form onSubmit={handleOnAddCandidat}>
+            <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
                         <span className="close" onClick={() => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
                         <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
 
                         <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
-                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>
+                        <span style={styles.span}><input type="text" id="input-titre-candidat" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>
 
                         <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
-                        <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
+                        <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
 
                         <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
                         <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>
+                        <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>
 
                         <input type="submit" className="add-candidat-button" style={styles.button} key="btnSubmitCandidat" value="Ajouter un candidat" />
                     </div>
@@ -259,7 +297,7 @@ const styles = {
             fontSize: "1rem"
         },
         '@media (min-width: 1100px)': {
-            fontSize: "1.5rem"
+            fontSize: "1rem"
         },
         ':hover': {
             border: "1px solid #0B6BA8",
@@ -277,12 +315,12 @@ const styles = {
             fontSize: "1rem"
         },
         '@media (min-width: 1100px)': {
-            fontSize: "1.5rem"
+            fontSize: "1rem"
         }
     },
     divForm: {
         backgroundColor: "white",
-        padding: "40px 40px 70px 40px",
+        padding: "40px 40px 50px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px"
     },
