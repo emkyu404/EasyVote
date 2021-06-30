@@ -5,13 +5,13 @@ import Radium from 'radium';
 import FileReaderAddElection from './FileReaderAddElection'
 
 
-const AddElection = ({addCandidat, onAddElection, idElection }) => {
+const AddElection = ({ addCandidat, onAddElection, idElection }) => {
 
-    useEffect(()=>{
+    useEffect(() => {
         listeCandidats.forEach(
             candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
         )
-      },[idElection])
+    }, [idElection])
 
     const [titreElection, setElectionTitle] = useState("")
     const [dateDebutElection, setDateDebutElection] = useState("")
@@ -31,14 +31,14 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
     const [listeCandidats, setListeCandidats] = useState([])
 
     const handleChange = (e) => {
-        if(electionType !== undefined) {
+        if (electionType !== undefined) {
             setElectionType(e.target.value)
             var inputs = document.getElementsByClassName("add-election-input")
-            for (var i=0; i<inputs.length; i++) {
-                inputs[i].value="";
+            for (var i = 0; i < inputs.length; i++) {
+                inputs[i].value = "";
             }
         }
-        
+
     }
     const handleRegionOnChange = (e) => {
         setNomRegion(e.target.value)
@@ -82,9 +82,9 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
     const onFileRead = (electionObj, candidatsArray) => {
 
         // Changement des informations de l'élection
-        document.getElementById('electionType').value=electionObj.electionType
+        document.getElementById('electionType').value = electionObj.electionType
         setElectionType(electionObj.electionType)
-        document.getElementById('electionTitle').value=electionObj.titreElection
+        document.getElementById('electionTitle').value = electionObj.titreElection
         setElectionTitle(electionObj.titreElection)
 
         //Changement des informations de la liste des candidats
@@ -115,12 +115,14 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         setDescriptionCandidat("")
         setUrlCandidat("")
         setShowAddCandidat(false)
-        
+
+        e.target.reset()
+
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(listeCandidats.length >= 0) {
+        if (listeCandidats.length >= 0) {
             await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             listeCandidats.forEach(
                 candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
@@ -129,6 +131,8 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         else {
             alert('Ajouter au moins 2 candidats')
         }
+        e.target.reset()
+
     }
 
     function btnFunction() {
@@ -149,80 +153,80 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
             <form onSubmit={handleSubmit}>
-                <label className="add-election-label">Type de l'élection : 
-                <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
-                    <optgroup style={styles.option}>
-                        <option key={0} value="">Sélectionner un type</option>
-                        <option key={1} value="election_nationale">Election nationale</option>
-                        <option key={2} value="election_regionale">Election régionale</option>
-                        <option key={3} value="election_departementale">Election départementale</option>
-                        <option key={4} value="election_municipale">Election municipale</option>
-                    </optgroup>
-                </select>
+                <label className="add-election-label">Type de l'élection :
+                    <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
+                        <optgroup style={styles.option}>
+                            <option key={0} value="">Sélectionner un type</option>
+                            <option key={1} value="election_nationale">Election nationale</option>
+                            <option key={2} value="election_regionale">Election régionale</option>
+                            <option key={3} value="election_departementale">Election départementale</option>
+                            <option key={4} value="election_municipale">Election municipale</option>
+                        </optgroup>
+                    </select>
                 </label>
 
                 {electionType !== "" &&
                     <div style={styles.divForm}>
                         {electionType === "election_regionale" &&
                             <div>
-                            <label className="add-election-label" style={styles.label}>Nom de la région : </label>
-                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required /></span>
+                                <label className="add-election-label" style={styles.label}>Nom de la région : </label>
+                                <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required /></span>
                             </div>
                         }
 
                         {electionType === "election_departementale" &&
                             <div>
-                            <label className="add-election-label" style={styles.label}>Code du département : </label>
-                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required /></span>
+                                <label className="add-election-label" style={styles.label}>Code du département : </label>
+                                <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required /></span>
                             </div>
                         }
 
                         {electionType === "election_municipale" &&
                             <div>
-                            <label className="add-election-label" style={styles.label}>Code postal : </label>
-                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required /></span>
+                                <label className="add-election-label" style={styles.label}>Code postal : </label>
+                                <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required /></span>
                             </div>
                         }
-                       
+
                         <label className="add-election-label" style={styles.label}>Titre de l'élection : </label>
                         <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required /></span>
-                        
+
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
                         <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
-                        
+
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
                         <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required /></span>
-                        
+
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
-                        <button type= "button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={ () => btnFunction()}>Open Modal</button>
-                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div> )} 
+                        <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Open Modal</button>
+                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div>)}
                     </div>
                 }
             </form>
-            <form onSubmit={handleOnAddCandidat}>  
+            <form onSubmit={handleOnAddCandidat}>
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
-                        <span className="close" onClick={ () => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
+                        <span className="close" onClick={() => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
                         <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
 
                         <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
-                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
+                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>
 
                         <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
                         <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
 
                         <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
+                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>
 
                         <input type="submit" className="add-candidat-button" style={styles.button} key="btnSubmitCandidat" value="Ajouter un candidat" />
                     </div>
-                </div>    
+                </div>
             </form>
-            <FileReaderAddElection onFileRead={onFileRead}/>   
+            <FileReaderAddElection onFileRead={onFileRead} />
         </div>
     )
 }
@@ -241,20 +245,20 @@ const styles = {
         border: "1px solid #E5E5E5",
         padding: "15px",
         marginLeft: "15px",
-        backgroundColor : "#ffffff",
-        backgroundImage : "url("+arrow+")",
-        backgroundRepeat : "no-repeat",
-        backgroundPosition : "95%",
-        backgroundSize : "15px",
+        backgroundColor: "#ffffff",
+        backgroundImage: "url(" + arrow + ")",
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "95%",
+        backgroundSize: "15px",
         transition: "0.5s",
         fontFamily: "Open Sans",
-        '@media (min-width: 640px)': { 
+        '@media (min-width: 640px)': {
             fontSize: "1rem"
         },
-        '@media (min-width: 960px)': { 
+        '@media (min-width: 960px)': {
             fontSize: "1rem"
         },
-        '@media (min-width: 1100px)': { 
+        '@media (min-width: 1100px)': {
             fontSize: "1.5rem"
         },
         ':hover': {
@@ -266,13 +270,13 @@ const styles = {
     },
     option: {
         fontFamily: "Open Sans",
-        '@media (min-width: 640px)': { 
+        '@media (min-width: 640px)': {
             fontSize: "1rem"
         },
-        '@media (min-width: 960px)': { 
+        '@media (min-width: 960px)': {
             fontSize: "1rem"
         },
-        '@media (min-width: 1100px)': { 
+        '@media (min-width: 1100px)': {
             fontSize: "1.5rem"
         }
     },
@@ -288,7 +292,7 @@ const styles = {
         lineHeight: "50px",
         textAlign: "center",
         verticalAlign: "middle",
-        '@media (max-width: 400px)': { 
+        '@media (max-width: 400px)': {
             float: "none"
         }
     },
@@ -309,9 +313,9 @@ const styles = {
         minWidth: "200px",
         float: "right",
         marginLeft: "10px",
-        ':hover':{
+        ':hover': {
             backgroundColor: "#074E7B",
-             transition: "0.2s"
+            transition: "0.2s"
         }
     },
     button: {
@@ -324,16 +328,16 @@ const styles = {
         minWidth: "200px",
         float: "right",
         marginLeft: "10px",
-        ':hover':{
+        ':hover': {
             backgroundColor: "#074E7B",
-             transition: "0.2s"
+            transition: "0.2s"
         }
     },
     span: {
         display: "block",
         overflow: "hidden",
         paddingLeft: "15px",
-        '@media (max-width: 400px)': { 
+        '@media (max-width: 400px)': {
             paddingLeft: "0px"
         }
     },
@@ -349,40 +353,40 @@ const styles = {
         display: "none"
     },
     modal: {
-      display: "none",
-      position: "fixed",
-      zIndex: "100",
-      paddingTop: "100px",
-      left: "0",
-      top: "0",
-      width: "100%",
-      height: "100%",
-      overflow: "auto",
-      backgroundColor: "rgb(0,0,0)",
-      backgroundColor: "rgba(0,0,0,0.4)"
+        display: "none",
+        position: "fixed",
+        zIndex: "100",
+        paddingTop: "100px",
+        left: "0",
+        top: "0",
+        width: "100%",
+        height: "100%",
+        overflow: "auto",
+        backgroundColor: "rgb(0,0,0)",
+        backgroundColor: "rgba(0,0,0,0.4)"
     },
     modalContent: {
-      backgroundColor: "white",
-      margin: "auto",
-      padding: "40px 40px 70px 40px",
-      border: "1px solid #888",
-      width: "80%"
+        backgroundColor: "white",
+        margin: "auto",
+        padding: "40px 40px 70px 40px",
+        border: "1px solid #888",
+        width: "80%"
     },
     close: {
-      color: "#aaaaaa",
-      float: "right",
-      fontSize: "28px",
-      fontWeight: "bold",
-      ':hover':{
-        color: "#000",
-        textdecoration: "none",
-        cursor: "pointer"
-      },
-      ':focus':{
-        color: "#000",
-        textDecoration: "none",
-        cursor: "pointer"
-      }
+        color: "#aaaaaa",
+        float: "right",
+        fontSize: "28px",
+        fontWeight: "bold",
+        ':hover': {
+            color: "#000",
+            textdecoration: "none",
+            cursor: "pointer"
+        },
+        ':focus': {
+            color: "#000",
+            textDecoration: "none",
+            cursor: "pointer"
+        }
     }
 }
 
