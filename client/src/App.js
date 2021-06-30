@@ -18,7 +18,7 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: ""})
+  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: "", nomCitoyen : ""})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
   const [election, setElection] = useState({idElection : 0})
@@ -42,39 +42,48 @@ function App() {
 
   useEffect(() => {
     handleConnected()
-  }, [currentUser])
+  }, [currentUser.idAdmin, currentUser.idCitoyen])
 
   useEffect(() => {
     var aFilteredelections
     switch (currentFilter){
       case "Ongoing" : 
-        aFilteredelections = elections.filter(election => new Date(election.dateDebutElection) < currentDate && new Date(election.dateFinElection) > currentDate)
+        aFilteredelections = elections.filter(election => election.start < currentDate && election.end > currentDate)
         break;
       case "Soon" : 
-        aFilteredelections = elections.filter(election => new Date(election.dateDebutElection) > currentDate)
+        aFilteredelections = elections.filter(election => election.start > currentDate)
         break;
       case "Finished" : 
-        aFilteredelections = elections.filter(election => new Date(election.dateFinElection) < currentDate)
+        aFilteredelections = elections.filter(election => election.end < currentDate)
         break;
       default : 
-        aFilteredelections = elections.filter(election => new Date(election.dateDebutElection) < currentDate && new Date(election.dateFinElection) > currentDate)
+        aFilteredelections = elections.filter(election => election.start < currentDate && election.end > currentDate)
         break;
     }
     
     setFilteredElections(aFilteredelections)
   }, [currentFilter])
 
-  useEffect(() => {
-    //console.log(filteredElections)
-  },[filteredElections])
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
   const handleConnected = () => {
     if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
       setConnected(false)
+      
     } else {
       setConnected(true)
+      let connectedText="";
+      if (currentUser.idAdmin){
+        connectedText = "administrateur " + currentUser.idAdmin
+      }
+      else{
+        connectedText = currentUser.nomCitoyen;
+      }
+      addToast("Bonjour " + connectedText, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
     }
   }
 
@@ -107,12 +116,7 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      addToast("Bonjour " + currentUser.nomCitoyen, {
-        appearance: 'success',
-        autoDismiss: true,
-      })
     }
-    //window.location.replace("/")
   };
 
   const loginAdmin = async (email, password) => {
@@ -125,10 +129,6 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      addToast("Bonjour " + currentUser.idAdmin, {
-        appearance: 'success',
-        autoDismiss: true,
-      })
     }
   };
 
@@ -140,7 +140,6 @@ function App() {
         appearance: 'success',
         autoDismiss: true,
       })
-
     } 
     else {
       addToast("Vous n'avez pas réussi à vous deconnecter", {
@@ -163,18 +162,6 @@ function App() {
     } 
   }            
 
-  // const getIdElection = (titreElection, dateDebutElection, dateFinElection) => {
-  //   Axios.post(baseUrl+"/getIdElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection }).then((response)=>{
-  //     if (response.data.message){
-  //       console.log(response.data.message);
-  //     } 
-  //     else {
-  //       console.log(response.data[0].idElection);
-  //       setIdElection(response.data[0].idElection)
-  //     }
-  //   })
-  // }
-
   const addElection = async (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
       const response = await Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal })
       if (response.data.message){
@@ -185,11 +172,14 @@ function App() {
       } 
       else {
         setIdElection(response.data[1][0].idElection);
+        addToast("Élection : " + response.data[1][0].titreElection +" ajoutée", {
+          appearance: 'error',
+          autoDismiss: true,
+        })
       }
     }
 
   const addCandidat = async (titreCandidat, descriptionCandidat, urlImage) => {
-    console.log(election.idElection)
     const response = await Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection })
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
@@ -198,7 +188,10 @@ function App() {
       })
     }
     else {
-      console.log(response.data);
+      addToast("Candidat : " + response.titreCandidat +" ajouté", {
+        appearance: 'error',
+        autoDismiss: true,
+      })
     }
   }
   
@@ -211,7 +204,7 @@ function App() {
       })
     }
     else {
-      setCurrentDate(new Date(response.data))
+      setCurrentDate(response.data)
     }
   }
 

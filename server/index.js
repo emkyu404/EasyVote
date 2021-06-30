@@ -11,24 +11,12 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(session({ key : 'token', secret: 'EZSTONKS', saveUninitialized: false, resave: false, cookie: { expires: 33300000 } }));
 app.use(cookieParser());
-// app.use((req, res, next) => {
-//   if (req.cookies.token && !req.session.user) {
-//     res.clearCookie("token");
-//   }
-//   next();
-// });
-
-// var sessionChecker = (req, res, next) => {
-//   if (req.session.user && req.cookies.token) {
-//     res.redirect("/elections");
-//   } else {
-//     next();
-//   }
-// };
-
-// app.get("/", sessionChecker, (req, res) => {
-//   res.redirect("/login");
-// });
+app.use((req, res, next) => {
+  if (req.cookies.token && !req.session.user) {
+    res.clearCookie("token");
+  }
+  next();
+});
 
 const db = mysql.createConnection({
   host: "localhost",
@@ -68,7 +56,7 @@ app.post("/login", (req, res) => {
       else{
         if(resultMail.length ==1){
           db.query(
-            "SELECT * FROM electeur WHERE idCitoyen=? AND motDePasseElecteur=?",
+            "SELECT electeur.idCitoyen, citoyen.nomCitoyen FROM electeur INNER JOIN citoyen on electeur.idCitoyen=citoyen.idCitoyen WHERE electeur.idCitoyen=?",
             [resultMail[0].idCitoyen, password],
             (err, resultPassword) => {
               if (err){
@@ -79,6 +67,7 @@ app.post("/login", (req, res) => {
                 if(resultPassword.length ==1){
                   req.session.user = {
                     idCitoyen : resultPassword[0].idCitoyen,
+                    nomCitoyen : resultPassword[0].nomCitoyen
                   }
                   res.json(req.session.user)
                 }
@@ -186,7 +175,7 @@ app.post('/getElections', (req, res) => {
   if(checkSameAccount(req)===true){
     const idCitoyen = req.session.user.idCitoyen
 
-    db.query("SELECT * FROM Election",
+    db.query("SET lc_time_names = 'fr_FR'; SELECT idElection, titreElection, descriptionElection, DATE_FORMAT(dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection , DATE_FORMAT(dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end' FROM Election",
     [],
     (err, result) => {
       if (err) {
@@ -194,8 +183,7 @@ app.post('/getElections', (req, res) => {
         res.json({message : "Impossible de récupérer les élections"})
       } 
       else if(result.length != 0){
-        result.forEach(election => election.dateDebutElection = new Date(election.dateDebutElection).toISOString().slice(0, 19).replace('T', ' '))
-        res.json(result)
+        res.json(result[1])
       }
       else {
         res.json({message : "Vous ne pouvez accèder à aucune élection"})
@@ -206,7 +194,7 @@ app.post('/getElections', (req, res) => {
 
 app.post('/getElection', (req, res) => {
   const idElection = req.body.idElection
-  db.query("SELECT el.idElection, el.titreElection, el.dateDebutElection, el.dateFinElection, el.dateFinElection, el.descriptionElection, el.idAdmin, count(pa.idElection)as 'nbVotes' FROM Election el INNER JOIN  Participer pa WHERE el.idElection = ?",
+  db.query("SET lc_time_names = 'fr_FR'; SELECT el.idElection, el.titreElection, el.dateDebutElection, el.dateFinElection, el.dateFinElection, el.descriptionElection, el.idAdmin, count(pa.idElection)as 'nbVotes' FROM Election el INNER JOIN  Participer pa WHERE el.idElection = ?",
   [idElection],
   (err, result) => {
     if (err) {
@@ -222,52 +210,14 @@ app.post('/getElection', (req, res) => {
   })
 });
 
-// app.post('/getIdElection', (req, res) => {
-//   const titreElection = req.body.titreElection
-//   const dateDebutElection = req.body.dateDebutElection
-//   const dateFinElection = req.body.dateFinElection 
-
-//   db.query(
-//     "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
-//     [titreElection, dateDebutElection, dateFinElection],
-//     (err, resultIdElection) => {
-//       if (err){
-//         console.log(err);
-//         res.json({message : "Impossible de récupérer l'id de l'élection"})
-//       }
-//       else{
-//         if(resultIdElection.length === 1) {
-//           res.status(200).json(resultIdElection)
-//         }
-//       }
-//     }
-//   )
-// });
-
 app.get('/currentDate', (req, res) => {
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
+  //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date+' '+time;
   res.json(dateTime);
 });
-
-// app.post('/getIdElection', titreElection, dateDebut, dateFin, (req, res) => {
-//   db.query(
-//     "SELECT idElection FROM election WHERE titreElection=? AND dateDebut=? AND dateFin=?",
-//     [titreElection, dateDebut, dateFin],
-//     (err, resultIdElection) => {
-//       if (err){
-//         console.log(err);
-//       }
-//       else{
-//         if(resultIdElection.length === 1) {
-//           res.status(200).json({ idElection: idElection })
-//         }
-//       }
-//     }
-//   )
-// })
 
 app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection
@@ -319,7 +269,6 @@ app.post('/addElection', (req, res) => {
                     res.status(401).json({ message: 'Le type d\'élection n\'existe pas' })
                     break;
                 }  
-                console.log(result)
                 res.status(200).json(result)
               }
             }
@@ -456,7 +405,6 @@ app.post('/addCandidat', (req, res) => {
   const descriptionCandidat = req.body.descriptionCandidat
   const urlImage = req.body.urlImage
   const idElection = req.body.idElection
-  // const idElection = req.session.currentUser.idAdmin
 
   db.query(
     "SELECT idCandidat FROM candidat WHERE titreCandidat=? AND idElection=?",
