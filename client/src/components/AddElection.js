@@ -101,6 +101,16 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         return false;
     }
 
+    function resetFormCandidat() {
+        setCandidatTitle("")
+        document.getElementById("input-titre-candidat").value = ""
+        setDescriptionCandidat("")
+        document.getElementById("input-description-candidat").value = ""
+        setUrlCandidat("")
+        document.getElementById("input-url-candidat").value = ""
+        spanFunction()
+    }
+
     const handleOnAddCandidat = (e) => {
         e.preventDefault()
 
@@ -111,16 +121,12 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         }
 
         setListeCandidats([...listeCandidats].concat(newCandidat))
-        setCandidatTitle("")
-        setDescriptionCandidat("")
-        setUrlCandidat("")
-        setShowAddCandidat(false)
-        
+        resetFormCandidat()
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        if(listeCandidats.length >= 0) {
+        if(listeCandidats.length >= 0) {        // Remettre à 2
             await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             listeCandidats.forEach(
                 candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
@@ -210,13 +216,13 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
 
                         <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
-                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
+                        <span style={styles.span}><input type="text" id="input-titre-candidat" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
 
                         <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
-                        <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
+                        <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
 
                         <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
+                        <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
 
                         <input type="submit" className="add-candidat-button" style={styles.button} key="btnSubmitCandidat" value="Ajouter un candidat" />
                     </div>
