@@ -18,13 +18,12 @@ const Candidats = ({candidats}) => {
 }
 
 const styles={
-    // card
     container: {
         overflow: "hidden",
         display: "flex",
         flexWrap: "wrap",
         justifyContent: "space-between",
-    }
+    },
 }
 
 export default Candidats
