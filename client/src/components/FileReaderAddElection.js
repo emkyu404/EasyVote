@@ -2,11 +2,18 @@ import React from 'react'
 import * as XLSX from 'xlsx'
 import { useToasts } from 'react-toast-notifications'
 
-const Test = () => {
+const FileReaderAddElection = ({onFileRead}) => {
 
     const {addToast} = useToasts()
     let candidatsArray = []
     let election = {}
+
+    function convertDateFormat(string){
+        console.log(string)
+        let stringTab = string.split('/')
+        let newString = '20'+stringTab[2] + '-' + stringTab[0] + '-' + stringTab[1]
+        return newString
+    }
 
     const handleNewFile = (e) => {
         var name = e.name;
@@ -28,12 +35,10 @@ const Test = () => {
                 // Lecture d'un fichier excel, contenu est dans DATA
                 let newCandidatsArray = []
                 data.forEach(element => {
-                    let newElement = {Titre:element.Titre, Description:element.Description, url:element.URL}
+                    let newElement = {titreCandidat:element.Titre, descriptionCandidat:element.Description, urlCandidat:element.URL}
                     newCandidatsArray.push(newElement)
-                    console.log(newCandidatsArray)
                 });
                 candidatsArray = newCandidatsArray
-                console.log(candidatsArray)
 
                 const wsname2 = wb.SheetNames[1]
                 if(wsname2 != "Election"){
@@ -46,10 +51,10 @@ const Test = () => {
                 let newElection
 
                 data2.forEach(element => {
-                    newElection = {titreElection: element.Titre, dateDebutElection: element.dateDebut, dateFinElection: element.dateFin, descriptionElection : element.description, electionType: element.échelle}
-                    console.log(element.échelle)
+                    let dateDebut = convertDateFormat(element.dateDebut)
+                    let dateFin = convertDateFormat(element.dateFin)
+                    newElection = {titreElection: element.Titre, dateDebutElection: dateDebut, dateFinElection: dateFin, descriptionElection : element.description}
                     let typeElection = element.échelle.toUpperCase()
-                    console.log(typeElection)
                     switch(typeElection){
                         case 'NATIONALE' : newElection = {...newElection, electionType: 'election_nationale', nomRegion:null, codeDepartement:null, codePostal:null}; break;
                         case 'REGIONALE' : newElection = {...newElection, electionType: 'election_regionale', nomRegion:element.zone, codeDepartement:null, codePostal:null}; break;
@@ -59,7 +64,8 @@ const Test = () => {
                     }
                 })
                 election = newElection
-                console.log(newElection)
+
+                onFileRead(election,candidatsArray)
 
                 addToast("Lecture du fichier réalisé avec succès",{
                     appearance: 'success',
@@ -71,7 +77,6 @@ const Test = () => {
                     autoDismiss: true,
                 })
             }
-            //Lecture de la seconde feuille
         }
 
         reader.readAsBinaryString(e)
@@ -88,4 +93,4 @@ const Test = () => {
     )
 }
 
-export default Test
+export default FileReaderAddElection

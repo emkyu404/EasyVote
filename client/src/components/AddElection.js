@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import arrow from '../img/down-arrow.svg';
 import Radium from 'radium';
 
+import FileReaderAddElection from './FileReaderAddElection'
+
+
 const AddElection = ({addCandidat, onAddElection, idElection }) => {
 
     useEffect(()=>{
@@ -76,6 +79,18 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         setShowAddCandidat(!showAddCandidat)
     }
 
+    const onFileRead = (electionObj, candidatsArray) => {
+
+        // Changement des informations de l'élection
+        document.getElementById('electionType').value=electionObj.electionType
+        setElectionType(electionObj.electionType)
+        document.getElementById('electionTitle').value=electionObj.titreElection
+        setElectionTitle(electionObj.titreElection)
+
+        //Changement des informations de la liste des candidats
+        setListeCandidats([...listeCandidats].concat(candidatsArray))
+    }
+
     function containsObject(obj, list) {
         var x;
         for (x in list) {
@@ -95,9 +110,7 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
             urlCandidat: urlCandidat
         }
 
-        if(listeCandidats.indexOf(newCandidat) === -1) {
-            setListeCandidats([...listeCandidats].concat(newCandidat))
-        }
+        setListeCandidats([...listeCandidats].concat(newCandidat))
         setCandidatTitle("")
         setDescriptionCandidat("")
         setUrlCandidat("")
@@ -158,7 +171,7 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         }
                        
                         <label className="add-election-label" style={styles.label}>Titre de l'élection : </label>
-                        <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleTitreOnChange} required /></span>
+                        <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
                         <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
@@ -205,6 +218,8 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                     </div>
                 }
             </form>
+
+            <FileReaderAddElection onFileRead={onFileRead}/>
             <hr style={styles.rounded}></hr>
         </div>
     )

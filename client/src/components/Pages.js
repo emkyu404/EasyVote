@@ -8,7 +8,6 @@ import Login from './LoginUser'
 import LoginAdmin from './LoginAdmin'
 import NotConnected from './NotConnected'
 import Election from './Election'
-import Test from './Test'
 import AddElection from "./AddElection"
 
 const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats}) => {
@@ -19,7 +18,8 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
                 <Home />
               </Route>
               <Route exact path="/addElection">
-                {connected ? <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection}/> : <NotConnected />}
+                <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection}/>
+                {/* {connected ? <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection}/> : <NotConnected />} */}
               </Route>
               <Route exact path="/elections">
                 {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection}/> : <NotConnected />}
@@ -42,9 +42,6 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
 
               <Route exact path="/addCandidat">
                 {/* <AddCandidat onAddCandidat={addCandidat} idElectionChoisi={ idElection } /> */}
-              </Route>
-              <Route exact path="/test">
-                <Test />
               </Route>
             </Switch>
           </div>
