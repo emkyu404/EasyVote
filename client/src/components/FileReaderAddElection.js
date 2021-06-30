@@ -9,9 +9,10 @@ const FileReaderAddElection = ({onFileRead}) => {
     let election = {}
 
     function convertDateFormat(string){
-        console.log(string)
-        let stringTab = string.split('/')
+        let date = string.split(' ')
+        let stringTab = date[0].split('/')
         let newString = '20'+stringTab[2] + '-' + stringTab[0] + '-' + stringTab[1]
+        console.log(newString)
         return newString
     }
 

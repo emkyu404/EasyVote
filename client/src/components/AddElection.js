@@ -182,21 +182,21 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         {electionType === "election_regionale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Nom de la région : </label>
-                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required /></span>
+                            <span style={styles.span}><input id="regionElection" type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required /></span>
                             </div>
                         }
 
                         {electionType === "election_departementale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Code du département : </label>
-                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required /></span>
+                            <span style={styles.span}><input id="codeDepartementElection" type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required /></span>
                             </div>
                         }
 
                         {electionType === "election_municipale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Code postal : </label>
-                            <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required /></span>
+                            <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required /></span>
                             </div>
                         }
                        
@@ -204,14 +204,14 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
-                        <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
+                        <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
-                        <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required /></span>
+                        <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required /></span>
                         
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
-                        <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
+                        <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type= "button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={ () => btnFunction()}>Open Modal</button>
