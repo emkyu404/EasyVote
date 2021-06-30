@@ -197,62 +197,32 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
 
-                        <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmit" value="Ajouter" />
+                        <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type= "button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={ () => btnFunction()}>Open Modal</button>
-                        <div id="myModal" className="modal" style={styles.modal}>
-                            <div className="modalContent" style={styles.modalContent}>
-                                <span className="close" onClick={ () => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
-                                <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
-
-                                <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
-                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
-
-                                <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
-                                <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
-
-                                <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
-
-                                {/* {(titreCandidat !== "" && descriptionCandidat !== "" && urlCandidat !== "") && */}
-                                    <input type="button" className="add-candidat-button" style={styles.button} key="btn3" onClick={handleOnAddCandidat} value="Ajouter un candidat" />
-                                {/* } */}
-                            </div>
-                        </div>
                         {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div> )} 
-
-                        
-
-                        {/* {showAddCandidat && 
-                            <div>
-                                <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
-
-                                <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
-                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
-
-                                <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
-                                <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
-
-                                <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
-
-                                {(titreCandidat !== "" && descriptionCandidat !== "" && urlCandidat !== "") &&
-                                    <input type="button" className="add-candidat-button" style={styles.button} key="btn3" onClick={handleOnAddCandidat} value="Ajouter un candidat" />
-                                }
-                            </div>
-                        } */}
-                        {/* {!showAddCandidat &&
-                            <input type="button" className="add-candidat-button" style={styles.button} key="btn1" onClick={handleOnClickShow} value="Ajouter un candidat" />
-                        }  */}
-
-                        {/* {showAddCandidat &&
-                            <input type="button" className="add-candidat-button" style={styles.button} key="btn2" onClick={handleOnClickShow} value="Annuler" />
-                        } */}
                     </div>
                 }
             </form>
+            <form onSubmit={handleOnAddCandidat}>  
+                <div id="myModal" className="modal" style={styles.modal}>
+                    <div className="modalContent" style={styles.modalContent}>
+                        <span className="close" onClick={ () => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
+                        <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
 
-            <FileReaderAddElection onFileRead={onFileRead}/>
-            <hr style={styles.rounded}></hr>
+                        <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
+                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
+
+                        <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
+                        <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
+
+                        <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
+                        <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
+
+                        <input type="submit" className="add-candidat-button" style={styles.button} key="btnSubmitCandidat" value="Ajouter un candidat" />
+                    </div>
+                </div>    
+            </form>
+            <FileReaderAddElection onFileRead={onFileRead}/>   
         </div>
     )
 }
@@ -394,7 +364,7 @@ const styles = {
     modalContent: {
       backgroundColor: "white",
       margin: "auto",
-      padding: "20px",
+      padding: "40px 40px 70px 40px",
       border: "1px solid #888",
       width: "80%"
     },
