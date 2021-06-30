@@ -27,14 +27,17 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
             document.getElementById("Ongoing").style.flex="2";
             document.getElementById("Soon").style.flex="1";
             document.getElementById("Finished").style.flex="1";
+            document.getElementById("divElections").style.backgroundColor="#0B6BA8";
         } else if(btnName === "Soon") {
             document.getElementById("Ongoing").style.flex="1";
             document.getElementById("Soon").style.flex="2";
             document.getElementById("Finished").style.flex="1";
+            document.getElementById("divElections").style.backgroundColor="#009F79";
         } else if(btnName === "Finished") {
             document.getElementById("Ongoing").style.flex="1";
             document.getElementById("Soon").style.flex="1";
             document.getElementById("Finished").style.flex="2";
+            document.getElementById("divElections").style.backgroundColor="#A63950";
         }
 
     }
@@ -48,7 +51,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
             <button id="Soon" style={Object.assign({},styles.btnFiltre, styles.green)} onClick={ () => {filterElection("Soon"); switchBtn("Soon");}}>A venir</button>
             <button id="Finished" style={Object.assign({},styles.btnFiltre, styles.red)} onClick={ () => {filterElection("Finished"); switchBtn("Finished");}}>Terminées</button>
             </div>
-            <div style={styles.divElections}>
+            <div id="divElections" style={styles.divElections}>
                 {typeof(filteredElections)==="undefined" || filteredElections.length===0 ? 
                 <div style={styles.emptyDiv}>
                     <img style={styles.emptyImg} src={loupe} alt="loupe"/>
@@ -79,7 +82,7 @@ const styles = {
         textAlign: "center"
     },
     divElections: {
-        backgroundColor: "white",
+        backgroundColor: "#0B6BA8",
         padding: "40px 40px 10px 40px",
         boxShadow: "0 0 10px #999"
     },
@@ -101,13 +104,15 @@ const styles = {
         transition: "0.5s"
     },
     emptyImg: {
-        maxWidth: "150px"
+        maxWidth: "150px",
+        filter: "brightness(0) invert(1)"
     },
     emptyMessage: {
         padding: "0 20% 0 20%",
         '@media (max-width: 640px)': { 
             padding: "0 0 0 0",
         },
+        color: "white"
     },
     emptyDiv: {
         textAlign: "center"

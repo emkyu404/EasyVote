@@ -11,7 +11,7 @@ const ElectionCard = ({electionCard}) => {
                 
                 <p style={styles.text}>{electionCard.descriptionElection}</p>
                 
-                <Link to={`/election/${electionCard.idElection}`}><btn style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </btn></Link>
+                <Link to={`/election/${electionCard.idElection}`}><button style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button></Link>
         </div>
     )
 }
@@ -37,9 +37,9 @@ const styles = {
         }
     },
     divElection: {
-        border: "1px solid #0B6BA8",
         padding: "30px 30px 80px 30px",
-        marginBottom: "30px"
+        marginBottom: "30px",
+        backgroundColor: "white"
     },
     blue : {
         backgroundColor: "#0B6BA8"
