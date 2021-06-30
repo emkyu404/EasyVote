@@ -161,19 +161,7 @@ function App() {
     else{
       setCurrentUser(response.data);
     } 
-  }            
-
-  // const getIdElection = (titreElection, dateDebutElection, dateFinElection) => {
-  //   Axios.post(baseUrl+"/getIdElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection }).then((response)=>{
-  //     if (response.data.message){
-  //       console.log(response.data.message);
-  //     } 
-  //     else {
-  //       console.log(response.data[0].idElection);
-  //       setIdElection(response.data[0].idElection)
-  //     }
-  //   })
-  // }
+  } 
 
   const addElection = async (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
       const response = await Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal })
@@ -260,7 +248,7 @@ function App() {
           {/* Header */}
           <Header onDisconnection={disconnect} isConnected={connected} />
           {/* Tout ce qu'il y a sous la page */}
-          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu}/>
+          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu} connectedAdmin={currentUser.idAdmin} />
           <Pages 
             connected={connected}
             //AddElection + AddCandidat
