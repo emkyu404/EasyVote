@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect} from "react";
 import Radium from "radium"
 import Chart from "react-google-charts";
 import { useLocation } from "react-router-dom";
@@ -18,7 +18,7 @@ const Election = ({getElection, election, getCandidats, candidats}) => {
 
     return (
         <div>
-            {election.finished===true 
+            {election.ended===true 
             ?
             <div>
                 <h1 style={styles.mainTitle}>Résultat du vote</h1>
@@ -92,8 +92,6 @@ const Election = ({getElection, election, getCandidats, candidats}) => {
     )
 }
 
-export default Radium(Election)
-
 const styles = {
     // chart
     electionDiv: {
@@ -135,5 +133,4 @@ const styles = {
     }
 }
 
-
-
+export default Radium(Election)

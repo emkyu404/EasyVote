@@ -285,11 +285,13 @@ INSERT INTO `election` (`idElection`, `titreElection`, `dateDebutElection`, `dat
 (1, 'Election présidentiel 2022 - 1er tour', '2022-04-10 00:00:00', '2022-04-23 00:00:00', '1er tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
 (2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:00:00', '2022-05-07 00:00:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
 (3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-07-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.'),
-(4, 'Election test', '2021-06-20 00:00:00', '2021-06-27 20:00:00', 'Election Test');
--- (1, 'Election présidentiel 2022 - 1er tour', '2022-04-10 00:00:00', '2022-04-23 00:00:00', '1er tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.', 1),
--- (2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:00:00', '2022-05-07 00:00:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.', 1),
--- (3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-06-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.', 1);
-
+(4, 'Election test', '2021-06-20 00:00:00', '2021-06-27 20:00:00', 'Election Test'),
+(5, 'Election régionale de la Bretagne', '2021-06-20 00:00:00', '2021-06-27 00:00:00', 'Election régionale 2021 de la Bretagne'), 
+(6, 'Election régionale de la Corse', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election régionale 2021 de la Corse'), 
+(7, 'Election départementale de Paris', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Paris'), 
+(8, 'Election départementale de Oise', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Oise'), 
+(9, 'Election municipale de Beauvais', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election municipale 2021 de Beauvais'), 
+(10, 'Election municipale de Paris', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election municipale 2021 de Paris');
 -- --------------------------------------------------------
 
 --
@@ -313,7 +315,41 @@ CREATE TABLE IF NOT EXISTS `candidat` (
 
 INSERT INTO `candidat` (`idCandidat`, `titreCandidat`, `descriptionCandidat`, `urlImage`, `idElection`) VALUES
 (1, 'Candidat test 1', 'Candidat test 1', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Emmanuel_Macron_%28cropped%29.jpg', 4),
-(2, 'Candidat test 2', 'Candidat test 2', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg%2C_2016_%28cropped%29.jpg', 4);
+(2, 'Candidat test 2', 'Candidat test 2', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg%2C_2016_%28cropped%29.jpg', 4),
+(3, 'Candidat Bretagne 1', 'Candidat Bretagne 1', 'Candidat Bretagne 1', '5'), 
+(4, 'Candidat Bretagne 2', 'Candidat Bretagne 2', 'Candidat Bretagne 2', '5'), 
+(5, 'Candidat Corse 1', 'Candidat Corse 1', 'Candidat Corse 1', '6'), 
+(6, 'Candidat Corse 2', 'Candidat Corse 2', 'Candidat Corse 2', '6'), 
+(7, 'Candidat Paris 1', 'Candidat Paris 1', 'Candidat Paris 1', '7'), 
+(8, 'Candidat Paris 2', 'Candidat Paris 2', 'Candidat Paris 2', '7'), 
+(9, 'Candidat Oise 1', 'Candidat Oise 1', 'Candidat Oise 1', '8'), 
+(10, 'Candidat Oise 2', 'Candidat Oise 2', 'Candidat Oise 2', '8'), 
+(11, 'Candidat Beauvais 1', 'Candidat Beauvais 1', 'Candidat Beauvais 1', '9'), 
+(12, 'Candidat Beauvais 2', 'Candidat Beauvais 2', 'Candidat Beauvais 2', '9'), 
+(13, 'Candidat élection municipale Paris 1', 'Candidat élection municipale Paris 1', 'Candidat élection municipale Paris 1', '10'), 
+(14, 'Candidat élection municipale Paris 2', 'Candidat élection municipale Paris 2', 'Candidat élection municipale Paris 2', '10');
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `election_regionale`
+--
+
+DROP TABLE IF EXISTS `election_regionale`;
+CREATE TABLE IF NOT EXISTS `election_regionale` (
+  `idElection` int(11) NOT NULL,
+  `nomRegion` varchar(50) NOT NULL,
+  PRIMARY KEY (`idElection`),
+  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `candidat`
+--
+
+INSERT INTO `election_regionale` (`idElection`, `nomRegion`) VALUES 
+('3', 'Ile-de-France'), 
+('5', 'Bretagne'), 
+('6', 'Corse');
 
 -- --------------------------------------------------------
 
@@ -329,6 +365,14 @@ CREATE TABLE IF NOT EXISTS `election_departementale` (
   FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `candidat`
+--
+
+INSERT INTO `election_departementale` (`idElection`, `codeDepartement`) VALUES 
+('7', '75'),
+('8', '60');
+
 -- --------------------------------------------------------
 
 --
@@ -343,6 +387,14 @@ CREATE TABLE IF NOT EXISTS `election_municipale` (
   FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `candidat`
+--
+
+INSERT INTO `election_municipale` (`idElection`, `codePostal`) VALUES 
+('9', '60000'), 
+('10', '75000');
+
 -- --------------------------------------------------------
 
 --
@@ -355,19 +407,10 @@ CREATE TABLE IF NOT EXISTS `election_nationale` (
   PRIMARY KEY (`idElection`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- --------------------------------------------------------
-
---
--- Structure de la table `election_regionale`
---
-
-DROP TABLE IF EXISTS `election_regionale`;
-CREATE TABLE IF NOT EXISTS `election_regionale` (
-  `idElection` int(11) NOT NULL,
-  `nomRegion` varchar(50) NOT NULL,
-  PRIMARY KEY (`idElection`),
-  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `election_nationale`(`idElection`) VALUES 
+('1'),
+('2'),
+('4');
 
 -- --------------------------------------------------------
 

@@ -34,8 +34,8 @@ const styles = {
         float: "right",
         marginTop: "15px",
         ':hover':{
-        backgroundColor: "#074E7B",
-        transition: "0.2s"
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
         }
     },
     divElection: {
