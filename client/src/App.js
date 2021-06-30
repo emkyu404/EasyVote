@@ -107,12 +107,11 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      addToast("Bonjour " + currentUser.nomCitoyen, {
+      addToast("Connexion réussi", {
         appearance: 'success',
         autoDismiss: true,
       })
     }
-    //window.location.replace("/")
   };
 
   const loginAdmin = async (email, password) => {
@@ -125,7 +124,7 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      addToast("Bonjour " + currentUser.idAdmin, {
+      addToast("Connexion réussi", {
         appearance: 'success',
         autoDismiss: true,
       })
@@ -136,14 +135,15 @@ function App() {
     const response = await Axios.get(baseUrl+"/disconnect")
     if (response.data.message) {
       setCurrentUser({ idAdmin: "", idCitoyen: "" });
-      addToast("Utilisateur déconnecté", {
+      addToast("Déconnexion réussi, au revoir !", {
         appearance: 'success',
         autoDismiss: true,
       })
+      window.location.replace('/')
 
     } 
     else {
-      addToast("Vous n'avez pas réussi à vous deconnecter", {
+      addToast("La déconnexion à échouer", {
         appearance: 'error',
         autoDismiss: true,
       })

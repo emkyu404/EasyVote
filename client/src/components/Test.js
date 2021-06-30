@@ -46,7 +46,17 @@ const Test = () => {
                 let newElection
 
                 data2.forEach(element => {
-                    newElection = {titre: element.Titre, dateDebut: element.dateDebut, dateFin: element.dateFin, description : element.description, échelle: element.échelle, zone: element.zone}
+                    newElection = {titreElection: element.Titre, dateDebutElection: element.dateDebut, dateFinElection: element.dateFin, descriptionElection : element.description, electionType: element.échelle}
+                    console.log(element.échelle)
+                    let typeElection = element.échelle.toUpperCase()
+                    console.log(typeElection)
+                    switch(typeElection){
+                        case 'NATIONALE' : newElection = {...newElection, electionType: 'election_nationale', nomRegion:null, codeDepartement:null, codePostal:null}; break;
+                        case 'REGIONALE' : newElection = {...newElection, electionType: 'election_regionale', nomRegion:element.zone, codeDepartement:null, codePostal:null}; break;
+                        case 'MUNICIPALE' : newElection = {...newElection, electionType: 'election_municipale', nomRegion:null, codeDepartement:null, codePostal:element.zone}; break;
+                        case 'DEPARTEMENTALE': newElection = {...newElection, electionType: 'election_departementale', nomRegion:null, codeDepartement:element.zone, codePostal:null}; break;
+                        default : throw 'Format incorrection concernant l\'échelle de l\'élection'; break;
+                    }
                 })
                 election = newElection
                 console.log(newElection)
