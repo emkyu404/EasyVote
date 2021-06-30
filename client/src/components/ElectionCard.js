@@ -6,7 +6,8 @@ const ElectionCard = ({electionCard}) => {
     return (
         <div style={styles.divElection}>
                 <h2>{electionCard.titreElection}</h2>
-                Date début : {electionCard.dateDebutElection} Date fin : {electionCard.dateFinElection}<br></br><br></br>
+                Date de début : {electionCard.dateDebutElection} <br/>
+                Date de fin : {electionCard.dateFinElection}<br/><br/>
                 
                 <p style={styles.text}>{electionCard.descriptionElection}</p>
                 
