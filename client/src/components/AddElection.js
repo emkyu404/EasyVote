@@ -239,8 +239,9 @@ const AddElection = ({ addCandidat, onAddElection, idElection }) => {
                         <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
-                        <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Open Modal</button>
+                        <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Ajouter un candidat</button>
                         {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div>)}
+
                     </div>
                 }
             </form>
@@ -320,9 +321,12 @@ const styles = {
     },
     divForm: {
         backgroundColor: "white",
-        padding: "40px 40px 50px 40px",
+        padding: "40px 40px 70px 40px",
         boxShadow: "0 0 10px #999",
-        margin: "20px 0px 20px 0px"
+        margin: "20px 0px 20px 0px",
+        '@media (max-width: 960px)':{
+            padding: "40px 40px 120px 40px",
+        }
     },
     label: {
         float: "left",
@@ -350,11 +354,15 @@ const styles = {
         cursor: "pointer",
         minWidth: "200px",
         float: "right",
-        marginLeft: "10px",
+        margin: "0px 0px 10px 10px",
         ':hover': {
             backgroundColor: "#074E7B",
             transition: "0.2s"
-        }
+        },
+        '@media (max-width: 960px)': {
+            width: "100%",
+            marginBottom: "10px"
+        },
     },
     button: {
         backgroundColor: "#0B6BA8",
@@ -365,10 +373,12 @@ const styles = {
         cursor: "pointer",
         minWidth: "200px",
         float: "right",
-        marginLeft: "10px",
         ':hover': {
             backgroundColor: "#074E7B",
             transition: "0.2s"
+        },
+        '@media (max-width: 960px)':{
+            width: "100%"
         }
     },
     span: {
