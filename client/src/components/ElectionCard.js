@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link }  from "react-router-dom";
+import Radium from 'radium';
 
 const ElectionCard = ({electionCard}) => {
     return (
@@ -9,7 +10,7 @@ const ElectionCard = ({electionCard}) => {
                 
                 <p style={styles.text}>{electionCard.descriptionElection}</p>
                 
-                <Link to={`/election/${electionCard.idElection}`} style={Object.assign({},styles.btn, styles.blue)}> Consulter l'élection </Link>
+                <Link to={`/election/${electionCard.idElection}`}><btn style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </btn></Link>
         </div>
     )
 }
@@ -28,7 +29,11 @@ const styles = {
         color: "white",
         cursor: "pointer",        
         float: "right",
-        marginTop: "15px"
+        marginTop: "15px",
+        ':hover':{
+            backgroundColor: "#074E7B",
+             transition: "0.2s"
+        }
     },
     divElection: {
         border: "1px solid #0B6BA8",
@@ -47,4 +52,4 @@ const styles = {
 }
 
 
-export default ElectionCard
+export default Radium(ElectionCard)

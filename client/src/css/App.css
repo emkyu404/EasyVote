@@ -38,7 +38,6 @@ body {
   width : 250px;
   flex-direction: column;
   height : 100vh;
-  
 }
 
 a:visited{
@@ -126,7 +125,7 @@ a:visited{
   background-color: #E9F1F7;
   /*box-shadow: 0 0 10px #999;*/
   padding: 25px;
-  min-height: 85vh;
+  min-height: calc(85vh - 50px);
   height : fit-content;
 }
 
