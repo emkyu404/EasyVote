@@ -6,7 +6,7 @@ import loupe from '../img/loupe.png'
 
 const Elections = ({getCurrentDate, getElections, filteredElections, filterElection }) => {
 
-    useEffect( () => {
+    useEffect(() => {
         async function prepareElections(){
             await getCurrentDate();
             await getElections();
@@ -61,7 +61,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
                     <div key={electionCard.idElection}>
                         <ElectionCard electionCard={electionCard}/>
                     </div>
-                )) }
+                ))}
                 
             </div>
         </div>
