@@ -44,7 +44,6 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
 
     return (
         <div>
-            <button onClick={election}>OUI</button>
             <h1 style={styles.mainTitle}>Listes des élections</h1>
             <div style={styles.flexContainer}>
             <button id="Ongoing" style={Object.assign({},styles.btnFiltre, styles.blue)} onClick={ () => {filterElection("Ongoing"); switchBtn("Ongoing");}}>En cours</button>
@@ -62,7 +61,6 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
                         <ElectionCard electionCard={electionCard}/>
                     </div>
                 ))}
-                
             </div>
         </div>
     )

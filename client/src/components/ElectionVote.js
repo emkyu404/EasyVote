@@ -1,7 +1,7 @@
 import React from 'react'
 import CandidatCard from "./CandidatCard";
 
-const Candidats = ({candidats}) => {
+const ElectionVote = ({candidats}) => {
     return (
         <div id="divCandidats" style={styles.container}>
             {typeof(candidats)==="undefined" || candidats.length===0 
@@ -26,4 +26,4 @@ const styles={
     },
 }
 
-export default Candidats
+export default ElectionVote
