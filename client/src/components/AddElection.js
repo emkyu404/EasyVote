@@ -4,14 +4,13 @@ import Radium from 'radium';
 
 import FileReaderAddElection from './FileReaderAddElection'
 
-
 const AddElection = ({addCandidat, onAddElection, idElection }) => {
 
     useEffect(()=>{
         listeCandidats.forEach(
             candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
         )
-      },[idElection])
+    },[idElection])
 
     const [titreElection, setElectionTitle] = useState("")
     const [dateDebutElection, setDateDebutElection] = useState("")
@@ -27,7 +26,6 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
     const [descriptionCandidat, setDescriptionCandidat] = useState("")
     const [urlCandidat, setUrlCandidat] = useState("")
 
-    const [showAddCandidat, setShowAddCandidat] = useState(false)
     const [listeCandidats, setListeCandidats] = useState([])
 
     const handleChange = (e) => {
@@ -74,11 +72,6 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         setDescriptionCandidat(e.target.value)
     }
 
-    const handleOnClickShow = (e) => {
-        e.preventDefault()
-        setShowAddCandidat(!showAddCandidat)
-    }
-
     const onFileRead = (electionObj, candidatsArray) => {
         try{
         // Changement des informations de l'élection
@@ -116,16 +109,6 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         return newDate
     }
 
-    function containsObject(obj, list) {
-        var x;
-        for (x in list) {
-            if (list.hasOwnProperty(x) && list[x] === obj) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     function resetFormCandidat() {
         setCandidatTitle("")
         setDescriptionCandidat("")
@@ -143,19 +126,27 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         setNomRegion("")
         setCodeDepartement("")
         setCodePostal("")
+        setListeCandidats([])
         document.getElementById("add-election-form").reset()
     }
 
     const handleOnAddCandidat = (e) => {
         e.preventDefault()
 
-        const newCandidat = {
+        var newCandidat = {
             titreCandidat: titreCandidat,
             descriptionCandidat: descriptionCandidat,
             urlCandidat: urlCandidat
         }
 
-        setListeCandidats([...listeCandidats].concat(newCandidat))
+        const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
+
+        if(idx !== -1 || newCandidat.titreCandidat === "") {
+            console.log("candidat doublon")
+        } else {
+            listeCandidats.push(newCandidat)
+        }
+
         resetFormCandidat()
     }
 
@@ -205,21 +196,21 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         {electionType === "election_regionale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Nom de la région : </label>
-                            <span style={styles.span}><input id="regionElection" type="text" className="add-election-input" style={styles.input} onBlur={handleRegionOnChange} required value={nomRegion}/></span>
+                            <span style={styles.span}><input id="regionElection" type="text" className="add-election-input" style={styles.input} onChange={handleRegionOnChange} required value={nomRegion}/></span>
                             </div>
                         }
 
                         {electionType === "election_departementale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Code du département : </label>
-                            <span style={styles.span}><input id="codeDepartementElection" type="text" className="add-election-input" style={styles.input} onBlur={handleDepartementOnChange} required value={codeDepartement}/></span>
+                            <span style={styles.span}><input id="codeDepartementElection" type="text" className="add-election-input" style={styles.input} onChange={handleDepartementOnChange} required value={codeDepartement}/></span>
                             </div>
                         }
 
                         {electionType === "election_municipale" &&
                             <div>
                             <label className="add-election-label" style={styles.label}>Code postal : </label>
-                            <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onBlur={handleCodePostalOnChange} required value={codePostal}/></span>
+                            <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onChange={handleCodePostalOnChange} required value={codePostal}/></span>
                             </div>
                         }
                        
@@ -227,14 +218,21 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required value={titreElection}/></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
-                        <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required value={dateDebutElection} /></span>
+                        <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
+                        
+                        <label className="add-election-label" style={styles.label}>Heure de début : </label>
+                        {/* <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
+                            <optgroup style={styles.option}>
+                                //options 
+                            </optgroup>
+                        </select> */}
                         
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
-                        <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onBlur={handleDateFinOnChange} required value={dateFinElection}/></span>
+                        <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection}/></span>
                         
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
-                        <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required value={descriptionElection}></textarea>
+                        <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type= "button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={ () => btnFunction()}>Open Modal</button>
@@ -252,10 +250,10 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         <span style={styles.span}><input type="text" id="input-titre-candidat" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
 
                         <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
-                        <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
+                        <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} ></textarea>
 
                         <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                        <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
+                        <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} /></span>           
 
                         <input type="submit" className="add-candidat-button" style={styles.button} key="btnSubmitCandidat" value="Ajouter un candidat" />
                     </div>
