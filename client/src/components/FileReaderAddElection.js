@@ -23,11 +23,11 @@ const FileReaderAddElection = ({onFileRead}) => {
             try{
                 const bstr = evt.target.result
                 const wb = XLSX.read(bstr, {type:'binary'})
-                if(wb.SheetNames.length != 2){
+                if(wb.SheetNames.length !== 2){
                     throw 'Format incorrect, la lecture du fichier à échouer'
                 }
                 const wsname = wb.SheetNames[0]
-                if(wsname != "Candidats"){
+                if(wsname !== "Candidats"){
                     throw 'Format incorrect, la lecture du fichier à échouer'
                 }
                 const ws = wb.Sheets[wsname]
@@ -41,7 +41,7 @@ const FileReaderAddElection = ({onFileRead}) => {
                 candidatsArray = newCandidatsArray
 
                 const wsname2 = wb.SheetNames[1]
-                if(wsname2 != "Election"){
+                if(wsname2 !== "Election"){
                     throw 'Format incorrect, la lecture du fichier à échouer'
                 }
                 const ws2 = wb.Sheets[wsname2]
