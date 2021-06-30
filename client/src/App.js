@@ -136,13 +136,15 @@ function App() {
     const response = await Axios.get(baseUrl+"/disconnect")
     if (response.data.message) {
       setCurrentUser({ idAdmin: "", idCitoyen: "" });
-      addToast("Utilisateur déconnecté", {
+      addToast("Déconnexion réussi, au revoir !", {
         appearance: 'success',
         autoDismiss: true,
       })
+      window.location.replace('/')
+
     } 
     else {
-      addToast("Vous n'avez pas réussi à vous deconnecter", {
+      addToast("La déconnexion à échouer", {
         appearance: 'error',
         autoDismiss: true,
       })
@@ -160,7 +162,7 @@ function App() {
     else{
       setCurrentUser(response.data);
     } 
-  }            
+  } 
 
   const addElection = async (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
       const response = await Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal })
@@ -253,7 +255,7 @@ function App() {
           {/* Header */}
           <Header onDisconnection={disconnect} isConnected={connected} />
           {/* Tout ce qu'il y a sous la page */}
-          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu}/>
+          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu} connectedAdmin={currentUser.idAdmin} />
           <Pages 
             connected={connected}
             //AddElection + AddCandidat

@@ -2,11 +2,18 @@ import React from 'react'
 import * as XLSX from 'xlsx'
 import { useToasts } from 'react-toast-notifications'
 
-const Test = () => {
+const FileReaderAddElection = ({onFileRead}) => {
 
     const {addToast} = useToasts()
     let candidatsArray = []
     let election = {}
+
+    function convertDateFormat(string){
+        console.log(string)
+        let stringTab = string.split('/')
+        let newString = '20'+stringTab[2] + '-' + stringTab[0] + '-' + stringTab[1]
+        return newString
+    }
 
     const handleNewFile = (e) => {
         var name = e.name;
@@ -16,11 +23,11 @@ const Test = () => {
             try{
                 const bstr = evt.target.result
                 const wb = XLSX.read(bstr, {type:'binary'})
-                if(wb.SheetNames.length != 2){
+                if(wb.SheetNames.length !== 2){
                     throw 'Format incorrect, la lecture du fichier à échouer'
                 }
                 const wsname = wb.SheetNames[0]
-                if(wsname != "Candidats"){
+                if(wsname !== "Candidats"){
                     throw 'Format incorrect, la lecture du fichier à échouer'
                 }
                 const ws = wb.Sheets[wsname]
@@ -28,15 +35,13 @@ const Test = () => {
                 // Lecture d'un fichier excel, contenu est dans DATA
                 let newCandidatsArray = []
                 data.forEach(element => {
-                    let newElement = {Titre:element.Titre, Description:element.Description, url:element.URL}
+                    let newElement = {titreCandidat:element.Titre, descriptionCandidat:element.Description, urlCandidat:element.URL}
                     newCandidatsArray.push(newElement)
-                    console.log(newCandidatsArray)
                 });
                 candidatsArray = newCandidatsArray
-                console.log(candidatsArray)
 
                 const wsname2 = wb.SheetNames[1]
-                if(wsname2 != "Election"){
+                if(wsname2 !== "Election"){
                     throw 'Format incorrect, la lecture du fichier à échouer'
                 }
                 const ws2 = wb.Sheets[wsname2]
@@ -46,10 +51,21 @@ const Test = () => {
                 let newElection
 
                 data2.forEach(element => {
-                    newElection = {titre: element.Titre, dateDebut: element.dateDebut, dateFin: element.dateFin, description : element.description, échelle: element.échelle, zone: element.zone}
+                    let dateDebut = convertDateFormat(element.dateDebut)
+                    let dateFin = convertDateFormat(element.dateFin)
+                    newElection = {titreElection: element.Titre, dateDebutElection: dateDebut, dateFinElection: dateFin, descriptionElection : element.description}
+                    let typeElection = element.échelle.toUpperCase()
+                    switch(typeElection){
+                        case 'NATIONALE' : newElection = {...newElection, electionType: 'election_nationale', nomRegion:null, codeDepartement:null, codePostal:null}; break;
+                        case 'REGIONALE' : newElection = {...newElection, electionType: 'election_regionale', nomRegion:element.zone, codeDepartement:null, codePostal:null}; break;
+                        case 'MUNICIPALE' : newElection = {...newElection, electionType: 'election_municipale', nomRegion:null, codeDepartement:null, codePostal:element.zone}; break;
+                        case 'DEPARTEMENTALE': newElection = {...newElection, electionType: 'election_departementale', nomRegion:null, codeDepartement:element.zone, codePostal:null}; break;
+                        default : throw 'Format incorrection concernant l\'échelle de l\'élection'; break;
+                    }
                 })
                 election = newElection
-                console.log(newElection)
+
+                onFileRead(election,candidatsArray)
 
                 addToast("Lecture du fichier réalisé avec succès",{
                     appearance: 'success',
@@ -61,7 +77,6 @@ const Test = () => {
                     autoDismiss: true,
                 })
             }
-            //Lecture de la seconde feuille
         }
 
         reader.readAsBinaryString(e)
@@ -78,4 +93,4 @@ const Test = () => {
     )
 }
 
-export default Test
+export default FileReaderAddElection

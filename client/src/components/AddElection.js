@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import arrow from '../img/down-arrow.svg';
 import Radium from 'radium';
 
+import FileReaderAddElection from './FileReaderAddElection'
+
+
 const AddElection = ({addCandidat, onAddElection, idElection }) => {
 
     useEffect(()=>{
@@ -76,6 +79,18 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         setShowAddCandidat(!showAddCandidat)
     }
 
+    const onFileRead = (electionObj, candidatsArray) => {
+
+        // Changement des informations de l'élection
+        document.getElementById('electionType').value=electionObj.electionType
+        setElectionType(electionObj.electionType)
+        document.getElementById('electionTitle').value=electionObj.titreElection
+        setElectionTitle(electionObj.titreElection)
+
+        //Changement des informations de la liste des candidats
+        setListeCandidats([...listeCandidats].concat(candidatsArray))
+    }
+
     function containsObject(obj, list) {
         var x;
         for (x in list) {
@@ -95,9 +110,7 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
             urlCandidat: urlCandidat
         }
 
-        if(listeCandidats.indexOf(newCandidat) === -1) {
-            setListeCandidats([...listeCandidats].concat(newCandidat))
-        }
+        setListeCandidats([...listeCandidats].concat(newCandidat))
         setCandidatTitle("")
         setDescriptionCandidat("")
         setUrlCandidat("")
@@ -117,6 +130,20 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
             alert('Ajouter au moins 2 candidats')
         }
     }
+
+    function btnFunction() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function spanFunction() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
+    // window.onclick = function(event) {
+    // if (event.target == document.getElementById("myModal")) {
+    //     document.getElementById("myModal").style.display = "none";
+    // }
+    // }
 
     return (
         <div>
@@ -158,7 +185,7 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                         }
                        
                         <label className="add-election-label" style={styles.label}>Titre de l'élection : </label>
-                        <span style={styles.span}><input type="text" className="add-election-input" style={styles.input} onBlur={handleTitreOnChange} required /></span>
+                        <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
                         <span style={styles.span}><input type="date" className="add-election-input" style={styles.input} onBlur={handleDateDebutOnChange} required /></span>
@@ -169,17 +196,33 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea type="text" className="add-election-input" style={styles.textArea} onBlur={handleDescriptionOnChange} required></textarea>
-                
-                        {/* Ajouter un candidat */}
-                        {!showAddCandidat &&
-                            <input type="button" className="add-candidat-button" style={styles.button} onClick={handleOnClickShow} value="Ajouter un candidat" />
-                        }
 
-                        {showAddCandidat &&
-                            <input type="button" className="add-candidat-button" style={styles.button} onClick={handleOnClickShow} value="Annuler" />
-                        }
+                        <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmit" value="Ajouter" />
+                        <button type= "button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={ () => btnFunction()}>Open Modal</button>
+                        <div id="myModal" className="modal" style={styles.modal}>
+                            <div className="modalContent" style={styles.modalContent}>
+                                <span className="close" onClick={ () => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
+                                <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
 
-                        {showAddCandidat && 
+                                <label className="add-candidat-label" style={styles.label}>Titre du candidat : </label>
+                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>    
+
+                                <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
+                                <textarea type="text" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required></textarea>
+
+                                <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
+                                <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
+
+                                {/* {(titreCandidat !== "" && descriptionCandidat !== "" && urlCandidat !== "") && */}
+                                    <input type="button" className="add-candidat-button" style={styles.button} key="btn3" onClick={handleOnAddCandidat} value="Ajouter un candidat" />
+                                {/* } */}
+                            </div>
+                        </div>
+                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div> )} 
+
+                        
+
+                        {/* {showAddCandidat && 
                             <div>
                                 <h1 className="add-candidat-title" style={styles.mainTitle}>Ajouter un candidat</h1>
 
@@ -193,18 +236,22 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                                 <span style={styles.span}><input type="text" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} required /></span>           
 
                                 {(titreCandidat !== "" && descriptionCandidat !== "" && urlCandidat !== "") &&
-                                    <input type="button" className="add-candidat-button" style={styles.button} onClick={handleOnAddCandidat} value="Ajouter un candidat" />
+                                    <input type="button" className="add-candidat-button" style={styles.button} key="btn3" onClick={handleOnAddCandidat} value="Ajouter un candidat" />
                                 }
                             </div>
-                        }
-                        {/* Fin ajouter un candidat */}
+                        } */}
+                        {/* {!showAddCandidat &&
+                            <input type="button" className="add-candidat-button" style={styles.button} key="btn1" onClick={handleOnClickShow} value="Ajouter un candidat" />
+                        }  */}
 
-                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div> )}
-
-                        <input type="submit" className="add-election-submit" style={styles.submit} value="Ajouter" />
+                        {/* {showAddCandidat &&
+                            <input type="button" className="add-candidat-button" style={styles.button} key="btn2" onClick={handleOnClickShow} value="Annuler" />
+                        } */}
                     </div>
                 }
             </form>
+
+            <FileReaderAddElection onFileRead={onFileRead}/>
             <hr style={styles.rounded}></hr>
         </div>
     )
@@ -265,11 +312,6 @@ const styles = {
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px"
     },
-    rounded: {
-        borderTop: "5px solid #0B6BA8",
-        margin: "50px",
-        borderRadius: "5px"
-    },
     label: {
         float: "left",
         height: "50px",
@@ -295,7 +337,12 @@ const styles = {
         textDecoration: "none",
         cursor: "pointer",
         minWidth: "200px",
-        float: "right"
+        float: "right",
+        marginLeft: "10px",
+        ':hover':{
+            backgroundColor: "#074E7B",
+             transition: "0.2s"
+        }
     },
     button: {
         backgroundColor: "#0B6BA8",
@@ -305,7 +352,12 @@ const styles = {
         textDecoration: "none",
         cursor: "pointer",
         minWidth: "200px",
-        float: "right"
+        float: "right",
+        marginLeft: "10px",
+        ':hover':{
+            backgroundColor: "#074E7B",
+             transition: "0.2s"
+        }
     },
     span: {
         display: "block",
@@ -325,6 +377,42 @@ const styles = {
     },
     inputIdElection: {
         display: "none"
+    },
+    modal: {
+      display: "none",
+      position: "fixed",
+      zIndex: "100",
+      paddingTop: "100px",
+      left: "0",
+      top: "0",
+      width: "100%",
+      height: "100%",
+      overflow: "auto",
+      backgroundColor: "rgb(0,0,0)",
+      backgroundColor: "rgba(0,0,0,0.4)"
+    },
+    modalContent: {
+      backgroundColor: "white",
+      margin: "auto",
+      padding: "20px",
+      border: "1px solid #888",
+      width: "80%"
+    },
+    close: {
+      color: "#aaaaaa",
+      float: "right",
+      fontSize: "28px",
+      fontWeight: "bold",
+      ':hover':{
+        color: "#000",
+        textdecoration: "none",
+        cursor: "pointer"
+      },
+      ':focus':{
+        color: "#000",
+        textDecoration: "none",
+        cursor: "pointer"
+      }
     }
 }
 
