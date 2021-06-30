@@ -30,47 +30,47 @@ const Election = () => {
                                 height: '80%',
                                 width: '100%',
                             },
-                            legend: { 
-                                position: 'bottom', 
-                                alignment: 'center' 
+                            legend: {
+                                position: 'bottom',
+                                alignment: 'center'
                             },
                             tooltip: {
-                                trigger:'none'
+                                trigger: 'none'
                             },
                             enableInteractivity: false
                         }}
                     />
                 </div>
                 <div style={styles.columnChartContainer}>
-                <Chart
-                    chartType="ColumnChart"
-                    data={[
-                        ['Choix', 'Oui', { role: 'annotation' }, 'Non', { role: 'annotation' }, 'Yes', { role: 'annotation' }, 'Oui aussi', { role: 'annotation' }],
-                        ['', 30, "30", 10, "10", 30, "30", 30, "30"],
-                    ]}
-                    height="100%"
-                    width="100%"
-                    options={{
-                        chartArea: {
-                            height: '80%',
-                            width: '80%',
-                        },
-                        legend: { 
-                            position: 'bottom', 
-                            alignment: 'center' 
-                        },
-                        bar: { groupWidth: "90%" }
-                        ,
-                        tooltip: {
-                            trigger:'none'
-                        },
-                        enableInteractivity: false
-                    }}
+                    <Chart
+                        chartType="ColumnChart"
+                        data={[
+                            ['Choix', 'Oui', { role: 'annotation' }, 'Non', { role: 'annotation' }, 'Yes', { role: 'annotation' }, 'Oui aussi', { role: 'annotation' }],
+                            ['', 30, "30", 10, "10", 30, "30", 30, "30"],
+                        ]}
+                        height="100%"
+                        width="100%"
+                        options={{
+                            chartArea: {
+                                height: '80%',
+                                width: '80%',
+                            },
+                            legend: {
+                                position: 'bottom',
+                                alignment: 'center'
+                            },
+                            bar: { groupWidth: "90%" }
+                            ,
+                            tooltip: {
+                                trigger: 'none'
+                            },
+                            enableInteractivity: false
+                        }}
                     />
                 </div>
             </div>
 
-
+            {/* old Card
             <div className="container" style={styles.container}>
                 <div className="card" style={styles.card}>
                     <div className="picture" style={styles.picture}>
@@ -149,7 +149,58 @@ const Election = () => {
                         <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
                     </div>
                 </div>
+            </div>*/}
+
+            {/* Carte de candidat */}
+            <div style={styles.container}>
+                <div style={styles.card} className="card">
+                    <div className="information">
+                        <h3 style={styles.name}>Thierry Pilote</h3>
+                        <h4 style={styles.slogan}>Nikdro !</h4>
+                        <div style={styles.picture}>
+                            <img style={styles.img} src={thierry} />
+                        </div>
+                    </div>
+                    <div style={styles.general}>
+                        <h2>Description</h2><br></br>
+                        <p>Votez moi et je vous emmène sur la lune.</p>
+                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
+
+                    </div>
+                </div>
+
+                <div style={styles.card} className="card">
+                    <div className="information">
+                        <h3 className="name" style={styles.name}>Thierry Pilote</h3>
+                        <h4 className="slogan" style={styles.slogan}>Nikdro !</h4>
+                        <div className="picture" style={styles.picture}>
+                            <img className="img" style={styles.img} src={thierry} />
+                        </div>
+                    </div>
+                    <div style={styles.general}>
+                        <h2>Description</h2><br></br>
+                        <p>Accrochez-vous on va décoller !</p>
+                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
+                    </div>
+                </div>
+
+
+                <div style={styles.card} className="card">
+                    <div className="information">
+                        <h3 className="name" style={styles.name}>Thierry Pilote</h3>
+                        <h4 className="slogan" style={styles.slogan}>Nikdro !</h4>
+                        <div className="picture" style={styles.picture}>
+                            <img className="img" style={styles.img} src={thierry} />
+                        </div>
+                    </div>
+                    <div style={styles.general}>
+                        <h2>Description</h2><br></br>
+                        <p>JE PROPOSE QU'ON AILLE TOUS NIQUER DRO !!!!</p>
+                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
+                    </div>
+                </div>
             </div>
+
         </div>
     )
 }
@@ -159,51 +210,52 @@ export default Radium(Election)
 
 const styles = {
 
+    // card
+    container: {
+        overflow: "hidden",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+    },
+
     card: {
-        padding: "30px 0 40px",
-        backgroundColor: "#f7f5ec",
-        textAlign: "center",
+        width: "450px",
+        height: "250px",
+        backgroundColor: "#fff",
+        background: "linear-gradient(#f8f8f8, #FFF5EE)",
+        boxShadow: "0 8px 16px -8px rgba(0,0,0,0.4)",
+        borderRadius: "6px",
         overflow: "hidden",
         position: "relative",
-        borderRadius: "0.2em",
-        border: "solid #0B6BA8",
-        padding: "0px 15px 0px 15px",
-        width: "240px",
-        topMax: "200px",
-        bottomMax: "200px",
-        float: "left",
-        margin: "70px",
+        margin: "40px",
     },
 
     picture: {
         display: "inline-block",
         height: "130px",
         width: "130px",
-        marginBottom: "50px",
+        marginLeft: "10px",
         zIndex: "1",
         position: "relative",
     },
-
-
 
     img: {
         width: "100%",
         borderRadius: "50%",
         transform: "scale(1)",
-
     },
 
 
-    title: {
+    slogan: {
         display: "block",
         fontSize: "15px",
         color: "#4e5052",
         textTransform: "capitalize",
+        margin: "10px",
     },
 
-
-    container: {
-        overflow: "hidden",
+    name: {
+        margin: "10px",
     },
 
     voterCandidat: {
@@ -211,8 +263,26 @@ const styles = {
         border: "none",
         color: "white",
         cursor: "pointer",
+        position: "absolute",
+        bottom: "1rem",
+        right: "1rem",
+        fontSize: "0.9em",
+        width: "100px",
     },
 
+    general: {
+        width: "300px",
+        height: "100%",
+        position: "absolute",
+        top: "0",
+        right: "0",
+        zIndex: "1",
+        boxSizing: "border-box",
+        padding: "1rem",
+    },
+
+
+    // chart
     electionDiv: {
         backgroundColor: "white",
         padding: "20px 40px 20px 40px",
@@ -234,19 +304,19 @@ const styles = {
     },
     pieChartContainer: {
         height: "600px",
-        '@media (max-width: 960px)': { 
+        '@media (max-width: 960px)': {
             height: "450px",
         },
-        '@media (max-width: 640px)': { 
+        '@media (max-width: 640px)': {
             height: "300px",
         }
     },
     columnChartContainer: {
         height: "600px",
-        '@media (max-width: 960px)': { 
+        '@media (max-width: 960px)': {
             height: "450px",
         },
-        '@media (max-width: 640px)': { 
+        '@media (max-width: 640px)': {
             height: "300px",
         }
     }
