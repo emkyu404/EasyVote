@@ -37,7 +37,7 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
               <Route exact path="/loginAdmin">
                 {connected ? <Home/> : <LoginAdmin onLogin={loginAdmin} />}
               </Route>
-              <Route exact path="/election">
+              <Route path="/election/:idElection">
                 {connected ?<Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats}/> : <NotConnected />}
               </Route>
 

@@ -26,6 +26,18 @@ const db = mysql.createConnection({
   multipleStatements: true
 });
 
+function currentTime(){
+  var today = new Date();
+  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+  return dateTime
+}
+
+app.get('/currentDate', (req, res) => {
+  res.json(currentTime());
+});
+
 app.get("/token", (req, res) => {
   if(req.session.user){
     res.json(req.session.user)
@@ -194,7 +206,7 @@ app.post('/getElections', (req, res) => {
 
 app.post('/getElection', (req, res) => {
   const idElection = req.body.idElection
-  db.query("SET lc_time_names = 'fr_FR'; SELECT el.idElection, el.titreElection, el.dateDebutElection, el.dateFinElection, el.dateFinElection, el.descriptionElection, el.idAdmin, count(pa.idElection)as 'nbVotes' FROM Election el INNER JOIN  Participer pa WHERE el.idElection = ?",
+  db.query("SET lc_time_names = 'fr_FR';SELECT el.idElection, el.titreElection, DATE_FORMAT(el.dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection, DATE_FORMAT(dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(el.dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end', el.descriptionElection, count(pa.idElection)as 'nbVotes' FROM Election el INNER JOIN  Participer pa WHERE el.idElection = ?",
   [idElection],
   (err, result) => {
     if (err) {
@@ -202,7 +214,21 @@ app.post('/getElection', (req, res) => {
       res.json({message : "Impossible de récupérer l'élection"})
     } 
     else if(result.length != 0){
-      res.json(result)
+      const currentDate = currentTime()
+      let results = JSON.parse(JSON.stringify(result[1]))
+      if (results[0].start < currentDate){
+        results[0].started=true
+      }
+      else{
+        results[0].started=false
+      }
+      if (results[0].end < currentDate){
+        results[0].ended=true
+      }
+      else{
+        results[0].ended=false
+      }
+      res.json(results[0])
     }
     else {
       res.json({message : "Élection introuvable"})
@@ -210,14 +236,27 @@ app.post('/getElection', (req, res) => {
   })
 });
 
-app.get('/currentDate', (req, res) => {
-  var today = new Date();
-  var date = today.getDate()+'-'+(today.getMonth()+1)+'-'+today.getFullYear();
-  //var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
-  res.json(dateTime);
+app.post('/getCandidats', (req, res) => {
+  const idElection = req.body.idElection
+
+  db.query("SELECT * FROM candidat WHERE idElection = ?",
+  [idElection],
+  (err, result) => {
+    if (err) {
+      console.log(err);
+      res.json({message : "Impossible de récupérer les candidats"})
+    } 
+    else if(result.length != 0){
+      res.json(result)
+    }
+    else {
+      res.json({message : "Il n'y a aucun candidats"})
+    }
+  });
 });
+
+
+
 
 app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection

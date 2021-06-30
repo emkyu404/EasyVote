@@ -6,7 +6,7 @@ import loupe from '../img/loupe.png'
 
 const Elections = ({getCurrentDate, getElections, filteredElections, filterElection }) => {
 
-    useEffect( () => {
+    useEffect(() => {
         async function prepareElections(){
             await getCurrentDate();
             await getElections();
@@ -44,7 +44,6 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
 
     return (
         <div>
-            <button onClick={election}>OUI</button>
             <h1 style={styles.mainTitle}>Listes des élections</h1>
             <div style={styles.flexContainer}>
             <button id="Ongoing" style={Object.assign({},styles.btnFiltre, styles.blue)} onClick={ () => {filterElection("Ongoing"); switchBtn("Ongoing");}}>En cours</button>
@@ -61,8 +60,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
                     <div key={electionCard.idElection}>
                         <ElectionCard electionCard={electionCard}/>
                     </div>
-                )) }
-                
+                ))}
             </div>
         </div>
     )

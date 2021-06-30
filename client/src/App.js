@@ -9,8 +9,6 @@ import Footer from './components/Footer'
 import Menu from './components/Menu'
 import Pages from './components/Pages'
 
-// import AddCandidat from './components/AddCandidat'
-
 // URL de base, à changer lorsque l'url change
 const baseUrl = "http://localhost:3001";
 
@@ -25,19 +23,14 @@ function App() {
   const [idElection, setIdElection] = useState({})
   const [candidats, setCandidats] = useState([])
   const [showMenu, setShowMenu] = useState(false)
-  //const [render, setRender] = useState(false)
   const [currentFilter, setCurrentFilter] = useState(""); 
   const [filteredElections, setFilteredElections] = useState([])
-
 
   /* state appeler dans handleConnected, fonction elle-même appelé à la connexion et à la déconnexion */
   const [connected, setConnected] = useState(false)
 
-  //const {idElection} = useParams()
-
   useEffect(() => {
     token();
-    // setIdElection(1)
   },[])
 
   useEffect(() => {
@@ -112,7 +105,7 @@ function App() {
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
         autoDismiss: true,
-     })
+      })
     } 
     else {
       setCurrentUser(response.data)
@@ -125,7 +118,7 @@ function App() {
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
         autoDismiss: true,
-     })
+      })
     } 
     else {
       setCurrentUser(response.data)
@@ -223,8 +216,8 @@ function App() {
     }
   }
 
-  const getElection = async () => {
-    const response = await Axios.post(baseUrl+"/getElection", {idElection : 1})
+  const getElection = async (URLIdElection) => {
+    const response = await Axios.post(baseUrl+"/getElection", {idElection : URLIdElection})
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
@@ -236,8 +229,8 @@ function App() {
     }
   }
 
-  const getCandidats = async () => {
-    const response = await Axios.post(baseUrl+"/getCandidats", {idElection : election.idElection})
+  const getCandidats = async (URLIdElection) => {
+    const response = await Axios.post(baseUrl+"/getCandidats", {idElection : URLIdElection})
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',

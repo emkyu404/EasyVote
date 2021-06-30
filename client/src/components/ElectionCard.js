@@ -11,7 +11,9 @@ const ElectionCard = ({electionCard}) => {
                 
                 <p style={styles.text}>{electionCard.descriptionElection}</p>
                 
-                <Link to={`/election/${electionCard.idElection}`}><button style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button></Link>
+                <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
+                    <button style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
+                </Link>
         </div>
     )
 }
@@ -33,7 +35,7 @@ const styles = {
         marginTop: "15px",
         ':hover':{
             backgroundColor: "#074E7B",
-             transition: "0.2s"
+            transition: "0.2s"
         }
     },
     divElection: {
