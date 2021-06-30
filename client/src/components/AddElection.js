@@ -103,12 +103,22 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
 
     function resetFormCandidat() {
         setCandidatTitle("")
-        document.getElementById("input-titre-candidat").value = ""
         setDescriptionCandidat("")
-        document.getElementById("input-description-candidat").value = ""
         setUrlCandidat("")
-        document.getElementById("input-url-candidat").value = ""
-        spanFunction()
+        document.getElementById("add-candidat-form").reset()
+    }
+
+    function resetFormElection() {
+        setElectionTitle("")
+        setDateDebutElection("")
+        setDateFinElection("")
+        setDescriptionElection("")
+        setElectionType("")
+    
+        setNomRegion("")
+        setCodeDepartement("")
+        setCodePostal("")
+        document.getElementById("add-candidat-form").reset()
     }
 
     const handleOnAddCandidat = (e) => {
@@ -128,9 +138,9 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
         e.preventDefault()
         if(listeCandidats.length >= 0) {        // Remettre à 2
             await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
-            listeCandidats.forEach(
-                candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
-            )
+            // listeCandidats.forEach(
+            //     candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
+            // )
         }
         else {
             alert('Ajouter au moins 2 candidats')
@@ -154,7 +164,7 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
     return (
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
-            <form onSubmit={handleSubmit}>
+            <form id="add-election-form" onSubmit={handleSubmit}>
                 <label className="add-election-label">Type de l'élection : 
                 <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
                     <optgroup style={styles.option}>
@@ -209,7 +219,7 @@ const AddElection = ({addCandidat, onAddElection, idElection }) => {
                     </div>
                 }
             </form>
-            <form onSubmit={handleOnAddCandidat}>  
+            <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>  
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
                         <span className="close" onClick={ () => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
