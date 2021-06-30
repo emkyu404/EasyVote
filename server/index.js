@@ -222,28 +222,6 @@ app.post('/getElection', (req, res) => {
   })
 });
 
-// app.post('/getIdElection', (req, res) => {
-//   const titreElection = req.body.titreElection
-//   const dateDebutElection = req.body.dateDebutElection
-//   const dateFinElection = req.body.dateFinElection 
-
-//   db.query(
-//     "SELECT idElection FROM election WHERE titreElection=? AND dateDebutElection=? AND dateFinElection=?",
-//     [titreElection, dateDebutElection, dateFinElection],
-//     (err, resultIdElection) => {
-//       if (err){
-//         console.log(err);
-//         res.json({message : "Impossible de récupérer l'id de l'élection"})
-//       }
-//       else{
-//         if(resultIdElection.length === 1) {
-//           res.status(200).json(resultIdElection)
-//         }
-//       }
-//     }
-//   )
-// });
-
 app.get('/currentDate', (req, res) => {
   var today = new Date();
   var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
@@ -251,23 +229,6 @@ app.get('/currentDate', (req, res) => {
   var dateTime = date+' '+time;
   res.json(dateTime);
 });
-
-// app.post('/getIdElection', titreElection, dateDebut, dateFin, (req, res) => {
-//   db.query(
-//     "SELECT idElection FROM election WHERE titreElection=? AND dateDebut=? AND dateFin=?",
-//     [titreElection, dateDebut, dateFin],
-//     (err, resultIdElection) => {
-//       if (err){
-//         console.log(err);
-//       }
-//       else{
-//         if(resultIdElection.length === 1) {
-//           res.status(200).json({ idElection: idElection })
-//         }
-//       }
-//     }
-//   )
-// })
 
 app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection
@@ -456,7 +417,6 @@ app.post('/addCandidat', (req, res) => {
   const descriptionCandidat = req.body.descriptionCandidat
   const urlImage = req.body.urlImage
   const idElection = req.body.idElection
-  // const idElection = req.session.currentUser.idAdmin
 
   db.query(
     "SELECT idCandidat FROM candidat WHERE titreCandidat=? AND idElection=?",

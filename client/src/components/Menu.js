@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { Sling as Hamburger } from 'hamburger-react'
 
-const Menu = ({desactivateMenu, toggleMenu, showMenu}) => {
+const Menu = ({desactivateMenu, toggleMenu, showMenu, connectedAdmin}) => {
     return(
     <ClickAwayListener onClickAway={desactivateMenu}>
             <div className={"flex-row " + (showMenu ? "shown" : "hidden")}>
@@ -11,7 +11,9 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu}) => {
               {/* Si le state showMenu vrai, affiche le menu */}
               <div className="menu-container ">
                 <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item">Accueil</div></Link>
-                <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item">Ajouter une élection</div></Link>
+                { (connectedAdmin !== "") &&
+                  <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item">Ajouter une élection</div></Link>
+                } 
                 <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item">Elections</div></Link>
                 <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item">Profil</div></Link>
                 <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item">Contact</div></Link>
