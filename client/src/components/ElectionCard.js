@@ -33,7 +33,7 @@ const styles = {
         marginTop: "15px",
         ':hover':{
             backgroundColor: "#074E7B",
-             transition: "0.2s"
+            transition: "0.2s"
         }
     },
     divElection: {
