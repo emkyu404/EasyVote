@@ -205,8 +205,6 @@ const Election = () => {
     )
 }
 
-export default Radium(Election)
-
 
 const styles = {
 
@@ -221,7 +219,6 @@ const styles = {
     card: {
         width: "450px",
         height: "250px",
-        backgroundColor: "#fff",
         background: "linear-gradient(#f8f8f8, #FFF5EE)",
         boxShadow: "0 8px 16px -8px rgba(0,0,0,0.4)",
         borderRadius: "6px",
@@ -323,4 +320,4 @@ const styles = {
 }
 
 
-
+export default Radium(Election)
