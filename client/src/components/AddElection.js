@@ -30,6 +30,9 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     const [descriptionCandidat, setDescriptionCandidat] = useState("")
     const [urlCandidat, setUrlCandidat] = useState("")
 
+    const [heureDebut, setHeureDebut] = useState("")
+    const [heureFin, setHeureFin] = useState("")
+
     const [listeCandidats, setListeCandidats] = useState([])
     
     const handleChange = (e) => {
@@ -59,6 +62,12 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     }
     const handleDateFinOnChange = (e) => {
         setDateFinElection(e.target.value)
+    }
+    const handleHeureDebutOnChange = (e) => {
+        setHeureDebut(e.target.value)
+    }
+    const handleHeureFinOnChange = (e) => {
+        setHeureFin(e.target.value)
     }
     const handleDescriptionOnChange = (e) => {
         setDescriptionElection(e.target.value)
@@ -124,6 +133,8 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         setElectionTitle("")
         setDateDebutElection("")
         setDateFinElection("")
+        setHeureDebut("")
+        setHeureFin("")
         setDescriptionElection("")
         setElectionType("")
 
@@ -157,9 +168,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         
-        var heureDebut = document.getElementById("heureDebut").value
-        var heureFin = document.getElementById("heureFin").value
-
         if (listeCandidats.length >= 2) {
             await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             resetFormElection()
@@ -184,9 +192,15 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         }
     }
 
+    function deleteCandidat(titreCandidat) {
+        const newList = listeCandidats.filter((candidat) => candidat.titreCandidat !== titreCandidat);
+        setListeCandidats(newList);
+    }
+
     return (
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
+            <FileReaderAddElection onFileRead={onFileRead} />
             <form id="add-election-form" onSubmit={handleSubmit}>
                 <label className="add-election-label" style={styles.selectLabel}>Type de l'élection :</label>
                 <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
@@ -230,24 +244,35 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
                         
                         <label className="add-election-label" style={styles.label}>Heure de début : </label>
-                        <span style={styles.span}><input id="heureDebut" type="time" className="add-election-input" style={styles.input} required /></span>
+                        <span style={styles.span}><input id="heureDebut" type="time" className="add-election-input" style={styles.input} onChange={handleHeureDebutOnChange} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
                         <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection}/></span>
                         
                         <label className="add-election-label" style={styles.label}>Heure de fin : </label>
-                        <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} required /></span>
+                        <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} onChange={handleHeureFinOnChange} required /></span>
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Ajouter un candidat</button>
-                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div>)}
-
                     </div>
                 }
             </form>
+            {listeCandidats.length > 0 &&
+                <div>
+                    <h1 style={styles.mainTitle}>Liste des candidats : </h1>
+                    <div className="list-candidat-added" style={styles.listeCandidats}>
+                        {listeCandidats.map((candidat) => 
+                            <div key={candidat.titreCandidat}> 
+                                <p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.cross}> ❌ </p>
+                                <p style={styles.candidat}> {candidat.titreCandidat} </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            }
             <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
@@ -267,7 +292,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                     </div>
                 </div>
             </form>
-            <FileReaderAddElection onFileRead={onFileRead} />
         </div>
     )
 }
@@ -448,6 +472,15 @@ const styles = {
             textDecoration: "none",
             cursor: "pointer"
         }
+    },
+    candidat: {
+        display: "inline-block"
+    },
+    cross: {
+        display: "inline-block"
+    },
+    listeCandidats: {
+        backgroundColor: "white",
     }
 }
 
