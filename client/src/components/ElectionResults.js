@@ -2,7 +2,7 @@ import React from 'react'
 import Radium from "radium"
 import Chart from "react-google-charts";
 
-const ElectionResults = ({election, candidat}) => {
+const ElectionResults = ({election, candidat, votes}) => {
     return (
         <div>
         
@@ -15,13 +15,7 @@ const ElectionResults = ({election, candidat}) => {
             <div style={styles.pieChartContainer}>
                 <Chart
                     chartType="PieChart"
-                    data={[
-                        ['Choix', 'Votes'],
-                        ['Oui', 30],
-                        ['Non', 10],
-                        ['Yes', 30],
-                        ['Oui aussi', 30],
-                    ]}
+                    data={votes}
                     height="100%"
                     width="100%"
                     options={{

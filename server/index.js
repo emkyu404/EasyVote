@@ -255,6 +255,25 @@ app.post('/getCandidats', (req, res) => {
   });
 });
 
+app.post('/getVotes', (req, res) => {
+  const idElection = req.body.idElection
+
+  db.query("SELECT ca.titreCandidat, COUNT(vo.idVote) as 'votes' FROM voter vo inner join candidat ca on vo.idCandidat=ca.idCandidat WHERE vo.idElection=? GROUP BY vo.idCandidat;",
+  [idElection],
+  (err, result) => {
+    if (err) {
+      console.log(err);
+      res.json({message : "Impossible de récupérer les votes"})
+    } 
+    else if(result.length != 0){
+      res.json(result)
+    }
+    else {
+      res.json({message : "Il n'y a aucun votes"})
+    }
+  });
+});
+
 
 
 

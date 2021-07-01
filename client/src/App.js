@@ -22,6 +22,8 @@ function App() {
   const [election, setElection] = useState({idElection : 0})
   const [idElection, setIdElection] = useState({})
   const [candidats, setCandidats] = useState([])
+  const [votes, setVotes] = useState([])
+
   const [showMenu, setShowMenu] = useState(false)
   const [currentFilter, setCurrentFilter] = useState(""); 
   const [filteredElections, setFilteredElections] = useState([])
@@ -240,6 +242,22 @@ function App() {
     }
   }
 
+  const getVotes = async (URLIdElection) => {
+    const response = await Axios.post(baseUrl+"/getVotes", {idElection : URLIdElection})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      var result = Object.keys(response.data).map((key) => [response.data[key].titreCandidat, response.data[key].votes]);
+      result.unshift(['titreElection', 'votes'])
+      setVotes(result);
+    }
+  }
+
+
   return (
     <div className="App">
         <Router>
@@ -275,6 +293,8 @@ function App() {
             election={election} 
             getCandidats={getCandidats} 
             candidats={candidats}
+            getVotes={getVotes}
+            votes={votes}
           />
           <Footer/>
         </Router>
