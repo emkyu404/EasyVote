@@ -4,8 +4,12 @@ import Radium from 'radium';
 import { useHistory } from 'react-router-dom';
 import loupe from '../img/loupe.png'
 
-const Elections = ({getCurrentDate, getElections, filteredElections, filterElection }) => {
+const Elections = ({getCurrentDate, getElections, filteredElections, filterElection, pageTitle }) => {
 
+    useEffect(() => {
+        document.title = pageTitle
+    }, [pageTitle])
+    
     useEffect(() => {
         async function prepareElections(){
             await getCurrentDate();

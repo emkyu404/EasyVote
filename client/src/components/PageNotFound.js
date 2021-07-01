@@ -1,7 +1,12 @@
 import React from 'react'
 import Radium from 'radium'
+import { useEffect } from 'react'
 
-const PageNotFound = () => {
+const PageNotFound = ({pageTitle}) => {
+    useEffect(() => {
+        document.title = pageTitle
+    }, [pageTitle])
+    
     return (
         <div>
             <div>

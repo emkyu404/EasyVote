@@ -1,7 +1,12 @@
 import vote from '../img/vote.jpg';
 import Radium from 'radium';
+import { useEffect } from 'react'
 
-const Home = ({onClick}) => {
+const Home = ({onClick, pageTitle}) => {
+    useEffect(() => {
+        document.title = pageTitle
+    }, [pageTitle])
+
     return (
         <div>
             <h1 style={styles.mainTitle}>Le vote à distance maintenant disponible</h1>
