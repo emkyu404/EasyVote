@@ -11,12 +11,18 @@ const FileReaderAddElection = ({onFileRead}) => {
     function convertDateFormat(string){
         let date = string.split(' ')
         let stringTab = date[0].split('/')
-        let newString = '20'+stringTab[2] + '-' + transformDayMonthFormat(stringTab[0]) + '-' + transformDayMonthFormat(stringTab[1])
-        console.log(newString)
+        let newString = '20'+stringTab[2] + '-' + transformTwoNumbersFormat(stringTab[0]) + '-' + transformTwoNumbersFormat(stringTab[1])
         return newString
     }
 
-    function transformDayMonthFormat(string){
+    function convertHoursFormat(string){
+        let hours = string.split(' ')
+        let stringHours = hours[1].split(':')
+        let newString = transformTwoNumbersFormat(stringHours[0])+":"+stringHours[1]
+        return newString
+    }
+
+    function transformTwoNumbersFormat(string){
         return parseInt(string) < 10 ? "0"+string: string
     }
 
@@ -66,7 +72,9 @@ const FileReaderAddElection = ({onFileRead}) => {
                     data2.forEach(element => {
                         let dateDebut = convertDateFormat(element.dateDebut)
                         let dateFin = convertDateFormat(element.dateFin)
-                        newElection = {titreElection: element.Titre, dateDebutElection: dateDebut, dateFinElection: dateFin, descriptionElection : element.description}
+                        let heureDebut = convertHoursFormat(element.dateDebut)
+                        let heureFin = convertHoursFormat(element.dateFin)
+                        newElection = {titreElection: element.Titre, dateDebutElection: dateDebut, heureDebutElection: heureDebut, dateFinElection: dateFin, heureFinElection: heureFin, descriptionElection : element.description}
                         let typeElection = element.échelle.toUpperCase()
                         switch(typeElection){
                             case 'NATIONALE' : newElection = {...newElection, electionType: 'election_nationale', nomRegion:null, codeDepartement:null, codePostal:null}; break;
@@ -77,6 +85,7 @@ const FileReaderAddElection = ({onFileRead}) => {
                         }
                     })
                     election = newElection
+                    console.log(election)
 
                     // Appel de la fonction dans le component AddElection qui permet d'initialiser les states en fonction des données lu sur le fichier excel.
                     onFileRead(election,candidatsArray)

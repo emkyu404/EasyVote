@@ -166,7 +166,7 @@ function App() {
       else {
         setIdElection(response.data[1][0].idElection);
         addToast("Élection : " + response.data[1][0].titreElection +" ajoutée", {
-          appearance: 'error',
+          appearance: 'success',
           autoDismiss: true,
         })
       }
@@ -176,12 +176,6 @@ function App() {
     const response = await Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection })
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
-        appearance: 'error',
-        autoDismiss: true,
-      })
-    }
-    else {
-      addToast("Candidat : " + response.titreCandidat +" ajouté", {
         appearance: 'error',
         autoDismiss: true,
       })
