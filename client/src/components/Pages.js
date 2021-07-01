@@ -1,5 +1,7 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
+import Radium from 'radium'
+
 import Home from './Home'
 import Elections from './Elections'
 import Profil from './Profil'
@@ -13,7 +15,7 @@ import PageNotFound from './PageNotFound'
 
 const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats}) => {
     return(
-        <div className="main-container">
+        <div className="main-container" style={styles.mainContainer}>
             <Switch>
               <Route exact path="/">
                 <Home />
@@ -53,4 +55,20 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
     )
 }
 
-export default Pages;
+const styles = {
+  mainContainer : {
+    margin : '0 auto',
+    marginTop : '15vh',
+    maxWidth : '1200px',
+    width : '80%',
+    backgroundColor : '#E9F1F7',
+    padding : '25px',
+    minHeight : 'calc(85vh - 50px)',
+    height : 'fit-content',
+    '@media (max-width :640px)':{
+      width : '100%'
+    }
+  }
+}
+
+export default Radium(Pages);

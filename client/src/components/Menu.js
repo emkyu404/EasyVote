@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import { Sling as Hamburger } from 'hamburger-react'
+import Radium from 'radium'
 
 const Menu = ({desactivateMenu, toggleMenu, showMenu, connectedAdmin}) => {
     return(
@@ -9,14 +10,14 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu, connectedAdmin}) => {
             <div className={"flex-row " + (showMenu ? "shown" : "hidden")}>
 
               {/* Si le state showMenu vrai, affiche le menu */}
-              <div className="menu-container ">
-                <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item">Accueil</div></Link>
+              <div id="menu-container" style = {styles.menuContainer}>
+                <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-1' style={styles.menuItem}>Accueil</div></Link>
                 { (connectedAdmin !== "") &&
-                  <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item">Ajouter une élection</div></Link>
+                  <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-2' style={styles.menuItem}>Ajouter une élection</div></Link>
                 } 
-                <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item">Elections</div></Link>
-                <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item">Profil</div></Link>
-                <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item">Contact</div></Link>
+                <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Elections</div></Link>
+                <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
+                <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-5' style={styles.menuItem}>Contact</div></Link>
               </div>
 
               {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}
@@ -32,4 +33,27 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu, connectedAdmin}) => {
     )
 }
 
-export default Menu;
+const styles = {
+  menuContainer : {
+    backgroundColor : '#DEDEDE',
+    display : 'flex',
+    width : '250px',
+    flexDirection : 'column',
+    height : '100vh'
+  },
+
+  menuItem : {
+    borderRight : '3px solid',
+    borderColor : '#DEDEDE',
+    padding : '10px',
+    ':hover' : {
+      backgroundColor : '#CECECE',
+      transition : '0.25s',
+      borderColor : '#0b6ba8',
+      cursor : 'pointer'
+    },
+  }
+
+}
+
+export default Radium(Menu);
