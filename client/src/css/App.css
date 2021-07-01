@@ -71,6 +71,10 @@ a:visited{
 .button-close-active:hover{
   background-color : rgba(205,92,92, 0.75);
 }
+
+.default-margin{
+  margin : 0 auto;
+}
 /* css de la page d'accueil*/
 /* 
 .picture::before {

@@ -15,7 +15,7 @@ import PageNotFound from './PageNotFound'
 
 const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats}) => {
     return(
-        <div className="main-container" style={styles.mainContainer}>
+        <div className="main-container default-margin" style={styles.mainContainer}>
             <Switch>
               <Route exact path="/">
                 <Home />
@@ -57,7 +57,6 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
 
 const styles = {
   mainContainer : {
-    margin : '0 auto',
     marginTop : '15vh',
     maxWidth : '1200px',
     width : '80%',
