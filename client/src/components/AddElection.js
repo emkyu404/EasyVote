@@ -101,8 +101,16 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
             }
             document.getElementById('dateDebut').valueAsDate = getDateObjFromString(electionObj.dateDebutElection)
             setDateDebutElection(electionObj.dateDebutElection)
+
+            document.getElementById('heureDebut').value = electionObj.heureDebutElection
+            setHeureDebut(electionObj.heureDebutElection)
+
             document.getElementById('dateFin').valueAsDate = getDateObjFromString(electionObj.dateFinElection)
             setDateFinElection(electionObj.dateFinElection)
+
+            document.getElementById('heureFin').value = electionObj.heureFinElection
+            setHeureDebut(electionObj.heureFinElection)
+
             document.getElementById('descriptionElection').value = electionObj.descriptionElection
             setDescriptionElection(electionObj.descriptionElection)
 

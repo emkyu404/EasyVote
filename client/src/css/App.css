@@ -32,6 +32,10 @@ body {
   justify-content: center;
 }
 
+a{
+  text-decoration: none;
+}
+
 a:visited{
   color: #272729;
 }
