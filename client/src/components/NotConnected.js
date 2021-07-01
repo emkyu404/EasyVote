@@ -3,7 +3,7 @@ import DialogComponent from './DialogComponent'
 
 const NotConnected = () => {
     const handleClick = () => {
-        window.location.replace('login')
+        window.location.replace('/login')
     }
     return (
         <div>

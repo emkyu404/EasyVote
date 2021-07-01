@@ -1,6 +1,8 @@
 import React from 'react'
 import * as XLSX from 'xlsx'
 import { useToasts } from 'react-toast-notifications'
+import { Link } from 'react-router-dom'
+import Radium from 'radium'
 
 const FileReaderAddElection = ({onFileRead}) => {
 
@@ -109,15 +111,58 @@ const FileReaderAddElection = ({onFileRead}) => {
             })
         }
     }
+    
+    const emulateClickOnInput = () => {
+        document.getElementById('input').click()
+    }
 
 
 
     return (
-        <div>
-            <input type="file" id="input" onChange={e => handleNewFile(e.target.files[0])}></input>
-            <table id="tbl-data"></table>
+        <div style={styles.mainDivContainer}>
+            <h2 style={styles.secondTitle}>Importer une éléction à partir d'un fichier</h2>
+            <p>Initialisation du formulaire avec la lecture d'un fichier (.xlsx)</p>
+            <Link to="/files/Easy_Vote_Formulaire_Election.xlsx" target="_blank" download><button style={styles.button} key="download">Télécharger le modèle</button></Link>
+            <input type="file" id="input" name="file" onChange={e => handleNewFile(e.target.files[0])} style={styles.inputStyle}></input>
+            <button onClick={emulateClickOnInput} style={styles.button} key="upload">Lecture d'un fichier</button>
         </div>
     )
 }
 
-export default FileReaderAddElection
+const styles = {
+    mainDivContainer : {
+        backgroundColor: "white",
+        padding: "40px 40px 40px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 20px 20px",
+        }
+    },
+    button: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        width: "200px",
+        margin: "20px 20px 0px 0px",
+        ':hover': {
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
+        },
+        '@media (max-width: 960px)':{
+            width: "100%"
+        }
+    },
+    secondTitle:{
+        textAlign: "center",
+        paddingBottom: "10px"
+    },
+    inputStyle : {
+        display: "none"
+    }
+}
+
+export default Radium(FileReaderAddElection)

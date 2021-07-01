@@ -16,12 +16,15 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: "", nomCitoyen : ""})
+  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: "", nomCitoyen : "", idElecteur : ""})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
   const [election, setElection] = useState({idElection : 0})
   const [idElection, setIdElection] = useState({})
   const [candidats, setCandidats] = useState([])
+  const [votes, setVotes] = useState([])
+  const [participer, setParticiper] = useState([])
+
   const [showMenu, setShowMenu] = useState(false)
   const [currentFilter, setCurrentFilter] = useState(""); 
   const [filteredElections, setFilteredElections] = useState([])
@@ -111,6 +114,21 @@ function App() {
       setCurrentUser(response.data)
     }
   };
+
+  const changePassword = async(newPassword) => {
+    const response = await Axios.post(baseUrl+"/changePassword", { newPassword: newPassword, userId: currentUser.idCitoyen })
+      if(response.data.message){
+        addToast("Erreur : " + response.data.message, {
+          appearance: 'error',
+          autoDismiss: true,
+        })
+      }else{
+        addToast("Mot de passe modifié avec succès", {
+          appearance : 'success',
+          autoDismiss: true,
+        })
+    }
+  }
 
   const loginAdmin = async (email, password) => {
     const response = await Axios.post(baseUrl+"/loginAdmin", { email: email, password: password })
@@ -234,6 +252,50 @@ function App() {
     }
   }
 
+  const getVotes = async (URLIdElection) => {
+    const response = await Axios.post(baseUrl+"/getVotes", {idElection : URLIdElection})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      var result = Object.keys(response.data).map((key) => [response.data[key].titreCandidat, response.data[key].votes]);
+      result.unshift(['titreElection', 'votes'])
+      setVotes(result);
+    }
+  }
+
+  const addVote = async (URLIdElection, idCandidat) => {
+    const response = await Axios.post(baseUrl+"/addVote", {idCitoyen : currentUser.idCitoyen, idElection : URLIdElection, idCandidat : idCandidat, idElecteur : currentUser.idElecteur})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else if (response.data.success){
+      addToast(response.data.success, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
+    }
+  }
+
+  const getParticiper = async (URLIdElection) => {
+    const response = await Axios.post(baseUrl+"/getParticiper", {idElection : URLIdElection, idElecteur : currentUser.idElecteur})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      setParticiper(response.data);
+    }
+  }
+
   return (
     <div className="App">
         <Router>
@@ -257,6 +319,7 @@ function App() {
             //Profile
             profile={profile}
             currentUser={currentUser}
+            changePassword={changePassword}
 
             //Login
             login={login}
@@ -269,6 +332,11 @@ function App() {
             election={election} 
             getCandidats={getCandidats} 
             candidats={candidats}
+            getVotes={getVotes}
+            votes={votes}
+            addVote={addVote}
+            getParticiper={getParticiper}
+            participer={participer}
           />
           <Footer/>
         </Router>

@@ -14,7 +14,7 @@ import AddElection from "./AddElection"
 import PageNotFound from './PageNotFound'
 import PasswordForget from './PasswordForget'
 
-const Pages = ({ connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats }) => {
+const Pages = ({ connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, addVote, getParticiper, participer, changePassword }) => {
   return (
     <div className="main-container default-margin" style={styles.mainContainer}>
       <Switch>
@@ -29,7 +29,7 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
           {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} /> : <NotConnected />}
         </Route>
         <Route exact path="/profil">
-          {connected ? <Profil getProfile={profile} currentUser={currentUser} pageTitle={'Profil'} /> : <NotConnected />}
+          {connected ? <Profil getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profil'} /> : <NotConnected />}
         </Route>
         <Route exact path="/contact">
           <Contact pageTitle={'Contactez nous'} />
@@ -41,7 +41,7 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
           {connected ? <Home pageTitle={'Accueil'} /> : <LoginAdmin onLogin={loginAdmin} pageTitle={'Connexion administrateur'} />}
         </Route>
         <Route path="/election/:idElection">
-          {connected ? <Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} pageTitle={'Election'} /> : <NotConnected />}
+          {connected ? <Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} addVote={addVote} getParticiper={getParticiper} participer={participer} pageTitle={'Election'} /> : <NotConnected />}
         </Route>
         <Route exact path="/passwordForget">
           <PasswordForget pageTitle={'Mot de passe oublié'} />
@@ -57,12 +57,12 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
 
 const styles = {
   mainContainer: {
-    marginTop: '15vh',
+    marginTop: '10vh',
     maxWidth: '1200px',
     width: '80%',
     backgroundColor: '#E9F1F7',
     padding: '25px',
-    minHeight: 'calc(85vh - 50px)',
+    minHeight: 'calc(90vh - 50px)',
     height: 'fit-content',
     '@media (max-width :640px)': {
       width: '100%'

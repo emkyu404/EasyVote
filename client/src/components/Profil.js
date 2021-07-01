@@ -5,7 +5,7 @@ import Radium from 'radium';
 
 import DialogComponent from './DialogComponent'
 
-const Profil = ({ getProfile, currentUser, pageTitle }) => {
+const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
 
     useEffect(() => {
         document.title = pageTitle
@@ -17,6 +17,7 @@ const Profil = ({ getProfile, currentUser, pageTitle }) => {
 
     const [triggerDialog, setTriggerDialog] = useState(false)
     const [numberOfCalls, setNumberOfCalls] = useState(0)
+    const [newPassword, setNewPassword] = useState("")
 
 
     const history = useHistory();
@@ -28,6 +29,23 @@ const Profil = ({ getProfile, currentUser, pageTitle }) => {
     const handlePasswordChange = (e) => {
         e.preventDefault()
         setNumberOfCalls(numberOfCalls + 1)
+    }
+
+    const handleNewPasswordChange = (e) => {
+        setNewPassword(e.target.value)
+        console.log(newPassword)
+    }
+
+    const handleConfirmPasswordChange = (e) => {
+        if(e.target.value != newPassword){
+            document.getElementById("newPassword").style.backgroundColor="rgba(240,128,128,0.5)"
+            document.getElementById("confirmPassword").style.backgroundColor="rgba(240,128,128,0.5)"
+            document.getElementById("changePasswordButton").disabled = true
+        }else{
+            document.getElementById("newPassword").style.backgroundColor="rgba(152,251,152,0.5)"
+            document.getElementById("confirmPassword").style.backgroundColor="rgba(152,251,152,0.5)"
+            document.getElementById("changePasswordButton").disabled = false
+        }
     }
 
     const [show, setShow] = React.useState(false);
@@ -97,12 +115,12 @@ const Profil = ({ getProfile, currentUser, pageTitle }) => {
                         <span style={styles.span}><input type="password" name="old-pass" required style={styles.input} /></span>
 
                         <label style={styles.label}>Nouveau mot de passe : </label>
-                        <span style={styles.span}><input type="password" name="new-pass" required style={styles.input} /></span>
+                        <span style={styles.span}><input id="newPassword" type="password" name="new-pass" required style={styles.input} onChange={handleNewPasswordChange} /></span>
 
                         <label style={styles.label}>Confirmation nouveau mot de passe : </label>
-                        <span style={styles.span}><input type="password" name="confirm-pass" required style={styles.input} /></span>
+                        <span style={styles.span}><input id="confirmPassword" type="password" name="confirm-pass" required style={styles.input} onChange={handleConfirmPasswordChange}/></span>
 
-                        <input type="submit" className="button" style={styles.submit} value="Envoyer"></input>
+                        <input id="changePasswordButton" type="submit" className="button" style={styles.submit} value="Envoyer"></input>
                     </div>
                 </form>
                 : null
@@ -112,8 +130,9 @@ const Profil = ({ getProfile, currentUser, pageTitle }) => {
                 dialogText={"Êtes-vous sûr de vouloir changer votre mot de passe ?"}
                 dialogTitle={"Changement de mot de passe ?"}
                 openOnRender={false}
-                handleClickYes={() => { alert("password change function called") }}
-                handleClickNo={() => { alert("cancel") }}
+                handleClickYes={() => {}}
+                handleClickNo={() => {}}
+                handleClickBehavior={() => {}}
                 yesNo={true}
                 numberOfCall={numberOfCalls}
             />
@@ -222,15 +241,19 @@ const styles = {
     },
     submit: {
         backgroundColor: "#0B6BA8",
+        cursor: "pointer",
         border: "none",
         color: "white",
         padding: "15px",
         textDecoration: "none",
-        cursor: "pointer",
         width: "200px",
         float: "right",
         '@media (max-width: 640px)': {
             width: "100%"
+        },
+        ':disabled':{
+            backgroundColor : "#CECECE",
+            cursor: "not-allowed"
         }
     },
     span: {

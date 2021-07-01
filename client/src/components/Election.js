@@ -7,7 +7,7 @@ import ElectionVote from "./ElectionVote";
 import ElectionResults from "./ElectionResults";
 
 
-const Election = ({getElection, election, getCandidats, candidats, pageTitle}) => {
+const Election = ({getElection, election, getCandidats, candidats, getVotes, votes, addVote, participer, getParticiper, pageTitle}) => {
     const { state } = useLocation();
 
     useEffect(() => {
@@ -17,12 +17,22 @@ const Election = ({getElection, election, getCandidats, candidats, pageTitle}) =
     useEffect(() => {
         async function prepareElection(){
             await getElection(state.URLIdElection)
-            if(election.started===true){
-                await getCandidats(state.URLIdElection)
-            }
         }
         prepareElection();
     }, [])
+
+    useEffect(() => {
+        async function prepareElection(){
+            if(election.started===true){
+                await getCandidats(state.URLIdElection)
+                await getParticiper(state.URLIdElection)
+            }
+            if (election.ended===true){
+                await getVotes(state.URLIdElection)
+            }
+        }
+        prepareElection();
+    }, [election])
 
     return (
         <div>
@@ -30,18 +40,17 @@ const Election = ({getElection, election, getCandidats, candidats, pageTitle}) =
             ?
             <div>
                 <h1 style={styles.mainTitle}>Résultat du vote</h1>
-                <ElectionResults election={election} candidats={candidats}/>
+                <ElectionResults election={election} candidats={candidats} votes={votes}/>
             </div>
             :
             election.started===true
             ?
             <div>
                 <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
-                <ElectionVote candidats={candidats}/>
+                <ElectionVote candidats={candidats} addVote={addVote} URLIdElection={state.URLIdElection} participer={participer}/>
             </div>
             :
             <div>
-                <h1 style={styles.mainTitle}>En cours de préparation</h1>
                 <ElectionWait election={election}/>
             </div>
             }

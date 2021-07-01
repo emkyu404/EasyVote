@@ -101,8 +101,16 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
             }
             document.getElementById('dateDebut').valueAsDate = getDateObjFromString(electionObj.dateDebutElection)
             setDateDebutElection(electionObj.dateDebutElection)
+
+            document.getElementById('heureDebut').value = electionObj.heureDebutElection
+            setHeureDebut(electionObj.heureDebutElection)
+
             document.getElementById('dateFin').valueAsDate = getDateObjFromString(electionObj.dateFinElection)
             setDateFinElection(electionObj.dateFinElection)
+
+            document.getElementById('heureFin').value = electionObj.heureFinElection
+            setHeureDebut(electionObj.heureFinElection)
+
             document.getElementById('descriptionElection').value = electionObj.descriptionElection
             setDescriptionElection(electionObj.descriptionElection)
 
@@ -192,9 +200,15 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         }
     }
 
+    function deleteCandidat(titreCandidat) {
+        const newList = listeCandidats.filter((candidat) => candidat.titreCandidat !== titreCandidat);
+        setListeCandidats(newList);
+    }
+
     return (
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
+            <FileReaderAddElection onFileRead={onFileRead} />
             <form id="add-election-form" onSubmit={handleSubmit}>
                 <label className="add-election-label" style={styles.selectLabel}>Type de l'élection :</label>
                 <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
@@ -210,6 +224,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
                 {electionType !== "" &&
                     <div style={styles.divForm}>
+                        <h2 style={styles.secondTitle}>Formulaire d'ajout d'une élection</h2>
                         {electionType === "election_regionale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Nom de la région : </label>
@@ -251,11 +266,10 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Ajouter un candidat</button>
-                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div>)}
-
                     </div>
                 }
             </form>
+            
             <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
@@ -275,7 +289,34 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                     </div>
                 </div>
             </form>
-            <FileReaderAddElection onFileRead={onFileRead} />
+
+            {listeCandidats.length > 0 &&
+                <div style={styles.divCandidat}>
+                    <h2 style={styles.secondTitle}>Liste des candidats</h2>
+                    <div className="list-candidat-added" style={styles.listeCandidats}>
+                        <table style={styles.table}>
+                            <thead>
+                                <tr style={styles.tr}>
+                                    <th style={styles.th}>Titre</th>
+                                    <th style={styles.th}>Description</th>
+                                    <th style={styles.th}>Image</th>
+                                    <th style={Object.assign({},styles.th, styles.delete)}></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {listeCandidats.map((candidat) => 
+                                    <tr key={candidat.titreCandidat} style={styles.tr}>
+                                        <td style={styles.td}>{candidat.titreCandidat}</td>
+                                        <td style={styles.td}>{candidat.descriptionCandidat}</td>
+                                        <td style={styles.td}>{candidat.urlCandidat}</td>
+                                        <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)}> ❌ </p></td>
+                                    </tr>
+                            )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
         </div>
     )
 }
@@ -456,6 +497,43 @@ const styles = {
             textDecoration: "none",
             cursor: "pointer"
         }
+    },
+    divCandidat: {
+        backgroundColor: "white",
+        padding: "40px 40px 40px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 20px 20px"
+        }
+    },
+    table: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        minWidth: "100%",
+        overflow: "auto"
+    },
+    th: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        backgroundColor: "#fafafa",
+        padding: "5px 20px 5px 20px"
+    },
+    td: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        padding: "5px 20px 5px 20px"
+    },
+    tr: {
+        width: "100%"
+    },
+    secondTitle:{
+        textAlign: "center",
+        paddingBottom: "10px"
+    },
+    delete: {
+        padding: "5px",
+        width: "5px"
     }
 }
 
