@@ -192,6 +192,11 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         }
     }
 
+    function deleteCandidat(titreCandidat) {
+        const newList = listeCandidats.filter((candidat) => candidat.titreCandidat !== titreCandidat);
+        setListeCandidats(newList);
+    }
+
     return (
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
@@ -251,7 +256,12 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Ajouter un candidat</button>
-                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div>)}
+                        {listeCandidats.map((candidat) => 
+                            <div key={candidat.titreCandidat}> 
+                                <p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.cross}> ❌ </p>
+                                <p style={styles.candidat}> {candidat.titreCandidat} </p>
+                            </div>
+                        )}
 
                     </div>
                 }
@@ -456,7 +466,13 @@ const styles = {
             textDecoration: "none",
             cursor: "pointer"
         }
-    }
+    },
+    candidat: {
+        display: "inline-block"
+    },
+    cross: {
+        display: "inline-block"
+    },
 }
 
 export default Radium(AddElection)
