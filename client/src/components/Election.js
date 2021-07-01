@@ -7,8 +7,12 @@ import ElectionVote from "./ElectionVote";
 import ElectionResults from "./ElectionResults";
 
 
-const Election = ({getElection, election, getCandidats, candidats}) => {
+const Election = ({getElection, election, getCandidats, candidats, pageTitle}) => {
     const { state } = useLocation();
+
+    useEffect(() => {
+        document.title = pageTitle
+    }, [pageTitle])
     
     useEffect(() => {
         async function prepareElection(){

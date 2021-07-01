@@ -133,8 +133,6 @@ function App() {
         appearance: 'success',
         autoDismiss: true,
       })
-      window.location.replace('/')
-
     } 
     else {
       addToast("La déconnexion à échouer", {

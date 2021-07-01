@@ -5,7 +5,10 @@ import Radium from 'radium';
 import FileReaderAddElection from './FileReaderAddElection'
 
 
-const AddElection = ({ addCandidat, onAddElection, idElection }) => {
+const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
+    useEffect(() => {
+        document.title = pageTitle
+    }, [pageTitle])
 
     useEffect(() => {
         listeCandidats.forEach(
