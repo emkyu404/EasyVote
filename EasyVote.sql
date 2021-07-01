@@ -284,14 +284,14 @@ CREATE TABLE IF NOT EXISTS `election` (
 INSERT INTO `election` (`idElection`, `titreElection`, `dateDebutElection`, `dateFinElection`, `descriptionElection`) VALUES
 (1, 'Election présidentiel 2022 - 1er tour', '2022-04-10 00:00:00', '2022-04-23 00:00:00', '1er tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
 (2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:00:00', '2022-05-07 00:00:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
-(3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-07-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.'),
-(4, 'Election test', '2021-06-20 00:00:00', '2021-06-27 20:00:00', 'Election Test'),
+(3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-06-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.'),
+(4, 'Election test', '2021-06-20 00:00:00', '2021-07-27 20:00:00', 'Election Test'),
 (5, 'Election régionale de la Bretagne', '2021-06-20 00:00:00', '2021-06-27 00:00:00', 'Election régionale 2021 de la Bretagne'), 
 (6, 'Election régionale de la Corse', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election régionale 2021 de la Corse'), 
 (7, 'Election départementale de Paris', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Paris'), 
 (8, 'Election départementale de Oise', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Oise'), 
 (9, 'Election municipale de Beauvais', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election municipale 2021 de Beauvais'), 
-(10, 'Election municipale de Paris', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election municipale 2021 de Paris');
+(10, 'Election municipale de Paris', '2021-07-20 00:00:00', '2021-07-26 00:00:00', 'Election municipale 2021 de Paris');
 -- --------------------------------------------------------
 
 --
@@ -393,7 +393,7 @@ CREATE TABLE IF NOT EXISTS `election_municipale` (
 
 INSERT INTO `election_municipale` (`idElection`, `codePostal`) VALUES 
 ('9', '60000'), 
-('10', '75000');
+('10', '75004');
 
 -- --------------------------------------------------------
 
@@ -449,4 +449,8 @@ CREATE TABLE IF NOT EXISTS `voter` (
   FOREIGN KEY (`idElection`) REFERENCES `candidat`(`idElection`),
   FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `voter` (`idElection`, `idCandidat`) VALUES
+(4, 1),
+(4, 2);
 COMMIT;
