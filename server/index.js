@@ -187,8 +187,8 @@ app.post('/getElections', (req, res) => {
   if(checkSameAccount(req)===true){
     const idCitoyen = req.session.user.idCitoyen
 
-    db.query("SET lc_time_names = 'fr_FR'; SELECT idElection, titreElection, descriptionElection, DATE_FORMAT(dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection , DATE_FORMAT(dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end' FROM Election",
-    [],
+    db.query("SET lc_time_names = 'fr_FR'; SELECT el.idElection, el.titreElection, el.descriptionElection, DATE_FORMAT(el.dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection , DATE_FORMAT(el.dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(el.dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(el.dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end', em.codePostal, ed.codeDepartement, er.nomRegion FROM Election el LEFT JOIN election_departementale ed on el.idElection=ed.idElection LEFT JOIN election_municipale em on el.idElection=em.idElection LEFT JOIN election_regionale er on el.idElection=er.idElection WHERE em.codePostal IN (SELECT vi.codePostal FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR ed.codeDepartement IN (SELECT de.codeDepartement FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR er.nomRegion IN (SELECT de.nomRegion FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?)",
+    [idCitoyen, idCitoyen, idCitoyen],
     (err, result) => {
       if (err) {
         console.log(err);
