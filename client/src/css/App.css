@@ -63,7 +63,7 @@ a:visited{
   display : flex;
   flex-direction : row;
   position : fixed;
-  top : 15vh;
+  top : 10vh;
   z-index : 2;
 }
 

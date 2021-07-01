@@ -53,12 +53,12 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
 
 const styles = {
   mainContainer : {
-    marginTop : '15vh',
+    marginTop : '10vh',
     maxWidth : '1200px',
     width : '80%',
     backgroundColor : '#E9F1F7',
     padding : '25px',
-    minHeight : 'calc(85vh - 50px)',
+    minHeight : 'calc(90vh - 50px)',
     height : 'fit-content',
     '@media (max-width :640px)':{
       width : '100%'

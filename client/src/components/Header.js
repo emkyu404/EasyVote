@@ -31,7 +31,7 @@ const styles = {
     },
     headerStyle : {
         backgroundColor : '#F9F9F9',
-        height : '15vh',
+        height : '10vh',
         boxSizing : 'border-box',
         display : 'flex',
         padding : '10px',
