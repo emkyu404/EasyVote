@@ -31,7 +31,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     const [urlCandidat, setUrlCandidat] = useState("")
 
     const [listeCandidats, setListeCandidats] = useState([])
-
+    
     const handleChange = (e) => {
         if (electionType !== undefined) {
             setElectionType(e.target.value)
@@ -156,15 +156,18 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        
+        var heureDebut = document.getElementById("heureDebut").value
+        var heureFin = document.getElementById("heureFin").value
+
         if (listeCandidats.length >= 2) {
-            await onAddElection(titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
+            await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             resetFormElection()
         }
         else {
             alert('Ajouter au moins 2 candidats')
         }
         e.target.reset()
-
     }
 
     function btnFunction() {
@@ -227,15 +230,13 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
                         
                         <label className="add-election-label" style={styles.label}>Heure de début : </label>
-                        {/* <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
-                            <optgroup style={styles.option}>
-                                //options 
-                            </optgroup>
-                        </select> */}
+                        <span style={styles.span}><input id="heureDebut" type="time" className="add-election-input" style={styles.input} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
                         <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection}/></span>
                         
+                        <label className="add-election-label" style={styles.label}>Heure de fin : </label>
+                        <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} required /></span>
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
