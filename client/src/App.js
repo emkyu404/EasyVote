@@ -251,6 +251,20 @@ function App() {
     }
   }
 
+  const deleteElection = async (idElection) => {
+    const response = await Axios.delete(baseUrl+"/election/"+idElection)
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      console.log(elections)
+      const newElections = elections.filter((election) => election.idElection !== idElection);
+      setElections(newElections)
+    }
+  }
 
   return (
     <div className="App">
@@ -289,6 +303,7 @@ function App() {
             candidats={candidats}
             getVotes={getVotes}
             votes={votes}
+            deleteElection={deleteElection}
           />
           <Footer/>
         </Router>

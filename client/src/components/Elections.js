@@ -4,7 +4,7 @@ import Radium from 'radium';
 import { useHistory } from 'react-router-dom';
 import loupe from '../img/loupe.png'
 
-const Elections = ({getCurrentDate, getElections, filteredElections, filterElection, pageTitle }) => {
+const Elections = ({getCurrentDate, getElections, filteredElections, filterElection, pageTitle, deleteElection }) => {
 
     useEffect(() => {
         document.title = pageTitle
@@ -62,7 +62,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
                 </div> 
                 : filteredElections.map((electionCard) => (
                     <div key={electionCard.idElection}>
-                        <ElectionCard electionCard={electionCard}/>
+                        <ElectionCard electionCard={electionCard} deleteElection={deleteElection} />
                     </div>
                 ))}
             </div>

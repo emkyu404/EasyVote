@@ -491,6 +491,71 @@ app.post('/addCandidat', (req, res) => {
   )
 });
 
+function parseElection (req, res, next) {
+  const idElection = parseInt(req.params.idElection)
+
+  // si idElection n'est pas un nombre (NaN = Not A Number), alors on s'arrête
+  if (isNaN(idElection)) {
+    res.status(400).json({ message: 'idElection should be a number' })
+    return
+  }
+  // on affecte req.livreId pour l'exploiter dans toutes les routes qui en ont besoin
+  req.idElection = idElection
+
+  next()
+}
+
+app.route('/election/:idElection')
+
+  /**
+   * Cette route modifie une élection.
+   */
+  .put(parseElection, (req, res) => {
+    updateElection(req, res)
+  })  
+
+  /**
+   * Cette route supprime une élection.
+   */
+  .delete(parseElection, (req, res) => {
+    deleteElection(req, res)
+  })
+
+  async function deleteElection(req, res) {
+    db.query(
+      "DELETE FROM `candidat` WHERE `idElection` = ?; DELETE FROM `election` WHERE `idElection` = ?",
+      [req.idElection, req.idElection],
+      (err) => {
+        if (err) {
+          res.status(401).json({ message: "Suppression de l'élection" })
+        }
+        else {
+          res.status(200).json({ delete: "Suppression réussie" })
+        }
+      }
+    )
+  }
+
+  async function updateElection(req, res) {
+    const titreElection = req.body.titreElection
+    const dateDebutElection = req.body.dateDebutElection
+    const dateFinElection = req.body.dateFinElection
+    const descriptionElection = req.body.descriptionElection
+
+    db.query(
+      "UPDATE `election` SET `titreElection` = ?, `dateDebutElection` = ?, `dateFinElection` = ?, `descriptionElection` = ? WHERE `idElection` = ?",
+      [titreElection, dateDebutElection, dateFinElection, descriptionElection, req.idElection],
+      (err) => {
+        if (err) {
+          console.log(err);
+        }
+        else {
+          res.status(200).json({ message: "Modification réussie" })
+        }
+      }
+    )
+  }
+
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });

@@ -13,7 +13,7 @@ import Election from './Election'
 import AddElection from "./AddElection"
 import PageNotFound from './PageNotFound'
 
-const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes}) => {
+const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, deleteElection}) => {
     return(
         <div className="main-container default-margin" style={styles.mainContainer}>
             <Switch>
@@ -25,7 +25,7 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
                 {/* {connected ? <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection} pageTitle={'Ajout d\'une élection'}/> : <NotConnected />} */}
               </Route>
               <Route exact path="/elections">
-                {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'}/> : <NotConnected />}
+                {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'}  deleteElection={deleteElection} /> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
                 {connected ? <Profil getProfile={profile} currentUser={currentUser} pageTitle={'Profil'} /> : <NotConnected />}
@@ -40,7 +40,7 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
                 {connected ? <Home pageTitle={'Accueil'}/> : <LoginAdmin onLogin={loginAdmin} pageTitle={'Connexion administrateur'}/>}
               </Route>
               <Route path="/election/:idElection">
-                {connected ?<Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} pageTitle={'Election'}/> : <NotConnected />}
+                {connected ?<Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} pageTitle={'Election'} /> : <NotConnected />}
               </Route>
               
               <Route path="*" >

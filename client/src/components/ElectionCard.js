@@ -2,18 +2,25 @@ import React from 'react';
 import { Link }  from "react-router-dom";
 import Radium from 'radium';
 
-const ElectionCard = ({electionCard}) => {
+const ElectionCard = ({electionCard, deleteElection}) => {
+
+    const handleDelete = async (idElection) => {
+        await deleteElection(idElection)
+    }
+
     return (
         <div style={styles.divElection}>
-                <h2>{electionCard.titreElection}</h2>
-                Date de début : {electionCard.dateDebutElection} <br/>
-                Date de fin : {electionCard.dateFinElection}<br/><br/>
-                
-                <p style={styles.text}>{electionCard.descriptionElection}</p>
-                
-                <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
-                    <button style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
-                </Link>
+            <h2>{electionCard.titreElection}</h2>
+            Date de début : {electionCard.dateDebutElection} <br/>
+            Date de fin : {electionCard.dateFinElection}<br/><br/>
+            
+            <p style={styles.text}>{electionCard.descriptionElection}</p>
+
+            <button key="Supprimer" onClick={() => {handleDelete(electionCard.idElection)}} style={Object.assign({},styles.btn, styles.blue)}>Supprimer l'élection </button>
+            
+            <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
+                <button style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
+            </Link>
         </div>
     )
 }
