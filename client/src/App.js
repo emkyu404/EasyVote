@@ -114,6 +114,21 @@ function App() {
     }
   };
 
+  const changePassword = async(newPassword) => {
+    const response = await Axios.post(baseUrl+"/changePassword", { newPassword: newPassword, userId: currentUser.idCitoyen })
+      if(response.data.message){
+        addToast("Erreur : " + response.data.message, {
+          appearance: 'error',
+          autoDismiss: true,
+        })
+      }else{
+        addToast("Mot de passe modifié avec succès", {
+          appearance : 'success',
+          autoDismiss: true,
+        })
+    }
+  }
+
   const loginAdmin = async (email, password) => {
     const response = await Axios.post(baseUrl+"/loginAdmin", { email: email, password: password })
     if (response.data.message) {
@@ -275,6 +290,7 @@ function App() {
             //Profile
             profile={profile}
             currentUser={currentUser}
+            changePassword={changePassword}
 
             //Login
             login={login}

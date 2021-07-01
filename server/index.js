@@ -491,6 +491,25 @@ app.post('/addCandidat', (req, res) => {
   )
 });
 
+app.post('/changePassword', (req, res) => {
+  const newPassword = req.body.newPassword
+  const userId = req.body.userId
+
+  db.query("UPDATE electeur SET motDePasseElecteur=? WHERE idElecteur = ?",
+  [newPassword,userId],
+  (err, result) => {
+    if (err) {
+      res.json({message : "Le changement de mot de passe à échouer"})
+    } 
+    else {
+      res.json({message : "Changement de mot de passe effectué"})
+    }
+  });
+});
+
+
+app.post('/')
+
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");
 });
