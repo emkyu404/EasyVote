@@ -286,7 +286,7 @@ INSERT INTO `election` (`idElection`, `titreElection`, `dateDebutElection`, `dat
 (2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:00:00', '2022-05-07 00:00:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
 (3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-06-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.'),
 (4, 'Election test', '2021-06-20 00:00:00', '2021-07-27 20:00:00', 'Election Test'),
-(5, 'Election régionale de la Bretagne', '2021-06-20 00:00:00', '2021-06-27 00:00:00', 'Election régionale 2021 de la Bretagne'), 
+(5, 'Election régionale de la Bretagne', '2021-06-20 00:00:00', '2021-07-27 00:00:00', 'Election régionale 2021 de la Bretagne'), 
 (6, 'Election régionale de la Corse', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election régionale 2021 de la Corse'), 
 (7, 'Election départementale de Paris', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Paris'), 
 (8, 'Election départementale de Oise', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Oise'), 
@@ -348,7 +348,7 @@ CREATE TABLE IF NOT EXISTS `election_regionale` (
 
 INSERT INTO `election_regionale` (`idElection`, `nomRegion`) VALUES 
 ('3', 'Ile-de-France'), 
-('5', 'Bretagne'), 
+('5', 'Ile-de-France'), 
 ('6', 'Corse');
 
 -- --------------------------------------------------------
@@ -452,5 +452,9 @@ CREATE TABLE IF NOT EXISTS `voter` (
 
 INSERT INTO `voter` (`idElection`, `idCandidat`) VALUES
 (4, 1),
-(4, 2);
+(4, 2),
+(7, 1),
+(7, 2),
+(7, 1),
+(7, 1);
 COMMIT;

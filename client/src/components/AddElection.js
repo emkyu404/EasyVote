@@ -200,9 +200,15 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         }
     }
 
+    function deleteCandidat(titreCandidat) {
+        const newList = listeCandidats.filter((candidat) => candidat.titreCandidat !== titreCandidat);
+        setListeCandidats(newList);
+    }
+
     return (
         <div>
             <h1 className="add-election-title" style={styles.mainTitle}>Ajouter une nouvelle élection</h1>
+            <FileReaderAddElection onFileRead={onFileRead} />
             <form id="add-election-form" onSubmit={handleSubmit}>
                 <label className="add-election-label" style={styles.selectLabel}>Type de l'élection :</label>
                 <select id="electionType" value={electionType.value} defaultValue={""} onChange={handleChange} style={styles.select}>
@@ -259,11 +265,22 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
                         <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Ajouter un candidat</button>
-                        {listeCandidats.map((candidat) => <div key={candidat.titreCandidat}> {candidat.titreCandidat} </div>)}
-
                     </div>
                 }
             </form>
+            {listeCandidats.length > 0 &&
+                <div>
+                    <h1 style={styles.mainTitle}>Liste des candidats : </h1>
+                    <div className="list-candidat-added" style={styles.listeCandidats}>
+                        {listeCandidats.map((candidat) => 
+                            <div key={candidat.titreCandidat}> 
+                                <p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.cross}> ❌ </p>
+                                <p style={styles.candidat}> {candidat.titreCandidat} </p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            }
             <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
@@ -283,7 +300,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                     </div>
                 </div>
             </form>
-            <FileReaderAddElection onFileRead={onFileRead} />
         </div>
     )
 }
@@ -464,6 +480,15 @@ const styles = {
             textDecoration: "none",
             cursor: "pointer"
         }
+    },
+    candidat: {
+        display: "inline-block"
+    },
+    cross: {
+        display: "inline-block"
+    },
+    listeCandidats: {
+        backgroundColor: "white",
     }
 }
 

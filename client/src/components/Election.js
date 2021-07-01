@@ -7,7 +7,7 @@ import ElectionVote from "./ElectionVote";
 import ElectionResults from "./ElectionResults";
 
 
-const Election = ({getElection, election, getCandidats, candidats, pageTitle}) => {
+const Election = ({getElection, election, getCandidats, candidats, getVotes, votes, pageTitle}) => {
     const { state } = useLocation();
 
     useEffect(() => {
@@ -17,12 +17,21 @@ const Election = ({getElection, election, getCandidats, candidats, pageTitle}) =
     useEffect(() => {
         async function prepareElection(){
             await getElection(state.URLIdElection)
-            if(election.started===true){
-                await getCandidats(state.URLIdElection)
-            }
         }
         prepareElection();
     }, [])
+
+    useEffect(() => {
+        async function prepareElection(){
+            if(election.started===true){
+                await getCandidats(state.URLIdElection)
+            }
+            if (election.ended===true){
+                await getVotes(state.URLIdElection)
+            }
+        }
+        prepareElection();
+    }, [election])
 
     return (
         <div>
@@ -30,7 +39,7 @@ const Election = ({getElection, election, getCandidats, candidats, pageTitle}) =
             ?
             <div>
                 <h1 style={styles.mainTitle}>Résultat du vote</h1>
-                <ElectionResults election={election} candidats={candidats}/>
+                <ElectionResults election={election} candidats={candidats} votes={votes}/>
             </div>
             :
             election.started===true

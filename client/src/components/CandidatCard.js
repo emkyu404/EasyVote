@@ -1,13 +1,12 @@
 import React from 'react'
-
-const Candidat = ({candidatCard}) => {
+import thierry from '../img/thierry.JPG'
+const Candidat = ({ candidatCard }) => {
     return (
         <div style={styles.card} className="card">
             <div className="information">
-                <h3 style={styles.name}>{candidatCard.titreCandidat}</h3>
-                <h4 style={styles.slogan}>Nikdro !</h4>
+                <h4 style={styles.name}>{candidatCard.titreCandidat}</h4>
                 <div style={styles.picture}>
-                    {/* <img style={styles.img} src={thierry} /> */}
+                    <img style={styles.img} src={thierry} />
                 </div>
             </div>
             <div style={styles.general}>
@@ -99,7 +98,7 @@ const Candidat = ({candidatCard}) => {
     )
 }
 
-const styles={
+const styles = {
     card: {
         width: "450px",
         height: "250px",
@@ -124,6 +123,7 @@ const styles={
         width: "100%",
         borderRadius: "50%",
         transform: "scale(1)",
+        position: "absolute",
     },
 
 
@@ -137,6 +137,7 @@ const styles={
 
     name: {
         margin: "10px",
+        maxWidth: "130px",
     },
 
     voterCandidat: {
