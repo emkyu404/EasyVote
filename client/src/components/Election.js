@@ -50,7 +50,6 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
             </div>
             :
             <div>
-                <h1 style={styles.mainTitle}>En cours de préparation</h1>
                 <ElectionWait election={election}/>
             </div>
             }

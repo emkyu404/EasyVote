@@ -1,6 +1,8 @@
 import React from 'react'
 import * as XLSX from 'xlsx'
 import { useToasts } from 'react-toast-notifications'
+import { Link } from 'react-router-dom'
+import Radium from 'radium'
 
 const FileReaderAddElection = ({onFileRead}) => {
 
@@ -109,15 +111,79 @@ const FileReaderAddElection = ({onFileRead}) => {
             })
         }
     }
+    
+    const emulateClickOnInput = () => {
+        document.getElementById('input').click()
+    }
 
 
 
     return (
-        <div>
-            <input type="file" id="input" onChange={e => handleNewFile(e.target.files[0])}></input>
-            <table id="tbl-data"></table>
+        <div style={styles.mainDivContainer}>
+            <p style={styles.titleStyle}>Initialisation du formulaire avec la lecture d'un fichier (.xlsx)</p>
+            <Link to="/files/Easy_Vote_Formulaire_Election.xlsx" target="_blank" download><div style={styles.buttonStyle}key="download"><p style={styles.buttonTextStyle} key="downloadText">Télécharger le modèle</p></div></Link>
+            <input type="file" id="input" name="file" onChange={e => handleNewFile(e.target.files[0])} style={styles.inputStyle}></input>
+            <a><div onClick={emulateClickOnInput} style={styles.buttonStyle} key="upload"><p style={styles.buttonTextStyle} key="uploadText">Lecture d'un fichier</p></div></a>
         </div>
     )
 }
 
-export default FileReaderAddElection
+const styles = {
+    mainDivContainer : {
+        display:"flex",
+        marginTop : "20px",
+        marginBottom : "20px",
+        padding : "20px",
+        boxShadow: "0 0 10px #999",
+        backgroundColor:"#fff",
+        width : "100%",
+        flexDirection : "row",
+        justifyContent : "space-evenly",
+        flexWrap : "wrap"
+    },
+
+    titleStyle : {
+        padding : "15px 0 15px 0",
+        width : "50%",
+        minWidth : "fit-content",
+        margin : "10px",
+        flex : "2"
+    },
+
+    buttonStyle : {
+        margin : "10px",
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        width: "200px",
+        flex: "1",
+        ':hover': {
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
+        }
+    },
+
+    inputStyle : {
+        width: "0.1px",
+        height: "0.1px",
+        opacity: "0",
+        overflow: "hidden",
+        position: "absolute",
+        zIndex: "-1"
+    },
+
+    buttonTextStyle : {
+        position : "relative",
+        width : "100%",
+        textAlign : "center",
+        margin : "auto",
+        fontSize : "14px"
+    }
+
+
+}
+
+export default Radium(FileReaderAddElection)
