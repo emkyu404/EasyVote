@@ -30,6 +30,9 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     const [descriptionCandidat, setDescriptionCandidat] = useState("")
     const [urlCandidat, setUrlCandidat] = useState("")
 
+    const [heureDebut, setHeureDebut] = useState("")
+    const [heureFin, setHeureFin] = useState("")
+
     const [listeCandidats, setListeCandidats] = useState([])
     
     const handleChange = (e) => {
@@ -59,6 +62,12 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     }
     const handleDateFinOnChange = (e) => {
         setDateFinElection(e.target.value)
+    }
+    const handleHeureDebutOnChange = (e) => {
+        setHeureDebut(e.target.value)
+    }
+    const handleHeureFinOnChange = (e) => {
+        setHeureFin(e.target.value)
     }
     const handleDescriptionOnChange = (e) => {
         setDescriptionElection(e.target.value)
@@ -124,6 +133,8 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         setElectionTitle("")
         setDateDebutElection("")
         setDateFinElection("")
+        setHeureDebut("")
+        setHeureFin("")
         setDescriptionElection("")
         setElectionType("")
 
@@ -157,9 +168,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         
-        var heureDebut = document.getElementById("heureDebut").value
-        var heureFin = document.getElementById("heureFin").value
-
         if (listeCandidats.length >= 2) {
             await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             resetFormElection()
@@ -230,13 +238,13 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
                         
                         <label className="add-election-label" style={styles.label}>Heure de début : </label>
-                        <span style={styles.span}><input id="heureDebut" type="time" className="add-election-input" style={styles.input} required /></span>
+                        <span style={styles.span}><input id="heureDebut" type="time" className="add-election-input" style={styles.input} onChange={handleHeureDebutOnChange} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
                         <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection}/></span>
                         
                         <label className="add-election-label" style={styles.label}>Heure de fin : </label>
-                        <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} required /></span>
+                        <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} onChange={handleHeureFinOnChange} required /></span>
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
