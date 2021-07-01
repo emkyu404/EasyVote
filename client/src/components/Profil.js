@@ -86,7 +86,6 @@ const Profil = ({ getProfile, currentUser, pageTitle }) => {
 
             <hr style={styles.rounded}></hr>
 
-            <p>Vous avez oublié votre mot de passe ?</p>
             <button style={styles.btn} onClick={() => setShow(!show)}>Changer de mot de passe</button>
 
             {show ?
