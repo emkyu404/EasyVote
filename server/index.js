@@ -68,7 +68,7 @@ app.post("/login", (req, res) => {
       else{
         if(resultMail.length ==1){
           db.query(
-            "SELECT electeur.idCitoyen, citoyen.nomCitoyen FROM electeur INNER JOIN citoyen on electeur.idCitoyen=citoyen.idCitoyen WHERE electeur.idCitoyen=?",
+            "SELECT electeur.idCitoyen, citoyen.nomCitoyen, electeur.idElecteur FROM electeur INNER JOIN citoyen on electeur.idCitoyen=citoyen.idCitoyen WHERE electeur.idCitoyen=?",
             [resultMail[0].idCitoyen, password],
             (err, resultPassword) => {
               if (err){
@@ -79,7 +79,8 @@ app.post("/login", (req, res) => {
                 if(resultPassword.length ==1){
                   req.session.user = {
                     idCitoyen : resultPassword[0].idCitoyen,
-                    nomCitoyen : resultPassword[0].nomCitoyen
+                    nomCitoyen : resultPassword[0].nomCitoyen,
+                    idElecteur : resultPassword[0].idElecteur
                   }
                   res.json(req.session.user)
                 }
@@ -255,10 +256,35 @@ app.post('/getCandidats', (req, res) => {
   });
 });
 
+app.post('/addVote', (req, res) => {
+  if(checkSameAccount(req)===true){
+    const idElecteur = req.body.idElecteur
+    const idElection = req.body.idElection
+    const idCandidat = req.body.idCandidat
+
+    db.query("INSERT INTO participer (idElecteur, idElection) VALUES(?, ?);INSERT INTO vote (idElection, idCandidat) VALUES(?, ?)",
+    [idElecteur, idElection, idElection, idCandidat],
+    (err, result) => {
+      if (err) {
+        if(err.code==="ER_DUP_ENTRY"){
+          res.json({message : "Vous avez déjà voté dans cette élection"})
+        }
+        else {
+          console.log(err);
+          res.json({message : "Impossible d'ajouter le vote"})
+        }
+      } 
+      else if(result[0].affectedRows===1 && result[1].affectedRows===1){
+        res.json({success : "Vote ajouté"})
+      }
+    });
+  }
+});
+
 app.post('/getVotes', (req, res) => {
   const idElection = req.body.idElection
 
-  db.query("SELECT ca.titreCandidat, COUNT(vo.idVote) as 'votes' FROM voter vo inner join candidat ca on vo.idCandidat=ca.idCandidat WHERE vo.idElection=? GROUP BY vo.idCandidat;",
+  db.query("SELECT ca.titreCandidat, COUNT(vo.idVote) as 'votes' FROM vote vo inner join candidat ca on vo.idCandidat=ca.idCandidat WHERE vo.idElection=? GROUP BY vo.idCandidat;",
   [idElection],
   (err, result) => {
     if (err) {
@@ -274,8 +300,26 @@ app.post('/getVotes', (req, res) => {
   });
 });
 
+app.post('/getParticiper', (req, res) => {
+  const idElecteur = req.body.idElecteur
+  const idElection = req.body.idElection
 
-
+  db.query("SELECT * FROM `participer` WHERE idElecteur=? AND idElection=?;",
+  [idElecteur, idElection],
+  (err, result) => {
+    
+    if (err) {
+      console.log(err);
+      res.json({message : "Impossible de récupérer la participation"})
+    } 
+    else if(result.length != 0){
+      res.json(true)
+    }
+    else {
+      res.json(false)
+    }
+  });
+});
 
 app.post('/addElection', (req, res) => {
   const titreElection = req.body.titreElection
@@ -555,6 +599,25 @@ app.route('/election/:idElection')
       }
     )
   }
+  
+app.post('/changePassword', (req, res) => {
+  const newPassword = req.body.newPassword
+  const userId = req.body.userId
+
+  db.query("UPDATE electeur SET motDePasseElecteur=? WHERE idElecteur = ?",
+  [newPassword,userId],
+  (err, result) => {
+    if (err) {
+      res.json({message : "Le changement de mot de passe à échouer"})
+    } 
+    else {
+      res.json({message : "Changement de mot de passe effectué"})
+    }
+  });
+});
+
+
+app.post('/')
 
 app.listen(3001, () => {
   console.log("Yey, your server is running on port 3001");

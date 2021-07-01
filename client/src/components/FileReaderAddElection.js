@@ -120,38 +120,26 @@ const FileReaderAddElection = ({onFileRead}) => {
 
     return (
         <div style={styles.mainDivContainer}>
-            <p style={styles.titleStyle}>Initialisation du formulaire avec la lecture d'un fichier (.xlsx)</p>
-            <Link to="/files/Easy_Vote_Formulaire_Election.xlsx" target="_blank" download><div style={styles.buttonStyle}key="download"><p style={styles.buttonTextStyle} key="downloadText">Télécharger le modèle</p></div></Link>
+            <h2 style={styles.secondTitle}>Importer une éléction à partir d'un fichier</h2>
+            <p>Initialisation du formulaire avec la lecture d'un fichier (.xlsx)</p>
+            <Link to="/files/Easy_Vote_Formulaire_Election.xlsx" target="_blank" download><button style={styles.button} key="download">Télécharger le modèle</button></Link>
             <input type="file" id="input" name="file" onChange={e => handleNewFile(e.target.files[0])} style={styles.inputStyle}></input>
-            <a><div onClick={emulateClickOnInput} style={styles.buttonStyle} key="upload"><p style={styles.buttonTextStyle} key="uploadText">Lecture d'un fichier</p></div></a>
+            <button onClick={emulateClickOnInput} style={styles.button} key="upload">Lecture d'un fichier</button>
         </div>
     )
 }
 
 const styles = {
     mainDivContainer : {
-        display:"flex",
-        marginTop : "20px",
-        marginBottom : "20px",
-        padding : "20px",
+        backgroundColor: "white",
+        padding: "40px 40px 40px 40px",
         boxShadow: "0 0 10px #999",
-        backgroundColor:"#fff",
-        width : "100%",
-        flexDirection : "row",
-        justifyContent : "space-evenly",
-        flexWrap : "wrap"
+        margin: "20px 0px 20px 0px",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 20px 20px",
+        }
     },
-
-    titleStyle : {
-        padding : "15px 0 15px 0",
-        width : "50%",
-        minWidth : "fit-content",
-        margin : "10px",
-        flex : "2"
-    },
-
-    buttonStyle : {
-        margin : "10px",
+    button: {
         backgroundColor: "#0B6BA8",
         border: "none",
         color: "white",
@@ -159,31 +147,22 @@ const styles = {
         textDecoration: "none",
         cursor: "pointer",
         width: "200px",
-        flex: "1",
+        margin: "20px 20px 0px 0px",
         ':hover': {
             backgroundColor: "#074E7B",
             transition: "0.2s"
+        },
+        '@media (max-width: 960px)':{
+            width: "100%"
         }
     },
-
-    inputStyle : {
-        width: "0.1px",
-        height: "0.1px",
-        opacity: "0",
-        overflow: "hidden",
-        position: "absolute",
-        zIndex: "-1"
+    secondTitle:{
+        textAlign: "center",
+        paddingBottom: "10px"
     },
-
-    buttonTextStyle : {
-        position : "relative",
-        width : "100%",
-        textAlign : "center",
-        margin : "auto",
-        fontSize : "14px"
+    inputStyle : {
+        display: "none"
     }
-
-
 }
 
 export default Radium(FileReaderAddElection)

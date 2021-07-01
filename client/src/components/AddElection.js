@@ -224,6 +224,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
                 {electionType !== "" &&
                     <div style={styles.divForm}>
+                        <h2 style={styles.secondTitle}>Formulaire d'ajout d'une élection</h2>
                         {electionType === "election_regionale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Nom de la région : </label>
@@ -268,19 +269,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                     </div>
                 }
             </form>
-            {listeCandidats.length > 0 &&
-                <div>
-                    <h1 style={styles.mainTitle}>Liste des candidats : </h1>
-                    <div className="list-candidat-added" style={styles.listeCandidats}>
-                        {listeCandidats.map((candidat) => 
-                            <div key={candidat.titreCandidat}> 
-                                <p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.cross}> ❌ </p>
-                                <p style={styles.candidat}> {candidat.titreCandidat} </p>
-                            </div>
-                        )}
-                    </div>
-                </div>
-            }
+            
             <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
@@ -300,6 +289,34 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                     </div>
                 </div>
             </form>
+
+            {listeCandidats.length > 0 &&
+                <div style={styles.divCandidat}>
+                    <h2 style={styles.secondTitle}>Liste des candidats</h2>
+                    <div className="list-candidat-added" style={styles.listeCandidats}>
+                        <table style={styles.table}>
+                            <thead>
+                                <tr style={styles.tr}>
+                                    <th style={styles.th}>Titre</th>
+                                    <th style={styles.th}>Description</th>
+                                    <th style={styles.th}>Image</th>
+                                    <th style={Object.assign({},styles.th, styles.delete)}></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {listeCandidats.map((candidat) => 
+                                    <tr key={candidat.titreCandidat} style={styles.tr}>
+                                        <td style={styles.td}>{candidat.titreCandidat}</td>
+                                        <td style={styles.td}>{candidat.descriptionCandidat}</td>
+                                        <td style={styles.td}>{candidat.urlCandidat}</td>
+                                        <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)}> ❌ </p></td>
+                                    </tr>
+                            )}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            }
         </div>
     )
 }
@@ -481,14 +498,42 @@ const styles = {
             cursor: "pointer"
         }
     },
-    candidat: {
-        display: "inline-block"
-    },
-    cross: {
-        display: "inline-block"
-    },
-    listeCandidats: {
+    divCandidat: {
         backgroundColor: "white",
+        padding: "40px 40px 40px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 20px 20px"
+        }
+    },
+    table: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        minWidth: "100%",
+        overflow: "auto"
+    },
+    th: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        backgroundColor: "#fafafa",
+        padding: "5px 20px 5px 20px"
+    },
+    td: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        padding: "5px 20px 5px 20px"
+    },
+    tr: {
+        width: "100%"
+    },
+    secondTitle:{
+        textAlign: "center",
+        paddingBottom: "10px"
+    },
+    delete: {
+        padding: "5px",
+        width: "5px"
     }
 }
 
