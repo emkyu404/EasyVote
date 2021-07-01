@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `departement` (
   `nomDepartement` varchar(50) NOT NULL,
   `nomRegion` varchar(50) NOT NULL,
   PRIMARY KEY (`codeDepartement`),
-  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
+  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `ville` (
   `nomVille` varchar(50) NOT NULL,
   `codeDepartement` varchar(2) NOT NULL,
   PRIMARY KEY (`codePostal`),
-  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
+  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `adresse` (
   `rue` varchar(75) NOT NULL,
   `codePostal` int(5) NOT NULL,
   PRIMARY KEY (`idAdresse`),
-  FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`)
+  FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `citoyen` (
   `idAdresse` int(11) NOT NULL,
   PRIMARY KEY (`idCitoyen`),
   UNIQUE KEY `emailCitoyen` (`emailCitoyen`),
-  FOREIGN KEY (`idAdresse`) REFERENCES `adresse`(`idAdresse`)
+  FOREIGN KEY (`idAdresse`) REFERENCES `adresse`(`idAdresse`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
@@ -306,7 +306,7 @@ CREATE TABLE IF NOT EXISTS `candidat` (
   `urlImage` varchar(255) NOT NULL,
   `idElection` int(11) NOT NULL,
   PRIMARY KEY (`idCandidat`),
-  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -338,8 +338,9 @@ DROP TABLE IF EXISTS `election_regionale`;
 CREATE TABLE IF NOT EXISTS `election_regionale` (
   `idElection` int(11) NOT NULL,
   `nomRegion` varchar(50) NOT NULL,
-  PRIMARY KEY (`idElection`),
-  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`)
+  PRIMARY KEY (`idElection`,`nomRegion`),
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE,
+  FOREIGN KEY (`nomRegion`) REFERENCES `region`(`nomRegion`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -361,8 +362,9 @@ DROP TABLE IF EXISTS `election_departementale`;
 CREATE TABLE IF NOT EXISTS `election_departementale` (
   `idElection` int(11) NOT NULL,
   `codeDepartement` varchar(2) NOT NULL,
-  PRIMARY KEY (`idElection`),
-  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`)
+  PRIMARY KEY (`idElection`,`codeDepartement`),
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE,
+  FOREIGN KEY (`codeDepartement`) REFERENCES `departement`(`codeDepartement`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -383,8 +385,9 @@ DROP TABLE IF EXISTS `election_municipale`;
 CREATE TABLE IF NOT EXISTS `election_municipale` (
   `idElection` int(11) NOT NULL,
   `codePostal` int(5) NOT NULL,
-  PRIMARY KEY (`idElection`),
-  FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`)
+  PRIMARY KEY (`idElection`,`codePostal`),
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE,
+  FOREIGN KEY (`codePostal`) REFERENCES `ville`(`codePostal`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -403,8 +406,10 @@ INSERT INTO `election_municipale` (`idElection`, `codePostal`) VALUES
 
 DROP TABLE IF EXISTS `election_nationale`;
 CREATE TABLE IF NOT EXISTS `election_nationale` (
+  `idElectionNationale` int(11) NOT NULL AUTO_INCREMENT,
   `idElection` int(11) NOT NULL,
-  PRIMARY KEY (`idElection`)
+  PRIMARY KEY (`idElectionNationale`),
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `election_nationale`(`idElection`) VALUES 
@@ -423,7 +428,8 @@ CREATE TABLE IF NOT EXISTS `participer` (
   `idElecteur` int(11) NOT NULL,
   `idElection` int(11) NOT NULL,
   PRIMARY KEY (`idElecteur`,`idElection`),
-  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`)
+  FOREIGN KEY (`idElecteur`) REFERENCES `electeur`(`idElecteur`) ON DELETE CASCADE,
+  FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -447,8 +453,8 @@ CREATE TABLE IF NOT EXISTS `vote` (
   `idElection` int(11) NOT NULL,
   `idCandidat` int(11) NOT NULL,
   PRIMARY KEY (`idVote`,`idElection`,`idCandidat`),
-  FOREIGN KEY (`idElection`) REFERENCES `candidat`(`idElection`),
-  FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`)
+  FOREIGN KEY (`idElection`) REFERENCES `candidat`(`idElection`) ON DELETE CASCADE,
+  FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `vote` (`idElection`, `idCandidat`) VALUES
