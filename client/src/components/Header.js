@@ -29,7 +29,7 @@ const styles = {
         }
     },
     headerStyle : {
-        backgroundColor : 'F9F9F9',
+        backgroundColor : '#F9F9F9',
         height : '15vh',
         boxSizing : 'border-box',
         display : 'flex',
@@ -38,7 +38,7 @@ const styles = {
         justifyContent : 'space-between',
         position : 'fixed',
         top : '0',
-        zIndex : '10',
+        zIndex : '1000',
         boxShadow : '0 0 5px #999'
     }
 }

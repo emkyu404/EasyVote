@@ -5,7 +5,12 @@ import Radium from 'radium';
 
 import DialogComponent from './DialogComponent'
 
-const Profil = ({ getProfile, currentUser }) => {
+const Profil = ({ getProfile, currentUser, pageTitle }) => {
+
+    useEffect(() => {
+        document.title = pageTitle
+    }, [pageTitle])
+
     useEffect(() => {
         getProfile();
     }, [])
