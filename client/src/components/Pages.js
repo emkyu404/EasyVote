@@ -13,7 +13,7 @@ import Election from './Election'
 import AddElection from "./AddElection"
 import PageNotFound from './PageNotFound'
 
-const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, changePassword}) => {
+const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, changePassword, addVote}) => {
     return(
         <div className="main-container default-margin" style={styles.mainContainer}>
             <Switch>
@@ -40,7 +40,7 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
                 {connected ? <Home pageTitle={'Accueil'}/> : <LoginAdmin onLogin={loginAdmin} pageTitle={'Connexion administrateur'}/>}
               </Route>
               <Route path="/election/:idElection">
-                {connected ?<Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} pageTitle={'Election'}/> : <NotConnected />}
+                {connected ?<Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} addVote={addVote} pageTitle={'Election'}/> : <NotConnected />}
               </Route>
               
               <Route path="*" >

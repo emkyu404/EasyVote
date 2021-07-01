@@ -1,18 +1,19 @@
 import React from 'react'
 import thierry from '../img/thierry.JPG'
-const Candidat = ({ candidatCard }) => {
+const Candidat = ({ candidatCard, addVote, URLIdElection }) => {
+
     return (
         <div style={styles.card} className="card">
             <div className="information">
                 <h4 style={styles.name}>{candidatCard.titreCandidat}</h4>
                 <div style={styles.picture}>
-                    <img style={styles.img} src={thierry} />
+                    <img style={styles.img} src={candidatCard.urlImage} />
                 </div>
             </div>
             <div style={styles.general}>
                 <h2>Description</h2><br></br>
                 <p>{candidatCard.descriptionCandidat}</p>
-                <button style={styles.voterCandidat} className="voterCandidat">Voter</button>
+                <button style={styles.voterCandidat}  onClick={ () => {addVote(URLIdElection, candidatCard.idCandidat);}} className="voterCandidat">Voter</button>
             </div>
             {/* old Card
             <div className="container" style={styles.container}>
