@@ -13,7 +13,7 @@ import Election from './Election'
 import AddElection from "./AddElection"
 import PageNotFound from './PageNotFound'
 
-const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, addVote, getParticiper, participer}) => {
+const Pages = ({connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, addVote, getParticiper, participer, changePassword}) => {
     return(
         <div className="main-container default-margin" style={styles.mainContainer}>
             <Switch>
@@ -28,7 +28,7 @@ const Pages = ({connected, idElection, addCandidat, addElection, getElections, g
                 {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'}/> : <NotConnected />}
               </Route>
               <Route exact path="/profil">
-                {connected ? <Profil getProfile={profile} currentUser={currentUser} pageTitle={'Profil'} /> : <NotConnected />}
+                {connected ? <Profil getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profil'} /> : <NotConnected />}
               </Route>
               <Route exact path="/contact">
                 <Contact pageTitle={'Contactez nous'}/>
