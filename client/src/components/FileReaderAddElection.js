@@ -132,6 +132,7 @@ const styles = {
     mainDivContainer : {
         display:"flex",
         marginTop : "20px",
+        marginBottom : "20px",
         padding : "20px",
         boxShadow: "0 0 10px #999",
         backgroundColor:"#fff",
