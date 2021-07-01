@@ -431,17 +431,18 @@ CREATE TABLE IF NOT EXISTS `participer` (
 --
 
 INSERT INTO `participer` (`idElecteur`, `idElection`) VALUES
-(1, 4),
-(2, 4);
+(2, 4),
+(1, 7),
+(2, 7);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `voter`
+-- Structure de la table `vote`
 --
 
-DROP TABLE IF EXISTS `voter`;
-CREATE TABLE IF NOT EXISTS `voter` (
+DROP TABLE IF EXISTS `vote`;
+CREATE TABLE IF NOT EXISTS `vote` (
   `idVote` int(11) NOT NULL AUTO_INCREMENT,
   `idElection` int(11) NOT NULL,
   `idCandidat` int(11) NOT NULL,
@@ -450,11 +451,9 @@ CREATE TABLE IF NOT EXISTS `voter` (
   FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `voter` (`idElection`, `idCandidat`) VALUES
-(4, 1),
+INSERT INTO `vote` (`idElection`, `idCandidat`) VALUES
 (4, 2),
 (7, 1),
-(7, 2),
-(7, 1),
-(7, 1);
+(7, 2);
+
 COMMIT;

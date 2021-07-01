@@ -16,7 +16,7 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: "", nomCitoyen : ""})
+  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: "", nomCitoyen : "", idElecteur : ""})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
   const [election, setElection] = useState({idElection : 0})
@@ -251,6 +251,21 @@ function App() {
     }
   }
 
+  const addVote = async (URLIdElection, idCandidat) => {
+    const response = await Axios.post(baseUrl+"/addVote", {idCitoyen : currentUser.idCitoyen, idElection : URLIdElection, idCandidat : idCandidat, idElecteur : currentUser.idElecteur})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else if (response.data.success){
+      addToast(response.data.success, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
+    }
+  }
 
   return (
     <div className="App">
@@ -289,6 +304,7 @@ function App() {
             candidats={candidats}
             getVotes={getVotes}
             votes={votes}
+            addVote={addVote}
           />
           <Footer/>
         </Router>
