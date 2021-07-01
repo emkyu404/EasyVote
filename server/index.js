@@ -256,25 +256,6 @@ app.post('/getCandidats', (req, res) => {
   });
 });
 
-app.post('/getVotes', (req, res) => {
-  const idElection = req.body.idElection
-
-  db.query("SELECT ca.titreCandidat, COUNT(vo.idVote) as 'votes' FROM vote vo inner join candidat ca on vo.idCandidat=ca.idCandidat WHERE vo.idElection=? GROUP BY vo.idCandidat;",
-  [idElection],
-  (err, result) => {
-    if (err) {
-      console.log(err);
-      res.json({message : "Impossible de récupérer les votes"})
-    } 
-    else if(result.length != 0){
-      res.json(result)
-    }
-    else {
-      res.json({message : "Il n'y a aucun votes"})
-    }
-  });
-});
-
 app.post('/addVote', (req, res) => {
   if(checkSameAccount(req)===true){
     const idElecteur = req.body.idElecteur
@@ -298,6 +279,46 @@ app.post('/addVote', (req, res) => {
       }
     });
   }
+});
+
+app.post('/getVotes', (req, res) => {
+  const idElection = req.body.idElection
+
+  db.query("SELECT ca.titreCandidat, COUNT(vo.idVote) as 'votes' FROM vote vo inner join candidat ca on vo.idCandidat=ca.idCandidat WHERE vo.idElection=? GROUP BY vo.idCandidat;",
+  [idElection],
+  (err, result) => {
+    if (err) {
+      console.log(err);
+      res.json({message : "Impossible de récupérer les votes"})
+    } 
+    else if(result.length != 0){
+      res.json(result)
+    }
+    else {
+      res.json({message : "Il n'y a aucun votes"})
+    }
+  });
+});
+
+app.post('/getParticiper', (req, res) => {
+  const idElecteur = req.body.idElecteur
+  const idElection = req.body.idElection
+
+  db.query("SELECT * FROM `participer` WHERE idElecteur=? AND idElection=?;",
+  [idElecteur, idElection],
+  (err, result) => {
+    
+    if (err) {
+      console.log(err);
+      res.json({message : "Impossible de récupérer la participation"})
+    } 
+    else if(result.length != 0){
+      res.json(true)
+    }
+    else {
+      res.json(false)
+    }
+  });
 });
 
 app.post('/addElection', (req, res) => {

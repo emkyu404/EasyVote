@@ -23,6 +23,7 @@ function App() {
   const [idElection, setIdElection] = useState({})
   const [candidats, setCandidats] = useState([])
   const [votes, setVotes] = useState([])
+  const [participer, setParticiper] = useState([])
 
   const [showMenu, setShowMenu] = useState(false)
   const [currentFilter, setCurrentFilter] = useState(""); 
@@ -267,6 +268,19 @@ function App() {
     }
   }
 
+  const getParticiper = async (URLIdElection) => {
+    const response = await Axios.post(baseUrl+"/getParticiper", {idElection : URLIdElection, idElecteur : currentUser.idElecteur})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
+      setParticiper(response.data);
+    }
+  }
+
   return (
     <div className="App">
         <Router>
@@ -305,6 +319,8 @@ function App() {
             getVotes={getVotes}
             votes={votes}
             addVote={addVote}
+            getParticiper={getParticiper}
+            participer={participer}
           />
           <Footer/>
         </Router>

@@ -1,6 +1,5 @@
 import React from 'react'
-import thierry from '../img/thierry.JPG'
-const Candidat = ({ candidatCard, addVote, URLIdElection }) => {
+const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
 
     return (
         <div style={styles.card} className="card">
@@ -13,7 +12,7 @@ const Candidat = ({ candidatCard, addVote, URLIdElection }) => {
             <div style={styles.general}>
                 <h2>Description</h2><br></br>
                 <p>{candidatCard.descriptionCandidat}</p>
-                <button style={styles.voterCandidat}  onClick={ () => {addVote(URLIdElection, candidatCard.idCandidat);}} className="voterCandidat">Voter</button>
+                {participer===false ? <button style={styles.voterCandidat} onClick={ () => {addVote(URLIdElection, candidatCard.idCandidat);}} className="voterCandidat">Voter</button> : ""}
             </div>
             {/* old Card
             <div className="container" style={styles.container}>
@@ -165,4 +164,4 @@ const styles = {
     },
 }
 
-export default Candidat
+export default CandidatCard
