@@ -68,7 +68,7 @@ app.post("/login", (req, res) => {
       else{
         if(resultMail.length ==1){
           db.query(
-            "SELECT electeur.idCitoyen, citoyen.nomCitoyen, electeur.idElecteur FROM electeur INNER JOIN citoyen on electeur.idCitoyen=citoyen.idCitoyen WHERE electeur.idCitoyen=?",
+            "SELECT electeur.idCitoyen, citoyen.nomCitoyen, electeur.idElecteur, electeur.premiereConnexion FROM electeur INNER JOIN citoyen on electeur.idCitoyen=citoyen.idCitoyen WHERE electeur.idCitoyen=?",
             [resultMail[0].idCitoyen, password],
             (err, resultPassword) => {
               if (err){
@@ -80,7 +80,8 @@ app.post("/login", (req, res) => {
                   req.session.user = {
                     idCitoyen : resultPassword[0].idCitoyen,
                     nomCitoyen : resultPassword[0].nomCitoyen,
-                    idElecteur : resultPassword[0].idElecteur
+                    idElecteur : resultPassword[0].idElecteur,
+                    premiereConnexion : resultPassword[0].premiereConnexion
                   }
                   res.json(req.session.user)
                 }

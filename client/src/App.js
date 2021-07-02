@@ -16,7 +16,7 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0})
+  const [currentUser, setCurrentUser] = useState({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0, premiereConnexion: 0})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
   const [election, setElection] = useState({idElection : 0})
@@ -108,7 +108,8 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      let connectedText="";
+      console.log(response.data)
+      let connectedText=response.data.nomCitoyen;
       addToast("Bonjour " + connectedText, {
         appearance: 'success',
         autoDismiss: true,
