@@ -92,6 +92,14 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
         }
     }
 
+    function btnFunction() {
+        document.getElementById("myModal").style.display = "block";
+    }
+
+    function spanFunction() {
+        document.getElementById("myModal").style.display = "none";
+    }
+
     return (
         <div>
             <h1 style={styles.mainTitle}>Profil</h1>
@@ -138,18 +146,15 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
                     </tbody>
                 </table>
                 <div style={styles.divContact}>
-                    <p>Des informations sont incorrectes ?</p>
                     <button style={styles.btn} onClick={contact}>Contactez nous</button>
+                    <button style={styles.btn} onClick={() => btnFunction()}>Changer de mot de passe</button>
                 </div>
             </div>
 
-            <hr style={styles.rounded}></hr>
-
-            <button style={styles.btn} onClick={() => setShow(!show)}>Changer de mot de passe</button>
-
-            {show ?
-                <form onSubmit={handleSubmitPassword} className='passwordForm' id="myForm">
-                    <div style={styles.divForm}>
+            <form id="myForm" className="passwordForm" onSubmit={handleSubmitPassword}>
+                <div id="myModal" className="modal" style={styles.modal}>
+                    <div className="modalContent" style={styles.modalContent}>
+                        <span className="close" onClick={() => spanFunction()} style={styles.close} key="btnModalClose">&times;</span>
                         <h2 style={styles.secondTitle}>Changer de mot de passe</h2>
 
                         <label style={styles.label}>Ancien mot de passe : </label>
@@ -163,9 +168,8 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
 
                         <input id="changePasswordButton" type="submit" className="button" style={styles.submit} value="Envoyer"></input>
                     </div>
-                </form>
-                : null
-            }
+                </div>
+            </form>
 
             <DialogComponent
                 dialogText={"Êtes-vous sûr de vouloir changer votre mot de passe ?"}
@@ -212,19 +216,11 @@ const styles = {
         cursor: "pointer",
         width: "200px",
         verticalAlign: "middle",
-        marginTop: "15px",
-        '@media (max-width: 640px)': {
+        margin : "15px 5px 10px 5px",
+        '@media (max-width: 740px)': {
             width: "100%"
         },
-        marginBottom: "10px",
-    },
-    rounded: {
-        borderTop: "5px solid #0B6BA8",
-        margin: "50px",
-        borderRadius: "5px",
-        '@media (max-width: 640px)': {
-            margin: "30px 50px 30px 50px"
-        }
+        
     },
     divProfil: {
         backgroundColor: "white",
@@ -268,7 +264,7 @@ const styles = {
         lineHeight: "50px",
         textAlign: "center",
         verticalAlign: "middle",
-        '@media (max-width: 920px)': {
+        '@media (max-width: 960px)': {
             float: "none",
             lineHeight: "30px"
         }
@@ -301,10 +297,50 @@ const styles = {
         display: "block",
         overflow: "hidden",
         paddingLeft: "15px",
-        '@media (max-width: 920px)': {
+        '@media (max-width: 960px)': {
             paddingLeft: "0px"
         }
-    }
+    },
+    modal: {
+        display: "none",
+        position: "fixed",
+        zIndex: "100",
+        paddingTop: "100px",
+        left: "0",
+        top: "0",
+        width: "100%",
+        height: "100%",
+        overflow: "auto",
+        backgroundColor: "rgba(0,0,0,0.4)"
+    },
+    modalContent: {
+        backgroundColor: "white",
+        margin: "auto",
+        padding: "40px 40px 70px 40px",
+        border: "1px solid #888",
+        width: "calc(80% - 50px)",
+        maxWidth: "1150px",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 70px 20px",
+            width: "calc(100% - 50px)",
+        }
+    },
+    close: {
+        color: "#aaaaaa",
+        float: "right",
+        fontSize: "28px",
+        fontWeight: "bold",
+        ':hover': {
+            color: "#000",
+            textdecoration: "none",
+            cursor: "pointer"
+        },
+        ':focus': {
+            color: "#000",
+            textDecoration: "none",
+            cursor: "pointer"
+        }
+    },
 }
 
 export default Radium(Profile)

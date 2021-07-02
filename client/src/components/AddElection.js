@@ -557,7 +557,7 @@ const styles = {
         ':hover' : {
             cursor : "pointer"
         }
-    }
+    },
 }
 
 export default Radium(AddElection)
