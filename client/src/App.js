@@ -331,6 +331,7 @@ function App() {
             getCurrentDate={getCurrentDate}
             filteredElections={filteredElections} 
             filterElection={filterElection}
+            connectedAdmin={currentUser.idAdmin}
 
             //Profile
             profile={profile}
