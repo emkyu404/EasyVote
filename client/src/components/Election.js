@@ -7,7 +7,7 @@ import ElectionVote from "./ElectionVote";
 import ElectionResults from "./ElectionResults";
 
 
-const Election = ({getElection, election, getCandidats, candidats, getVotes, votes, addVote, participer, getParticiper, pageTitle}) => {
+const Election = ({getElection, election, getCandidats, candidats, getVotes, votes, addVote, participer, getParticiper, pageTitle, currentUser}) => {
     const { state } = useLocation();
 
     useEffect(() => {
@@ -40,18 +40,18 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
             ?
             <div>
                 <h1 style={styles.mainTitle}>Résultat du vote</h1>
-                <ElectionResults election={election} candidats={candidats} votes={votes}/>
+                <ElectionResults election={election} candidats={candidats} votes={votes} currentUser={currentUser} />
             </div>
             :
             election.started===true
             ?
             <div>
                 <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
-                <ElectionVote candidats={candidats} addVote={addVote} URLIdElection={state.URLIdElection} participer={participer} getParticiper={getParticiper}/>
+                <ElectionVote candidats={candidats} addVote={addVote} URLIdElection={state.URLIdElection} participer={participer} getParticiper={getParticiper} currentUser={currentUser}  />
             </div>
             :
             <div>
-                <ElectionWait election={election}/>
+                <ElectionWait election={election} currentUser={currentUser} />
             </div>
             }
         </div>

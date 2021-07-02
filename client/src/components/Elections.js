@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Radium from 'radium';
 import loupe from '../img/loupe.png'
 
-const Elections = ({getCurrentDate, getElections, filteredElections, filterElection, pageTitle, deleteElection, connectedAdmin }) => {
+const Elections = ({getCurrentDate, getElections, filteredElections, filterElection, pageTitle, deleteElection, currentUser }) => {
 
     useEffect(() => {
         document.title = pageTitle
@@ -55,7 +55,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
                 </div> 
                 : filteredElections.map((electionCard) => (
                     <div key={electionCard.idElection}>
-                        <ElectionCard electionCard={electionCard} deleteElection={deleteElection} connectedAdmin={connectedAdmin} />
+                        <ElectionCard electionCard={electionCard} deleteElection={deleteElection} currentUser={currentUser} />
                     </div>
                 ))}
             </div>
