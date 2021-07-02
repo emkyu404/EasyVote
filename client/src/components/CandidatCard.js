@@ -1,6 +1,11 @@
 import React from 'react'
+import { useState } from 'react'
+import DialogComponent from './DialogComponent'
 const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
-
+    const [numberOfCalls, setNumberOfCalls] = useState(0)
+    function prepareVote(){
+        setNumberOfCalls(numberOfCalls + 1)
+    }
     return (
         <div style={styles.card} className="card">
             <div className="information">
@@ -12,88 +17,19 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
             <div style={styles.general}>
                 <h2>Description</h2><br></br>
                 <p>{candidatCard.descriptionCandidat}</p>
-                {participer===false ? <button style={styles.voterCandidat} onClick={ () => {addVote(URLIdElection, candidatCard.idCandidat);}} className="voterCandidat">Voter</button> : ""}
+                {participer===false ? <button style={styles.voterCandidat} onClick={() => {prepareVote()}} className="voterCandidat">Voter</button> : ""}
             </div>
-            {/* old Card
-            <div className="container" style={styles.container}>
-                <div className="card" style={styles.card}>
-                    <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={thierry} alt="candidat"/>
-                    </div>
-                    <div className="team">
-                        <h4 className="name">Thierry Pilote</h4>
-                        <h4 style={styles.title}>Web Developer</h4>
-                    </div>
-                    <div className="vote" style={styles.vote}>
-                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
-                    </div>
-                </div>
 
-                <div className="card" style={styles.card}>
-                    <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
-                    </div>
-                    <div className="team">
-                        <h4 className="name">Amaury Saiyan</h4>
-                        <h4 className="title" style={styles.title}>Web Developer</h4>
-                    </div>
-                    <div className="vote" style={styles.vote}>
-                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
-                    </div>
-                </div>
-
-                <div className="card" style={styles.card}>
-                    <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
-                    </div>
-                    <div className="team">
-                        <h4 className="name">Amaury Saiyan</h4>
-                        <h4 className="title" style={styles.title}>Web Developer</h4>
-                    </div>
-                    <div className="vote" style={styles.vote}>
-                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
-                    </div>
-                </div>
-
-                <div className="card" style={styles.card}>
-                    <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
-                    </div>
-                    <div className="team">
-                        <h4 className="name">Amaury Saiyan</h4>
-                        <h4 className="title" style={styles.title}>Web Developer</h4>
-                    </div>
-                    <div className="vote" style={styles.vote}>
-                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
-                    </div>
-                </div>
-
-                <div className="card" style={styles.card}>
-                    <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
-                    </div>
-                    <div className="team">
-                        <h4 className="name">Amaury Saiyan</h4>
-                        <h4 className="title" style={styles.title}>Web Developer</h4>
-                    </div>
-                    <div className="vote" style={styles.vote}>
-                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
-                    </div>
-                </div>
-
-                <div className="card" style={styles.card}>
-                    <div className="picture" style={styles.picture}>
-                        <img className="img" style={styles.img} src={saiyan} alt="candidat"/>
-                    </div>
-                    <div className="team">
-                        <h4 className="name">Amaury Saiyan</h4>
-                        <h4 className="title" style={styles.title}>Web Developer</h4>
-                    </div>
-                    <div className="vote" style={styles.vote}>
-                        <button style={styles.voterCandidat} onClick="{}" className="voterCandidat">Voter</button>
-                    </div>
-                </div>
-            </div>*/}
+            <DialogComponent
+                dialogText={"Le vote est irréversible. Vous avez encore la possibilité de consulter la liste des candidats"}
+                dialogTitle={"Confirmation de votre vote pour " +candidatCard.titreCandidatb}
+                openOnRender={false}
+                handleClickYes={() => {addVote(URLIdElection, candidatCard.idCandidat)}}
+                handleClickNo={() => {}}
+                handleClickBehavior={() => {}}
+                yesNo={true}
+                numberOfCall={numberOfCalls}
+            />
         </div>
     )
 }

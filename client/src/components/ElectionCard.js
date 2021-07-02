@@ -50,7 +50,8 @@ const styles = {
     divElection: {
         padding: "30px 30px 80px 30px",
         marginBottom: "30px",
-        backgroundColor: "white"
+        backgroundColor: "white",
+        boxShadow: "0 0 10px #555"
     },
     blue : {
         backgroundColor: "#0B6BA8"

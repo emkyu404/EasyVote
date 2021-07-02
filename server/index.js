@@ -143,7 +143,9 @@ function checkConnected(req){
 
 function checkSameAccount(req){
   if(req.session.user){
-    return req.body.idCitoyen===req.session.user.idCitoyen
+    if(req.body.idCitoyen===req.session.user.idCitoyen||req.body.idAdmin===req.session.user.idAdmin){
+      return true
+    }
   }
   return false
 }
@@ -180,16 +182,24 @@ app.post("/profile", (req, res) => {
     });
   }
   else {
-    res.json({message : "Vous n'êtes pas connecté"})
+    res.json({message : "Vous n'êtes pas connecté en tant qu'utilisateur"})
   }
 });
 
 app.post('/getElections', (req, res) => {
   if(checkSameAccount(req)===true){
-    const idCitoyen = req.session.user.idCitoyen
-
-    db.query("SET lc_time_names = 'fr_FR'; SELECT el.idElection, el.titreElection, el.descriptionElection, DATE_FORMAT(el.dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection , DATE_FORMAT(el.dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(el.dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(el.dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end', em.codePostal, ed.codeDepartement, er.nomRegion FROM Election el LEFT JOIN election_departementale ed on el.idElection=ed.idElection LEFT JOIN election_municipale em on el.idElection=em.idElection LEFT JOIN election_regionale er on el.idElection=er.idElection WHERE em.codePostal IN (SELECT vi.codePostal FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR ed.codeDepartement IN (SELECT de.codeDepartement FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR er.nomRegion IN (SELECT de.nomRegion FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR el.idElection IN (SELECT en.idElection FROM election_nationale en)",
-    [idCitoyen, idCitoyen, idCitoyen],
+    let id=0
+    let query=""
+    if(req.session.user.idAdmin){
+      id=req.session.user.idAdmin
+      query="SET lc_time_names = 'fr_FR';SELECT el.idElection, el.titreElection, el.descriptionElection, DATE_FORMAT(el.dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection , DATE_FORMAT(el.dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(el.dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(el.dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end', em.codePostal, ed.codeDepartement, er.nomRegion FROM Election el LEFT JOIN election_departementale ed on el.idElection=ed.idElection LEFT JOIN election_municipale em on el.idElection=em.idElection LEFT JOIN election_regionale er on el.idElection=er.idElection"
+    }
+    else{
+      id=req.session.user.idCitoyen
+      query="SET lc_time_names = 'fr_FR'; SELECT el.idElection, el.titreElection, el.descriptionElection, DATE_FORMAT(el.dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection , DATE_FORMAT(el.dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(el.dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(el.dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end', em.codePostal, ed.codeDepartement, er.nomRegion FROM Election el LEFT JOIN election_departementale ed on el.idElection=ed.idElection LEFT JOIN election_municipale em on el.idElection=em.idElection LEFT JOIN election_regionale er on el.idElection=er.idElection WHERE em.codePostal IN (SELECT vi.codePostal FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR ed.codeDepartement IN (SELECT de.codeDepartement FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR er.nomRegion IN (SELECT de.nomRegion FROM citoyen ci INNER JOIN adresse ad ON ci.idAdresse=ad.idAdresse INNER JOIN ville vi ON ad.codePostal=vi.codePostal INNER JOIN departement de ON vi.codeDepartement=de.codeDepartement WHERE ci.idCitoyen=?) OR el.idElection IN (SELECT en.idElection FROM election_nationale en)"
+    }
+    db.query(query,
+    [id, id, id],
     (err, result) => {
       if (err) {
         console.log(err);
@@ -258,26 +268,32 @@ app.post('/getCandidats', (req, res) => {
 
 app.post('/addVote', (req, res) => {
   if(checkSameAccount(req)===true){
-    const idElecteur = req.body.idElecteur
-    const idElection = req.body.idElection
-    const idCandidat = req.body.idCandidat
 
-    db.query("INSERT INTO participer (idElecteur, idElection) VALUES(?, ?);INSERT INTO vote (idElection, idCandidat) VALUES(?, ?)",
-    [idElecteur, idElection, idElection, idCandidat],
-    (err, result) => {
-      if (err) {
-        if(err.code==="ER_DUP_ENTRY"){
-          res.json({message : "Vous avez déjà voté dans cette élection"})
+    if (req.body.idAdmin>0){
+      res.json({message : "Vous ne pouvez pas voter en tant qu'administrateur"})
+    }
+    else{
+      const idElecteur = req.body.idElecteur
+      const idElection = req.body.idElection
+      const idCandidat = req.body.idCandidat
+
+      db.query("INSERT INTO participer (idElecteur, idElection) VALUES(?, ?);INSERT INTO vote (idElection, idCandidat) VALUES(?, ?)",
+      [idElecteur, idElection, idElection, idCandidat],
+      (err, result) => {
+        if (err) {
+          if(err.code==="ER_DUP_ENTRY"){
+            res.json({message : "Vous avez déjà voté dans cette élection"})
+          }
+          else {
+            console.log(err);
+            res.json({message : "Impossible d'ajouter le vote"})
+          }
+        } 
+        else if(result[0].affectedRows===1 && result[1].affectedRows===1){
+          res.json({success : "Vote ajouté"})
         }
-        else {
-          console.log(err);
-          res.json({message : "Impossible d'ajouter le vote"})
-        }
-      } 
-      else if(result[0].affectedRows===1 && result[1].affectedRows===1){
-        res.json({success : "Vote ajouté"})
-      }
-    });
+      })
+    }
   }
 });
 

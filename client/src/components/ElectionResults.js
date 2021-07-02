@@ -4,8 +4,6 @@ import Chart from "react-google-charts";
 
 const ElectionResults = ({election, candidat, votes}) => {
     return (
-        <div>
-        
         <div style={styles.electionDiv}>
             <h2 style={styles.secondTitle}>{election.titreElection}</h2>
             <p>Description : {election.descriptionElection}</p>
@@ -34,7 +32,7 @@ const ElectionResults = ({election, candidat, votes}) => {
                     }}
                 />
             </div>
-            <div style={styles.columnChartContainer}>
+            {/* <div style={styles.columnChartContainer}>
                 <Chart
                     chartType="ColumnChart"
                     data={[
@@ -60,9 +58,8 @@ const ElectionResults = ({election, candidat, votes}) => {
                         enableInteractivity: false
                     }}
                 />
-            </div>
+            </div> */}
         </div>
-    </div>
     )
 }
 
