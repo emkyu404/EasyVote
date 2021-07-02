@@ -63,7 +63,7 @@ function App() {
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
   const handleConnected = useCallback(() => {
-    if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
+    if (currentUser.idCitoyen === 0 && currentUser.idAdmin === 0) {
       setConnected(false)
       
     } else {
