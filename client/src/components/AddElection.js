@@ -153,6 +153,16 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         document.getElementById("add-election-form").reset()
     }
 
+    function doublonCandidat(newCandidat) {
+        const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
+
+        if(idx !== -1 || newCandidat.titreCandidat === "") {
+            console.log("candidat doublon")
+        } else {
+            listeCandidats.push(newCandidat)
+        }
+    }
+
     const handleOnAddCandidat = (e) => {
         e.preventDefault()
 
@@ -162,13 +172,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
             urlCandidat: urlCandidat
         }
 
-        const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
-
-        if(idx !== -1 || newCandidat.titreCandidat === "") {
-            console.log("candidat doublon")
-        } else {
-            listeCandidats.push(newCandidat)
-        }
+        doublonCandidat(newCandidat)
 
         resetFormCandidat()
     }
