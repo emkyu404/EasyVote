@@ -76,10 +76,6 @@ function App() {
       else{
         connectedText = currentUser.nomCitoyen;
       }
-      addToast("Bonjour " + connectedText, {
-        appearance: 'success',
-        autoDismiss: true,
-      })
     }
   }
 
@@ -112,22 +108,39 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
+      let connectedText="";
+      addToast("Bonjour " + connectedText, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
     }
   };
 
-  const changePassword = async(newPassword) => {
-    const response = await Axios.post(baseUrl+"/changePassword", { newPassword: newPassword, userId: currentUser.idCitoyen })
-      if(response.data.message){
+  const changePassword = async(password, newPassword) => {
+    //vérification du mot de passe
+    console.log(password, currentUser.idCitoyen)
+    const response = await Axios.post(baseUrl+"/verifyPassword", { password: password, userId: currentUser.idCitoyen })
+      if(response.data.success === false){
         addToast("Erreur : " + response.data.message, {
           appearance: 'error',
           autoDismiss: true,
         })
       }else{
-        addToast("Mot de passe modifié avec succès", {
-          appearance : 'success',
-          autoDismiss: true,
-        })
-    }
+        // Si aucune erreur, changement du mot de passe
+        const response2 = await Axios.post(baseUrl+"/changePassword", { newPassword: newPassword, userId: currentUser.idCitoyen })
+        if(response2.data.success === false){
+          addToast("Erreur : " + response2.data.message, {
+            appearance: 'error',
+            autoDismiss: true,
+          })
+        }else{
+          addToast("Mot de passe modifié avec succès", {
+            appearance : 'success',
+            autoDismiss: true,
+          })
+          window.location.replace("/profil")
+        }
+      }   
   }
 
   const loginAdmin = async (email, password) => {
@@ -140,6 +153,12 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
+      let connectedText="";
+      connectedText = "administrateur " + currentUser.idAdmin
+      addToast("Bonjour " + connectedText, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
     }
   };
 

@@ -599,22 +599,40 @@ app.route('/election/:idElection')
       }
     )
   }
-  
-app.post('/changePassword', (req, res) => {
-  const newPassword = req.body.newPassword
-  const userId = req.body.userId
 
-  db.query("UPDATE electeur SET motDePasseElecteur=? WHERE idElecteur = ?",
-  [newPassword,userId],
-  (err, result) => {
-    if (err) {
-      res.json({message : "Le changement de mot de passe à échouer"})
-    } 
-    else {
-      res.json({message : "Changement de mot de passe effectué"})
-    }
+  app.post('/verifyPassword', (req, res) => {
+    const password = req.body.password
+    const userId = req.body.userId
+  
+    db.query("SELECT * FROM electeur WHERE idCitoyen = ? AND motDePasseElecteur = ?",
+    [userId, password],
+    (err, result) => {
+      if (err) {
+        res.json({message : "La vérification de mot de passe à échouer", success: false})
+      } 
+      else if(result.length === 0) {
+        res.json({message : "Les mots de passe ne correspondent pas", success: false})
+      }else{
+        res.json({message : "Vérification réussi", success: true})
+      }
+    });
   });
-});
+  
+  app.post('/changePassword', (req, res) => {
+    const newPassword = req.body.newPassword
+    const userId = req.body.userId
+    console.log("called")
+    db.query("UPDATE electeur SET motDePasseElecteur=? WHERE idCitoyen = ?",
+    [newPassword,userId],
+    (err) => {
+      if (err) {
+        res.json({message : "Le changement de mot de passe à échouer", success: false})
+      } 
+      else {
+        res.json({message : "Changement de mot de passe effectué", success: true})
+      }
+    });
+  });
 
 
 app.post('/')
