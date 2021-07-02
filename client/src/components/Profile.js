@@ -5,7 +5,7 @@ import Radium from 'radium';
 
 import DialogComponent from './DialogComponent'
 
-const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
+const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
 
     useEffect(() => {
         document.title = pageTitle
@@ -307,4 +307,4 @@ const styles = {
     }
 }
 
-export default Radium(Profil)
+export default Radium(Profile)

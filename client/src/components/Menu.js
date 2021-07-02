@@ -25,7 +25,7 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu, currentUser}) => {
 
                 {/* Vérifie si l'utilisateur connecté est un administrateur */}
                 { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== 0)  &&
-                  <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
+                  <Link to="/profile" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
                 }
               </div>
             } 
