@@ -324,9 +324,10 @@ function App() {
       })
     }
     else{
-      console.log(elections)
       const newElections = elections.filter((election) => election.idElection !== idElection);
+      const newFilteredElections = filteredElections.filter((filteredElection) => filteredElection.idElection !== idElection);
       setElections(newElections)
+      setFilteredElections(newFilteredElections)
     }
   }
 
@@ -349,6 +350,7 @@ function App() {
             getCurrentDate={getCurrentDate}
             filteredElections={filteredElections} 
             filterElection={filterElection}
+            connectedAdmin={currentUser.idAdmin}
 
             //Profile
             profile={profile}
