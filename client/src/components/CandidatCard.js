@@ -1,5 +1,5 @@
 import React from 'react'
-const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
+const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getParticiper }) => {
 
     return (
         <div style={styles.card} className="card">
@@ -12,7 +12,13 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
             <div style={styles.general}>
                 <h2>Description</h2><br></br>
                 <p>{candidatCard.descriptionCandidat}</p>
-                {participer===false ? <button style={styles.voterCandidat} onClick={ () => {addVote(URLIdElection, candidatCard.idCandidat);}} className="voterCandidat">Voter</button> : ""}
+                {participer===false 
+                ?
+                <button style={styles.voterCandidat} 
+                onClick={ async () => {await addVote(URLIdElection, candidatCard.idCandidat); await getParticiper(URLIdElection)}} 
+                className="voterCandidat">Voter</button> 
+                :
+                ""}
             </div>
             {/* old Card
             <div className="container" style={styles.container}>
