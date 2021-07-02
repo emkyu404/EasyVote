@@ -2,7 +2,7 @@ import React from 'react';
 import { Link }  from "react-router-dom";
 import Radium from 'radium';
 
-const ElectionCard = ({electionCard, deleteElection, connectedAdmin}) => {
+const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
 
     const handleDelete = async (idElection) => {
         await deleteElection(idElection)
@@ -16,12 +16,18 @@ const ElectionCard = ({electionCard, deleteElection, connectedAdmin}) => {
             
             <p style={styles.text}>{electionCard.descriptionElection}</p>
 
-            { (connectedAdmin !== undefined && connectedAdmin !== "") &&
+            { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
+                <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
+                    <button  key={"Modifier"} style={Object.assign({},styles.btn, styles.blue)}>Modifier l'élection </button>
+                </Link>
+            }
+
+            { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
                 <button key="Supprimer" onClick={() => {handleDelete(electionCard.idElection)}} style={Object.assign({},styles.btn, styles.blue)}>Supprimer l'élection </button>
             }
 
-            <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
-                <button style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
+            <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
+                <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
             </Link>
         </div>
     )

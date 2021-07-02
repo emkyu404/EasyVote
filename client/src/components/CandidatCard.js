@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import DialogComponent from './DialogComponent'
-const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
+const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getParticiper }) => {
     const [numberOfCalls, setNumberOfCalls] = useState(0)
     function prepareVote(){
         setNumberOfCalls(numberOfCalls + 1)
@@ -24,7 +24,7 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
                 dialogText={"Le vote est irréversible. Vous avez encore la possibilité de consulter la liste des candidats"}
                 dialogTitle={"Confirmation de votre vote pour " +candidatCard.titreCandidatb}
                 openOnRender={false}
-                handleClickYes={() => {addVote(URLIdElection, candidatCard.idCandidat)}}
+                handleClickYes={async () => { await addVote(URLIdElection, candidatCard.idCandidat); await getParticiper(URLIdElection)}}
                 handleClickNo={() => {}}
                 handleClickBehavior={() => {}}
                 yesNo={true}

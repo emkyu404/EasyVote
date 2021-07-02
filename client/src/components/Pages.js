@@ -27,7 +27,7 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
           {/* {connected ? <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection} pageTitle={'Ajout d\'une élection'}/> : <NotConnected />} */}
         </Route>
         <Route exact path="/elections">
-          {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} deleteElection={deleteElection} connectedAdmin={connectedAdmin} /> : <NotConnected />}
+          {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} deleteElection={deleteElection} currentUser={currentUser} /> : <NotConnected />}
         </Route>
         <Route exact path="/profil">
           {connected ? <Profil getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profil'} /> : <NotConnected />}
@@ -42,7 +42,7 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
           {connected ? <Home pageTitle={'Accueil'} /> : <LoginAdmin onLogin={loginAdmin} pageTitle={'Connexion administrateur'} />}
         </Route>
         <Route path="/election/:idElection">
-          {connected ? <Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} addVote={addVote} getParticiper={getParticiper} participer={participer} pageTitle={'Election'} /> : <NotConnected />}
+          {connected ? <Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} addVote={addVote} getParticiper={getParticiper} participer={participer} pageTitle={'Election'} currentUser={currentUser} /> : <NotConnected />}
         </Route>
 
         <Route exact path="/bienvenue">

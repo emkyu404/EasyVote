@@ -2,13 +2,18 @@ import React from 'react'
 import Radium from "radium"
 import Chart from "react-google-charts";
 
-const ElectionResults = ({election, candidat, votes}) => {
+const ElectionResults = ({election, candidat, votes, currentUser}) => {
     return (
         <div style={styles.electionDiv}>
-            <h2 style={styles.secondTitle}>{election.titreElection}</h2>
-            <p>Description : {election.descriptionElection}</p>
-            Date de début : {election.dateDebutElection} <br/>
-            Date de fin : {election.dateFinElection}<br/>
+
+            {/* { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
+                <div>
+                    <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+                    <p>Description : {election.descriptionElection}</p>
+                    Date de début : {election.dateDebutElection} <br/>
+                    Date de fin : {election.dateFinElection}<br/>
+                </div>
+            {/* } */}
 
             <div style={styles.pieChartContainer}>
                 <Chart

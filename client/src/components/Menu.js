@@ -12,9 +12,9 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu, currentUser}) => {
               {/* Si le state showMenu vrai, affiche le menu */}
               <div id="menu-container" style = {styles.menuContainer}>
                 <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-1' style={styles.menuItem}>Accueil</div></Link>
-                { ( (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") || (currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") ) &&
+                { ( (currentUser.idElecteur !== undefined && currentUser.idElecteur !== 0) || (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) ) &&
                 <div>
-                  { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== "")  &&
+                  { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0)  &&
                     <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-2' style={styles.menuItem}>Ajouter une élection</div></Link>
                   }
                   <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Consulter les élections</div></Link>
