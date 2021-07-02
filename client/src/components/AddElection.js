@@ -300,12 +300,12 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                 <div style={styles.divCandidat}>
                     <h2 style={styles.secondTitle}>Liste des candidats</h2>
                     <div className="list-candidat-added" style={styles.listeCandidats}>
-                        <table style={styles.table}>
+                        {/* <table style={styles.table}>
                             <thead>
                                 <tr style={styles.tr}>
-                                    <th style={styles.th}>Titre</th>
-                                    <th style={styles.th}>Description</th>
-                                    <th style={styles.th}>Image</th>
+                                    <th style={Object.assign({},styles.th, styles.title)}>Titre</th>
+                                    <th style={Object.assign({},styles.th, styles.description)}>Description</th>
+                                    <th style={Object.assign({},styles.th, styles.image)}>Image</th>
                                     <th style={Object.assign({},styles.th, styles.delete)}></th>
                                 </tr>
                             </thead>
@@ -319,7 +319,30 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                                     </tr>
                             )}
                             </tbody>
-                        </table>
+                        </table> */}
+                        <table style={styles.table}>
+                    <tbody>
+                        <tr>
+                            <th style={Object.assign({},styles.th, styles.title)}>Titre</th>
+                            <th style={Object.assign({},styles.th, styles.description)}>Description</th>
+                            <th style={Object.assign({},styles.th, styles.image)}>Image</th>
+                            <th style={Object.assign({},styles.th, styles.delete)}></th>
+                            
+                        </tr>
+                        <tr>
+                            <td style={styles.td}>Ceci est le titre</td>
+                            <td style={styles.td}>Ceci est la desciption, nike dro aussi.</td>
+                            <td style={Object.assign({},styles.td, styles.image)}><img src="https://i.pinimg.com/474x/ca/0a/cb/ca0acbb81ad3feee2a815463ed7423e6.jpg"></img></td>
+                            <td style={styles.td}> ❌ </td>
+                        </tr>
+                        <tr>
+                            <td style={styles.td}>Ceci est le titre</td>
+                            <td style={styles.td}>Ceci est la desciption, nike dro aussi.</td>
+                            <td style={Object.assign({},styles.td, styles.image)}>https://i.pinimg.com/474x/ca/0a/cb/ca0acbb81ad3feee2a815463ed7423e6.jpg</td>
+                            <td style={styles.td}> ❌ </td>
+                        </tr>
+                    </tbody>
+                </table>
                     </div>
                 </div>
             }
@@ -328,6 +351,50 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 }
 
 const styles = {
+    divCandidat: {
+        backgroundColor: "white",
+        padding: "40px 40px 40px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 20px 20px"
+        }
+    },
+    table: {
+        tableLayout: "fixed",
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        width: "100%",
+        marginBottom: "25px",
+        display: "block",
+        overflow: "auto"
+    },
+    th: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        backgroundColor: "#fafafa",
+        padding: "5px 20px 5px 20px"
+    },
+    td: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        padding: "5px 20px 5px 20px",
+        width: "100%"
+    },
+    title: {
+        minWidth: "200px"
+    },
+    description: {
+        minWidth: "400px"
+    },
+    image: {
+        width: "250px",
+        overflow: "hidden",
+        whiteSpace: "nowrap"
+    },
+    delete: {
+        width: "15px"
+    },
     mainTitle: {
         color: "#0B6BA8",
         height: "fit-content",
@@ -503,39 +570,11 @@ const styles = {
             cursor: "pointer"
         }
     },
-    divCandidat: {
-        backgroundColor: "white",
-        padding: "40px 40px 40px 40px",
-        boxShadow: "0 0 10px #999",
-        margin: "20px 0px 20px 0px",
-        '@media (max-width: 640px)': { 
-            padding: "20px 20px 20px 20px"
-        }
-    },
-    table: {
-        border: "1px solid #eee",
-        borderCollapse: "collapse",
-        minWidth: "100%",
-        overflow: "auto"
-    },
-    th: {
-        border: "1px solid #eee",
-        borderCollapse: "collapse",
-        backgroundColor: "#fafafa",
-        padding: "5px 20px 5px 20px"
-    },
-    td: {
-        border: "1px solid #eee",
-        borderCollapse: "collapse",
-        padding: "5px 20px 5px 20px"
-    },
-    tr: {
-        width: "100%"
-    },
     secondTitle:{
         textAlign: "center",
         paddingBottom: "10px"
     },
+<<<<<<< Updated upstream
     delete: {
         padding: "5px",
         width: "5px"
@@ -545,6 +584,8 @@ const styles = {
             cursor : "pointer"
         }
     }
+=======
+>>>>>>> Stashed changes
 }
 
 export default Radium(AddElection)
