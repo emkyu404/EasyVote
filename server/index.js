@@ -638,7 +638,6 @@ app.route('/election/:idElection')
   app.post('/changePassword', (req, res) => {
     const newPassword = req.body.newPassword
     const userId = req.body.userId
-    console.log("called")
     db.query("UPDATE electeur SET motDePasseElecteur=? WHERE idCitoyen = ?",
     [newPassword,userId],
     (err) => {
@@ -647,6 +646,20 @@ app.route('/election/:idElection')
       } 
       else {
         res.json({message : "Changement de mot de passe effectué", success: true})
+      }
+    });
+  });
+
+  app.post('/updateFirstConnexion', (req, res) => {
+    const userId = req.body.idElecteur
+    db.query("UPDATE electeur SET premiereConnexion = ? WHERE idCitoyen = ?",
+    [0,userId],
+    (err) => {
+      if (err) {
+        res.json({message : "La première connexion n'a pas pu être prise en compte", success: false})
+      } 
+      else {
+        res.json({message : "Première connexion prise en compte", success: true})
       }
     });
   });

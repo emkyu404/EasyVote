@@ -107,12 +107,16 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      console.log(response.data)
       let connectedText=response.data.nomCitoyen;
       addToast("Bonjour " + connectedText, {
         appearance: 'success',
         autoDismiss: true,
       })
+      if(response.data.premiereConnexion === 1){
+        window.location.replace('/bienvenue')
+      }else{
+        window.location.replace('/')
+      }
     }
   };
 
@@ -338,6 +342,34 @@ function App() {
     }
   }
 
+  const updateFirstConnexion = async (idElecteur) => {
+    const response = await Axios.post(baseUrl+"/updateFirstConnexion", {idElecteur : idElecteur})
+    if(response.data.success === false){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }else{
+      console.log("Première connexion prise en compte")
+    }
+  }
+
+  const updatePasswordFirstConnexion = async (idElecteur, newPassword) => {
+    const response = await Axios.post(baseUrl+"/changePassword", {userId: idElecteur, newPassword: newPassword})
+    if(response.data.success === false){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }else{
+      addToast("Mot de passe modifié avec succès", {
+        appearance : 'success',
+        autoDismiss: true,
+      })
+      window.location.replace('/')
+    }
+  }
+
   return (
     <div className="App">
         <Router>
@@ -381,6 +413,10 @@ function App() {
             addVote={addVote}
             getParticiper={getParticiper}
             participer={participer}
+
+            //FirstConnexion
+            updateFirstConnexion={updateFirstConnexion}
+            updatePasswordFirstConnexion={updatePasswordFirstConnexion}
           />
           <Footer/>
         </Router>
