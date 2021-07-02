@@ -16,7 +16,7 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: "", nomCitoyen : "", idElecteur : ""})
+  const [currentUser, setCurrentUser] = useState({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
   const [election, setElection] = useState({idElection : 0})
@@ -214,7 +214,14 @@ function App() {
   }
 
   const getElections = async () => {
-    const response = await Axios.post(baseUrl+"/getElections", {idCitoyen : currentUser.idCitoyen})
+    let response=""
+    if (currentUser.idAdmin!==0){
+      response = await Axios.post(baseUrl+"/getElections", {idAdmin : currentUser.idAdmin})
+    }
+    else{
+      response = await Axios.post(baseUrl+"/getElections", {idCitoyen : currentUser.idCitoyen})
+    }
+    
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
@@ -268,7 +275,7 @@ function App() {
   }
 
   const addVote = async (URLIdElection, idCandidat) => {
-    const response = await Axios.post(baseUrl+"/addVote", {idCitoyen : currentUser.idCitoyen, idElection : URLIdElection, idCandidat : idCandidat, idElecteur : currentUser.idElecteur})
+    const response = await Axios.post(baseUrl+"/addVote", {idAdmin : currentUser.idAdmin, idCitoyen : currentUser.idCitoyen, idElection : URLIdElection, idCandidat : idCandidat, idElecteur : currentUser.idElecteur})
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
