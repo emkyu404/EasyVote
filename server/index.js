@@ -567,8 +567,8 @@ app.route('/election/:idElection')
 
   async function deleteElection(req, res) {
     db.query(
-      "DELETE FROM `candidat` WHERE `idElection` = ?; DELETE FROM `election` WHERE `idElection` = ?",
-      [req.idElection, req.idElection],
+      "DELETE FROM `election` WHERE `idElection` = ?",
+      [req.idElection],
       (err) => {
         if (err) {
           res.status(401).json({ message: "Suppression de l'élection" })
