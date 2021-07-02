@@ -3,7 +3,7 @@ import React from 'react';
 import Radium from 'radium';
 import { useToasts } from 'react-toast-notifications'
 
-const Contact = ({ }) => {
+const Contact = () => {
     const {addToast} = useToasts()
 
     function sendEmail(e) {

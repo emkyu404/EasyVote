@@ -11,7 +11,7 @@ const PageNotFound = ({pageTitle}) => {
         <div>
             <div>
             <h1 style={styles.title}>Oups !</h1>
-            <img src=""></img>
+            <img src="" alt="Not found"></img>
             </div>
             <p>La page que vous tenter d'afficher n'existe pas ou une erreur s'est produite.</p>
             <br></br>

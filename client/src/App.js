@@ -1,5 +1,5 @@
 import "./css/App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
@@ -56,14 +56,13 @@ function App() {
         aFilteredelections = elections.filter(election => election.start < currentDate && election.end > currentDate)
         break;
     }
-    
     setFilteredElections(aFilteredelections)
   }, [currentFilter])
 
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
-  const handleConnected = () => {
+  const handleConnected = useCallback(() => {
     if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
       setConnected(false)
       
@@ -77,7 +76,7 @@ function App() {
         connectedText = currentUser.nomCitoyen;
       }
     }
-  }
+  })
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
