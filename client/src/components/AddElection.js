@@ -315,7 +315,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                                         <td style={styles.td}>{candidat.titreCandidat}</td>
                                         <td style={styles.td}>{candidat.descriptionCandidat}</td>
                                         <td style={styles.td}>{candidat.urlCandidat}</td>
-                                        <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)}> ❌ </p></td>
+                                        <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.hoverable} key={candidat.titreCandidat}> ❌ </p></td>
                                     </tr>
                             )}
                             </tbody>
@@ -540,6 +540,11 @@ const styles = {
     delete: {
         padding: "5px",
         width: "5px"
+    },
+    hoverable: {
+        ':hover' : {
+            cursor : "pointer"
+        }
     }
 }
 
