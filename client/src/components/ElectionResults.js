@@ -6,30 +6,14 @@ const ElectionResults = ({election, candidat, votes, currentUser}) => {
     return (
         <div style={styles.electionDiv}>
 
-            { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+            {/* { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
                 <div>
                     <h2 style={styles.secondTitle}>{election.titreElection}</h2>
                     <p>Description : {election.descriptionElection}</p>
                     Date de début : {election.dateDebutElection} <br/>
                     Date de fin : {election.dateFinElection}<br/>
                 </div>
-            }
-
-            { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
-                <div>
-                    <label className="update-election-label" style={styles.label}>Titre de l'élection : </label>
-                    <input type="text" className="update-election-input" required value={election.titreElection} />
-
-                    <label className="update-election-label" style={styles.label}>Description de l'élection : </label>
-                    <p>Description : {election.descriptionElection}</p>
-
-                    <label className="update-election-label" style={styles.label}>Date de début : </label>
-                    Date de début : {election.dateDebutElection} <br/>
-
-                    <label className="update-election-label" style={styles.label}>Date de fin : </label>
-                    Date de fin : {election.dateFinElection}<br/>
-                </div>
-            }
+            {/* } */}
 
             <div style={styles.pieChartContainer}>
                 <Chart
