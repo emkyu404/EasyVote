@@ -8,8 +8,10 @@ const ElectionWait = ({election, currentUser, updateElection}) => {
   const dateHeureFin = election.end.split(' ');
 
   const [titreElection, setElectionTitle] = useState(election.titreElection)
+
   const [dateDebutElection, setDateDebutElection] = useState(dateHeureDebut[0])
   const [dateFinElection, setDateFinElection] = useState(dateHeureFin[0])
+
   const [descriptionElection, setDescriptionElection] = useState(election.descriptionElection)
 
   const [heureDebut, setHeureDebut] = useState(dateHeureDebut[1])

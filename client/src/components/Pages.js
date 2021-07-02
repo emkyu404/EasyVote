@@ -24,7 +24,6 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
         </Route>
         <Route exact path="/addElection">
           <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection} pageTitle={'Ajout d\'une élection'} />
-          {/* {connected ? <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection} pageTitle={'Ajout d\'une élection'}/> : <NotConnected />} */}
         </Route>
         <Route exact path="/elections">
           {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} deleteElection={deleteElection} currentUser={currentUser} /> : <NotConnected />}
