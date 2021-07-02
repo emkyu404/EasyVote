@@ -16,14 +16,17 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu, currentUser}) => {
             {/* Vérifie que l'utilisateur est connecté */}
             { ( (currentUser.idElecteur !== undefined && currentUser.idElecteur !== 0) || (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) ) &&
               <div>
+                <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Elections</div></Link>
 
                 {/* Vérifie si l'utilisateur connecté est un administrateur */}
                 { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0)  &&
                   <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-2' style={styles.menuItem}>Ajouter une élection</div></Link>
                 }
 
-                <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Elections</div></Link>
-                <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
+                {/* Vérifie si l'utilisateur connecté est un administrateur */}
+                { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== 0)  &&
+                  <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
+                }
               </div>
             } 
 
