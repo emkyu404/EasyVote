@@ -1,7 +1,7 @@
 import React from 'react'
 import CandidatCard from "./CandidatCard";
 
-const ElectionVote = ({election, candidats, addVote, URLIdElection, participer, currentUser}) => {
+const ElectionVote = ({election, candidats, addVote, URLIdElection, participer, getParticiper, currentUser}) => {
 
     const dateHeureDebut = election.start.split(' ');
 
@@ -47,7 +47,7 @@ const ElectionVote = ({election, candidats, addVote, URLIdElection, participer, 
                 :
                 candidats.map((candidatCard)=> (
                     <div key={candidatCard.idCandidat}>
-                        <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer}/>
+                        <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} />
                     </div>
                 ))
                 }
