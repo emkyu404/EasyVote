@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Component } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from 'react-router-dom';
 import '../css/App.css';
 import Radium from 'radium';
@@ -15,7 +15,7 @@ const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
         getProfile();
     }, [])
 
-    const [triggerDialog, setTriggerDialog] = useState(false)
+    // const [triggerDialog, setTriggerDialog] = useState(false)
     const [numberOfCalls, setNumberOfCalls] = useState(0)
     const [newPassword, setNewPassword] = useState("")
     const [password, setPassword] = useState("")
@@ -62,7 +62,7 @@ const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
             document.getElementById("changePasswordButton").style.cursor = "not-allowed"
             document.getElementById("changePasswordButton").disabled = true
             document.getElementById("changePasswordButton").style.backgroundColor = "#CECECE"
-        }else if(cfmPwd != newPwd){
+        }else if(cfmPwd !== newPwd){
             document.getElementById("changePasswordButton").style.backgroundColor = "#CECECE"
             document.getElementById("changePasswordButton").style.cursor = "not-allowed"
             document.getElementById("changePasswordButton").disabled = true
@@ -79,7 +79,7 @@ const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
             document.getElementById("confirmPassword").style.backgroundColor="white"
             submitButtonEnabledOrDisabled(password, newPwd, cfmPwd)
             
-        }else if(cfmPwd != newPwd){
+        }else if(cfmPwd !== newPwd){
             document.getElementById("newPassword").style.backgroundColor="rgba(240,128,128,0.5)"
             document.getElementById("confirmPassword").style.backgroundColor="rgba(240,128,128,0.5)"
             document.getElementById("changePasswordButton").style.backgroundColor = "#CECECE"

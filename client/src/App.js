@@ -1,5 +1,5 @@
 import "./css/App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
@@ -16,7 +16,7 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0})
+  const [currentUser, setCurrentUser] = useState({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0, premiereConnexion: 0})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
   const [election, setElection] = useState({idElection : 0})
@@ -56,14 +56,13 @@ function App() {
         aFilteredelections = elections.filter(election => election.start < currentDate && election.end > currentDate)
         break;
     }
-    
     setFilteredElections(aFilteredelections)
   }, [currentFilter])
 
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
-  const handleConnected = () => {
+  const handleConnected = useCallback(() => {
     if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
       setConnected(false)
       
@@ -77,7 +76,7 @@ function App() {
         connectedText = currentUser.nomCitoyen;
       }
     }
-  }
+  })
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -108,7 +107,8 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      let connectedText="";
+      console.log(response.data)
+      let connectedText=response.data.nomCitoyen;
       addToast("Bonjour " + connectedText, {
         appearance: 'success',
         autoDismiss: true,
