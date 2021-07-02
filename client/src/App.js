@@ -63,7 +63,7 @@ function App() {
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
   const handleConnected = useCallback(() => {
-    if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
+    if (currentUser.idCitoyen === 0 && currentUser.idAdmin === 0) {
       setConnected(false)
       
     } else {
@@ -94,7 +94,7 @@ function App() {
 
   const token = async () => {
     const response = await Axios.get(baseUrl+"/token")
-    response.data.message ? setCurrentUser({idAdmin: "", idCitoyen: ""}) : setCurrentUser(response.data); 
+    response.data.message ? setCurrentUser({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0}) : setCurrentUser(response.data); 
   }
 
   const login = async (email, password) => {
@@ -107,12 +107,16 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
-      console.log(response.data)
       let connectedText=response.data.nomCitoyen;
       addToast("Bonjour " + connectedText, {
         appearance: 'success',
         autoDismiss: true,
       })
+      if(response.data.premiereConnexion === 1){
+        window.location.replace('/bienvenue')
+      }else{
+        window.location.replace('/')
+      }
     }
   };
 
@@ -165,7 +169,7 @@ function App() {
   const disconnect = async () => {
     const response = await Axios.get(baseUrl+"/disconnect")
     if (response.data.message) {
-      setCurrentUser({ idAdmin: "", idCitoyen: "" });
+      setCurrentUser({ idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0 });
       addToast("Déconnexion réussi, au revoir !", {
         appearance: 'success',
         autoDismiss: true,
@@ -338,6 +342,34 @@ function App() {
     }
   }
 
+  const updateFirstConnexion = async (idElecteur) => {
+    const response = await Axios.post(baseUrl+"/updateFirstConnexion", {idElecteur : idElecteur})
+    if(response.data.success === false){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }else{
+      console.log("Première connexion prise en compte")
+    }
+  }
+
+  const updatePasswordFirstConnexion = async (idElecteur, newPassword) => {
+    const response = await Axios.post(baseUrl+"/changePassword", {userId: idElecteur, newPassword: newPassword})
+    if(response.data.success === false){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }else{
+      addToast("Mot de passe modifié avec succès", {
+        appearance : 'success',
+        autoDismiss: true,
+      })
+      window.location.replace('/')
+    }
+  }
+
   return (
     <div className="App">
         <Router>
@@ -381,7 +413,10 @@ function App() {
             addVote={addVote}
             getParticiper={getParticiper}
             participer={participer}
-            currentUser={currentUser}
+
+            //FirstConnexion
+            updateFirstConnexion={updateFirstConnexion}
+            updatePasswordFirstConnexion={updatePasswordFirstConnexion}
           />
           <Footer/>
         </Router>

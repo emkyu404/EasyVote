@@ -21,7 +21,6 @@ const PasswordForget = () => {
                 <input className="forget-input" type="email" id="email" name="email" style={styles.forgetInput} required onBlur={handleEmailOnChange} />
 
                 <input type="submit" className="forget-button" value="Envoyer" style={styles.forgetSubmit} />
-
             </form>
         </div>
     )
