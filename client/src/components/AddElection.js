@@ -270,10 +270,40 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
                         <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
-                        <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                         <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Ajouter un candidat</button>
+
+                        {listeCandidats.length > 0 &&
+                            <div style={styles.divCandidat}>
+                                <h2 style={styles.secondTitle}>Liste des candidats</h2>
+                                <div className="list-candidat-added" style={styles.listeCandidats}>
+                                    <table style={styles.table}>
+                                        <thead>
+                                            <tr>
+                                                <th style={Object.assign({},styles.th, styles.title)}>Titre</th>
+                                                <th style={Object.assign({},styles.th, styles.description)}>Description</th>
+                                                <th style={Object.assign({},styles.th, styles.image)}>Image</th>
+                                                <th style={Object.assign({},styles.th, styles.delete)}></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        {listeCandidats.map((candidat) => 
+                                                <tr key={candidat.titreCandidat} style={styles.tr}>
+                                                    <td style={Object.assign({},styles.th, styles.title)}>{candidat.titreCandidat}</td>
+                                                    <td style={Object.assign({},styles.td, styles.description)}>{candidat.descriptionCandidat}</td>
+                                                    <td style={Object.assign({},styles.td, styles.image)}>{candidat.urlCandidat}</td>
+                                                    <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.hoverable} key={candidat.titreCandidat}> ❌ </p></td>
+                                                </tr>
+                                        )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
+                            </div>
+                }   
                     </div>
                 }
+
+                
             </form>
             
             <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>
@@ -296,38 +326,49 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                 </div>
             </form>
 
-            {listeCandidats.length > 0 &&
-                <div style={styles.divCandidat}>
-                    <h2 style={styles.secondTitle}>Liste des candidats</h2>
-                    <div className="list-candidat-added" style={styles.listeCandidats}>
-                        <table style={styles.table}>
-                            <thead>
-                                <tr style={styles.tr}>
-                                    <th style={styles.th}>Titre</th>
-                                    <th style={styles.th}>Description</th>
-                                    <th style={styles.th}>Image</th>
-                                    <th style={Object.assign({},styles.th, styles.delete)}></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            {listeCandidats.map((candidat) => 
-                                    <tr key={candidat.titreCandidat} style={styles.tr}>
-                                        <td style={styles.td}>{candidat.titreCandidat}</td>
-                                        <td style={styles.td}>{candidat.descriptionCandidat}</td>
-                                        <td style={styles.td}>{candidat.urlCandidat}</td>
-                                        <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.hoverable} key={candidat.titreCandidat}> ❌ </p></td>
-                                    </tr>
-                            )}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            }
+            
         </div>
     )
 }
 
 const styles = {
+    divCandidat: {
+        marginTop: "60px",
+    },
+    table: {
+        tableLayout: "fixed",
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        width: "100%",
+        marginBottom: "25px",
+        display: "block",
+        overflow: "auto"
+    },
+    th: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        backgroundColor: "#fafafa",
+        padding: "5px 20px 5px 20px"
+    },
+    td: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        padding: "5px 20px 5px 20px"
+    },
+    title: {
+        minWidth: "200px"
+    },
+    description: {
+        minWidth: "400px",
+        width: "100%"
+    },
+    image: {
+        maxWidth: "250px",
+        overflow: "auto"
+    },
+    delete: {
+        width: "15px"
+    },
     mainTitle: {
         color: "#0B6BA8",
         height: "fit-content",
@@ -482,6 +523,7 @@ const styles = {
         padding: "40px 40px 70px 40px",
         border: "1px solid #888",
         width: "calc(80% - 50px)",
+        maxWidth: "1150px",
         '@media (max-width: 640px)': { 
             padding: "20px 20px 70px 20px",
             width: "calc(100% - 50px)",
@@ -502,35 +544,6 @@ const styles = {
             textDecoration: "none",
             cursor: "pointer"
         }
-    },
-    divCandidat: {
-        backgroundColor: "white",
-        padding: "40px 40px 40px 40px",
-        boxShadow: "0 0 10px #999",
-        margin: "20px 0px 20px 0px",
-        '@media (max-width: 640px)': { 
-            padding: "20px 20px 20px 20px"
-        }
-    },
-    table: {
-        border: "1px solid #eee",
-        borderCollapse: "collapse",
-        minWidth: "100%",
-        overflow: "auto"
-    },
-    th: {
-        border: "1px solid #eee",
-        borderCollapse: "collapse",
-        backgroundColor: "#fafafa",
-        padding: "5px 20px 5px 20px"
-    },
-    td: {
-        border: "1px solid #eee",
-        borderCollapse: "collapse",
-        padding: "5px 20px 5px 20px"
-    },
-    tr: {
-        width: "100%"
     },
     secondTitle:{
         textAlign: "center",

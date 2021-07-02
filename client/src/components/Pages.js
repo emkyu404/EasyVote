@@ -4,7 +4,7 @@ import Radium from 'radium'
 
 import Home from './Home'
 import Elections from './Elections'
-import Profil from './Profil'
+import Profile from './Profile'
 import Contact from './Contact'
 import Login from './LoginUser'
 import LoginAdmin from './LoginAdmin'
@@ -29,8 +29,8 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
         <Route exact path="/elections">
           {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} deleteElection={deleteElection} currentUser={currentUser} /> : <NotConnected />}
         </Route>
-        <Route exact path="/profil">
-          {connected ? <Profil getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profil'} /> : <NotConnected />}
+        <Route exact path="/profile">
+          {connected ? <Profile getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profile'} /> : <NotConnected />}
         </Route>
         <Route exact path="/contact">
           <Contact pageTitle={'Contactez nous'} />

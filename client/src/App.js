@@ -142,7 +142,7 @@ function App() {
             appearance : 'success',
             autoDismiss: true,
           })
-          window.location.replace("/profil")
+          window.location.replace("/profile")
         }
       }   
   }

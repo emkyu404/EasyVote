@@ -1,6 +1,43 @@
-Ouvrir 2 terminaux
-Un dans client et un autre dans server
-npm install sur les deux terminaux
-Pour respectivement le terminal correspondant au client et celui du serveur, inscrire la ligne de commande :
-    - client npm start
-    - serveur nodemon index.js
+EASY VOTE
+
+Introduction :
+Mastercamp 2021 L3 New
+Front End
+React
+Back End
+Node et express
+
+Pré-requis :
+    -visual studio code (de préférence)
+    -node.js pour le serveur et installer les librairies rapidement
+    -BDD MySQL avec PhpMyAdmin (de préférence)
+    -notre projet : "https://github.com/emkyu404/EasyVote"
+
+Installation :
+Ouvrir 2 terminaux :
+    - un dans client (cd client)
+    - un dans server (cd server)
+npm install sur les deux terminaux (peut prendre du temps)
+
+Ouvrir votre MySQL et lancer le script dans votre interface pour créer la base de données.
+
+Lancer le projet : 
+Respectivement dans le terminal du :
+    - client "npm start" : vous devriez avoir une page internet qui s'ouvre (peut prendre du temps)
+    - server "node index.js" : vous devriez avoir ce message dans la console "Yey, your server is running on port 3001"
+
+Explorer le projet :
+Vous pouvez vous connecter avec :
+    - un compte utilisateur :
+        - email : j-f.tang@email.com
+        - mot de passe : tang
+    - un compte administrateur sur le lien http://localhost:3000/loginAdmin (non indéxé) :
+        - email : admin@email.fr
+        - mot de passe : admin
+        
+Contributeurs :
+    -Minh-Quan BUIH
+    -Antoine CHENG
+    -Amaury LIN
+    -Thierry ZHANG
+    -Jean-Franck TANG
