@@ -115,7 +115,9 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
             setDescriptionElection(electionObj.descriptionElection)
 
             //Changement des informations de la liste des candidats
-            setListeCandidats([...listeCandidats].concat(candidatsArray))
+            candidatsArray.forEach(candidat => {
+                duplicateCandidat(candidat)
+            })
         } catch (e) {
             console.log(e)
         }
@@ -153,7 +155,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         document.getElementById("add-election-form").reset()
     }
 
-    function doublonCandidat(newCandidat) {
+    function duplicateCandidat(newCandidat) {
         const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
 
         if(idx !== -1 || newCandidat.titreCandidat === "") {
@@ -172,7 +174,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
             urlCandidat: urlCandidat
         }
 
-        doublonCandidat(newCandidat)
+        duplicateCandidat(newCandidat)
 
         resetFormCandidat()
     }
