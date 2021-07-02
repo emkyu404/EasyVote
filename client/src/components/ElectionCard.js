@@ -17,18 +17,19 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
             <p style={styles.text}>{electionCard.descriptionElection}</p>
 
             { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
-                <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
-                    <button  key={"Modifier"} style={Object.assign({},styles.btn, styles.blue)}>Modifier l'élection </button>
+                <div>
+                    <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
+                        <button  key={"Modifier"} style={Object.assign({},styles.btn, styles.blue)}>Modifier l'élection </button>
+                    </Link>
+                    <button key="Supprimer" onClick={() => {handleDelete(electionCard.idElection)}} style={Object.assign({},styles.btn, styles.blue)}>Supprimer l'élection </button>
+                </div>
+            }
+
+            { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== 0) &&
+                <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
+                    <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
                 </Link>
-            }
-
-            { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
-                <button key="Supprimer" onClick={() => {handleDelete(electionCard.idElection)}} style={Object.assign({},styles.btn, styles.blue)}>Supprimer l'élection </button>
-            }
-
-            <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
-                <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
-            </Link>
+            }            
         </div>
     )
 }
