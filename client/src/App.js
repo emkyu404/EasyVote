@@ -344,7 +344,7 @@ function App() {
           {/* Header */}
           <Header onDisconnection={disconnect} isConnected={connected} />
           {/* Tout ce qu'il y a sous la page */}
-          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu} connectedAdmin={currentUser.idAdmin} />
+          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu} currentUser={currentUser} />
           <Pages 
             connected={connected}
             //AddElection + AddCandidat
@@ -357,7 +357,7 @@ function App() {
             getCurrentDate={getCurrentDate}
             filteredElections={filteredElections} 
             filterElection={filterElection}
-            connectedAdmin={currentUser.idAdmin}
+            currentUser={currentUser}
 
             //Profile
             profile={profile}
