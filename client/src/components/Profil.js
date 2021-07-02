@@ -18,6 +18,8 @@ const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
     const [triggerDialog, setTriggerDialog] = useState(false)
     const [numberOfCalls, setNumberOfCalls] = useState(0)
     const [newPassword, setNewPassword] = useState("")
+    const [password, setPassword] = useState("")
+    const [confirmPassword, setConfirmPassword] = useState("")
 
 
     const history = useHistory();
@@ -26,30 +28,69 @@ const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
         history.push("./Contact");
     }
 
-    const handlePasswordChange = (e) => {
+    // ouvre la boite de dialogue pour confirmer le changement de mot de passe
+    const handleSubmitPassword = (e) => {
         e.preventDefault()
         setNumberOfCalls(numberOfCalls + 1)
     }
 
+
+    // fonction appeler à la confirmation
+    const handleConfirmSubmitPassword = () => {
+        changePassword(password, newPassword)
+    }
+
+    const handlePasswordChange = (e)=> {
+        setPassword(e.target.value)
+        submitButtonEnabledOrDisabled(e.target.value, newPassword, confirmPassword)
+    }
+
     const handleNewPasswordChange = (e) => {
         setNewPassword(e.target.value)
-        console.log(newPassword)
+        passwordAndConfirmPasswordMatch(e.target.value, confirmPassword)
     }
 
     const handleConfirmPasswordChange = (e) => {
-        if(e.target.value != newPassword){
-            document.getElementById("newPassword").style.backgroundColor="rgba(240,128,128,0.5)"
-            document.getElementById("confirmPassword").style.backgroundColor="rgba(240,128,128,0.5)"
-            document.getElementById("changePasswordButton").disabled = true
-        }else{
-            document.getElementById("newPassword").style.backgroundColor="rgba(152,251,152,0.5)"
-            document.getElementById("confirmPassword").style.backgroundColor="rgba(152,251,152,0.5)"
-            document.getElementById("changePasswordButton").disabled = false
-        }
+       setConfirmPassword(e.target.value)
+       passwordAndConfirmPasswordMatch(newPassword, e.target.value)
     }
 
     const [show, setShow] = React.useState(false);
 
+    function submitButtonEnabledOrDisabled(pwd, newPwd, cfmPwd){
+        if(cfmPwd === "" || newPwd === "" || pwd === ""){
+            document.getElementById("changePasswordButton").style.cursor = "not-allowed"
+            document.getElementById("changePasswordButton").disabled = true
+            document.getElementById("changePasswordButton").style.backgroundColor = "#CECECE"
+        }else if(cfmPwd != newPwd){
+            document.getElementById("changePasswordButton").style.backgroundColor = "#CECECE"
+            document.getElementById("changePasswordButton").style.cursor = "not-allowed"
+            document.getElementById("changePasswordButton").disabled = true
+        }else{
+            document.getElementById("changePasswordButton").style.backgroundColor = "#0B6BA8"
+            document.getElementById("changePasswordButton").style.cursor = "pointer"
+            document.getElementById("changePasswordButton").disabled = false
+        }
+    }
+
+    function passwordAndConfirmPasswordMatch(newPwd, cfmPwd){
+        if(cfmPwd === "" || newPwd === ""){
+            document.getElementById("newPassword").style.backgroundColor="white"
+            document.getElementById("confirmPassword").style.backgroundColor="white"
+            submitButtonEnabledOrDisabled(password, newPwd, cfmPwd)
+            
+        }else if(cfmPwd != newPwd){
+            document.getElementById("newPassword").style.backgroundColor="rgba(240,128,128,0.5)"
+            document.getElementById("confirmPassword").style.backgroundColor="rgba(240,128,128,0.5)"
+            document.getElementById("changePasswordButton").style.backgroundColor = "#CECECE"
+            submitButtonEnabledOrDisabled(password, newPwd, cfmPwd)
+            
+        }else{
+            document.getElementById("newPassword").style.backgroundColor="rgba(152,251,152,0.5)"
+            document.getElementById("confirmPassword").style.backgroundColor="rgba(152,251,152,0.5)"
+            submitButtonEnabledOrDisabled(password, newPwd, cfmPwd)
+        }
+    }
 
     return (
         <div>
@@ -107,12 +148,12 @@ const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
             <button style={styles.btn} onClick={() => setShow(!show)}>Changer de mot de passe</button>
 
             {show ?
-                <form onSubmit={handlePasswordChange} className='passwordForm' id="myForm">
+                <form onSubmit={handleSubmitPassword} className='passwordForm' id="myForm">
                     <div style={styles.divForm}>
                         <h2 style={styles.secondTitle}>Changer de mot de passe</h2>
 
                         <label style={styles.label}>Ancien mot de passe : </label>
-                        <span style={styles.span}><input type="password" name="old-pass" required style={styles.input} /></span>
+                        <span style={styles.span}><input id="password" type="password" name="old-pass" required style={styles.input} onChange={handlePasswordChange} /></span>
 
                         <label style={styles.label}>Nouveau mot de passe : </label>
                         <span style={styles.span}><input id="newPassword" type="password" name="new-pass" required style={styles.input} onChange={handleNewPasswordChange} /></span>
@@ -130,7 +171,7 @@ const Profil = ({ getProfile, currentUser,changePassword, pageTitle }) => {
                 dialogText={"Êtes-vous sûr de vouloir changer votre mot de passe ?"}
                 dialogTitle={"Changement de mot de passe ?"}
                 openOnRender={false}
-                handleClickYes={() => {}}
+                handleClickYes={handleConfirmSubmitPassword}
                 handleClickNo={() => {}}
                 handleClickBehavior={() => {}}
                 yesNo={true}
@@ -240,8 +281,8 @@ const styles = {
         marginBottom: "10px"
     },
     submit: {
-        backgroundColor: "#0B6BA8",
-        cursor: "pointer",
+        backgroundColor: "#CECECE",
+        cursor: "not-allowed",
         border: "none",
         color: "white",
         padding: "15px",
