@@ -158,7 +158,7 @@ function App() {
     else {
       setCurrentUser(response.data)
       let connectedText="";
-      connectedText = "administrateur " + currentUser.idAdmin
+      connectedText = "administrateur " + response.data.idAdmin
       addToast("Bonjour " + connectedText, {
         appearance: 'success',
         autoDismiss: true,

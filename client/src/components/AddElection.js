@@ -182,7 +182,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         
-        if (listeCandidats.length >= 2) {
+        if (listeCandidats.length >= 0) {
             await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             resetFormElection()
         }

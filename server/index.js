@@ -28,7 +28,7 @@ const db = mysql.createConnection({
 
 function currentTime(){
   var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+  var date = today.getFullYear()+'-'+("0"+(today.getMonth()+1)).slice(-2)+'-'+("0"+today.getDate()).slice(-2);
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date+' '+time;
   return dateTime
@@ -218,7 +218,7 @@ app.post('/getElections', (req, res) => {
 
 app.post('/getElection', (req, res) => {
   const idElection = req.body.idElection
-  db.query("SET lc_time_names = 'fr_FR';SELECT el.idElection, el.titreElection, DATE_FORMAT(el.dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection, DATE_FORMAT(dateDebutElection,'%Y-%c-%e %H:%m:%s') as 'start', DATE_FORMAT(el.dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(dateFinElection,'%Y-%c-%e %H:%m:%s') as 'end', el.descriptionElection, count(pa.idElection)as 'nbVotes' FROM Election el INNER JOIN  Participer pa WHERE el.idElection = ?",
+  db.query("SET lc_time_names = 'fr_FR';SELECT el.idElection, el.titreElection, DATE_FORMAT(el.dateDebutElection,'%W %e %M %Y à %HH%m') as dateDebutElection, DATE_FORMAT(dateDebutElection,'%Y-%m-%d %H:%m:%s') as 'start', DATE_FORMAT(el.dateFinElection,'%W %e %M %Y à %HH%m') as dateFinElection, DATE_FORMAT(dateFinElection,'%Y-%m-%d %H:%m:%s') as 'end', el.descriptionElection, count(pa.idElection)as 'nbVotes' FROM Election el INNER JOIN  Participer pa WHERE el.idElection = ?",
   [idElection],
   (err, result) => {
     if (err) {
