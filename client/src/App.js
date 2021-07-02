@@ -326,6 +326,16 @@ function App() {
     }
   }
 
+  const updateElection = async (idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection) => {
+    const response = await Axios.put(baseUrl+"/election/"+idElection, {titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection})
+    if (response.data.message){
+      addToast("Erreur : " + response.data.message, {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+  }
+
   const deleteElection = async (idElection) => {
     const response = await Axios.delete(baseUrl+"/election/"+idElection)
     if (response.data.message){
@@ -413,6 +423,7 @@ function App() {
             addVote={addVote}
             getParticiper={getParticiper}
             participer={participer}
+            updateElection={updateElection}
 
             //FirstConnexion
             updateFirstConnexion={updateFirstConnexion}

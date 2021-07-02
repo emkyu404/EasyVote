@@ -256,13 +256,13 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required value={titreElection} /></span>
 
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
-                        <span style={styles.span}><input id="dateDebut" type="date" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
+                        <span style={styles.span}><input id="dateDebut" type="date" max="9999-12-31" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
                         
                         <label className="add-election-label" style={styles.label}>Heure de début : </label>
                         <span style={styles.span}><input id="heureDebut" type="time" className="add-election-input" style={styles.input} onChange={handleHeureDebutOnChange} required /></span>
                         
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
-                        <span style={styles.span}><input id="dateFin" type="date" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection}/></span>
+                        <span style={styles.span}><input id="dateFin" type="date" max="9999-12-31" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection}/></span>
                         
                         <label className="add-election-label" style={styles.label}>Heure de fin : </label>
                         <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} onChange={handleHeureFinOnChange} required /></span>
@@ -286,7 +286,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <span style={styles.span}><input type="text" id="input-titre-candidat" className="add-candidat-input" style={styles.input} onChange={handleTitreCandidatOnChange} required /></span>
 
                         <label className="add-candidat-label" style={styles.label}>Description du candidat : </label>
-                        <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} ></textarea>
+                        <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required ></textarea>
 
                         <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
                         <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} /></span>           
