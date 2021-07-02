@@ -1,32 +1,34 @@
 import React from 'react'
 import { useState } from 'react'
 import DialogComponent from './DialogComponent'
+
 const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getParticiper }) => {
     const [numberOfCalls, setNumberOfCalls] = useState(0)
-    function prepareVote(){
+    function prepareVote() {
         setNumberOfCalls(numberOfCalls + 1)
     }
+
     return (
         <div style={styles.card} className="card">
             <div className="information">
                 <h4 style={styles.name}>{candidatCard.titreCandidat}</h4>
                 <div style={styles.picture}>
-                    <img style={styles.img} src={candidatCard.urlImage} alt={"Image "+candidatCard.titreCandidat} />
+                    <img style={styles.img} src={candidatCard.urlImage} alt={"Image " + candidatCard.titreCandidat} onError={(e) => { e.target.onerror = null; e.target.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Circle-icons-profile.svg/1200px-Circle-icons-profile.svg.png" }} />
                 </div>
             </div>
             <div style={styles.general}>
                 <h2>Description</h2><br></br>
                 <p>{candidatCard.descriptionCandidat}</p>
-                {participer===false ? <button style={styles.voterCandidat} onClick={() => {prepareVote()}} className="voterCandidat">Voter</button> : ""}
+                {participer === false ? <button style={styles.voterCandidat} onClick={() => { prepareVote() }} className="voterCandidat">Voter</button> : ""}
             </div>
 
             <DialogComponent
                 dialogText={"Le vote est irréversible. Vous avez encore la possibilité de consulter la liste des candidats"}
-                dialogTitle={"Confirmation de votre vote pour " +candidatCard.titreCandidatb}
+                dialogTitle={"Confirmation de votre vote pour " + candidatCard.titreCandidatb}
                 openOnRender={false}
-                handleClickYes={async () => { await addVote(URLIdElection, candidatCard.idCandidat); await getParticiper(URLIdElection)}}
-                handleClickNo={() => {}}
-                handleClickBehavior={() => {}}
+                handleClickYes={async () => { await addVote(URLIdElection, candidatCard.idCandidat); await getParticiper(URLIdElection) }}
+                handleClickNo={() => { }}
+                handleClickBehavior={() => { }}
                 yesNo={true}
                 numberOfCall={numberOfCalls}
             />
@@ -36,14 +38,21 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getPar
 
 const styles = {
     card: {
-        width: "450px",
-        height: "250px",
+        // width: "450px",
+        // height: "250px",
+        padding: "0px 450px 250px 0px",
         background: "linear-gradient(#f8f8f8, #FFF5EE)",
         boxShadow: "0 8px 16px -8px rgba(0,0,0,0.4)",
         borderRadius: "6px",
         overflow: "hidden",
         position: "relative",
-        margin: "40px",
+        display: "flex",
+        flexWrap: "wrap",
+        margin: "30px",
+        '@media (max-width: 1335px)': {
+            width: "1000px",
+
+        }
     },
 
     picture: {
@@ -57,9 +66,14 @@ const styles = {
 
     img: {
         width: "100%",
+        height: "100%",
         borderRadius: "50%",
         transform: "scale(1)",
         position: "absolute",
+        maxHeight: "170px",
+        maxWidth: "130px",
+        overflow: "hidden",
+        objectFit: "cover",
     },
 
 

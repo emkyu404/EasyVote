@@ -1,5 +1,8 @@
-import React, { useState } from 'react'
 
+import React, { useState } from 'react'
+import emailjs from "emailjs-com";
+import Radium from 'radium';
+import { useToasts } from 'react-toast-notifications'
 const PasswordForget = () => {
 
     const [email, setEmail] = useState();
@@ -12,13 +15,34 @@ const PasswordForget = () => {
         setEmail(e.target.value)
     }
 
+    const { addToast } = useToasts()
+
+    function sendEmail(e) {
+        e.preventDefault();
+
+        emailjs.sendForm('service_btyu4pb', 'template_cvrcrja', e.target, 'user_i6c320cLnwcR81VHCJfhi')
+            .then((result) => {
+                addToast("Vous recevrez prochainement votre mot de passe par email.", {
+                    appearance: 'success',
+                    autoDismiss: true,
+                })
+            }, (error) => {
+                addToast("Erreur : " + error.text, {
+                    appearance: 'error',
+                    autoDismiss: true,
+                })
+            });
+        e.target.reset()
+
+    }
+
     return (
         <div style={{ width: "100%" }}>
-            <form onSubmit={handleSubmit} style={styles.formStyle}>
+            <form onSubmit={sendEmail} style={styles.formStyle}>
                 <h1 className="forget-title" style={styles.forgetTitle}>Mot de passe oublié</h1>
 
                 <label className="forget-label" style={styles.forgetLabel}>Votre email : </label>
-                <input className="forget-input" type="email" id="email" name="email" style={styles.forgetInput} required onBlur={handleEmailOnChange} />
+                <input className="forget-input" type="email" id="email" name="email" style={styles.forgetInput} required />
 
                 <input type="submit" className="forget-button" value="Envoyer" style={styles.forgetSubmit} />
             </form>
@@ -72,4 +96,4 @@ const styles = {
     }
 }
 
-export default PasswordForget
+export default Radium(PasswordForget)

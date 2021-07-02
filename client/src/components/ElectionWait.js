@@ -2,44 +2,44 @@ import React from 'react';
 import { useState } from 'react';
 import Radium from "radium";
 
-const ElectionWait = ({election, currentUser, updateElection}) => {
+const ElectionWait = ({ election, currentUser, updateElection }) => {
 
-  const dateHeureDebut = election.start.split(' ');
-  const dateHeureFin = election.end.split(' ');
+  // const dateHeureDebut = election.start.split(' ');
+  // const dateHeureFin = election.end.split(' ');
 
-  const [titreElection, setElectionTitle] = useState(election.titreElection)
+  // const [titreElection, setElectionTitle] = useState(election.titreElection)
 
-  const [dateDebutElection, setDateDebutElection] = useState(dateHeureDebut[0])
-  const [dateFinElection, setDateFinElection] = useState(dateHeureFin[0])
+  // const [dateDebutElection, setDateDebutElection] = useState(dateHeureDebut[0])
+  // const [dateFinElection, setDateFinElection] = useState(dateHeureFin[0])
 
-  const [descriptionElection, setDescriptionElection] = useState(election.descriptionElection)
+  // const [descriptionElection, setDescriptionElection] = useState(election.descriptionElection)
 
-  const [heureDebut, setHeureDebut] = useState(dateHeureDebut[1])
-  const [heureFin, setHeureFin] = useState(dateHeureFin[1])
+  // const [heureDebut, setHeureDebut] = useState(dateHeureDebut[1])
+  // const [heureFin, setHeureFin] = useState(dateHeureFin[1])
 
-  const handleTitreOnChange = (e) => {
-      setElectionTitle(e.target.value)
-  }
-  const handleDateDebutOnChange = (e) => {
-      setDateDebutElection(e.target.value)
-  }
-  const handleDateFinOnChange = (e) => {
-      setDateFinElection(e.target.value)
-  }
-  const handleHeureDebutOnChange = (e) => {
-      setHeureDebut(e.target.value)
-  }
-  const handleHeureFinOnChange = (e) => {
-      setHeureFin(e.target.value)
-  }
-  const handleDescriptionOnChange = (e) => {
-      setDescriptionElection(e.target.value)
-  }
+  // const handleTitreOnChange = (e) => {
+  //     setElectionTitle(e.target.value)
+  // }
+  // const handleDateDebutOnChange = (e) => {
+  //     setDateDebutElection(e.target.value)
+  // }
+  // const handleDateFinOnChange = (e) => {
+  //     setDateFinElection(e.target.value)
+  // }
+  // const handleHeureDebutOnChange = (e) => {
+  //     setHeureDebut(e.target.value)
+  // }
+  // const handleHeureFinOnChange = (e) => {
+  //     setHeureFin(e.target.value)
+  // }
+  // const handleDescriptionOnChange = (e) => {
+  //     setDescriptionElection(e.target.value)
+  // }
 
-  const handleModification = async (e) => {
-      e.preventDefault()
-      await updateElection(election.idElection, titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection)
-  }
+  // const handleModification = async (e) => {
+  //     e.preventDefault()
+  //     await updateElection(election.idElection, titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection)
+  // }
 
   const elections = () => {
     window.location.replace('/elections')
@@ -47,19 +47,19 @@ const ElectionWait = ({election, currentUser, updateElection}) => {
 
   return (
     <div>
-      { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+      {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
         <div>
           <h1 style={styles.mainTitle}>En cours de préparation</h1>
           <div style={styles.divElections}>
             <h2>{election.titreElection}</h2>
             <p style={styles.text}>{election.descriptionElection}</p><br></br>
-            <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p> 
+            <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p>
             <button style={styles.btn} onClick={elections}>Retour</button>
-          </div>  
-        </div>  
+          </div>
+        </div>
       }
 
-      { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
+      {/* { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
         <div>
             <form onSubmit={handleModification}>
                 <label className="update-election-label" style={styles.label}>Titre de l'élection : </label>
@@ -83,18 +83,18 @@ const ElectionWait = ({election, currentUser, updateElection}) => {
                 <input type="submit" className="update-election-submit" style={styles.submit} key="btnSubmitElection" value="Modifier" />
             </form>
         </div>
-      }
+      } */}
     </div>
   )
 }
 
 const styles = {
   mainTitle: {
-      color: "#0B6BA8",
-      height: "fit-content",
-      width: "100%",
-      paddingBottom: "15px",
-      textAlign: "center"
+    color: "#0B6BA8",
+    height: "fit-content",
+    width: "100%",
+    paddingBottom: "15px",
+    textAlign: "center"
   },
   divElections: {
     backgroundColor: "white",

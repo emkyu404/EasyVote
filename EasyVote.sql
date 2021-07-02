@@ -316,7 +316,7 @@ CREATE TABLE IF NOT EXISTS `candidat` (
 INSERT INTO `candidat` (`idCandidat`, `titreCandidat`, `descriptionCandidat`, `urlImage`, `idElection`) VALUES
 (1, 'Candidat test 1', 'Candidat test 1', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Emmanuel_Macron_%28cropped%29.jpg', 4),
 (2, 'Candidat test 2', 'Candidat test 2', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg%2C_2016_%28cropped%29.jpg', 4),
-(3, 'Candidat Bretagne 1', 'Candidat Bretagne 1', 'Candidat Bretagne 1', '5'), 
+(3, 'Candidat Bretagne 1', 'Candidat Bretagne 1', 'https://media-exp1.licdn.com/dms/image/C4E03AQGT74m4X7Bp7w/profile-displayphoto-shrink_200_200/0/1601582886141?e=1626912000&v=beta&t=JaZnB0ybeVRZpt1IAo0XSEIXZMdvQumbZ3VcqFCco94', '5'), 
 (4, 'Candidat Bretagne 2', 'Candidat Bretagne 2', 'Candidat Bretagne 2', '5'), 
 (5, 'Candidat Corse 1', 'Candidat Corse 1', 'Candidat Corse 1', '6'), 
 (6, 'Candidat Corse 2', 'Candidat Corse 2', 'Candidat Corse 2', '6'), 

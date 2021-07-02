@@ -5,7 +5,7 @@ import Radium from 'radium';
 import FileReaderAddElection from './FileReaderAddElection'
 
 
-const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
+const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
     useEffect(() => {
         document.title = pageTitle
     }, [pageTitle])
@@ -34,7 +34,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     const [heureFin, setHeureFin] = useState("")
 
     const [listeCandidats, setListeCandidats] = useState([])
-    
+
     const handleChange = (e) => {
         if (electionType !== undefined) {
             setElectionType(e.target.value)
@@ -158,7 +158,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     function duplicateCandidat(newCandidat) {
         const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
 
-        if(idx !== -1 || newCandidat.titreCandidat === "") {
+        if (idx !== -1 || newCandidat.titreCandidat === "") {
             console.log("candidat doublon")
         } else {
             listeCandidats.push(newCandidat)
@@ -181,7 +181,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        
+
         if (listeCandidats.length >= 0) {
             await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
             resetFormElection()
@@ -200,7 +200,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         document.getElementById("myModal").style.display = "none";
     }
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target === document.getElementById("myModal")) {
             document.getElementById("myModal").style.display = "none";
         }
@@ -226,7 +226,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <option key={4} value="election_municipale">Election municipale</option>
                     </optgroup>
                 </select>
-                
+
 
                 {electionType !== "" &&
                     <div style={styles.divForm}>
@@ -248,7 +248,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         {electionType === "election_municipale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Code postal : </label>
-                                <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onChange={handleCodePostalOnChange} required value={codePostal}/></span>
+                                <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onChange={handleCodePostalOnChange} required value={codePostal} /></span>
                             </div>
                         }
 
@@ -257,13 +257,13 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
 
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
                         <span style={styles.span}><input id="dateDebut" type="date" max="9999-12-31" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
-                        
+
                         <label className="add-election-label" style={styles.label}>Heure de début : </label>
                         <span style={styles.span}><input id="heureDebut" type="time" className="add-election-input" style={styles.input} onChange={handleHeureDebutOnChange} required /></span>
-                        
+
                         <label className="add-election-label" style={styles.label}>Date de fin : </label>
-                        <span style={styles.span}><input id="dateFin" type="date" max="9999-12-31" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection}/></span>
-                        
+                        <span style={styles.span}><input id="dateFin" type="date" max="9999-12-31" className="add-election-input" style={styles.input} onChange={handleDateFinOnChange} required value={dateFinElection} /></span>
+
                         <label className="add-election-label" style={styles.label}>Heure de fin : </label>
                         <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} onChange={handleHeureFinOnChange} required /></span>
 
@@ -279,33 +279,33 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                                     <table style={styles.table}>
                                         <thead>
                                             <tr>
-                                                <th style={Object.assign({},styles.th, styles.title)}>Titre</th>
-                                                <th style={Object.assign({},styles.th, styles.description)}>Description</th>
-                                                <th style={Object.assign({},styles.th, styles.image)}>Image</th>
-                                                <th style={Object.assign({},styles.th, styles.delete)}></th>
+                                                <th style={Object.assign({}, styles.th, styles.title)}>Titre</th>
+                                                <th style={Object.assign({}, styles.th, styles.description)}>Description</th>
+                                                <th style={Object.assign({}, styles.th, styles.image)}>Image</th>
+                                                <th style={Object.assign({}, styles.th, styles.delete)}></th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        {listeCandidats.map((candidat) => 
+                                            {listeCandidats.map((candidat) =>
                                                 <tr key={candidat.titreCandidat} style={styles.tr}>
-                                                    <td style={Object.assign({},styles.th, styles.title)}>{candidat.titreCandidat}</td>
-                                                    <td style={Object.assign({},styles.td, styles.description)}>{candidat.descriptionCandidat}</td>
-                                                    <td style={Object.assign({},styles.td, styles.image)}>{candidat.urlCandidat}</td>
-                                                    <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.hoverable} key={candidat.titreCandidat}> ❌ </p></td>
+                                                    <td style={Object.assign({}, styles.th, styles.title)}>{candidat.titreCandidat}</td>
+                                                    <td style={Object.assign({}, styles.td, styles.description)}>{candidat.descriptionCandidat}</td>
+                                                    <td style={Object.assign({}, styles.td, styles.image)}>{candidat.urlCandidat}</td>
+                                                    <td style={Object.assign({}, styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.hoverable} key={candidat.titreCandidat}> ❌ </p></td>
                                                 </tr>
-                                        )}
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
                                 <input type="submit" className="add-election-submit" style={styles.submit} key="btnSubmitElection" value="Ajouter" />
                             </div>
-                }   
+                        }
                     </div>
                 }
 
-                
+
             </form>
-            
+
             <form id="add-candidat-form" onSubmit={handleOnAddCandidat}>
                 <div id="myModal" className="modal" style={styles.modal}>
                     <div className="modalContent" style={styles.modalContent}>
@@ -319,14 +319,14 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                         <textarea type="text" id="input-description-candidat" className="add-candidat-input" style={styles.textArea} onChange={handleDescriptionCandidatOnChange} required ></textarea>
 
                         <label className="add-candidat-label" style={styles.label}>URL de l'image candidat : </label>
-                        <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} /></span>           
+                        <span style={styles.span}><input type="text" id="input-url-candidat" className="add-candidat-input" style={styles.input} onChange={handleUrlOnChange} /></span>
 
                         <input type="submit" className="add-candidat-button" style={styles.button} key="btnSubmitCandidat" value="Ajouter un candidat" />
                     </div>
                 </div>
             </form>
 
-            
+
         </div>
     )
 }
@@ -425,10 +425,10 @@ const styles = {
         padding: "40px 40px 70px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
-        '@media (max-width: 960px)':{
+        '@media (max-width: 960px)': {
             padding: "40px 40px 120px 40px",
         },
-        '@media (max-width: 640px)': { 
+        '@media (max-width: 640px)': {
             padding: "20px 20px 120px 20px"
         }
     },
@@ -438,7 +438,7 @@ const styles = {
         lineHeight: "50px",
         textAlign: "center",
         verticalAlign: "middle",
-        '@media (max-width: 640px)': { 
+        '@media (max-width: 640px)': {
             float: "none",
             lineHeight: "30px",
         }
@@ -482,7 +482,7 @@ const styles = {
             backgroundColor: "#074E7B",
             transition: "0.2s"
         },
-        '@media (max-width: 960px)':{
+        '@media (max-width: 960px)': {
             width: "100%"
         }
     },
@@ -523,8 +523,7 @@ const styles = {
         padding: "40px 40px 70px 40px",
         border: "1px solid #888",
         width: "calc(80% - 50px)",
-        maxWidth: "1150px",
-        '@media (max-width: 640px)': { 
+        '@media (max-width: 640px)': {
             padding: "20px 20px 70px 20px",
             width: "calc(100% - 50px)",
         }
@@ -545,7 +544,7 @@ const styles = {
             cursor: "pointer"
         }
     },
-    secondTitle:{
+    secondTitle: {
         textAlign: "center",
         paddingBottom: "10px"
     },
@@ -554,8 +553,8 @@ const styles = {
         width: "5px"
     },
     hoverable: {
-        ':hover' : {
-            cursor : "pointer"
+        ':hover': {
+            cursor: "pointer"
         }
     },
 }

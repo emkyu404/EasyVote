@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import CandidatCard from "./CandidatCard";
 
-const ElectionVote = ({election, candidats, addVote, URLIdElection, participer, getParticiper, currentUser, updateElection}) => {
+const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer, getParticiper, currentUser, updateElection }) => {
 
     const dateHeureDebut = election.start.split(' ');
     const dateHeureFin = election.end.split(' ');
@@ -41,16 +41,45 @@ const ElectionVote = ({election, candidats, addVote, URLIdElection, participer, 
 
     return (
         <div>
-            { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
-                <div>
-                    <h2 style={styles.secondTitle}>{election.titreElection}</h2>
-                    <p>Description : {election.descriptionElection}</p>
-                    Date de début : {election.dateDebutElection} <br/>
-                    Date de fin : {election.dateFinElection}<br/>
+            {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+                <div style={styles.election}>
+                    <h2 style={styles.title}>{election.titreElection}</h2>
+                    <table style={styles.table}>
+                        <tbody>
+                            <tr>
+                                <th style={styles.th}>Description : </th>
+                                <td style={styles.td}>{election.descriptionElection}</td>
+                            </tr>
+                            <tr>
+                                <th style={styles.th}>Date de début : </th>
+                                <td style={styles.td}>{election.dateDebutElection}</td>
+                            </tr>
+                            <tr>
+                                <th style={styles.th}>Date de fin : </th>
+                                <td style={styles.td}>{election.dateFinElection}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div id="divCandidats" style={styles.container}>
+                        {typeof (candidats) === "undefined" || candidats.length === 0
+                            ?
+                            "Pas de candidats"
+                            :
+                            candidats.map((candidatCard) => (
+                                <div key={candidatCard.idCandidat}>
+                                    <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} />
+                                </div>
+                            ))
+                        }
+                        <div style={styles.votedStyle}>
+                            <p style={styles.background}>{participer === true ? "Important ! Vous avez déjà voté." : ""}</p>
+                        </div>
+                    </div>
                 </div>
             }
 
-            { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
+            {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
                 <div>
                     <form onSubmit={handleModification}>
                         <label className="update-election-label" style={styles.label}>Titre de l'élection : </label>
@@ -76,31 +105,64 @@ const ElectionVote = ({election, candidats, addVote, URLIdElection, participer, 
                 </div>
             }
 
-            <div id="divCandidats" style={styles.container}>
-                {typeof(candidats)==="undefined" || candidats.length===0 
-                ?
-                "Pas de candidats"
-                :
-                candidats.map((candidatCard)=> (
-                    <div key={candidatCard.idCandidat}>
-                        <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} />
-                    </div>
-                ))
-                }
-                {participer===true ? "Vous avez déjà voté" : "" }
-            </div>
         </div>
     )
 }
 
-const styles={
+const styles = {
     container: {
         overflow: "hidden",
         display: "flex",
         flexWrap: "wrap",
-        width : "100%",
+        width: "100%",
         justifyContent: "space-evenly",
     },
+
+    votedStyle: {
+        width: "100%",
+        padding: "10px",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        color: "red",
+        fontSize: "18px",
+    },
+
+    background: {
+
+
+    },
+
+    election: {
+        marginTop: "20px",
+        marginBottom: "20px",
+        backgroundColor: "white",
+        padding: "20px 40px 40px 40px",
+        boxShadow: "0 0 10px #999",
+        '@media (max-width: 640px)': {
+            padding: "20px 20px 65px 20px"
+        }
+    },
+
+    th: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        backgroundColor: "#fafafa",
+        padding: "5px 20px 5px 20px",
+        whiteSpace: "nowrap"
+    },
+
+    td: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        padding: "5px 20px 5px 20px",
+        width: "100%"
+    },
+
+    title: {
+        padding: "10px",
+    }
+
 }
 
 export default ElectionVote
