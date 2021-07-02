@@ -1,6 +1,6 @@
 EASY VOTE
 
-Introduction
+Introduction :
 Mastercamp 2021 L3 New
 Front End
 React
@@ -31,10 +31,10 @@ Vous pouvez vous connecter avec :
     - un compte utilisateur :
         - email : j-f.tang@email.com
         - mot de passe : tang
-    - un compte administrateur sur le lien http://localhost:3000/loginAdmin(non indéxé) :
+    - un compte administrateur sur le lien http://localhost:3000/loginAdmin (non indéxé) :
         - email : admin@email.fr
         - mot de passe : admin
-
+        
 Contributeurs :
     -Minh-Quan BUIH
     -Antoine CHENG
