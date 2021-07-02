@@ -63,7 +63,7 @@ function App() {
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
   const handleConnected = useCallback(() => {
-    if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
+    if (currentUser.idCitoyen === 0 && currentUser.idAdmin === 0) {
       setConnected(false)
       
     } else {
@@ -94,7 +94,7 @@ function App() {
 
   const token = async () => {
     const response = await Axios.get(baseUrl+"/token")
-    response.data.message ? setCurrentUser({idAdmin: "", idCitoyen: ""}) : setCurrentUser(response.data); 
+    response.data.message ? setCurrentUser({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0}) : setCurrentUser(response.data); 
   }
 
   const login = async (email, password) => {
@@ -169,7 +169,7 @@ function App() {
   const disconnect = async () => {
     const response = await Axios.get(baseUrl+"/disconnect")
     if (response.data.message) {
-      setCurrentUser({ idAdmin: "", idCitoyen: "" });
+      setCurrentUser({ idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0 });
       addToast("Déconnexion réussi, au revoir !", {
         appearance: 'success',
         autoDismiss: true,
