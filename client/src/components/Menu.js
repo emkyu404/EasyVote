@@ -17,11 +17,11 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu, currentUser}) => {
                   { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0)  &&
                     <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-2' style={styles.menuItem}>Ajouter une élection</div></Link>
                   }
-                  <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Elections</div></Link>
-                  <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
+                  <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Consulter les élections</div></Link>
+                  <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Vos informations</div></Link>
                 </div>
                 } 
-                <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-5' style={styles.menuItem}>Contact</div></Link>
+                <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-5' style={styles.menuItem}>Nous contacter</div></Link>
               </div>
 
               {/* Toujours visible, change le component afficher en fonction de l'adresse correspondante (par défaut '/' correspond au component Home) */}

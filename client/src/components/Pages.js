@@ -13,8 +13,9 @@ import Election from './Election'
 import AddElection from "./AddElection"
 import PageNotFound from './PageNotFound'
 import PasswordForget from './PasswordForget'
+import FirstConnexion from './FirstConnexion'
 
-const Pages = ({ connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, addVote, getParticiper, participer, changePassword, deleteElection, connectedAdmin }) => {
+const Pages = ({ connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, addVote, getParticiper, participer, changePassword, deleteElection, connectedAdmin, updateFirstConnexion, updatePasswordFirstConnexion}) => {
   return (
     <div className="main-container default-margin" style={styles.mainContainer}>
       <Switch>
@@ -43,8 +44,13 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
         <Route path="/election/:idElection">
           {connected ? <Election getElection={getElection} election={election} getCandidats={getCandidats} candidats={candidats} getVotes={getVotes} votes={votes} addVote={addVote} getParticiper={getParticiper} participer={participer} pageTitle={'Election'} currentUser={currentUser} /> : <NotConnected />}
         </Route>
+
+        <Route exact path="/bienvenue">
+          {currentUser.premiereConnexion === 1 ? <FirstConnexion pageTitle={'Nouvel utilisateur'} currentUser={currentUser} updateFirstConnexion={updateFirstConnexion} updatePasswordFirstConnexion={updatePasswordFirstConnexion}/> : <Home pageTitle={'Accueil'} />}
+        </Route>
+
         <Route exact path="/passwordForget">
-          <PasswordForget pageTitle={'Mot de passe oublié'} />
+          {connected ? <PasswordForget pageTitle={'Mot de passe oublié'}/> : <NotConnected />}
         </Route>
 
         <Route path="*" >
