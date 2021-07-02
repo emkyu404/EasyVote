@@ -13,10 +13,12 @@ const Menu = ({desactivateMenu, toggleMenu, showMenu, connectedAdmin}) => {
               <div id="menu-container" style = {styles.menuContainer}>
                 <Link to="/" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-1' style={styles.menuItem}>Accueil</div></Link>
                 { (connectedAdmin !== undefined && connectedAdmin !== "") &&
+                <div>
                   <Link to="/addElection" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-2' style={styles.menuItem}>Ajouter une élection</div></Link>
+                  <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Elections</div></Link>
+                  <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
+                </div>
                 } 
-                <Link to="/elections" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-3' style={styles.menuItem}>Elections</div></Link>
-                <Link to="/profil" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-4' style={styles.menuItem}>Profil</div></Link>
                 <Link to="/contact" style={{ textDecoration: "none" }}><div className="menu-item" key='menu-item-5' style={styles.menuItem}>Contact</div></Link>
               </div>
 

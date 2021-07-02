@@ -115,7 +115,9 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
             setDescriptionElection(electionObj.descriptionElection)
 
             //Changement des informations de la liste des candidats
-            setListeCandidats([...listeCandidats].concat(candidatsArray))
+            candidatsArray.forEach(candidat => {
+                duplicateCandidat(candidat)
+            })
         } catch (e) {
             throw e;
         }
@@ -153,6 +155,16 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
         document.getElementById("add-election-form").reset()
     }
 
+    function duplicateCandidat(newCandidat) {
+        const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
+
+        if(idx !== -1 || newCandidat.titreCandidat === "") {
+            console.log("candidat doublon")
+        } else {
+            listeCandidats.push(newCandidat)
+        }
+    }
+
     const handleOnAddCandidat = (e) => {
         e.preventDefault()
 
@@ -162,13 +174,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
             urlCandidat: urlCandidat
         }
 
-        const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
-
-        if(idx !== -1 || newCandidat.titreCandidat === "") {
-            console.log("candidat doublon")
-        } else {
-            listeCandidats.push(newCandidat)
-        }
+        duplicateCandidat(newCandidat)
 
         resetFormCandidat()
     }
@@ -309,7 +315,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                                         <td style={styles.td}>{candidat.titreCandidat}</td>
                                         <td style={styles.td}>{candidat.descriptionCandidat}</td>
                                         <td style={styles.td}>{candidat.urlCandidat}</td>
-                                        <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)}> ❌ </p></td>
+                                        <td style={Object.assign({},styles.td, styles.delete)}><p onClick={() => deleteCandidat(candidat.titreCandidat)} style={styles.hoverable} key={candidat.titreCandidat}> ❌ </p></td>
                                     </tr>
                             )}
                             </tbody>
@@ -533,6 +539,11 @@ const styles = {
     delete: {
         padding: "5px",
         width: "5px"
+    },
+    hoverable: {
+        ':hover' : {
+            cursor : "pointer"
+        }
     }
 }
 
