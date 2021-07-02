@@ -11,7 +11,7 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer }) => {
             <div className="information">
                 <h4 style={styles.name}>{candidatCard.titreCandidat}</h4>
                 <div style={styles.picture}>
-                    <img style={styles.img} src={candidatCard.urlImage} />
+                    <img style={styles.img} src={candidatCard.urlImage} alt={"Image "+candidatCard.titreCandidat} />
                 </div>
             </div>
             <div style={styles.general}>

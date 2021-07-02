@@ -97,7 +97,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                 case 'election_municipale': document.getElementById('codePostalElection').value = electionObj.codePostal; setCodePostal(electionObj.codePostal); break;
                 case 'election_departementale': document.getElementById('codeDepartementElection').value = electionObj.codeDepartement; setCodeDepartement(electionObj.codeDepartement); break;
                 case 'election_regionale': document.getElementById('regionElection').value = electionObj.nomRegion; setNomRegion(electionObj.nomRegion); break;
-                default: throw 'Erreur';
+                default: throw new Error("Votre type d'élection n'est pas reconnue");
             }
             document.getElementById('dateDebut').valueAsDate = getDateObjFromString(electionObj.dateDebutElection)
             setDateDebutElection(electionObj.dateDebutElection)
@@ -119,7 +119,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
                 duplicateCandidat(candidat)
             })
         } catch (e) {
-            console.log(e)
+            throw e;
         }
     }
 
@@ -201,7 +201,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle}) => {
     }
 
     window.onclick = function(event) {
-        if (event.target == document.getElementById("myModal")) {
+        if (event.target === document.getElementById("myModal")) {
             document.getElementById("myModal").style.display = "none";
         }
     }
@@ -474,7 +474,6 @@ const styles = {
         width: "100%",
         height: "100%",
         overflow: "auto",
-        backgroundColor: "rgb(0,0,0)",
         backgroundColor: "rgba(0,0,0,0.4)"
     },
     modalContent: {
