@@ -381,6 +381,7 @@ function App() {
             addVote={addVote}
             getParticiper={getParticiper}
             participer={participer}
+            currentUser={currentUser}
           />
           <Footer/>
         </Router>
