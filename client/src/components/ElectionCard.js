@@ -16,7 +16,7 @@ const ElectionCard = ({electionCard, deleteElection, connectedAdmin}) => {
             
             <p style={styles.text}>{electionCard.descriptionElection}</p>
 
-            { (connectedAdmin !== undefined) &&
+            { (connectedAdmin !== undefined && connectedAdmin !== "") &&
                 <button key="Supprimer" onClick={() => {handleDelete(electionCard.idElection)}} style={Object.assign({},styles.btn, styles.blue)}>Supprimer l'élection </button>
             }
 
