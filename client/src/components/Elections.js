@@ -1,10 +1,9 @@
 import ElectionCard from "./ElectionCard";
 import React, { useEffect } from "react";
 import Radium from 'radium';
-import { useHistory } from 'react-router-dom';
 import loupe from '../img/loupe.png'
 
-const Elections = ({getCurrentDate, getElections, filteredElections, filterElection, pageTitle, deleteElection }) => {
+const Elections = ({getCurrentDate, getElections, filteredElections, filterElection, pageTitle, deleteElection, connectedAdmin }) => {
 
     useEffect(() => {
         document.title = pageTitle
@@ -19,12 +18,6 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
         prepareElections();
         switchBtn("Ongoing");
     }, [])
-
-    const history = useHistory();
-
-    const election = () => {
-        history.push("./election");
-    }
 
     function switchBtn(btnName) {
         if(btnName === "Ongoing"){
@@ -62,7 +55,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
                 </div> 
                 : filteredElections.map((electionCard) => (
                     <div key={electionCard.idElection}>
-                        <ElectionCard electionCard={electionCard} deleteElection={deleteElection} />
+                        <ElectionCard electionCard={electionCard} deleteElection={deleteElection} connectedAdmin={connectedAdmin} />
                     </div>
                 ))}
             </div>

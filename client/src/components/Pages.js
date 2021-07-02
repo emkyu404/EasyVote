@@ -14,7 +14,7 @@ import AddElection from "./AddElection"
 import PageNotFound from './PageNotFound'
 import PasswordForget from './PasswordForget'
 
-const Pages = ({ connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, addVote, getParticiper, participer, changePassword, deleteElection }) => {
+const Pages = ({ connected, idElection, addCandidat, addElection, getElections, getCurrentDate, filteredElections, filterElection, profile, currentUser, login, loginAdmin, getElection, election, getCandidats, candidats, getVotes, votes, addVote, getParticiper, participer, changePassword, deleteElection, connectedAdmin }) => {
   return (
     <div className="main-container default-margin" style={styles.mainContainer}>
       <Switch>
@@ -26,7 +26,7 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
           {/* {connected ? <AddElection idElection={idElection} addCandidat={addCandidat} onAddElection={addElection} pageTitle={'Ajout d\'une élection'}/> : <NotConnected />} */}
         </Route>
         <Route exact path="/elections">
-          {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} deleteElection={deleteElection} /> : <NotConnected />}
+          {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} deleteElection={deleteElection} connectedAdmin={connectedAdmin} /> : <NotConnected />}
         </Route>
         <Route exact path="/profil">
           {connected ? <Profil getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profil'} /> : <NotConnected />}

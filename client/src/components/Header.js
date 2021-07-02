@@ -2,7 +2,6 @@ import logo from '../img/header-logo.png';
 import BoutonConnexionDeconnexion from './BoutonConnexionDeconnexion';
 import {Link} from "react-router-dom";
 import Radium from 'radium'
-import { useState } from 'react'
 
 const Header = ({ onDisconnection, isConnected }) => {
     return (

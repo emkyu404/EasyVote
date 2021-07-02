@@ -24,7 +24,8 @@ const styles={
         overflow: "hidden",
         display: "flex",
         flexWrap: "wrap",
-        justifyContent: "space-between",
+        width : "100%",
+        justifyContent: "space-evenly",
     },
 }
 

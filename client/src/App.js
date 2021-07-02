@@ -1,5 +1,5 @@
 import "./css/App.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
@@ -16,7 +16,7 @@ function App() {
   Axios.defaults.withCredentials = true
 
   const {addToast} = useToasts()
-  const [currentUser, setCurrentUser] = useState({idAdmin: "", idCitoyen: "", nomCitoyen : "", idElecteur : ""})
+  const [currentUser, setCurrentUser] = useState({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0, premiereConnexion: 0})
   const [currentDate, setCurrentDate] = useState(["No date"])
   const [elections, setElections] = useState([])
   const [election, setElection] = useState({idElection : 0})
@@ -56,14 +56,13 @@ function App() {
         aFilteredelections = elections.filter(election => election.start < currentDate && election.end > currentDate)
         break;
     }
-    
     setFilteredElections(aFilteredelections)
   }, [currentFilter])
 
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
-  const handleConnected = () => {
+  const handleConnected = useCallback(() => {
     if (currentUser.idCitoyen === "" && currentUser.idAdmin === "") {
       setConnected(false)
       
@@ -76,12 +75,8 @@ function App() {
       else{
         connectedText = currentUser.nomCitoyen;
       }
-      addToast("Bonjour " + connectedText, {
-        appearance: 'success',
-        autoDismiss: true,
-      })
     }
-  }
+  })
 
   const toggleMenu = () => {
     setShowMenu(!showMenu)
@@ -112,22 +107,40 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
+      console.log(response.data)
+      let connectedText=response.data.nomCitoyen;
+      addToast("Bonjour " + connectedText, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
     }
   };
 
-  const changePassword = async(newPassword) => {
-    const response = await Axios.post(baseUrl+"/changePassword", { newPassword: newPassword, userId: currentUser.idCitoyen })
-      if(response.data.message){
+  const changePassword = async(password, newPassword) => {
+    //vérification du mot de passe
+    console.log(password, currentUser.idCitoyen)
+    const response = await Axios.post(baseUrl+"/verifyPassword", { password: password, userId: currentUser.idCitoyen })
+      if(response.data.success === false){
         addToast("Erreur : " + response.data.message, {
           appearance: 'error',
           autoDismiss: true,
         })
       }else{
-        addToast("Mot de passe modifié avec succès", {
-          appearance : 'success',
-          autoDismiss: true,
-        })
-    }
+        // Si aucune erreur, changement du mot de passe
+        const response2 = await Axios.post(baseUrl+"/changePassword", { newPassword: newPassword, userId: currentUser.idCitoyen })
+        if(response2.data.success === false){
+          addToast("Erreur : " + response2.data.message, {
+            appearance: 'error',
+            autoDismiss: true,
+          })
+        }else{
+          addToast("Mot de passe modifié avec succès", {
+            appearance : 'success',
+            autoDismiss: true,
+          })
+          window.location.replace("/profil")
+        }
+      }   
   }
 
   const loginAdmin = async (email, password) => {
@@ -140,6 +153,12 @@ function App() {
     } 
     else {
       setCurrentUser(response.data)
+      let connectedText="";
+      connectedText = "administrateur " + currentUser.idAdmin
+      addToast("Bonjour " + connectedText, {
+        appearance: 'success',
+        autoDismiss: true,
+      })
     }
   };
 
@@ -214,7 +233,14 @@ function App() {
   }
 
   const getElections = async () => {
-    const response = await Axios.post(baseUrl+"/getElections", {idCitoyen : currentUser.idCitoyen})
+    let response=""
+    if (currentUser.idAdmin!==0){
+      response = await Axios.post(baseUrl+"/getElections", {idAdmin : currentUser.idAdmin})
+    }
+    else{
+      response = await Axios.post(baseUrl+"/getElections", {idCitoyen : currentUser.idCitoyen})
+    }
+    
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
@@ -268,7 +294,7 @@ function App() {
   }
 
   const addVote = async (URLIdElection, idCandidat) => {
-    const response = await Axios.post(baseUrl+"/addVote", {idCitoyen : currentUser.idCitoyen, idElection : URLIdElection, idCandidat : idCandidat, idElecteur : currentUser.idElecteur})
+    const response = await Axios.post(baseUrl+"/addVote", {idAdmin : currentUser.idAdmin, idCitoyen : currentUser.idCitoyen, idElection : URLIdElection, idCandidat : idCandidat, idElecteur : currentUser.idElecteur})
     if (response.data.message){
       addToast("Erreur : " + response.data.message, {
         appearance: 'error',
@@ -305,9 +331,10 @@ function App() {
       })
     }
     else{
-      console.log(elections)
       const newElections = elections.filter((election) => election.idElection !== idElection);
+      const newFilteredElections = filteredElections.filter((filteredElection) => filteredElection.idElection !== idElection);
       setElections(newElections)
+      setFilteredElections(newFilteredElections)
     }
   }
 
@@ -317,7 +344,7 @@ function App() {
           {/* Header */}
           <Header onDisconnection={disconnect} isConnected={connected} />
           {/* Tout ce qu'il y a sous la page */}
-          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu} connectedAdmin={currentUser.idAdmin} />
+          <Menu toggleMenu={toggleMenu} desactivateMenu={desactivateMenu} showMenu={showMenu} currentUser={currentUser} />
           <Pages 
             connected={connected}
             //AddElection + AddCandidat
@@ -330,6 +357,7 @@ function App() {
             getCurrentDate={getCurrentDate}
             filteredElections={filteredElections} 
             filterElection={filterElection}
+            currentUser={currentUser}
 
             //Profile
             profile={profile}
