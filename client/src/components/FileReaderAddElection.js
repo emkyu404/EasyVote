@@ -37,7 +37,7 @@ const FileReaderAddElection = ({onFileRead}) => {
         try{
             var name = e.name
             if(!verifyFileExtension(name)){
-                throw 'Format du fichier incorrect. Veuillez vérifier que le fichier lu a pour extension .xlsx'
+                throw new Error('Format du fichier incorrect. Veuillez vérifier que le fichier lu a pour extension .xlsx')
             }
             const reader = new FileReader()
             reader.onload = (evt) => {
@@ -45,11 +45,11 @@ const FileReaderAddElection = ({onFileRead}) => {
                     const bstr = evt.target.result
                     const wb = XLSX.read(bstr, {type:'binary'})
                     if(wb.SheetNames.length !== 2){
-                        throw 'Format incorrect, la lecture du fichier à échouer'
+                        throw new Error('Format incorrect, la lecture du fichier à échouer')
                     }
                     const wsname = wb.SheetNames[0]
                     if(wsname !== "Candidats"){
-                        throw 'Format incorrect, la lecture du fichier à échouer'
+                        throw new Error('Format incorrect, la lecture du fichier à échouer')
                     }
                     const ws = wb.Sheets[wsname]
                     const data = XLSX.utils.sheet_to_json(ws, {raw: false})
@@ -64,7 +64,7 @@ const FileReaderAddElection = ({onFileRead}) => {
                     // Lecture de la seconde feuille du fichier excel
                     const wsname2 = wb.SheetNames[1]
                     if(wsname2 !== "Election"){
-                        throw 'Format incorrect, la lecture du fichier à échouer'
+                        throw new Error('Format incorrect, la lecture du fichier à échouer')
                     }
                     const ws2 = wb.Sheets[wsname2]
                     const data2 = XLSX.utils.sheet_to_json(ws2, {raw: false})
@@ -83,7 +83,7 @@ const FileReaderAddElection = ({onFileRead}) => {
                             case 'REGIONALE' : newElection = {...newElection, electionType: 'election_regionale', nomRegion:element.zone, codeDepartement:null, codePostal:null}; break;
                             case 'MUNICIPALE' : newElection = {...newElection, electionType: 'election_municipale', nomRegion:null, codeDepartement:null, codePostal:element.zone}; break;
                             case 'DEPARTEMENTALE': newElection = {...newElection, electionType: 'election_departementale', nomRegion:null, codeDepartement:element.zone, codePostal:null}; break;
-                            default : throw 'Format incorrection concernant l\'échelle de l\'élection'; break;
+                            default : throw new Error('Format incorrection concernant l\'échelle de l\'élection');
                         }
                     })
                     election = newElection
@@ -97,7 +97,7 @@ const FileReaderAddElection = ({onFileRead}) => {
                         autoDismiss: true,
                     })
                 }catch(e){
-                    addToast("Erreur : " + e, {
+                    addToast("Erreur : " + e.message, {
                         appearance: 'error',
                         autoDismiss: true,
                     })
@@ -105,7 +105,7 @@ const FileReaderAddElection = ({onFileRead}) => {
             }
             reader.readAsBinaryString(e)
         }catch(e){
-            addToast("Erreur : " + e, {
+            addToast("Erreur : " + e.message, {
                 appearance: 'error',
                 autoDismiss: true,
             })
