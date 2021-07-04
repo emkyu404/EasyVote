@@ -542,7 +542,7 @@ app.post('/addCandidat', (req, res) => {
                 console.log(err);
               }
               else {
-                res.status(200).json({ titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection })
+                res.status(200).json({ titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection, success: true })
               }
             }
           )
