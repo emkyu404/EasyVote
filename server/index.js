@@ -389,7 +389,7 @@ app.post('/addElection', (req, res) => {
                     break;
                 }  
                 res.status(200).json(result)
-              }
+              } 
             }
           )
         } else {
