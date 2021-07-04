@@ -1,11 +1,19 @@
 import React from 'react';
+import {useState} from 'react'
 import { Link }  from "react-router-dom";
 import Radium from 'radium';
+import DialogComponent from './DialogComponent';
 
 const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
 
-    const handleDelete = async (idElection) => {
-        await deleteElection(idElection)
+    const [numberOfCalls, setNumberOfCalls] = useState(0)
+
+    const handleDeleteConfirmed = () => {
+        deleteElection(electionCard.idElection)
+    }
+
+    const handleDelete =  () => {
+       setNumberOfCalls(numberOfCalls+1)
     }
 
     return (
@@ -29,7 +37,17 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
                 <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
                     <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
                 </Link>
-            }            
+            }   
+            <DialogComponent
+                dialogText={"Souhaitez-vous supprimer l'élection '"+electionCard.titreElection+ "' de la base de données ? Cette action est irréversible."}
+                dialogTitle={"Suppression d'une élection de la base de données"}
+                openOnRender={false}
+                handleClickYes={handleDeleteConfirmed}
+                handleClickNo={() => {}}
+                handleClickBehavior={() => {}}
+                yesNo={true}
+                numberOfCall={numberOfCalls}
+            />         
         </div>
     )
 }
