@@ -3,6 +3,8 @@ import arrow from '../img/down-arrow.svg';
 import Radium from 'radium';
 
 import FileReaderAddElection from './FileReaderAddElection'
+import DialogComponent from './DialogComponent';
+import { CookieJar } from 'tough-cookie';
 
 
 const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
@@ -34,6 +36,8 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
     const [heureFin, setHeureFin] = useState("")
 
     const [listeCandidats, setListeCandidats] = useState([])
+
+    const [numberOfCalls, setNumberOfCalls] = useState(0)
 
     const handleChange = (e) => {
         if (electionType !== undefined) {
@@ -183,8 +187,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
         e.preventDefault()
 
         if (listeCandidats.length >= 0) {
-            await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
-            resetFormElection()
+            handleValidSubmit()
         }
         else {
             alert('Ajouter au moins 2 candidats')
@@ -204,6 +207,18 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
         if (event.target === document.getElementById("myModal")) {
             document.getElementById("myModal").style.display = "none";
         }
+    }
+
+    const handleValidSubmit = () => {
+        setNumberOfCalls(numberOfCalls+1)
+    }
+
+    const handleAddElection = async ()=> {
+        const response = await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
+        if(response.data.success){
+            resetFormElection()
+        }
+        
     }
 
     function deleteCandidat(titreCandidat) {
@@ -326,7 +341,16 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
                 </div>
             </form>
 
-
+            <DialogComponent
+                dialogText={"Souhaitez-vous ajouter l'élection '"+titreElection+ "' à la base de données ?"}
+                dialogTitle={"Ajout d'une élection à la base de données"}
+                openOnRender={false}
+                handleClickYes={handleAddElection}
+                handleClickNo={() => {}}
+                handleClickBehavior={() => {}}
+                yesNo={true}
+                numberOfCall={numberOfCalls}
+            />
         </div>
     )
 }

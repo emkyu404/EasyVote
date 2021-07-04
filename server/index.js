@@ -415,9 +415,9 @@ async function addElectionNationale(res, titreElection, dateDebutElection, dateF
             [idElection],
             (error) => {
               if(error) {
-                console.log(error);
+                res.status(500).json({success: false});
               } else {
-                res.status(200)
+                res.status(200).json({success: true})
               }
             }
           )
@@ -445,9 +445,9 @@ async function addElectionRegionale(req, res, titreElection, dateDebutElection, 
             [idElection, nomRegion],
             (error) => {
               if(error) {
-                console.log(error);
+                res.status(500).json({success: false});
               } else {
-                res.status(200)
+                res.status(200).json({success: true})
               }
             }
           )
@@ -475,9 +475,9 @@ async function addElectionDepartementale(req, res, titreElection, dateDebutElect
             [idElection, codeDepartement],
             (error) => {
               if(error) {
-                console.log(error);
+                res.status(500).json({success: false});
               } else {
-                res.status(200)
+                res.status(200).json({success: true})
               }
             }
           )
@@ -505,9 +505,9 @@ async function addElectionMunicipale(req, res, titreElection, dateDebutElection,
             [idElection, codePostal],
             (error) => {
               if(error) {
-                console.log(error);
+                res.status(500).json({success: false});
               } else {
-                res.status(200)
+                res.status(200).json({success: true})
               }
             }
           )
