@@ -192,7 +192,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
         else {
             alert('Ajouter au moins 2 candidats')
         }
-        e.target.reset()
     }
 
     function btnFunction() {
