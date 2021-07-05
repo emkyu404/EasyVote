@@ -47,20 +47,18 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
       window.location.replace('/elections')
   }
 
-  const elections = () => {
-    window.location.replace('/elections')
-  }
-
   return (
     <div>
       {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
         <div>
+          <Link to={{ pathname: `/elections`}} >
+            <button key={"Retour"} style={Object.assign({},styles.btn, styles.returnBtn, styles.blue)}>Retour </button>
+          </Link>
           <h1 style={styles.mainTitle}>En cours de préparation</h1>
           <div style={styles.divElections}>
             <h2>{election.titreElection}</h2>
             <p style={styles.text}>{election.descriptionElection}</p><br></br>
             <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p>
-            <button style={Object.assign({},styles.btn, styles.blue)} onClick={elections}>Retour</button>
           </div>
         </div>
       }
@@ -196,6 +194,11 @@ const styles = {
         backgroundColor: "#074E7B",
         transition: "0.2s"
     }
+  },
+  returnBtn: {
+    position: "absolute !important",
+    float: "left",
+    marginTop: "0px !important"
   },
   blue : {
       backgroundColor: "#0B6BA8"

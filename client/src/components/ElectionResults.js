@@ -52,14 +52,16 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
         <div>
             { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
                 <div>
+                    <Link to={{ pathname: `/elections`}} >
+                        <button key={"Retour"} style={Object.assign({},styles.btn, styles.returnBtn, styles.blue)}>Retour </button>
+                    </Link>
+
                     <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
                     <div style={styles.electionDiv}>
                         
                         <div>
                             <h2 style={styles.secondTitle}>{election.titreElection}</h2>
-                            <Link to={{ pathname: `/elections`}} >
-                                <button key={"Retour"} style={Object.assign({},styles.btn, styles.blue)}>Retour </button>
-                            </Link>
+                            
                             <p>Description : {election.descriptionElection}</p>
                             Date de début : {election.dateDebutElection} <br/>
                             Date de fin : {election.dateFinElection}<br/>
@@ -279,6 +281,11 @@ const styles={
             transition: "0.2s"
         }
     },
+    returnBtn: {
+        position: "absolute !important",
+        float: "left",
+        marginTop: "0px !important"
+      },
     blue : {
         backgroundColor: "#0B6BA8"
     },
