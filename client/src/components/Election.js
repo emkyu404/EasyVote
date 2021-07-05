@@ -39,21 +39,40 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
             {election.ended===true
             ?
             <div>
-                <h1 style={styles.mainTitle}>Résultat du vote</h1>
-                <ElectionResults election={election} candidats={candidats} votes={votes} currentUser={currentUser} />
+                {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+                    <h1 style={styles.mainTitle}>Résultat du vote</h1>
+                }
+                {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
+                    <h1 style={styles.mainTitle}>Modifier l'élection</h1>
+                }
+                <ElectionResults election={election} candidats={candidats} votes={votes} currentUser={currentUser} updateElection={updateElection} />
             </div>
             :
             election.started===true
             ?
             <div>
-                <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
+                {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+                    <h1 style={styles.mainTitle}>Résultat du vote</h1>
+                }
+                {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
+                    <h1 style={styles.mainTitle}>Modifier l'élection</h1>
+                }
                 <ElectionVote election={election} candidats={candidats} addVote={addVote} URLIdElection={state.URLIdElection} participer={participer} getParticiper={getParticiper} currentUser={currentUser} updateElection={updateElection} />
             </div>
             :
+            (election.started===false && election.ended===false) 
+            ?
             <div>
+                {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
+                    <h1 style={styles.mainTitle}>Modifier l'élection</h1>
+                }
                 <ElectionWait election={election} currentUser={currentUser} updateElection={updateElection} />
             </div>
+            :
+            <div>
+            </div>
             }
+        
         </div>
     )
 }
