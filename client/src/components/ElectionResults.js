@@ -55,15 +55,15 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
                     <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
                     <div style={styles.electionDiv}>
                         
-
-                        {/* { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
-                            <div>
-                                <h2 style={styles.secondTitle}>{election.titreElection}</h2>
-                                <p>Description : {election.descriptionElection}</p>
-                                Date de début : {election.dateDebutElection} <br/>
-                                Date de fin : {election.dateFinElection}<br/>
-                            </div>
-                        {/* } */}
+                        <div>
+                            <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+                            <Link to={{ pathname: `/elections`}} >
+                                <button key={"Retour"} style={Object.assign({},styles.btn, styles.blue)}>Retour </button>
+                            </Link>
+                            <p>Description : {election.descriptionElection}</p>
+                            Date de début : {election.dateDebutElection} <br/>
+                            Date de fin : {election.dateFinElection}<br/>
+                        </div>
 
                         <div style={styles.pieChartContainer}>
                             <Chart

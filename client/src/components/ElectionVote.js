@@ -55,6 +55,11 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                     <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
                     <div style={styles.election}>
                         <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+
+                        <Link to={{ pathname: `/elections`}} >
+                            <button key={"Retour"} style={Object.assign({},styles.btn, styles.blue)}>Retour </button>
+                        </Link>
+
                         <table style={styles.table}>
                             <tbody>
                                 <tr>
