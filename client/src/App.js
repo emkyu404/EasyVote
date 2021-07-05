@@ -12,8 +12,10 @@ import Pages from './components/Pages'
 // URL de base, à changer lorsque l'url change
 const baseUrl = "http://localhost:3001";
 
+
 function App() {
   Axios.defaults.withCredentials = true
+  // const bcrypt = require('bcryptjs');
 
   const {addToast} = useToasts()
   const [currentUser, setCurrentUser] = useState({idAdmin: 0, idCitoyen: 0, nomCitoyen : "", idElecteur : 0, premiereConnexion: 0})
@@ -98,6 +100,7 @@ function App() {
   }
 
   const login = async (email, password) => {
+    // password = await hashPassword(password, 10)
     const response = await Axios.post(baseUrl+"/login", { email: email, password: password })
     if (response.data.message) {
       addToast("Erreur : " + response.data.message, {
@@ -119,6 +122,10 @@ function App() {
       }
     }
   };
+
+  // async function hashPassword (myPlaintextPassword, saltRounds){
+  //   return await bcrypt.hash(myPlaintextPassword, saltRounds)
+  // } 
 
   const changePassword = async(password, newPassword) => {
     //vérification du mot de passe

@@ -34,6 +34,17 @@ function currentTime(){
   return dateTime
 }
 
+async function compareHash(myPlaintextPassword, hash){
+  // bcrypt.hash(myPlaintextPassword, 10, function(err, data) {
+  //   console.log("🚀 ~ file: index.js ~ line 40 ~ bcrypt.hash ~ data", data)
+  //   bcrypt.compare(myPlaintextPassword, data).then((result)=> {
+  //     console.log("🚀 ~ file: index.js ~ line 40 ~ bcrypt.compare ~ result", result)
+  //   });
+  // })
+
+  return await bcrypt.compare(myPlaintextPassword, hash)
+}
+
 app.get('/currentDate', (req, res) => {
   res.json(currentTime());
 });
@@ -53,7 +64,7 @@ app.get("/disconnect", (req, res) => {
   res.status(200).json({message: "Vous êtes déconnecté"})
 });
 
-app.post("/login", (req, res) => {
+app.post("/login",  (req, res) => {
   const email = req.body.email
   const password = req.body.password
 
@@ -61,29 +72,35 @@ app.post("/login", (req, res) => {
     db.query(
       "SELECT * FROM citoyen WHERE emailCitoyen=?",
       [email],
-    (err, resultMail) => {
+      (err, resultMail) => {
       if (err){
         console.log(err);
+        res.json({message : "Impossible de se connecter"})
       }
       else{
         if(resultMail.length ==1){
           db.query(
-            "SELECT electeur.idCitoyen, citoyen.nomCitoyen, electeur.idElecteur, electeur.premiereConnexion FROM electeur INNER JOIN citoyen on electeur.idCitoyen=citoyen.idCitoyen WHERE electeur.idCitoyen=?",
-            [resultMail[0].idCitoyen, password],
-            (err, resultPassword) => {
+            "SELECT el.idCitoyen, ci.nomCitoyen, el.idElecteur, el.motDePasseElecteur, el.premiereConnexion FROM electeur el INNER JOIN citoyen ci on el.idCitoyen=ci.idCitoyen WHERE el.idCitoyen=?",
+            [resultMail[0].idCitoyen],
+            async (err, resultPassword) => {
               if (err){
                 console.log(err);
                 res.json({message : "Impossible de se connecter"})
               }
               else{
                 if(resultPassword.length ==1){
-                  req.session.user = {
-                    idCitoyen : resultPassword[0].idCitoyen,
-                    nomCitoyen : resultPassword[0].nomCitoyen,
-                    idElecteur : resultPassword[0].idElecteur,
-                    premiereConnexion : resultPassword[0].premiereConnexion
+                  if (await compareHash(password, resultPassword[0].motDePasseElecteur)===true){
+                    req.session.user = {
+                      idCitoyen : resultPassword[0].idCitoyen,
+                      nomCitoyen : resultPassword[0].nomCitoyen,
+                      idElecteur : resultPassword[0].idElecteur,
+                      premiereConnexion : resultPassword[0].premiereConnexion
+                    }
+                    res.json(req.session.user)
                   }
-                  res.json(req.session.user)
+                  else{
+                    res.json({message : "Email ou mot de passe incorrect"})
+                  }
                 }
                 else {
                   res.json({message : "Email ou mot de passe incorrect"})
@@ -110,19 +127,24 @@ app.post("/loginAdmin", (req, res) => {
   if(checkConnected(req)===false){
 
     db.query(
-      "SELECT * FROM admin WHERE emailAdmin=? AND motDePasseAdmin=?",
-      [email, password],
-    (err, result) => {
+      "SELECT * FROM admin WHERE emailAdmin=?",
+      [email],
+    async(err, result) => {
       if (err){
         console.log(err);
         res.json({message : "Impossible de se connecter"})
       }
       else{
         if(result.length == 1){
-          req.session.user = {
-            idAdmin : result[0].idAdmin
+          if (await compareHash(password, result[0].motdePasseAdmin)===true){
+            req.session.user = {
+              idAdmin : result[0].idAdmin
+            }
+            res.json(req.session.user)
           }
-          res.json(req.session.user)
+          else{
+            res.json({message : "Email ou mot de passe incorrect"})
+          }
         }
         else {
           res.json({message : "Email ou mot de passe incorrect"})
@@ -621,33 +643,43 @@ app.route('/election/:idElection')
     const password = req.body.password
     const userId = req.body.userId
   
-    db.query("SELECT * FROM electeur WHERE idCitoyen = ? AND motDePasseElecteur = ?",
-    [userId, password],
-    (err, result) => {
+    db.query("SELECT * FROM electeur WHERE idCitoyen = ?",
+    [userId],
+    async (err, result) => {
       if (err) {
         res.json({message : "La vérification de mot de passe à échouer", success: false})
       } 
       else if(result.length === 0) {
         res.json({message : "Les mots de passe ne correspondent pas", success: false})
       }else{
+        if (await compareHash(password, result[0].motDePasseElecteur)===true){
         res.json({message : "Vérification réussi", success: true})
+        }else{
+          res.json({message : "Les mots de passe ne correspondent pas", success: false})
+        }
       }
     });
   });
   
   app.post('/changePassword', (req, res) => {
-    const newPassword = req.body.newPassword
+    let newPassword = req.body.newPassword
     const userId = req.body.userId
-    db.query("UPDATE electeur SET motDePasseElecteur=? WHERE idCitoyen = ?",
-    [newPassword,userId],
-    (err) => {
-      if (err) {
-        res.json({message : "Le changement de mot de passe à échouer", success: false})
-      } 
-      else {
-        res.json({message : "Changement de mot de passe effectué", success: true})
+
+    bcrypt.hash(newPassword, 10, function(err, hash) {
+      if(err){
+        console.log(err)
       }
-    });
+      db.query("UPDATE electeur SET motDePasseElecteur=? WHERE idCitoyen = ?",
+      [hash,userId],
+      (err) => {
+        if (err) {
+          res.json({message : "Le changement de mot de passe à échouer", success: false})
+        } 
+        else {
+          res.json({message : "Changement de mot de passe effectué", success: true})
+        }
+      });
+    })
   });
 
   app.post('/updateFirstConnexion', (req, res) => {

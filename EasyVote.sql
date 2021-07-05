@@ -29,7 +29,7 @@ USE easyvote;
 DROP TABLE IF EXISTS `admin`;
 CREATE TABLE IF NOT EXISTS `admin` (
   `idAdmin` int(11) NOT NULL AUTO_INCREMENT,
-  `motdePasseAdmin` varchar(50) NOT NULL,
+  `motdePasseAdmin` varchar(100) NOT NULL,
   `emailAdmin` varchar(50) NOT NULL,
   PRIMARY KEY (`idAdmin`),
   UNIQUE KEY `emailAdmin` (`emailAdmin`)
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
 --
 
 INSERT INTO `admin` (`idAdmin`, `motdePasseAdmin`, `emailAdmin`) VALUES
-(1, 'admin', 'admin@email.fr');
+(1, '$2b$10$hhLBELdHKkgLRAVZpQpshOAE8Te4iQkqfGhqzArJ1HnrHvHkjGeTm', 'admin@email.fr');
 
 -- --------------------------------------------------------
 
@@ -246,7 +246,7 @@ INSERT INTO `citoyen` (`idCitoyen`, `nomCitoyen`, `prenomCitoyen`, `emailCitoyen
 DROP TABLE IF EXISTS `electeur`;
 CREATE TABLE IF NOT EXISTS `electeur` (
   `idElecteur` int(11) NOT NULL AUTO_INCREMENT,
-  `motDePasseElecteur` varchar(50) NOT NULL,
+  `motDePasseElecteur` varchar(100) NOT NULL,
   `premiereConnexion` tinyint(1) NOT NULL DEFAULT '1',
   `idCitoyen` int(11) NOT NULL,
   PRIMARY KEY (`idElecteur`),
@@ -258,8 +258,8 @@ CREATE TABLE IF NOT EXISTS `electeur` (
 --
 
 INSERT INTO `electeur` (`idElecteur`, `motDePasseElecteur`, `premiereConnexion`, `idCitoyen`) VALUES
-(1, 'tang', 1, 4),
-(2, 'zhang', 1, 5);
+(1, '$2b$10$nCSLRrAVQI0lZUxC/JCb8Ok0LEPWKT7RYpVpI/sPt3Wcj4jSZkXeC', 1, 4),
+(2, '$2b$10$t.JM1JcdwYuNvjbohqU0PuOH4uDtVgJKIejCD.m0YeImFu4L70xvi', 1, 5);
 
 -- --------------------------------------------------------
 

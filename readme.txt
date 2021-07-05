@@ -10,7 +10,7 @@ Node et express
 Pré-requis :
     -visual studio code (de préférence)
     -node.js pour le serveur et installer les librairies rapidement
-    -BDD MySQL avec PhpMyAdmin (de préférence)
+    -MySQL avec PhpMyAdmin (de préférence)
     -notre projet : "https://github.com/emkyu404/EasyVote"
 
 Installation :
@@ -31,7 +31,7 @@ Vous pouvez vous connecter avec :
     - un compte utilisateur :
         - email : j-f.tang@email.com
         - mot de passe : tang
-    - un compte administrateur sur le lien http://localhost:3000/loginAdmin (non indéxé) :
+    - un compte administrateur sur le l'adresse http://localhost:3000/loginAdmin (non indéxé) :
         - email : admin@email.fr
         - mot de passe : admin
         
