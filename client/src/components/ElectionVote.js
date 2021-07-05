@@ -1,8 +1,8 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
-import CandidatCard from "./CandidatCard";
-import Radium from 'radium';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import { useState, useEffect } from 'react'
+import CandidatCard from "./CandidatCard"
+import Radium from 'radium'
+import { Link } from 'react-router-dom'
 
 const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer, getParticiper, currentUser, updateElection }) => {
 
@@ -54,11 +54,11 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                 <div>
 
                     <Link to={{ pathname: `/elections`}} >
-                        <button key={"Retour"} style={Object.assign({}, styles.returnBtn, styles.blue)}>Retour </button>
+                        <button key={"Retour"} style={styles.returnBtn}>Retour </button>
                     </Link>
 
                     <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
-                    <div style={styles.election}>
+                    <div style={styles.divElection}>
                         <h2 style={styles.secondTitle}>{election.titreElection}</h2>
 
                         <table style={styles.table}>
@@ -90,7 +90,7 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                                 ))
                             }
                             <div style={styles.votedStyle}>
-                                <p style={styles.background}>{participer === true ? "Vous avez déjà voté." : ""}</p>
+                                <p>{participer === true ? "Vous avez déjà voté." : ""}</p>
                             </div>
                         </div>
                     </div>
@@ -118,10 +118,10 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                         <label className="add-election-label" style={styles.label}>Heure de fin : </label>
                         <span style={styles.span}><input type="time" className="update-election-input" value={heureFin} style={styles.input} onChange={handleHeureFinOnChange} required /></span>
 
-                        <input type="submit" className="update-election-submit" style={styles.submit} key="btnSubmitElection" value="Modifier" />
+                        <input type="submit" className="update-election-submit" style={styles.btn} key="btnSubmitElection" value="Modifier" />
                     </form>
                     <Link to={{ pathname: `/elections`}} >
-                        <button key={"Annuler"} style={Object.assign({},styles.btn, styles.blue)}>Annuler </button>
+                        <button key={"Annuler"} style={styles.btn}>Annuler </button>
                     </Link>
                 </div>
             }
@@ -131,26 +131,52 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
 }
 
 const styles = {
-    votedStyle: {
-        width: "100%",
-        padding: "10px",
-        display: "flex",
-        flexWrap: "wrap",
-        justifyContent: "center",
-        color: "red",
-        fontSize: "18px",
+    returnBtn: {
+        backgroundColor: "#0B6BA8",
+        textAlign: "center",
+        textDecoration: "none",
+        minWidth: "200px",
+        padding: "15px",
+        border: "none",
+        color: "white",
+        cursor: "pointer",        
+        float: "right",
+        marginTop: "15px",
+        position: "absolute",
+        float: "left",
+        marginTop: "0px",
+        ':hover':{
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
+        },
+        '@media (max-width: 640px)': {
+            width: "calc(100% - 50px)",
+            float: "none"
+        }
     },
-    election: {
+    mainTitle: {
+        color: "#0B6BA8",
+        width: "100%",
+        padding: "0px 0px 15px 0px",
+        textAlign: "center",
+        '@media (max-width: 1100px)': {
+            padding: "60px 0px 5px 0px",
+        }
+    },
+    secondTitle: {
+        margin: "0px 0px 20px 0px",
+        textAlign: "center"
+    },
+    divElection: {
         marginTop: "20px",
         marginBottom: "20px",
         backgroundColor: "white",
-        padding: "20px 40px 40px 40px",
+        padding: "20px 40px 20px 40px",
         boxShadow: "0 0 10px #999",
         '@media (max-width: 640px)': {
             padding: "20px 20px 65px 20px"
         }
     },
-
     table: {
         border: "1px solid #eee",
         borderCollapse: "collapse",
@@ -173,19 +199,14 @@ const styles = {
         width: "100%",
         minWidth: "300px"
     },
-    mainTitle: {
-        color: "#0B6BA8",
-        height: "fit-content",
+    votedStyle: {
         width: "100%",
-        padding: "0px 0px 15px 0px",
-        textAlign: "center",
-        '@media (max-width: 1100px)': {
-            padding: "50px 0px 5px 0px",
-        }
-    },
-    secondTitle: {
-        margin: "0px 0px 20px 0px",
-        textAlign: "center"
+        padding: "10px",
+        display: "flex",
+        flexWrap: "wrap",
+        justifyContent: "center",
+        color: "red",
+        fontSize: "18px",
     },
     divForm: {
         backgroundColor: "white",
@@ -193,7 +214,7 @@ const styles = {
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
         '@media (max-width: 960px)': {
-            padding: "40px 40px 150px 40px"
+            padding: "20px 40px 150px 40px"
         },
         '@media (max-width: 640px)': {
             padding: "20px 20px 150px 20px"
@@ -201,10 +222,7 @@ const styles = {
     },
     label: {
         float: "left",
-        height: "50px",
         lineHeight: "50px",
-        textAlign: "center",
-        verticalAlign: "middle",
         '@media (max-width: 640px)': {
             float: "none",
             lineHeight: "30px",
@@ -234,66 +252,24 @@ const styles = {
         marginBottom: "10px"
     },
     btn: {
-        textAlign: "center",
-        textDecoration: "none",
-        minWidth: "200px",
-        padding: "15px",
-        border: "none",
-        color: "white",
-        cursor: "pointer",        
-        float: "right",
-        marginTop: "15px",
-        ':hover':{
-            backgroundColor: "#074E7B",
-            transition: "0.2s"
-        },
-        '@media (max-width: 960px)': {
-            width: "100%"
-        },
-    },
-    submit: {
         backgroundColor: "#0B6BA8",
         border: "none",
-        color: "white",
-        padding: "15px",
         textDecoration: "none",
-        cursor: "pointer",
+        color: "white",
         width: "200px",
-        float: "right",
-        margin: "15px 0px 0px 10px",
-        ':hover': {
-            backgroundColor: "#074E7B",
-            transition: "0.2s"
-        },
-        '@media (max-width: 960px)': {
-            width: "100%"
-        },
-    },
-    returnBtn: {
-        textAlign: "center",
-        textDecoration: "none",
-        minWidth: "200px",
         padding: "15px",
-        border: "none",
-        color: "white",
         cursor: "pointer",        
         float: "right",
-        marginTop: "15px",
+        margin: "15px 0px 0px 10px",
         ':hover':{
             backgroundColor: "#074E7B",
             transition: "0.2s"
         },
-        position: "absolute",
-        float: "left",
-        marginTop: "0px",
-        '@media (max-width: 640px)': {
-            width: "calc(100% - 50px)",
-            float: "none"
+        '@media (max-width: 960px)': {
+            width: "100%",
+            margin: "15px 0px 0px 0px"
         }
-    },
-    blue : {
-        backgroundColor: "#0B6BA8"
-    },
+    }
 }
 
 export default Radium(ElectionVote)

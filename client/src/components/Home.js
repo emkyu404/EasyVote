@@ -34,8 +34,6 @@ const styles = {
     },
     mainTitle: {
         color: "#0B6BA8",
-        height: "fit-content",
-        width: "100%",
         paddingBottom: "15px",
         textAlign: "center"
     },
@@ -43,26 +41,26 @@ const styles = {
         textAlign: "center",
         paddingBottom: "10px"
     },
+    container: {
+        overflow: "hidden",
+        paddingBottom: "20px"
+    },
     image: {
         float: "left",
         margin: "5px 20px 5px 5px",
         width: "400px",
-        '@media (max-width: 640px)': { 
-            width: "100%"
-        },
         '@media (max-width: 960px)': { 
             float: "none",
             display: "block",
             marginLeft: "auto",
             marginRight: "auto"
-        }  
+        },
+        '@media (max-width: 640px)': { 
+            width: "100%"
+        }
     },
     text: {
         textAlign: "justify"
-    },
-    container: {
-        overflow: "hidden",
-        paddingBottom: "20px"
     }
 }
 

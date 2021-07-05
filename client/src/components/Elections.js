@@ -64,23 +64,21 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
 }
 
 const styles = {
+    mainTitle: {
+        color: "#0B6BA8",
+        paddingBottom: "15px",
+        textAlign: "center"
+    },
     flexContainer:{
         display: "flex",
         flexDirection: "row",
         flexWrap: "no-wrap",
     },
-    mainTitle: {
-        color: "#0B6BA8",
-        height: "fit-content",
-        width: "100%",
-        paddingBottom: "15px",
-        textAlign: "center"
-    },
     divElections: {
         backgroundColor: "#0B6BA8",
-        padding: "40px 40px 10px 40px",
+        padding: "20px 40px 1px 40px",
         boxShadow: "0 0 10px #999",
-        padding: "20px 20px 10px 20px",
+        padding: "20px 20px 1px 20px",
     },
     blue : {
         backgroundColor: "#0B6BA8",
@@ -99,19 +97,19 @@ const styles = {
         cursor: "pointer",
         transition: "0.5s"
     },
+    emptyDiv: {
+        textAlign: "center"
+    },
     emptyImg: {
         maxWidth: "150px",
         filter: "brightness(0) invert(1)"
     },
     emptyMessage: {
         padding: "0 20% 0 20%",
+        color: "white",
         '@media (max-width: 640px)': { 
-            padding: "0 0 0 0",
-        },
-        color: "white"
-    },
-    emptyDiv: {
-        textAlign: "center"
+            padding: "0 0 0 0"
+        }
     }
 }
 

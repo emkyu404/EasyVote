@@ -52,12 +52,12 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
       {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
         <div>
           <Link to={{ pathname: `/elections`}} >
-            <button key={"Retour"} style={Object.assign({}, styles.returnBtn, styles.blue)}>Retour </button>
+            <button key={"Retour"} style={styles.returnBtn}>Retour </button>
           </Link>
           <h1 style={styles.mainTitle}>En cours de préparation</h1>
           <div style={styles.divElections}>
-            <h2>{election.titreElection}</h2>
-            <p style={styles.text}>{election.descriptionElection}</p><br></br>
+            <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+            <p>{election.descriptionElection}</p><br></br>
             <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p>
           </div>
         </div>
@@ -84,11 +84,11 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
                 <label className="add-election-label" style={styles.label}>Heure de fin : </label>
                 <span style={styles.span}><input type="time" className="update-election-input" value={heureFin} style={styles.input} onChange={handleHeureFinOnChange} required /></span>
 
-                <input type="submit" className="update-election-submit" style={styles.submit} key="btnSubmitElection" value="Modifier" />
+                <input type="submit" className="update-election-submit" style={styles.btn} key="btnSubmitElection" value="Modifier" />
             </form>
 
             <Link to={{ pathname: `/elections`}} >
-              <button key={"Annuler"} style={Object.assign({},styles.btn, styles.blue)}>Annuler </button>
+              <button key={"Annuler"} style={styles.btn}>Annuler </button>
             </Link>
         </div>
       }
@@ -97,15 +97,41 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
 }
 
 const styles = {
+  returnBtn: {
+    backgroundColor: "#0B6BA8",
+    textAlign: "center",
+    textDecoration: "none",
+    minWidth: "200px",
+    padding: "15px",
+    border: "none",
+    color: "white",
+    cursor: "pointer",        
+    float: "right",
+    marginTop: "15px",
+    position: "absolute",
+    float: "left",
+    marginTop: "0px",
+    ':hover':{
+        backgroundColor: "#074E7B",
+        transition: "0.2s"
+    },
+    '@media (max-width: 640px)': {
+        width: "calc(100% - 50px)",
+        float: "none"
+    }
+  },
   mainTitle: {
     color: "#0B6BA8",
-    height: "fit-content",
     width: "100%",
-    paddingBottom: "15px",
+    padding: "0px 0px 15px 0px",
     textAlign: "center",
     '@media (max-width: 1100px)': {
-      padding: "50px 0px 15px 0px",
+      padding: "60px 0px 15px 0px",
     }
+  },
+  secondTitle: {
+    margin: "0px 0px 20px 0px",
+    textAlign: "center"
   },
   divElections: {
     backgroundColor: "white",
@@ -118,106 +144,61 @@ const styles = {
     boxShadow: "0 0 10px #999",
     margin: "20px 0px 20px 0px",
     '@media (max-width: 960px)': {
-        padding: "40px 40px 150px 40px"
+        padding: "20px 40px 150px 40px"
     },
     '@media (max-width: 640px)': {
         padding: "20px 20px 150px 20px"
     }
-},
-label: {
+  },
+  label: {
     float: "left",
-    height: "50px",
     lineHeight: "50px",
-    textAlign: "center",
-    verticalAlign: "middle",
     '@media (max-width: 640px)': {
         float: "none",
         lineHeight: "30px",
     }
-},
-input: {
+  },
+  input: {
     border: "1px solid #E5E5E5",
     padding: "15px",
     width: "100%",
     height: "50px",
     marginBottom: "10px"
-},
-span: {
+  },
+  span: {
     display: "block",
     overflow: "hidden",
     paddingLeft: "15px",
     '@media (max-width: 640px)': {
         paddingLeft: "0px"
     }
-},
-textArea: {
+  },
+  textArea: {
     resize: "none",
     border: "1px solid #E5E5E5",
     padding: "15px",
     width: "100%",
     height: "200px",
     marginBottom: "10px"
-},
-btn: {
-    textAlign: "center",
-    textDecoration: "none",
-    minWidth: "200px",
-    padding: "15px",
+  },
+  btn: {
+    backgroundColor: "#0B6BA8",
     border: "none",
+    textDecoration: "none",
     color: "white",
+    width: "200px",
+    padding: "15px",
     cursor: "pointer",        
     float: "right",
-    marginTop: "15px",
+    margin: "15px 0px 0px 10px",
     ':hover':{
         backgroundColor: "#074E7B",
         transition: "0.2s"
     },
     '@media (max-width: 960px)': {
-        width: "100%"
-    },
-},
-submit: {
-    backgroundColor: "#0B6BA8",
-    border: "none",
-    color: "white",
-    padding: "15px",
-    textDecoration: "none",
-    cursor: "pointer",
-    width: "200px",
-    float: "right",
-    margin: "15px 0px 0px 10px",
-    ':hover': {
-        backgroundColor: "#074E7B",
-        transition: "0.2s"
-    },
-    '@media (max-width: 960px)': {
-        width: "100%"
-    },
-},
-returnBtn: {
-  textAlign: "center",
-  textDecoration: "none",
-  minWidth: "200px",
-  padding: "15px",
-  border: "none",
-  color: "white",
-  cursor: "pointer",        
-  float: "right",
-  marginTop: "15px",
-  ':hover':{
-      backgroundColor: "#074E7B",
-      transition: "0.2s"
-  },
-  position: "absolute",
-  float: "left",
-  marginTop: "0px",
-  '@media (max-width: 640px)': {
-      width: "calc(100% - 50px)",
-      float: "none"
+        width: "100%",
+        margin: "15px 0px 0px 0px"
+    }
   }
-},
-  blue : {
-      backgroundColor: "#0B6BA8"
-  },
 }
 export default Radium(ElectionWait)

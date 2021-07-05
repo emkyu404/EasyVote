@@ -53,7 +53,7 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
             { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
                 <div>
                     <Link to={{ pathname: `/elections`}} >
-                        <button key={"Retour"} style={Object.assign({}, styles.returnBtn, styles.blue)}>Retour </button>
+                        <button key={"Retour"} style={styles.returnBtn}>Retour </button>
                     </Link>
 
                     <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
@@ -144,11 +144,11 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
                         <label className="add-election-label" style={styles.label}>Heure de fin : </label>
                         <span style={styles.span}><input type="time" className="update-election-input" value={heureFin} style={styles.input} onChange={handleHeureFinOnChange} required /></span>
 
-                        <input type="submit" className="update-election-submit" style={styles.submit} key="btnSubmitElection" value="Modifier" />
+                        <input type="submit" className="update-election-submit" style={styles.btn} key="btnSubmitElection" value="Modifier" />
                     </form>
 
                     <Link to={{ pathname: `/elections`}} >
-                        <button key={"Annuler"} style={Object.assign({},styles.btn, styles.blue)}>Annuler </button>
+                        <button key={"Annuler"} style={styles.btn}>Annuler </button>
                     </Link>
                 </div>
             }
@@ -158,6 +158,42 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
 }
 
 const styles={
+    returnBtn: {
+        backgroundColor: "#0B6BA8",
+        textAlign: "center",
+        textDecoration: "none",
+        minWidth: "200px",
+        padding: "15px",
+        border: "none",
+        color: "white",
+        cursor: "pointer",        
+        float: "right",
+        marginTop: "15px",
+        position: "absolute",
+        float: "left",
+        marginTop: "0px",
+        ':hover':{
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
+        },
+        '@media (max-width: 640px)': {
+            width: "calc(100% - 50px)",
+            float: "none"
+        }
+    },
+    mainTitle: {
+        color: "#0B6BA8",
+        width: "100%",
+        padding: "0px 0px 15px 0px",
+        textAlign: "center",
+        '@media (max-width: 1100px)': {
+          padding: "60px 0px 15px 0px",
+        }
+    },
+    secondTitle: {
+        margin: "0px 0px 20px 0px",
+        textAlign: "center"
+    },
     electionDiv: {
         backgroundColor: "white",
         padding: "20px 40px 20px 40px",
@@ -165,20 +201,6 @@ const styles={
         '@media (max-width: 640px)': {
             padding: "20px 20px 20px 20px"
         }
-    },
-    mainTitle: {
-        color: "#0B6BA8",
-        height: "fit-content",
-        width: "100%",
-        paddingBottom: "15px",
-        textAlign: "center",
-        '@media (max-width: 1100px)': {
-            padding: "50px 0px 5px 0px",
-        }
-    },
-    secondTitle: {
-        textAlign: "center",
-        paddingBottom: "10px"
     },
     pieChartContainer: {
         height: "600px",
@@ -189,22 +211,22 @@ const styles={
             height: "300px",
         }
     },
-    columnChartContainer: {
-        height: "600px",
-        '@media (max-width: 960px)': {
-            height: "450px",
-        },
-        '@media (max-width: 640px)': {
-            height: "300px",
-        }
-    },
+    // columnChartContainer: {
+    //     height: "600px",
+    //     '@media (max-width: 960px)': {
+    //         height: "450px",
+    //     },
+    //     '@media (max-width: 640px)': {
+    //         height: "300px",
+    //     }
+    // },
     divForm: {
         backgroundColor: "white",
         padding: "40px 40px 70px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
         '@media (max-width: 960px)': {
-            padding: "40px 40px 150px 40px"
+            padding: "20px 40px 150px 40px"
         },
         '@media (max-width: 640px)': {
             padding: "20px 20px 150px 20px"
@@ -212,10 +234,7 @@ const styles={
     },
     label: {
         float: "left",
-        height: "50px",
         lineHeight: "50px",
-        textAlign: "center",
-        verticalAlign: "middle",
         '@media (max-width: 640px)': {
             float: "none",
             lineHeight: "30px",
@@ -245,66 +264,24 @@ const styles={
         marginBottom: "10px"
     },
     btn: {
-        textAlign: "center",
-        textDecoration: "none",
-        minWidth: "200px",
-        padding: "15px",
-        border: "none",
-        color: "white",
-        cursor: "pointer",        
-        float: "right",
-        marginTop: "15px",
-        ':hover':{
-            backgroundColor: "#074E7B",
-            transition: "0.2s"
-        },
-        '@media (max-width: 960px)': {
-            width: "100%"
-        },
-    },
-    submit: {
         backgroundColor: "#0B6BA8",
         border: "none",
-        color: "white",
-        padding: "15px",
         textDecoration: "none",
-        cursor: "pointer",
+        color: "white",
         width: "200px",
-        float: "right",
-        margin: "15px 0px 0px 10px",
-        ':hover': {
-            backgroundColor: "#074E7B",
-            transition: "0.2s"
-        },
-        '@media (max-width: 960px)': {
-            width: "100%"
-        },
-    },
-    returnBtn: {
-        textAlign: "center",
-        textDecoration: "none",
-        minWidth: "200px",
         padding: "15px",
-        border: "none",
-        color: "white",
         cursor: "pointer",        
         float: "right",
-        marginTop: "15px",
+        margin: "15px 0px 0px 10px",
         ':hover':{
             backgroundColor: "#074E7B",
             transition: "0.2s"
         },
-        position: "absolute",
-        float: "left",
-        marginTop: "0px",
-        '@media (max-width: 640px)': {
-            width: "calc(100% - 50px)",
-            float: "none"
+        '@media (max-width: 960px)': {
+            width: "100%",
+            margin: "15px 0px 0px 0px"
         }
-    },
-    blue : {
-        backgroundColor: "#0B6BA8"
-    },
+    }
 }
 
 export default Radium(ElectionResults)
