@@ -30,7 +30,7 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getPar
             </div>
             <DialogComponent
                 dialogText={"Le vote est irréversible. Vous avez encore la possibilité de consulter la liste des candidats"}
-                dialogTitle={"Confirmation de votre vote pour " + candidatCard.titreCandidatb}
+                dialogTitle={"Confirmation de votre vote pour " + candidatCard.titreCandidat}
                 openOnRender={false}
                 handleClickYes={async () => { await addVote(URLIdElection, candidatCard.idCandidat); await getParticiper(URLIdElection) }}
                 handleClickNo={() => { }}

@@ -429,7 +429,6 @@ CREATE TABLE IF NOT EXISTS `participer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `participer` (`idElecteur`, `idElection`) VALUES 
-('1', '1'),
 ('1', '3'),
 ('2', '1'),
 ('2', '3'),
@@ -452,7 +451,6 @@ CREATE TABLE IF NOT EXISTS `vote` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `vote` (`idVote`, `idElection`, `idCandidat`) VALUES 
-('1', '1', '7'),
 ('2', '3', '14'),
 ('3', '1', '9'),
 ('4', '3', '13'),

@@ -298,7 +298,7 @@ function App() {
       })
     }
     else{
-      var result = Object.keys(response.data).map((key) => [response.data[key].titreCandidat, response.data[key].votes]);
+      var result = Object.keys(response.data).map((key) => [response.data[key].titreCandidat+"("+response.data[key].votes+")", response.data[key].votes]);
       result.unshift(['titreElection', 'votes'])
       setVotes(result);
     }
