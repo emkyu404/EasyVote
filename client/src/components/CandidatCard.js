@@ -50,7 +50,7 @@ const styles = {
         width: "calc(50% - 20px)",
         float: "left",
         boxShadow: "0 0 5px #555",
-        background: "linear-gradient(#f8f8f8, #FFF5EE)",
+        backgroundColor: '#E9F1F7',
         borderRadius: "5px",
         '@media (max-width: 1100px)': {
             width: "100%",

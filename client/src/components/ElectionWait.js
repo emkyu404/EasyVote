@@ -102,7 +102,10 @@ const styles = {
     height: "fit-content",
     width: "100%",
     paddingBottom: "15px",
-    textAlign: "center"
+    textAlign: "center",
+    '@media (max-width: 1100px)': {
+      padding: "50px 0px 15px 0px",
+    }
   },
   divElections: {
     backgroundColor: "white",
@@ -196,9 +199,13 @@ const styles = {
     }
   },
   returnBtn: {
-    position: "absolute !important",
-    float: "left",
-    marginTop: "0px !important"
+    position: "absolute",
+      float: "left",
+      marginTop: "0px",
+    '@media (max-width: 640px)': {
+      width: "calc(100% - 50px)",
+      float: "none"
+    }
   },
   blue : {
       backgroundColor: "#0B6BA8"
