@@ -46,7 +46,6 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
             election.started===true
             ?
             <div>
-                <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
                 <ElectionVote election={election} candidats={candidats} addVote={addVote} URLIdElection={state.URLIdElection} participer={participer} getParticiper={getParticiper} currentUser={currentUser} updateElection={updateElection} />
             </div>
             :

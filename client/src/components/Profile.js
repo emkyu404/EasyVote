@@ -205,7 +205,8 @@ const styles = {
         border: "1px solid #eee",
         borderCollapse: "collapse",
         padding: "5px 20px 5px 20px",
-        width: "100%"
+        width: "100%",
+        minWidth: "300px"
     },
     btn: {
         backgroundColor: "#0B6BA8",

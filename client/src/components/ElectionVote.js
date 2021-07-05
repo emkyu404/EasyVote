@@ -41,9 +41,10 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
 
     return (
         <div>
+            <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
             {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
                 <div style={styles.election}>
-                    <h2 style={styles.title}>{election.titreElection}</h2>
+                    <h2 style={styles.secondTitle}>{election.titreElection}</h2>
                     <table style={styles.table}>
                         <tbody>
                             <tr>
@@ -73,7 +74,7 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                             ))
                         }
                         <div style={styles.votedStyle}>
-                            <p style={styles.background}>{participer === true ? "Important ! Vous avez déjà voté." : ""}</p>
+                            <p style={styles.background}>{participer === true ? "Vous avez déjà voté." : ""}</p>
                         </div>
                     </div>
                 </div>
@@ -144,6 +145,14 @@ const styles = {
         }
     },
 
+    table: {
+        border: "1px solid #eee",
+        borderCollapse: "collapse",
+        width: "auto",
+        marginBottom: "25px",
+        display: "block",
+        overflow: "auto"
+    },
     th: {
         border: "1px solid #eee",
         borderCollapse: "collapse",
@@ -151,18 +160,24 @@ const styles = {
         padding: "5px 20px 5px 20px",
         whiteSpace: "nowrap"
     },
-
     td: {
         border: "1px solid #eee",
         borderCollapse: "collapse",
         padding: "5px 20px 5px 20px",
-        width: "100%"
+        width: "100%",
+        minWidth: "300px"
     },
-
-    title: {
-        padding: "10px",
+    mainTitle: {
+        color: "#0B6BA8",
+        height: "fit-content",
+        width: "100%",
+        paddingBottom: "15px",
+        textAlign: "center"
+    },
+    secondTitle: {
+        margin: "0px 0px 20px 0px",
+        textAlign: "center"
     }
-
 }
 
 export default ElectionVote
