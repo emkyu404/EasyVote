@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `adresse` (
 
 INSERT INTO `adresse` (`idAdresse`, `numRue`, `rue`, `codePostal`) VALUES
 (1, 1, 'Allée André-Breton', 75001),
-(2, 1, 'Passage Sainte-Anne', 75002),
+(2, 1, 'Rue d’Amiens', 60000),
 (3, 1, 'Passage Sainte-Élisabeth', 75003),
 (4, 1, 'Allée Célestin Hennion', 75004),
 (5, 1, 'Rue Amyot', 75005),
@@ -259,7 +259,8 @@ CREATE TABLE IF NOT EXISTS `electeur` (
 
 INSERT INTO `electeur` (`idElecteur`, `motDePasseElecteur`, `premiereConnexion`, `idCitoyen`) VALUES
 (1, '$2b$10$nCSLRrAVQI0lZUxC/JCb8Ok0LEPWKT7RYpVpI/sPt3Wcj4jSZkXeC', 1, 4),
-(2, '$2b$10$t.JM1JcdwYuNvjbohqU0PuOH4uDtVgJKIejCD.m0YeImFu4L70xvi', 1, 5);
+(2, '$2b$10$t.JM1JcdwYuNvjbohqU0PuOH4uDtVgJKIejCD.m0YeImFu4L70xvi', 1, 5),
+(3, '$2b$10$Nw5HwU/YmRzjslbcGEbiqeviDjnT4Fwq5hHtYm1nNQhbsmTnak6iG', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -282,16 +283,13 @@ CREATE TABLE IF NOT EXISTS `election` (
 --
 
 INSERT INTO `election` (`idElection`, `titreElection`, `dateDebutElection`, `dateFinElection`, `descriptionElection`) VALUES
-(1, 'Election présidentiel 2022 - 1er tour', '2022-04-10 00:00:00', '2022-04-23 00:00:00', '1er tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
-(2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:00:00', '2022-05-07 00:00:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
-(3, 'Election régionale 2021 - 1er tour', '2021-06-20 00:00:00', '2021-06-26 00:00:00', '1er tour de l’élection régionale 2021 en Ile-de-France.'),
-(4, 'Election test', '2021-06-20 00:00:00', '2021-07-27 20:00:00', 'Election Test'),
-(5, 'Election régionale de la Bretagne', '2021-06-20 00:00:00', '2021-07-27 00:00:00', 'Election régionale 2021 de la Bretagne'), 
-(6, 'Election régionale de la Corse', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election régionale 2021 de la Corse'), 
-(7, 'Election départementale de Paris', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Paris'), 
-(8, 'Election départementale de Oise', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Oise'), 
-(9, 'Election municipale de Beauvais', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election municipale 2021 de Beauvais'), 
-(10, 'Election municipale de Paris', '2021-07-20 00:00:00', '2021-07-26 00:00:00', 'Election municipale 2021 de Paris');
+(1, 'Election présidentiel 2022 - 1er tour', '2021-07-01 00:04:00', '2022-07-02 00:04:00', '1er tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
+(2, 'Election présidentiel 2022 - 2e tour', '2022-04-24 00:04:00', '2022-05-07 00:05:00', '2e tour de l’élection pour désigner le (la) prochain(e) président(e) de la République Française.'),
+(3, 'Election régionale Ile-de-France 2021 - 1er tour', '2021-06-20 00:06:00', '2021-06-26 00:06:00', '1er tour de l’élection régionale 2021 en Ile-de-France.'),
+(4, 'Election départementale de Oise', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election départementale 2021 de Oise'),
+(5, 'Election municipale de Beauvais', '2021-06-20 00:00:00', '2021-06-26 00:00:00', 'Election municipale 2021 de Beauvais'),
+(6, 'Election municipale de Paris', '2021-07-20 00:00:00', '2021-07-26 00:00:00', 'Election municipale 2021 de Paris');
+
 -- --------------------------------------------------------
 
 --
@@ -314,20 +312,22 @@ CREATE TABLE IF NOT EXISTS `candidat` (
 --
 
 INSERT INTO `candidat` (`idCandidat`, `titreCandidat`, `descriptionCandidat`, `urlImage`, `idElection`) VALUES
-(1, 'Candidat test 1', 'Candidat test 1', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Emmanuel_Macron_%28cropped%29.jpg', 4),
-(2, 'Candidat test 2', 'Candidat test 2', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg%2C_2016_%28cropped%29.jpg', 4),
-(3, 'Candidat Bretagne 1', 'Candidat Bretagne 1', 'https://media-exp1.licdn.com/dms/image/C4E03AQGT74m4X7Bp7w/profile-displayphoto-shrink_200_200/0/1601582886141?e=1626912000&v=beta&t=JaZnB0ybeVRZpt1IAo0XSEIXZMdvQumbZ3VcqFCco94', '5'), 
-(4, 'Candidat Bretagne 2', 'Candidat Bretagne 2', 'Candidat Bretagne 2', '5'), 
-(5, 'Candidat Corse 1', 'Candidat Corse 1', 'Candidat Corse 1', '6'), 
-(6, 'Candidat Corse 2', 'Candidat Corse 2', 'Candidat Corse 2', '6'), 
-(7, 'Candidat Paris 1', 'Candidat Paris 1', 'Candidat Paris 1', '7'), 
-(8, 'Candidat Paris 2', 'Candidat Paris 2', 'Candidat Paris 2', '7'), 
-(9, 'Candidat Oise 1', 'Candidat Oise 1', 'Candidat Oise 1', '8'), 
-(10, 'Candidat Oise 2', 'Candidat Oise 2', 'Candidat Oise 2', '8'), 
-(11, 'Candidat Beauvais 1', 'Candidat Beauvais 1', 'Candidat Beauvais 1', '9'), 
-(12, 'Candidat Beauvais 2', 'Candidat Beauvais 2', 'Candidat Beauvais 2', '9'), 
-(13, 'Candidat élection municipale Paris 1', 'Candidat élection municipale Paris 1', 'Candidat élection municipale Paris 1', '10'), 
-(14, 'Candidat élection municipale Paris 2', 'Candidat élection municipale Paris 2', 'Candidat élection municipale Paris 2', '10');
+(1, 'David Magnier et Claire Marais-Beuil Claire', 'Candidats du Rassemblement national', 'https://www.lobservateurdebeauvais.fr/wp-content/uploads/2021/06/Capture-d’écran-2021-06-14-à-09.43.01.png', 4),
+(2, 'Thierry Aury et Dominique Clinckemaillie', 'Candidats de la Gauche départementale', 'https://www.lobservateurdebeauvais.fr/wp-content/uploads/2021/06/Capture-d’écran-2021-06-14-à-09.46.20.png', 4),
+(3, 'Xavier BERTRAND', 'Candidat de l’Union Démocratique', 'https://pbs.twimg.com/profile_images/1389200515427414022/qtGDcS-V_400x400.jpg', 5),
+(4, 'Sébastien CHENU', 'Candidat du Rassemblement National', 'https://upload.wikimedia.org/wikipedia/commons/e/ec/S%C3%A9bastien_Chenu.jpg', 5),
+(5, 'Anne Hidalgo', 'Candidate du Parti  socialiste', 'https://cdn.paris.fr/paris/2020/07/03/huge-dc64cc08aac6ec80b6fb7162599222be.jpg', 6),
+(6, 'Rachida Dati', 'Candidate des Républicains', 'https://cdn.paris.fr/paris/2020/10/05/huge-94302caa8dd2962645c8b9ca28e86372.jpg', 6),
+(7, 'Emmanuel Macron', 'Candidat de la République En Marche', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Emmanuel_Macron_%28cropped%29.jpg', 1),
+(8, 'Emmanuel Macron', 'Candidat de la République En Marche', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Emmanuel_Macron_%28cropped%29.jpg', 2),
+(9, 'Marine Le Pen', 'Candidate du Rassemblement National', 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Marine_Le_Pen_%282017-03-24%29_01_cropped.jpg', 1),
+(10, 'Marine Le Pen', 'Candidate du Rassemblement National', 'https://upload.wikimedia.org/wikipedia/commons/7/7f/Marine_Le_Pen_%282017-03-24%29_01_cropped.jpg', 2),
+(11, 'Jean-Luc Mélenchon', 'Candidat de la France Insoumise', 'https://upload.wikimedia.org/wikipedia/commons/b/b1/Jean_Luc_MELENCHON_in_the_European_Parliament_in_Strasbourg%2C_2016_%28cropped%29.jpg', 1),
+(12, 'Vote Blanc', NULL, '', 1),
+(13, 'Valérie PÉCRESSE', 'Liste d’union à droite', 'https://pbs.twimg.com/profile_images/1392059688687177731/UD3loKNE.jpg', 3),
+(14, 'Julien BAYOU', 'Liste d’union à gauche avec des écologiste', 'https://upload.wikimedia.org/wikipedia/commons/3/3c/Julien_Bayou_par_C._Guilhem_%28cropped%29.jpg', 3),
+(15, 'Jordan BARDELLA', 'Rassemblement National', 'https://pbs.twimg.com/profile_images/1303731893293199360/kHcksx82_400x400.jpg', 3);
+
 -- --------------------------------------------------------
 
 --
@@ -348,9 +348,8 @@ CREATE TABLE IF NOT EXISTS `election_regionale` (
 --
 
 INSERT INTO `election_regionale` (`idElection`, `nomRegion`) VALUES 
-('3', 'Ile-de-France'), 
-('5', 'Ile-de-France'), 
-('6', 'Corse');
+(3, 'Ile-de-France'),
+(5, 'Ile-de-France');
 
 -- --------------------------------------------------------
 
@@ -372,9 +371,7 @@ CREATE TABLE IF NOT EXISTS `election_departementale` (
 --
 
 INSERT INTO `election_departementale` (`idElection`, `codeDepartement`) VALUES 
-('7', '75'),
-('8', '60');
-
+(4, '60');
 -- --------------------------------------------------------
 
 --
@@ -395,8 +392,8 @@ CREATE TABLE IF NOT EXISTS `election_municipale` (
 --
 
 INSERT INTO `election_municipale` (`idElection`, `codePostal`) VALUES 
-('9', '60000'), 
-('10', '75004');
+(5, 60000),
+(6, 75004);
 
 -- --------------------------------------------------------
 
@@ -412,10 +409,9 @@ CREATE TABLE IF NOT EXISTS `election_nationale` (
   FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `election_nationale`(`idElection`) VALUES 
-('1'),
-('2'),
-('4');
+INSERT INTO `election_nationale`(`idElectionNationale`, `idElection`) VALUES 
+(1, 1),
+(2, 2);
 
 -- --------------------------------------------------------
 
@@ -432,14 +428,12 @@ CREATE TABLE IF NOT EXISTS `participer` (
   FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Déchargement des données de la table `participer`
---
-
-INSERT INTO `participer` (`idElecteur`, `idElection`) VALUES
-(2, 4),
-(1, 7),
-(2, 7);
+INSERT INTO `participer` (`idElecteur`, `idElection`) VALUES 
+('1', '1'),
+('1', '3'),
+('2', '1'),
+('2', '3'),
+('3', '5');
 
 -- --------------------------------------------------------
 
@@ -457,9 +451,11 @@ CREATE TABLE IF NOT EXISTS `vote` (
   FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `vote` (`idElection`, `idCandidat`) VALUES
-(4, 2),
-(7, 1),
-(7, 2);
+INSERT INTO `vote` (`idVote`, `idElection`, `idCandidat`) VALUES 
+('1', '1', '7'),
+('2', '3', '14'),
+('3', '1', '9'),
+('4', '3', '13'),
+('5', '5', '3');
 
 COMMIT;

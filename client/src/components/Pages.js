@@ -29,7 +29,15 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
           {connected ? <Elections getElections={getElections} getCurrentDate={getCurrentDate} filteredElections={filteredElections} filterElection={filterElection} pageTitle={'Elections'} deleteElection={deleteElection} currentUser={currentUser} /> : <NotConnected />}
         </Route>
         <Route exact path="/profile">
-          {connected ? <Profile getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profile'} /> : <NotConnected />}
+          {connected ? 
+            <div> 
+              {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") ?
+                <PageNotFound pageTitle={'404 - Not Found'} />
+              : 
+                <Profile getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profile'} /> 
+              } 
+            </div> : 
+          <NotConnected />}
         </Route>
         <Route exact path="/contact">
           <Contact pageTitle={'Contactez nous'} />
