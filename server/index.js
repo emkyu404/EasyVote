@@ -608,10 +608,10 @@ app.route('/election/:idElection')
       [titreElection, dateDebutElection, dateFinElection, descriptionElection, req.idElection],
       (err) => {
         if (err) {
-          console.log(err);
+          res.status(401).json({ message: "La modification échouée", success: false })
         }
         else {
-          res.status(200).json({ message: "Modification réussie" })
+          res.status(200).json({ message: "Modification réussie", success: true })
         }
       }
     )
