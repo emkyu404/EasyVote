@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `adresse` (
 
 INSERT INTO `adresse` (`idAdresse`, `numRue`, `rue`, `codePostal`) VALUES
 (1, 1, 'Allée André-Breton', 75001),
-(2, 1, 'Passage Sainte-Anne', 75002),
+(2, 1, 'Rue d’Amiens', 60000),
 (3, 1, 'Passage Sainte-Élisabeth', 75003),
 (4, 1, 'Allée Célestin Hennion', 75004),
 (5, 1, 'Rue Amyot', 75005),
@@ -259,7 +259,8 @@ CREATE TABLE IF NOT EXISTS `electeur` (
 
 INSERT INTO `electeur` (`idElecteur`, `motDePasseElecteur`, `premiereConnexion`, `idCitoyen`) VALUES
 (1, 'tang', 1, 4),
-(2, 'zhang', 1, 5);
+(2, 'zhang', 1, 5),
+(3, 'cheng', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -427,6 +428,13 @@ CREATE TABLE IF NOT EXISTS `participer` (
   FOREIGN KEY (`idElection`) REFERENCES `election`(`idElection`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `participer` (`idElecteur`, `idElection`) VALUES 
+('1', '1'),
+('1', '3'),
+('2', '1'),
+('2', '3'),
+('3', '5');
+
 -- --------------------------------------------------------
 
 --
@@ -443,5 +451,11 @@ CREATE TABLE IF NOT EXISTS `vote` (
   FOREIGN KEY (`idCandidat`) REFERENCES `candidat`(`idCandidat`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `vote` (`idVote`, `idElection`, `idCandidat`) VALUES 
+('1', '1', '7'),
+('2', '3', '14'),
+('3', '1', '9'),
+('4', '3', '13'),
+('5', '5', '3');
 
 COMMIT;

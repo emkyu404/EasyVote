@@ -50,40 +50,42 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
 
     return (
         <div>
-            <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
             {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
-                <div style={styles.election}>
-                    <h2 style={styles.secondTitle}>{election.titreElection}</h2>
-                    <table style={styles.table}>
-                        <tbody>
-                            <tr>
-                                <th style={styles.th}>Description : </th>
-                                <td style={styles.td}>{election.descriptionElection}</td>
-                            </tr>
-                            <tr>
-                                <th style={styles.th}>Date de début : </th>
-                                <td style={styles.td}>{election.dateDebutElection}</td>
-                            </tr>
-                            <tr>
-                                <th style={styles.th}>Date de fin : </th>
-                                <td style={styles.td}>{election.dateFinElection}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div>
+                    <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
+                    <div style={styles.election}>
+                        <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+                        <table style={styles.table}>
+                            <tbody>
+                                <tr>
+                                    <th style={styles.th}>Description : </th>
+                                    <td style={styles.td}>{election.descriptionElection}</td>
+                                </tr>
+                                <tr>
+                                    <th style={styles.th}>Date de début : </th>
+                                    <td style={styles.td}>{election.dateDebutElection}</td>
+                                </tr>
+                                <tr>
+                                    <th style={styles.th}>Date de fin : </th>
+                                    <td style={styles.td}>{election.dateFinElection}</td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                    <div id="divCandidats" style={styles.container}>
-                        {typeof (candidats) === "undefined" || candidats.length === 0
-                            ?
-                            "Pas de candidats"
-                            :
-                            candidats.map((candidatCard) => (
-                                <div key={candidatCard.idCandidat}>
-                                    <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} />
-                                </div>
-                            ))
-                        }
-                        <div style={styles.votedStyle}>
-                            <p style={styles.background}>{participer === true ? "Vous avez déjà voté." : ""}</p>
+                        <div id="divCandidats" style={styles.container}>
+                            {typeof (candidats) === "undefined" || candidats.length === 0
+                                ?
+                                "Pas de candidats"
+                                :
+                                candidats.map((candidatCard) => (
+                                    <div key={candidatCard.idCandidat}>
+                                        <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} />
+                                    </div>
+                                ))
+                            }
+                            <div style={styles.votedStyle}>
+                                <p style={styles.background}>{participer === true ? "Vous avez déjà voté." : ""}</p>
+                            </div>
                         </div>
                     </div>
                 </div>

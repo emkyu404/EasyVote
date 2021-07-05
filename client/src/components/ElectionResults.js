@@ -49,14 +49,75 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
     }
 
     return (
-        <div style={styles.electionDiv}>
-
+        <div>
             { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
                 <div>
-                    <h2 style={styles.secondTitle}>{election.titreElection}</h2>
-                    <p>Description : {election.descriptionElection}</p>
-                    Date de début : {election.dateDebutElection} <br/>
-                    Date de fin : {election.dateFinElection}<br/>
+                    <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
+                    <div style={styles.electionDiv}>
+                        
+
+                        {/* { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
+                            <div>
+                                <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+                                <p>Description : {election.descriptionElection}</p>
+                                Date de début : {election.dateDebutElection} <br/>
+                                Date de fin : {election.dateFinElection}<br/>
+                            </div>
+                        {/* } */}
+
+                        <div style={styles.pieChartContainer}>
+                            <Chart
+                                chartType="PieChart"
+                                data={votes}
+                                height="100%"
+                                width="100%"
+                                options={{
+                                    chartArea: {
+                                        height: '80%',
+                                        width: '100%',
+                                    },
+                                    legend: {
+                                        position: 'bottom',
+                                        alignment: 'center'
+                                    },
+                                    tooltip: {
+                                        trigger: 'none'
+                                    },
+                                    enableInteractivity: false
+                                }}
+                            />
+                        </div>
+
+                        
+
+                        {/* <div style={styles.columnChartContainer}>
+                            <Chart
+                                chartType="ColumnChart"
+                                data={[
+                                    ['Choix', 'Oui', { role: 'annotation' }, 'Non', { role: 'annotation' }, 'Yes', { role: 'annotation' }, 'Oui aussi', { role: 'annotation' }],
+                                    ['', 30, "30", 10, "10", 30, "30", 30, "30"],
+                                ]}
+                                height="100%"
+                                width="100%"
+                                options={{
+                                    chartArea: {
+                                        height: '80%',
+                                        width: '80%',
+                                    },
+                                    legend: {
+                                        position: 'bottom',
+                                        alignment: 'center'
+                                    },
+                                    bar: { groupWidth: "90%" }
+                                    ,
+                                    tooltip: {
+                                        trigger: 'none'
+                                    },
+                                    enableInteractivity: false
+                                }}
+                            />
+                        </div> */}
+                    </div>
                 </div>
             }
 
@@ -90,58 +151,6 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
                 </div>
             }
 
-            <div style={styles.pieChartContainer}>
-                <Chart
-                    chartType="PieChart"
-                    data={votes}
-                    height="100%"
-                    width="100%"
-                    options={{
-                        chartArea: {
-                            height: '80%',
-                            width: '100%',
-                        },
-                        legend: {
-                            position: 'bottom',
-                            alignment: 'center'
-                        },
-                        tooltip: {
-                            trigger: 'none'
-                        },
-                        enableInteractivity: false
-                    }}
-                />
-            </div>
-
-            
-
-            {/* <div style={styles.columnChartContainer}>
-                <Chart
-                    chartType="ColumnChart"
-                    data={[
-                        ['Choix', 'Oui', { role: 'annotation' }, 'Non', { role: 'annotation' }, 'Yes', { role: 'annotation' }, 'Oui aussi', { role: 'annotation' }],
-                        ['', 30, "30", 10, "10", 30, "30", 30, "30"],
-                    ]}
-                    height="100%"
-                    width="100%"
-                    options={{
-                        chartArea: {
-                            height: '80%',
-                            width: '80%',
-                        },
-                        legend: {
-                            position: 'bottom',
-                            alignment: 'center'
-                        },
-                        bar: { groupWidth: "90%" }
-                        ,
-                        tooltip: {
-                            trigger: 'none'
-                        },
-                        enableInteractivity: false
-                    }}
-                />
-            </div> */}
         </div>
     )
 }
@@ -154,6 +163,13 @@ const styles={
         '@media (max-width: 640px)': {
             padding: "20px 20px 20px 20px"
         }
+    },
+    mainTitle: {
+        color: "#0B6BA8",
+        height: "fit-content",
+        width: "100%",
+        paddingBottom: "15px",
+        textAlign: "center"
     },
     secondTitle: {
         textAlign: "center",

@@ -60,7 +60,7 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
             <h2>{election.titreElection}</h2>
             <p style={styles.text}>{election.descriptionElection}</p><br></br>
             <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p>
-            <button style={styles.btn} onClick={elections}>Retour</button>
+            <button style={Object.assign({},styles.btn, styles.blue)} onClick={elections}>Retour</button>
           </div>
         </div>
       }
