@@ -49,7 +49,7 @@ const styles = {
         display: "flex",
         flexWrap: "wrap",
         margin: "30px",
-        '@media (max-width: 1335px)': {
+        '@media (maxWidth: 1335px)': {
             width: "1000px",
 
         }
