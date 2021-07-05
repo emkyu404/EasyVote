@@ -78,7 +78,7 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                             </tbody>
                         </table>
 
-                        <div id="divCandidats" style={styles.container}>
+                        <div id="divCandidats">
                             {typeof (candidats) === "undefined" || candidats.length === 0
                                 ?
                                 "Pas de candidats"
@@ -131,14 +131,6 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
 }
 
 const styles = {
-    container: {
-        overflow: "hidden",
-        display: "flex",
-        flexWrap: "wrap",
-        width: "100%",
-        justifyContent: "space-evenly",
-    },
-
     votedStyle: {
         width: "100%",
         padding: "10px",
@@ -148,12 +140,6 @@ const styles = {
         color: "red",
         fontSize: "18px",
     },
-
-    background: {
-
-
-    },
-
     election: {
         marginTop: "20px",
         marginBottom: "20px",

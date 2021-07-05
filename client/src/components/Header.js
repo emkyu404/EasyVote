@@ -38,7 +38,7 @@ const styles = {
         justifyContent : 'space-between',
         position : 'fixed',
         top : '0',
-        zIndex : '1000',
+        zIndex : '10',
         boxShadow : '0 0 5px #999'
     }
 }

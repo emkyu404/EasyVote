@@ -79,7 +79,8 @@ const styles = {
     divElections: {
         backgroundColor: "#0B6BA8",
         padding: "40px 40px 10px 40px",
-        boxShadow: "0 0 10px #999"
+        boxShadow: "0 0 10px #999",
+        padding: "20px 20px 10px 20px",
     },
     blue : {
         backgroundColor: "#0B6BA8",

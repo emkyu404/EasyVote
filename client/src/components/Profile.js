@@ -100,6 +100,12 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
         document.getElementById("myModal").style.display = "none";
     }
 
+    window.onclick = function (event) {
+        if (event.target === document.getElementById("myModal")) {
+            document.getElementById("myModal").style.display = "none";
+        }
+    }
+
     return (
         <div>
             <h1 style={styles.mainTitle}>Profil</h1>
@@ -306,7 +312,7 @@ const styles = {
         display: "none",
         position: "fixed",
         zIndex: "100",
-        paddingTop: "100px",
+        paddingTop: "250px",
         left: "0",
         top: "0",
         width: "100%",

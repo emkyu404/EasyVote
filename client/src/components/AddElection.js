@@ -449,11 +449,8 @@ const styles = {
         padding: "40px 40px 70px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
-        '@media (max-width: 960px)': {
-            padding: "40px 40px 120px 40px",
-        },
         '@media (max-width: 640px)': {
-            padding: "20px 20px 120px 20px"
+            padding: "20px 20px 70px 20px"
         }
     },
     label: {

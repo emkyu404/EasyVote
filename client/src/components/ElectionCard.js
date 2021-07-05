@@ -16,38 +16,61 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
        setNumberOfCalls(numberOfCalls+1)
     }
 
-    return (
-        <div style={styles.divElection}>
-            <h2>{electionCard.titreElection}</h2>
-            Date de début : {electionCard.dateDebutElection} <br/>
-            Date de fin : {electionCard.dateFinElection}<br/><br/>
-            
-            <p style={styles.text}>{electionCard.descriptionElection}</p>
+    const user = {
+        padding: "30px 30px 80px 30px",
+        marginBottom: "30px",
+        backgroundColor: "white",
+        boxShadow: "0 0 10px #555",
+    }
 
+    return (
+        <div>
             { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
-                <div>
-                    <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
-                        <button  key={"Modifier"} style={Object.assign({},styles.btn, styles.blue)}>Modifier l'élection </button>
-                    </Link>
-                    <button key="Supprimer" onClick={() => {handleDelete(electionCard.idElection)}} style={Object.assign({},styles.btn, styles.blue)}>Supprimer l'élection </button>
+                <div style={styles.divElectionAdmin}>
+                    <h2>{electionCard.titreElection}</h2>
+                    Date de début : {electionCard.dateDebutElection} <br/>
+                    Date de fin : {electionCard.dateFinElection}<br/><br/>
+                    <p style={styles.text}>{electionCard.descriptionElection}</p>
+                    <div>
+                        <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
+                            <button  key={"Modifier"} style={Object.assign({},styles.btn, styles.blue)}>Modifier l'élection </button>
+                        </Link>
+                        <button key="Supprimer" onClick={() => {handleDelete(electionCard.idElection)}} style={Object.assign({},styles.btn, styles.blue)}>Supprimer l'élection </button>
+                    </div>
+                    <DialogComponent
+                    dialogText={"Souhaitez-vous supprimer l'élection '"+electionCard.titreElection+ "' de la base de données ? Cette action est irréversible."}
+                    dialogTitle={"Suppression d'une élection de la base de données"}
+                    openOnRender={false}
+                    handleClickYes={handleDeleteConfirmed}
+                    handleClickNo={() => {}}
+                    handleClickBehavior={() => {}}
+                    yesNo={true}
+                    numberOfCall={numberOfCalls}
+                    />
                 </div>
             }
 
             { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== 0) &&
-                <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
-                    <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
-                </Link>
-            }   
-            <DialogComponent
-                dialogText={"Souhaitez-vous supprimer l'élection '"+electionCard.titreElection+ "' de la base de données ? Cette action est irréversible."}
-                dialogTitle={"Suppression d'une élection de la base de données"}
-                openOnRender={false}
-                handleClickYes={handleDeleteConfirmed}
-                handleClickNo={() => {}}
-                handleClickBehavior={() => {}}
-                yesNo={true}
-                numberOfCall={numberOfCalls}
-            />         
+                <div style={styles.divElectionUser}>
+                    <h2>{electionCard.titreElection}</h2>
+                    Date de début : {electionCard.dateDebutElection} <br/>
+                    Date de fin : {electionCard.dateFinElection}<br/><br/>
+                    <p style={styles.text}>{electionCard.descriptionElection}</p>
+                    <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
+                        <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
+                    </Link>
+                    <DialogComponent
+                    dialogText={"Souhaitez-vous supprimer l'élection '"+electionCard.titreElection+ "' de la base de données ? Cette action est irréversible."}
+                    dialogTitle={"Suppression d'une élection de la base de données"}
+                    openOnRender={false}
+                    handleClickYes={handleDeleteConfirmed}
+                    handleClickNo={() => {}}
+                    handleClickBehavior={() => {}}
+                    yesNo={true}
+                    numberOfCall={numberOfCalls}
+                    />
+                </div>
+            }
         </div>
     )
 }
@@ -66,17 +89,29 @@ const styles = {
         color: "white",
         cursor: "pointer",        
         float: "right",
-        marginTop: "15px",
+        margin: "15px 0px 0px 15px ",
         ':hover':{
             backgroundColor: "#074E7B",
             transition: "0.2s"
+        },
+        '@media (max-width: 960px)': {
+            width: "100%"
         }
     },
-    divElection: {
+    divElectionAdmin: {
         padding: "30px 30px 80px 30px",
         marginBottom: "30px",
         backgroundColor: "white",
-        boxShadow: "0 0 10px #555"
+        boxShadow: "0 0 10px #555",
+        '@media (max-width: 960px)': {
+            padding: "30px 30px 140px 30px",
+        }
+    },
+    divElectionUser: {
+        padding: "30px 30px 80px 30px",
+        marginBottom: "30px",
+        backgroundColor: "white",
+        boxShadow: "0 0 10px #555",
     },
     blue : {
         backgroundColor: "#0B6BA8"
