@@ -53,7 +53,7 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
             { (currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
                 <div>
                     <Link to={{ pathname: `/elections`}} >
-                        <button key={"Retour"} style={Object.assign({},styles.btn, styles.returnBtn, styles.blue)}>Retour </button>
+                        <button key={"Retour"} style={Object.assign({}, styles.returnBtn, styles.blue)}>Retour </button>
                     </Link>
 
                     <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
@@ -124,7 +124,7 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
             }
 
             {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
-                <div>
+                <div style={styles.divForm}>
                     <form onSubmit={handleModification}>
                         <label className="update-election-label" style={styles.label}>Titre de l'élection : </label>
                         <span style={styles.span}><input type="text" className="update-election-input" value={titreElection} style={styles.input} onChange={handleTitreOnChange} required /></span>
@@ -171,7 +171,10 @@ const styles={
         height: "fit-content",
         width: "100%",
         paddingBottom: "15px",
-        textAlign: "center"
+        textAlign: "center",
+        '@media (max-width: 1100px)': {
+            padding: "50px 0px 5px 0px",
+        }
     },
     secondTitle: {
         textAlign: "center",
@@ -195,6 +198,18 @@ const styles={
             height: "300px",
         }
     },
+    divForm: {
+        backgroundColor: "white",
+        padding: "40px 40px 70px 40px",
+        boxShadow: "0 0 10px #999",
+        margin: "20px 0px 20px 0px",
+        '@media (max-width: 960px)': {
+            padding: "40px 40px 150px 40px"
+        },
+        '@media (max-width: 640px)': {
+            padding: "20px 20px 150px 20px"
+        }
+    },
     label: {
         float: "left",
         height: "50px",
@@ -213,42 +228,6 @@ const styles={
         height: "50px",
         marginBottom: "10px"
     },
-    submit: {
-        backgroundColor: "#0B6BA8",
-        border: "none",
-        color: "white",
-        padding: "15px",
-        textDecoration: "none",
-        cursor: "pointer",
-        width: "200px",
-        float: "right",
-        margin: "0px 0px 10px 10px",
-        ':hover': {
-            backgroundColor: "#074E7B",
-            transition: "0.2s"
-        },
-        '@media (max-width: 960px)': {
-            width: "100%",
-            marginBottom: "10px"
-        },
-    },
-    button: {
-        backgroundColor: "#0B6BA8",
-        border: "none",
-        color: "white",
-        padding: "15px",
-        textDecoration: "none",
-        cursor: "pointer",
-        width: "200px",
-        float: "right",
-        ':hover': {
-            backgroundColor: "#074E7B",
-            transition: "0.2s"
-        },
-        '@media (max-width: 960px)': {
-            width: "100%"
-        }
-    },
     span: {
         display: "block",
         overflow: "hidden",
@@ -266,7 +245,6 @@ const styles={
         marginBottom: "10px"
     },
     btn: {
-        font: "400 13.3333px Arial",
         textAlign: "center",
         textDecoration: "none",
         minWidth: "200px",
@@ -279,13 +257,51 @@ const styles={
         ':hover':{
             backgroundColor: "#074E7B",
             transition: "0.2s"
-        }
+        },
+        '@media (max-width: 960px)': {
+            width: "100%"
+        },
+    },
+    submit: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        width: "200px",
+        float: "right",
+        margin: "15px 0px 0px 10px",
+        ':hover': {
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
+        },
+        '@media (max-width: 960px)': {
+            width: "100%"
+        },
     },
     returnBtn: {
-        position: "absolute !important",
+        textAlign: "center",
+        textDecoration: "none",
+        minWidth: "200px",
+        padding: "15px",
+        border: "none",
+        color: "white",
+        cursor: "pointer",        
+        float: "right",
+        marginTop: "15px",
+        ':hover':{
+            backgroundColor: "#074E7B",
+            transition: "0.2s"
+        },
+        position: "absolute",
         float: "left",
-        marginTop: "0px !important"
-      },
+        marginTop: "0px",
+        '@media (max-width: 640px)': {
+            width: "calc(100% - 50px)",
+            float: "none"
+        }
+    },
     blue : {
         backgroundColor: "#0B6BA8"
     },

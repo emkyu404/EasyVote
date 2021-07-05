@@ -30,7 +30,7 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getPar
             </div>
             <DialogComponent
                 dialogText={"Le vote est irréversible. Vous avez encore la possibilité de consulter la liste des candidats"}
-                dialogTitle={"Confirmation de votre vote pour " + candidatCard.titreCandidat}
+                dialogTitle={"Confirmation de votre vote pour " + candidatCard.titreCandidatb}
                 openOnRender={false}
                 handleClickYes={async () => { await addVote(URLIdElection, candidatCard.idCandidat); await getParticiper(URLIdElection) }}
                 handleClickNo={() => { }}
@@ -50,7 +50,7 @@ const styles = {
         width: "calc(50% - 20px)",
         float: "left",
         boxShadow: "0 0 5px #555",
-        backgroundColor: '#E9F1F7',
+        background: "linear-gradient(#f8f8f8, #FFF5EE)",
         borderRadius: "5px",
         '@media (max-width: 1100px)': {
             width: "100%",
