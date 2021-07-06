@@ -34,7 +34,7 @@ const Pages = ({ connected, idElection, addCandidat, addElection, getElections, 
               {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") ?
                 <PageNotFound pageTitle={'404 - Not Found'} />
               : 
-                <Profile getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profile'} /> 
+                <Profile getProfile={profile} currentUser={currentUser} changePassword={changePassword} pageTitle={'Profil'} /> 
               } 
             </div> : 
           <NotConnected />}

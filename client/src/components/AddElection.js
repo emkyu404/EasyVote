@@ -214,10 +214,9 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
     }
 
     const handleAddElection = async ()=> {
+        console.log("Ajout élection")
         const response = await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
-        if(response.data.success){
             resetFormElection()
-        }
         
     }
 
@@ -248,7 +247,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
                         <h2 style={styles.secondTitle}>Formulaire d'ajout d'une élection</h2>
                         {electionType === "election_regionale" &&
                             <div>
-                                <label className="add-election-label" style={styles.label}>Nom de la région : </label>
+                                <label className="add-election-label" maxLength="50" style={styles.label}>Nom de la région : </label>
                                 <span style={styles.span}><input id="regionElection" type="text" className="add-election-input" style={styles.input} onChange={handleRegionOnChange} required value={nomRegion} /></span>
                             </div>
                         }
@@ -256,19 +255,19 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
                         {electionType === "election_departementale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Code du département : </label>
-                                <span style={styles.span}><input id="codeDepartementElection" type="text" className="add-election-input" style={styles.input} onChange={handleDepartementOnChange} required value={codeDepartement} /></span>
+                                <span style={styles.span}><input id="codeDepartementElection" type="text" maxLength="2" className="add-election-input" style={styles.input} onChange={handleDepartementOnChange} required value={codeDepartement} /></span>
                             </div>
                         }
 
                         {electionType === "election_municipale" &&
                             <div>
                                 <label className="add-election-label" style={styles.label}>Code postal : </label>
-                                <span style={styles.span}><input id="codePostalElection" type="text" className="add-election-input" style={styles.input} onChange={handleCodePostalOnChange} required value={codePostal} /></span>
+                                <span style={styles.span}><input id="codePostalElection" type="text" maxLength="5" className="add-election-input" style={styles.input} onChange={handleCodePostalOnChange} required value={codePostal} /></span>
                             </div>
                         }
 
                         <label className="add-election-label" style={styles.label}>Titre de l'élection : </label>
-                        <span style={styles.span}><input id="electionTitle" type="text" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required value={titreElection} /></span>
+                        <span style={styles.span}><input id="electionTitle" type="text" maxLength="50" className="add-election-input" style={styles.input} onChange={handleTitreOnChange} required value={titreElection} /></span>
 
                         <label className="add-election-label" style={styles.label}>Date de début : </label>
                         <span style={styles.span}><input id="dateDebut" type="date" max="9999-12-31" className="add-election-input" style={styles.input} onChange={handleDateDebutOnChange} required value={dateDebutElection} /></span>
@@ -283,7 +282,7 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
                         <span style={styles.span}><input id="heureFin" type="time" className="add-election-input" style={styles.input} onChange={handleHeureFinOnChange} required /></span>
 
                         <label className="add-election-label" style={styles.label}>Description de l'élection : </label>
-                        <textarea id="descriptionElection" type="text" className="add-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
+                        <textarea id="descriptionElection" type="text" maxLength="200" className="add-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
                         <button type="button" id="myBtn" style={styles.button} key="btnModalOpen" onClick={() => btnFunction()}>Ajouter un candidat</button>
 
