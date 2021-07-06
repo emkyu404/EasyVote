@@ -105,7 +105,6 @@ const styles = {
     border: "none",
     color: "white",
     cursor: "pointer",
-    marginTop: "15px",
     position: "absolute",
     float: "left",
     marginTop: "0px",
