@@ -370,7 +370,8 @@ const styles = {
         overflow: "auto"
     },
     delete: {
-        width: "15px"
+        width: "15px",
+        padding: "5px",
     },
     mainTitle: {
         color: "#0B6BA8",
@@ -547,10 +548,6 @@ const styles = {
     secondTitle: {
         textAlign: "center",
         paddingBottom: "10px"
-    },
-    delete: {
-        padding: "5px",
-        width: "5px"
     },
     hoverable: {
         ':hover': {
