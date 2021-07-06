@@ -25,6 +25,9 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
                     Date de fin : {electionCard.dateFinElection}<br/><br/>
                     <p style={styles.text}>{electionCard.descriptionElection}</p>
                     <div>
+                        <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
+                            <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
+                        </Link>
                         <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}}>
                             <button  key={"Modifier"} style={Object.assign({},styles.btn, styles.blue)}>Modifier l'élection </button>
                         </Link>
@@ -54,6 +57,7 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
                     </Link>
                 </div>
             }
+            
         </div>
     )
 }
@@ -65,7 +69,7 @@ const styles = {
         backgroundColor: "white",
         boxShadow: "0 0 10px #555",
         '@media (max-width: 960px)': {
-            padding: "30px 30px 140px 30px",
+            padding: "30px 30px 200px 30px",
         }
     },
     divElectionUser: {
