@@ -101,10 +101,10 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                 <div style={styles.divForm}>
                     <form onSubmit={handleModification}>
                         <label className="update-election-label" style={styles.label}>Titre de l'élection : </label>
-                        <span style={styles.span}><input type="text" className="update-election-input" value={titreElection} style={styles.input} onChange={handleTitreOnChange} required /></span>
+                        <span style={styles.span}><input type="text" maxLength="50" className="update-election-input" value={titreElection} style={styles.input} onChange={handleTitreOnChange} required /></span>
 
                         <label className="update-election-label" style={styles.label}>Description de l'élection : </label>
-                        <textarea id="descriptionElection" type="text" className="update-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
+                        <textarea id="descriptionElection" type="text" maxLength="200" className="update-election-input" style={styles.textArea} onChange={handleDescriptionOnChange} required value={descriptionElection}></textarea>
 
                         <label className="update-election-label" style={styles.label}>Date de début : </label>
                         <span style={styles.span}><input type="date" max="9999-12-31" className="update-election-input" value={dateDebutElection} style={styles.input} onChange={handleDateDebutOnChange} required /></span>
