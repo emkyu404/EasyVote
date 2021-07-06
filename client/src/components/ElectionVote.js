@@ -50,7 +50,7 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
 
     return (
         <div>
-            {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+            {/* {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
                 <div>
 
                     <Link to={{ pathname: `/elections`}} >
@@ -85,7 +85,7 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                                 :
                                 candidats.map((candidatCard) => (
                                     <div key={candidatCard.idCandidat}>
-                                        <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} />
+                                        <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} currentUser={currentUser} />
                                     </div>
                                 ))
                             }
@@ -95,10 +95,11 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
                         </div>
                     </div>
                 </div>
-            }
+            {/* } */}
 
             {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
                 <div style={styles.divForm}>
+                    <h1 style={styles.mainTitle}>Modifier l'élection</h1>
                     <form onSubmit={handleModification}>
                         <label className="update-election-label" style={styles.label}>Titre de l'élection : </label>
                         <span style={styles.span}><input type="text" className="update-election-input" value={titreElection} style={styles.input} onChange={handleTitreOnChange} required /></span>

@@ -4,7 +4,7 @@ import DialogComponent from './DialogComponent'
 import Radium from 'radium'
 import NotFound from '../img/default.png'
 
-const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getParticiper }) => {
+const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getParticiper, currentUser }) => {
     const [numberOfCalls, setNumberOfCalls] = useState(0)
     function prepareVote() {
         setNumberOfCalls(numberOfCalls + 1)
@@ -18,9 +18,11 @@ const CandidatCard = ({ candidatCard, addVote, URLIdElection, participer, getPar
                     <tr>
                         <td><img style={styles.img} src={candidatCard.urlImage} alt={"Image " + candidatCard.titreCandidat} onError={(e) => { e.target.onerror = null; e.target.src =NotFound}} /></td>
                     </tr>
-                    <tr>
-                        <td>{participer === false ? <button style={styles.btn} onClick={() => { prepareVote() }} className="voterCandidat">Voter</button> : ""}</td>
-                    </tr>
+                    {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+                        <tr>
+                            <td>{participer === false ? <button style={styles.btn} onClick={() => { prepareVote() }} className="voterCandidat">Voter</button> : ""}</td>
+                        </tr>
+                    }
                 </tbody>
             </table>
             </div>

@@ -49,7 +49,7 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
 
   return (
     <div>
-      {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") &&
+      {/* {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
         <div>
           <Link to={{ pathname: `/elections`}} >
             <button key={"Retour"} style={styles.returnBtn}>Retour </button>
@@ -61,10 +61,11 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
             <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p>
           </div>
         </div>
-      }
+      {/* } */}
 
       {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
         <div style={styles.divForm}>
+          <h1 style={styles.mainTitle}>Modifier l'élection</h1>
             <form onSubmit={handleModification}>
                 <label className="update-election-label" style={styles.label}>Titre de l'élection : </label>
                 <span style={styles.span}><input type="text" className="update-election-input" value={titreElection} style={styles.input} onChange={handleTitreOnChange} required /></span>
