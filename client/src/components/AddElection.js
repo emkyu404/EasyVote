@@ -214,11 +214,10 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
     }
 
     const handleAddElection = async ()=> {
-        const response = await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
-        if(response.data.success){
-            resetFormElection()
-        }
-        
+        await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
+        // if(response.data.success){
+        //     resetFormElection()
+        // }
     }
 
     function deleteCandidat(titreCandidat) {

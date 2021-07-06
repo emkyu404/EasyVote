@@ -204,6 +204,13 @@ function App() {
   } 
 
   const addElection = async (titreElection, dateDebutElection, dateFinElection, descriptionElection, electionType, nomRegion, codeDepartement, codePostal) => {
+    if (dateDebutElection>dateFinElection){
+      addToast("Erreur : votre date de fin doit être postérieur à votre date de début", {
+        appearance: 'error',
+        autoDismiss: true,
+      })
+    }
+    else{
       const response = await Axios.post(baseUrl+"/addElection", { titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection, electionType: electionType, nomRegion: nomRegion, codeDepartement: codeDepartement, codePostal: codePostal })
       if (response.data.message){
         addToast("Erreur : " + response.data.message, {
@@ -219,6 +226,7 @@ function App() {
         })
       }
     }
+  }
 
   const addCandidat = async (titreCandidat, descriptionCandidat, urlImage) => {
     const response = await Axios.post(baseUrl+"/addCandidat", { titreCandidat: titreCandidat, descriptionCandidat: descriptionCandidat, urlImage: urlImage, idElection: idElection })
@@ -334,18 +342,26 @@ function App() {
   }
 
   const updateElection = async (idElection, titreElection, dateDebutElection, dateFinElection, descriptionElection) => {
-    const response = await Axios.put(baseUrl+"/election/"+idElection, {titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection})
-    if (response.data.success === true){
-      addToast(response.data.message, {
-        appearance: 'success',
-        autoDismiss: true,
-      })
-    }
-    else {
-      addToast("Erreur : La modification a échouée" , {
+    if (dateDebutElection>dateFinElection){
+      addToast("Erreur : votre date de fin doit être postérieur à votre date de début", {
         appearance: 'error',
         autoDismiss: true,
       })
+    }
+    else{
+      const response = await Axios.put(baseUrl+"/election/"+idElection, {titreElection: titreElection, dateDebutElection: dateDebutElection, dateFinElection: dateFinElection, descriptionElection: descriptionElection})
+      if (response.data.success === true){
+        addToast(response.data.message, {
+          appearance: 'success',
+          autoDismiss: true,
+        })
+      }
+      else {
+        addToast("Erreur : La modification a échouée" , {
+          appearance: 'error',
+          autoDismiss: true,
+        })
+      }
     }
   }
 

@@ -55,7 +55,7 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
        passwordAndConfirmPasswordMatch(newPassword, e.target.value)
     }
 
-    const [show, setShow] = React.useState(false);
+    // const [show, setShow] = React.useState(false);
 
     function submitButtonEnabledOrDisabled(pwd, newPwd, cfmPwd){
         if(cfmPwd === "" || newPwd === "" || pwd === ""){
