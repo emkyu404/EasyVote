@@ -16,13 +16,6 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
        setNumberOfCalls(numberOfCalls+1)
     }
 
-    const user = {
-        padding: "30px 30px 80px 30px",
-        marginBottom: "30px",
-        backgroundColor: "white",
-        boxShadow: "0 0 10px #555",
-    }
-
     return (
         <div>
             { (currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
@@ -59,16 +52,6 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
                     <Link to={{ pathname: `/election/${electionCard.idElection}`, state: { URLIdElection: electionCard.idElection }}} >
                         <button key={"Consulter"} style={Object.assign({},styles.btn, styles.blue)}>Consulter l'élection </button>
                     </Link>
-                    <DialogComponent
-                    dialogText={"Souhaitez-vous supprimer l'élection '"+electionCard.titreElection+ "' de la base de données ? Cette action est irréversible."}
-                    dialogTitle={"Suppression d'une élection de la base de données"}
-                    openOnRender={false}
-                    handleClickYes={handleDeleteConfirmed}
-                    handleClickNo={() => {}}
-                    handleClickBehavior={() => {}}
-                    yesNo={true}
-                    numberOfCall={numberOfCalls}
-                    />
                 </div>
             }
         </div>
@@ -76,10 +59,26 @@ const ElectionCard = ({electionCard, deleteElection, currentUser}) => {
 }
 
 const styles = {
+    divElectionAdmin: {
+        padding: "30px 30px 80px 30px",
+        marginBottom: "30px",
+        backgroundColor: "white",
+        boxShadow: "0 0 10px #555",
+        '@media (max-width: 960px)': {
+            padding: "30px 30px 140px 30px",
+        }
+    },
+    divElectionUser: {
+        padding: "30px 30px 80px 30px",
+        marginBottom: "30px",
+        backgroundColor: "white",
+        boxShadow: "0 0 10px #555",
+    },
     text: {
         textAlign: "justify"
     },
     btn: {
+        backgroundColor: "#0B6BA8",
         font: "400 13.3333px Arial",
         textAlign: "center",
         textDecoration: "none",
@@ -97,30 +96,6 @@ const styles = {
         '@media (max-width: 960px)': {
             width: "100%"
         }
-    },
-    divElectionAdmin: {
-        padding: "30px 30px 80px 30px",
-        marginBottom: "30px",
-        backgroundColor: "white",
-        boxShadow: "0 0 10px #555",
-        '@media (max-width: 960px)': {
-            padding: "30px 30px 140px 30px",
-        }
-    },
-    divElectionUser: {
-        padding: "30px 30px 80px 30px",
-        marginBottom: "30px",
-        backgroundColor: "white",
-        boxShadow: "0 0 10px #555",
-    },
-    blue : {
-        backgroundColor: "#0B6BA8"
-    },
-    green : {
-        backgroundColor: "#009F79"
-    },
-    red : {
-        backgroundColor: "#A63950"
     }
 }
 

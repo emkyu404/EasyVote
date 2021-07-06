@@ -1,6 +1,6 @@
-import emailjs from "emailjs-com";
-import React from 'react';
-import Radium from 'radium';
+import emailjs from "emailjs-com"
+import React from 'react'
+import Radium from 'radium'
 import { useToasts } from 'react-toast-notifications'
 
 const Contact = () => {
@@ -26,7 +26,7 @@ const Contact = () => {
     }
 
     return (
-        <div style={styles.fullWidth}>
+        <div>
             <h1 style={styles.mainTitle}>Contactez-nous</h1>
             <form onSubmit={sendEmail} className='contactForm'>
                 <div style={styles.divForm}>
@@ -61,8 +61,23 @@ const Contact = () => {
 }
 
 const styles = {
-    fullWidth: {
-        width: "100%"
+    mainTitle: {
+        color: "#0B6BA8",
+        paddingBottom: "15px",
+        textAlign: "center"
+    },
+    secondTitle:{
+        margin:"0px 0px 20px 0px",
+        textAlign: "center"
+    },
+    divForm: {
+        backgroundColor: "white",
+        padding: "20px 40px 70px 40px",
+        boxShadow: "0 0 10px #999",
+        width: "100%",
+        '@media (max-width: 640px)': { 
+            padding: "20px 20px 70px 20px"
+        }
     },
     alignleft: {
         width: "47.5%",
@@ -84,33 +99,10 @@ const styles = {
             marginLeft: "0%",
         }
     },
-    mainTitle: {
-        color: "#0B6BA8",
-        height: "fit-content",
-        width: "100%",
-        paddingBottom: "15px",
-        textAlign: "center"
-    },
-    secondTitle:{
-        margin:"0px 0px 20px 0px",
-        textAlign: "center"
-    },
-    divForm: {
-        backgroundColor: "white",
-        padding: "20px 40px 75px 40px",
-        boxShadow: "0 0 10px #999",
-        margin: "20px 0px 20px 0px",
-        width: "100%",
-        '@media (max-width: 640px)': { 
-            padding: "20px 20px 60px 20px"
-        }
-    },
     label: {
         float: "left",
-        height: "50px",
         lineHeight: "50px",
         textAlign: "center",
-        verticalAlign: "middle",
         '@media (max-width: 640px)': { 
             float: "none",
             lineHeight: "30px",
@@ -122,19 +114,6 @@ const styles = {
         width: "100%",
         height: "50px",
         marginBottom: "10px"
-    },
-    submit: {
-        backgroundColor: "#0B6BA8",
-        border: "none",
-        color: "white",
-        padding: "15px",
-        textDecoration: "none",
-        cursor: "pointer",
-        width: "200px",
-        float: "right",
-        '@media (max-width: 640px)': { 
-            width: "100%"
-        }
     },
     span: {
         display: "block",
@@ -151,7 +130,21 @@ const styles = {
         width: "100%",
         height: "200px",
         marginBottom: "10px"
-    }
+    },
+    submit: {
+        backgroundColor: "#0B6BA8",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        cursor: "pointer",
+        width: "200px",
+        float: "right",
+        '@media (max-width: 640px)': { 
+            width: "100%"
+        }
+    },
+    
 }
 
 export default Radium(Contact)

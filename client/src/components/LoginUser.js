@@ -58,12 +58,14 @@ const styles = {
 
     loginInputStyle: {
         padding: "5px",
-        marginTop: "5px"
+        marginTop: "5px",
+        marginBottom: "15px",
+
     },
 
     loginSubmitStyle: {
         padding: "15px",
-        marginTop: "20px",
+        marginTop: "10px",
         backgroundColor: "#0B6BA8",
         border: "none",
         color: "white",
@@ -78,7 +80,8 @@ const styles = {
         paddingTop: "10px",
         cursor: "pointer",
         fontSize: "15px",
-    }
+    },
+
 }
 
 export default Radium(LoginUser)

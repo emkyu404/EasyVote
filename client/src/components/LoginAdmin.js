@@ -38,32 +38,33 @@ const LoginAdmin = ({ onLogin, pageTitle }) => {
 }
 
 const styles = {
-    formStyle : {
-    display : "flex",
-    flexDirection : "column",
-    width : "100%",
-    maxWidth :"300px",
-    margin : "auto"
+    formStyle: {
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
+        maxWidth: "300px",
+        margin: "auto"
     },
 
-    loginTitleStyle : {
-        fontSize : "20px",
-        textAlign : "center",
-        marginBottom : "20px"
+    loginTitleStyle: {
+        fontSize: "20px",
+        textAlign: "center",
+        marginBottom: "20px"
     },
 
-    loginInputStyle : {
-        padding : "5px",
-        marginTop : "5px"
+    loginInputStyle: {
+        padding: "5px",
+        marginTop: "5px",
+        marginBottom: "15px",
     },
 
-    loginSubmitStyle : {
-        padding : "15px",
-        marginTop : "20px",
+    loginSubmitStyle: {
+        padding: "15px",
+        marginTop: "10px",
         backgroundColor: "#0B6BA8",
-        border : "none",
-        color : "white",
-        cursor : "pointer",
+        border: "none",
+        color: "white",
+        cursor: "pointer",
         ':hover': {
             backgroundColor: "#074E7B",
             transition: "0.2s"

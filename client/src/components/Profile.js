@@ -192,6 +192,23 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
 }
 
 const styles = {
+    mainTitle: {
+        color: "#0B6BA8",
+        paddingBottom: "15px",
+        textAlign: "center"
+    },
+    secondTitle: {
+        margin: "0px 0px 20px 0px",
+        textAlign: "center"
+    },
+    divProfil: {
+        backgroundColor: "white",
+        padding: "20px 40px 20px 40px",
+        boxShadow: "0 0 10px #999",
+        '@media (max-width: 640px)': {
+            padding: "20px 20px 20px 20px"
+        }
+    },
     table: {
         border: "1px solid #eee",
         borderCollapse: "collapse",
@@ -223,90 +240,14 @@ const styles = {
         cursor: "pointer",
         width: "200px",
         verticalAlign: "middle",
-        margin : "15px 5px 10px 5px",
+        margin : "0px 5px 10px 5px",
         '@media (max-width: 740px)': {
             width: "100%"
         },
         
     },
-    divProfil: {
-        backgroundColor: "white",
-        padding: "20px 40px 30px 40px",
-        boxShadow: "0 0 10px #999",
-        '@media (max-width: 640px)': {
-            padding: "20px 20px 20px 20px"
-        }
-    },
-    divForm: {
-        backgroundColor: "white",
-        padding: "20px 40px 75px 40px",
-        boxShadow: "0 0 10px #999",
-        '@media (max-width: 640px)': {
-            padding: "20px 20px 65px 20px"
-        }
-    },
-    mainTitle: {
-        color: "#0B6BA8",
-        height: "fit-content",
-        width: "100%",
-        paddingBottom: "15px",
-        textAlign: "center"
-    },
-    secondTitle: {
-        margin: "0px 0px 20px 0px",
-        textAlign: "center"
-    },
-    thirdTitle: {
-        display: "inline-block",
-        marginRight: "20px",
-        verticalAlign: "middle",
-        marginTop: "15px"
-    },
     divContact: {
         textAlign: "center"
-    },
-    label: {
-        float: "left",
-        height: "50px",
-        lineHeight: "50px",
-        textAlign: "center",
-        verticalAlign: "middle",
-        '@media (max-width: 960px)': {
-            float: "none",
-            lineHeight: "30px"
-        }
-    },
-    input: {
-        border: "1px solid #E5E5E5",
-        padding: "15px",
-        width: "100%",
-        height: "50px",
-        marginBottom: "10px"
-    },
-    submit: {
-        backgroundColor: "#CECECE",
-        cursor: "not-allowed",
-        border: "none",
-        color: "white",
-        padding: "15px",
-        textDecoration: "none",
-        width: "200px",
-        float: "right",
-        '@media (max-width: 640px)': {
-            width: "100%"
-        },
-        ':disabled':{
-            backgroundColor : "#CECECE",
-            cursor: "not-allowed"
-        }
-    },
-    span: {
-        display: "block",
-        overflow: "hidden",
-        paddingLeft: "15px",
-        '@media (max-width: 960px)': {
-            paddingLeft: "0px"
-        }
     },
     modal: {
         display: "none",
@@ -323,7 +264,7 @@ const styles = {
     modalContent: {
         backgroundColor: "white",
         margin: "auto",
-        padding: "40px 40px 70px 40px",
+        padding: "20px 40px 70px 40px",
         border: "1px solid #888",
         width: "calc(80% - 50px)",
         maxWidth: "1150px",
@@ -348,6 +289,42 @@ const styles = {
             cursor: "pointer"
         }
     },
+    label: {
+        float: "left",
+        lineHeight: "50px",
+        '@media (max-width: 960px)': {
+            float: "none",
+            lineHeight: "30px"
+        }
+    },
+    span: {
+        display: "block",
+        overflow: "hidden",
+        paddingLeft: "15px",
+        '@media (max-width: 960px)': {
+            paddingLeft: "0px"
+        }
+    },
+    input: {
+        border: "1px solid #E5E5E5",
+        padding: "15px",
+        width: "100%",
+        height: "50px",
+        marginBottom: "10px"
+    },
+    submit: {
+        backgroundColor: "#CECECE",
+        cursor: "not-allowed",
+        border: "none",
+        color: "white",
+        padding: "15px",
+        textDecoration: "none",
+        width: "200px",
+        float: "right",
+        '@media (max-width: 640px)': {
+            width: "100%"
+        },
+    }
 }
 
 export default Radium(Profile)
