@@ -34,6 +34,15 @@ Vous pouvez vous connecter avec :
     - un compte administrateur sur le l'adresse http://localhost:3000/loginAdmin (non indéxé) :
         - email : admin@email.fr
         - mot de passe : admin
+
+Formulaire de contact :
+Si vous souhaitez vérifier si le a bien été envoyé a l'admin, vous pouvez vous connecter avec le compte gmail easyvote :
+	- mail : easyvoteefrei@gmail.com
+	- mot de passe : easyvote
+
+mot de passe oublier :
+pareil que le formulaire de contact, l'administrateur renverra le mot de passe au mail fournis.
+
         
 Contributeurs :
     -Minh-Quan BUIH
