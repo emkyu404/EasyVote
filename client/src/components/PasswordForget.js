@@ -20,7 +20,7 @@ const PasswordForget = () => {
     function sendEmail(e) {
         e.preventDefault();
 
-        emailjs.sendForm('service_btyu4pb', 'template_cvrcrja', e.target, 'user_i6c320cLnwcR81VHCJfhi')
+        emailjs.sendForm('service_smeqj8c', 'template_c0zdm4d', e.target, 'user_7btEnIT2d1r5Dkv4VHxvI')
             .then((result) => {
                 addToast("Vous recevrez prochainement votre mot de passe par email.", {
                     appearance: 'success',

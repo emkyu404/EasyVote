@@ -164,13 +164,13 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
                         <h2 style={styles.secondTitle}>Changer de mot de passe</h2>
 
                         <label style={styles.label}>Ancien mot de passe : </label>
-                        <span style={styles.span}><input id="password" type="password" name="old-pass" required style={styles.input} onChange={handlePasswordChange} /></span>
+                        <span style={styles.span}><input id="password" maxLength="32" type="password" name="old-pass" required style={styles.input} onChange={handlePasswordChange} /></span>
 
                         <label style={styles.label}>Nouveau mot de passe : </label>
-                        <span style={styles.span}><input id="newPassword" type="password" name="new-pass" required style={styles.input} onChange={handleNewPasswordChange} /></span>
+                        <span style={styles.span}><input id="newPassword" maxLength="32" type="password" name="new-pass" required style={styles.input} onChange={handleNewPasswordChange} /></span>
 
                         <label style={styles.label}>Confirmation nouveau mot de passe : </label>
-                        <span style={styles.span}><input id="confirmPassword" type="password" name="confirm-pass" required style={styles.input} onChange={handleConfirmPasswordChange}/></span>
+                        <span style={styles.span}><input id="confirmPassword" maxLength="32" type="password" name="confirm-pass" required style={styles.input} onChange={handleConfirmPasswordChange}/></span>
 
                         <input id="changePasswordButton" type="submit" className="button" style={styles.submit} value="Envoyer"></input>
                     </div>

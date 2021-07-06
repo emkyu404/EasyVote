@@ -9,7 +9,7 @@ const Contact = () => {
     function sendEmail(e) {
         e.preventDefault();
 
-        emailjs.sendForm('service_btyu4pb', 'template_nd7o35g', e.target, 'user_i6c320cLnwcR81VHCJfhi')
+        emailjs.sendForm('service_smeqj8c', 'template_4rtoyrl', e.target, 'user_7btEnIT2d1r5Dkv4VHxvI')
             .then((result) => {
                 addToast("Message envoyé avec succès !", {
                     appearance: 'success',
