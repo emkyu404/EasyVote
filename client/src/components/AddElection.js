@@ -10,13 +10,13 @@ import { CookieJar } from 'tough-cookie';
 const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
     useEffect(() => {
         document.title = pageTitle
-    }, [pageTitle])
+    }, [pageTitle])// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         listeCandidats.forEach(
             candidat => addCandidat(candidat.titreCandidat, candidat.descriptionCandidat, candidat.urlCandidat)
         )
-    }, [idElection])
+    }, [idElection])// eslint-disable-line react-hooks/exhaustive-deps
 
     const [titreElection, setElectionTitle] = useState("")
     const [dateDebutElection, setDateDebutElection] = useState("")

@@ -8,7 +8,7 @@ const FirstConnexion = ({pageTitle, currentUser, updateFirstConnexion, updatePas
     useEffect(() => {
         document.title = pageTitle
         updateFirstConnexion(currentUser.idCitoyen)
-    }, [pageTitle])
+    }, [pageTitle])// eslint-disable-line react-hooks/exhaustive-deps
 
     const [newPassword, setNewPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')

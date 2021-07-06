@@ -19,7 +19,7 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
             await getElection(state.URLIdElection)
         }
         prepareElection();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         async function prepareElection(){
@@ -32,7 +32,7 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
             }
         }
         prepareElection();
-    }, [election])
+    }, [election])// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div>
