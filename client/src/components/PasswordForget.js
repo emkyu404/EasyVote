@@ -1,19 +1,7 @@
-
-// import React, { useState } from 'react'
 import emailjs from "emailjs-com";
 import Radium from 'radium';
 import { useToasts } from 'react-toast-notifications'
 const PasswordForget = () => {
-
-    // const [email, setEmail] = useState();
-
-    // const handleSubmit = (e) => {
-    //     e.preventDefault()
-    // }
-
-    // const handleEmailOnChange = (e) => {
-    //     setEmail(e.target.value)
-    // }
 
     const { addToast } = useToasts()
 

@@ -15,7 +15,6 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
         getProfile();
     }, [])
 
-    // const [triggerDialog, setTriggerDialog] = useState(false)
     const [numberOfCalls, setNumberOfCalls] = useState(0)
     const [newPassword, setNewPassword] = useState("")
     const [password, setPassword] = useState("")
@@ -54,8 +53,6 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
        setConfirmPassword(e.target.value)
        passwordAndConfirmPasswordMatch(newPassword, e.target.value)
     }
-
-    // const [show, setShow] = React.useState(false);
 
     function submitButtonEnabledOrDisabled(pwd, newPwd, cfmPwd){
         if(cfmPwd === "" || newPwd === "" || pwd === ""){
