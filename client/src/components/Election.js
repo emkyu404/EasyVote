@@ -39,27 +39,18 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
             {election.ended===true
             ?
             <div>
-                {/* {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
-                    <h1 style={styles.mainTitle}>Modifier l'élection</h1>
-                } */}
                 <ElectionResults election={election} candidats={candidats} votes={votes} currentUser={currentUser} updateElection={updateElection} />
             </div>
             :
             election.started===true
             ?
             <div>
-                {/* {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
-                    <h1 style={styles.mainTitle}>Modifier l'élection</h1>
-                } */}
                 <ElectionVote election={election} candidats={candidats} addVote={addVote} URLIdElection={state.URLIdElection} participer={participer} getParticiper={getParticiper} currentUser={currentUser} updateElection={updateElection} />
             </div>
             :
             (election.started===false && election.ended===false) 
             ?
             <div>
-                {/* {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== 0) &&
-                    <h1 style={styles.mainTitle}>Modifier l'élection</h1>
-                } */}
                 <ElectionWait election={election} currentUser={currentUser} updateElection={updateElection} />
             </div>
             :
@@ -69,16 +60,6 @@ const Election = ({getElection, election, getCandidats, candidats, getVotes, vot
         
         </div>
     )
-}
-
-const styles = {
-    mainTitle: {
-        color: "#0B6BA8",
-        height: "fit-content",
-        width: "100%",
-        paddingBottom: "15px",
-        textAlign: "center"
-    },
 }
 
 export default Radium(Election)

@@ -50,52 +50,49 @@ const ElectionVote = ({ election, candidats, addVote, URLIdElection, participer,
 
     return (
         <div>
-            {/* {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
-                <div>
+            <div>
+                <Link to={{ pathname: `/elections`}} >
+                    <button key={"Retour"} style={styles.returnBtn}>Retour </button>
+                </Link>
 
-                    <Link to={{ pathname: `/elections`}} >
-                        <button key={"Retour"} style={styles.returnBtn}>Retour </button>
-                    </Link>
+                <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
+                <div style={styles.divElection}>
+                    <h2 style={styles.secondTitle}>{election.titreElection}</h2>
 
-                    <h1 style={styles.mainTitle}>Voter pour un candidat</h1>
-                    <div style={styles.divElection}>
-                        <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+                    <table style={styles.table}>
+                        <tbody>
+                            <tr>
+                                <th style={styles.th}>Description : </th>
+                                <td style={styles.td}>{election.descriptionElection}</td>
+                            </tr>
+                            <tr>
+                                <th style={styles.th}>Date de début : </th>
+                                <td style={styles.td}>{election.dateDebutElection}</td>
+                            </tr>
+                            <tr>
+                                <th style={styles.th}>Date de fin : </th>
+                                <td style={styles.td}>{election.dateFinElection}</td>
+                            </tr>
+                        </tbody>
+                    </table>
 
-                        <table style={styles.table}>
-                            <tbody>
-                                <tr>
-                                    <th style={styles.th}>Description : </th>
-                                    <td style={styles.td}>{election.descriptionElection}</td>
-                                </tr>
-                                <tr>
-                                    <th style={styles.th}>Date de début : </th>
-                                    <td style={styles.td}>{election.dateDebutElection}</td>
-                                </tr>
-                                <tr>
-                                    <th style={styles.th}>Date de fin : </th>
-                                    <td style={styles.td}>{election.dateFinElection}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-
-                        <div id="divCandidats">
-                            {typeof (candidats) === "undefined" || candidats.length === 0
-                                ?
-                                "Pas de candidats"
-                                :
-                                candidats.map((candidatCard) => (
-                                    <div key={candidatCard.idCandidat}>
-                                        <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} currentUser={currentUser} />
-                                    </div>
-                                ))
-                            }
-                            <div style={styles.votedStyle}>
-                                <p>{participer === true ? "Vous avez déjà voté." : ""}</p>
-                            </div>
+                    <div id="divCandidats">
+                        {typeof (candidats) === "undefined" || candidats.length === 0
+                            ?
+                            "Pas de candidats"
+                            :
+                            candidats.map((candidatCard) => (
+                                <div key={candidatCard.idCandidat}>
+                                    <CandidatCard candidatCard={candidatCard} addVote={addVote} URLIdElection={URLIdElection} participer={participer} getParticiper={getParticiper} currentUser={currentUser} />
+                                </div>
+                            ))
+                        }
+                        <div style={styles.votedStyle}>
+                            <p>{participer === true ? "Vous avez déjà voté." : ""}</p>
                         </div>
                     </div>
                 </div>
-            {/* } */}
+            </div>
 
             {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
                 <div style={styles.divForm}>
