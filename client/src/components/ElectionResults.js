@@ -222,7 +222,7 @@ const styles={
     // },
     divForm: {
         backgroundColor: "white",
-        padding: "40px 40px 70px 40px",
+        padding: "40px 40px 80px 40px",
         boxShadow: "0 0 10px #999",
         margin: "20px 0px 20px 0px",
         '@media (max-width: 960px)': {
