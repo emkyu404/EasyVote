@@ -1,13 +1,5 @@
 EASY VOTE
 
-Introduction :
-Mastercamp 2021 L3 New
-Front End
-React
-Back End
-Node et express
-
-
 Pré-requis :
     -visual studio code (de préférence)
     -node.js pour le serveur et installer les librairies rapidement
@@ -45,7 +37,7 @@ Si vous souhaitez vérifier si le a bien été envoyé a l'admin, vous pouvez vo
 	- mot de passe : easyvote
 
 Mot de passe oublié :
-pareil que le formulaire de contact, l'administrateur renverra le mot de passe au mail fourni.
+Pareil que le formulaire de contact, l'administrateur renverra le mot de passe au mail fourni.
 
 
 Contributeurs :
@@ -54,3 +46,5 @@ Contributeurs :
     -Amaury LIN
     -Thierry ZHANG
     -Jean-Franck TANG
+
+Mastercamp 2021 L3 New

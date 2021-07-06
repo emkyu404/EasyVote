@@ -1,5 +1,5 @@
 import "./css/App.css";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import Axios from "axios";
 import { BrowserRouter as Router } from "react-router-dom";
 import { useToasts } from 'react-toast-notifications'
@@ -35,11 +35,11 @@ function App() {
 
   useEffect(() => {
     token();
-  },[])
+  },[])// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     handleConnected()
-  }, [currentUser.idAdmin, currentUser.idCitoyen])
+  }, [currentUser.idAdmin, currentUser.idCitoyen])// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     var aFilteredelections
@@ -58,24 +58,16 @@ function App() {
         break;
     }
     setFilteredElections(aFilteredelections)
-  }, [currentFilter])
+  }, [currentFilter])// eslint-disable-line react-hooks/exhaustive-deps
 
   /**
    * Vérifie si l'idCitoyen est vide ou non, en conséquence modifie la state connected à true ou false
    */
-  const handleConnected = useCallback(() => {
+  const handleConnected = (() => {
     if (currentUser.idCitoyen === 0 && currentUser.idAdmin === 0) {
       setConnected(false)
-      
     } else {
       setConnected(true)
-      let connectedText="";
-      if (currentUser.idAdmin){
-        connectedText = "administrateur " + currentUser.idAdmin
-      }
-      else{
-        connectedText = currentUser.nomCitoyen;
-      }
     }
   })
 
@@ -426,7 +418,7 @@ function App() {
 
             //Profile
             profile={profile}
-            currentUser={currentUser}
+            //currentUser={currentUser}
             changePassword={changePassword}
 
             //Login

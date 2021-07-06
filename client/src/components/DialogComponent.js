@@ -20,7 +20,7 @@ const DialogComponent = ({ dialogText, dialogTitle, openOnRender, handleClickBeh
         if(numberOfCall > 0){
             handleClickOpen()
         }
-    }, [numberOfCall])
+    }, [numberOfCall])// eslint-disable-line react-hooks/exhaustive-deps
 
     const handleClickOpen = () => {
         setOpen(true);

@@ -13,7 +13,7 @@ const ElectionResults = ({election, candidat, votes, currentUser, updateElection
         setDateFinElection(dateHeureFin[0])
         setHeureDebut(dateHeureDebut[1])
         setHeureFin(dateHeureFin[1])
-      },[election])
+      },[election])// eslint-disable-line react-hooks/exhaustive-deps
 
     const [titreElection, setElectionTitle] = useState(election.titreElection)
     const [dateDebutElection, setDateDebutElection] = useState("")

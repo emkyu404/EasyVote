@@ -13,7 +13,7 @@ const Profile = ({ getProfile, currentUser,changePassword, pageTitle }) => {
 
     useEffect(() => {
         getProfile();
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     const [numberOfCalls, setNumberOfCalls] = useState(0)
     const [newPassword, setNewPassword] = useState("")

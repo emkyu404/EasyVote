@@ -17,7 +17,7 @@ const Elections = ({getCurrentDate, getElections, filteredElections, filterElect
         }
         prepareElections();
         switchBtn("Ongoing");
-    }, [])
+    }, [])// eslint-disable-line react-hooks/exhaustive-deps
 
     function switchBtn(btnName) {
         if(btnName === "Ongoing"){
