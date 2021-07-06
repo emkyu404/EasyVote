@@ -4,7 +4,6 @@ import Radium from 'radium';
 
 import FileReaderAddElection from './FileReaderAddElection'
 import DialogComponent from './DialogComponent';
-import { CookieJar } from 'tough-cookie';
 
 
 const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
@@ -143,22 +142,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
         document.getElementById("add-candidat-form").reset()
     }
 
-    function resetFormElection() {
-        setElectionTitle("")
-        setDateDebutElection("")
-        setDateFinElection("")
-        setHeureDebut("")
-        setHeureFin("")
-        setDescriptionElection("")
-        setElectionType("")
-
-        setNomRegion("")
-        setCodeDepartement("")
-        setCodePostal("")
-        setListeCandidats([])
-        document.getElementById("add-election-form").reset()
-    }
-
     function duplicateCandidat(newCandidat) {
         const idx = listeCandidats.findIndex(c => c.titreCandidat === newCandidat.titreCandidat)
 
@@ -215,9 +198,6 @@ const AddElection = ({ addCandidat, onAddElection, idElection, pageTitle }) => {
 
     const handleAddElection = async ()=> {
         await onAddElection(titreElection, (dateDebutElection + " " + heureDebut), (dateFinElection + " " + heureFin), descriptionElection, electionType, nomRegion, codeDepartement, codePostal)
-        // if(response.data.success){
-        //     resetFormElection()
-        // }
     }
 
     function deleteCandidat(titreCandidat) {

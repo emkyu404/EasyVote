@@ -49,19 +49,17 @@ const ElectionWait = ({ election, currentUser, updateElection }) => {
 
   return (
     <div>
-      {/* {(currentUser.idElecteur !== undefined && currentUser.idElecteur !== "") && */}
-        <div>
-          <Link to={{ pathname: `/elections`}} >
-            <button key={"Retour"} style={styles.returnBtn}>Retour </button>
-          </Link>
-          <h1 style={styles.mainTitle}>En cours de préparation</h1>
-          <div style={styles.divElections}>
-            <h2 style={styles.secondTitle}>{election.titreElection}</h2>
-            <p>{election.descriptionElection}</p><br></br>
-            <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p>
-          </div>
+      <div>
+        <Link to={{ pathname: `/elections`}} >
+          <button key={"Retour"} style={styles.returnBtn}>Retour </button>
+        </Link>
+        <h1 style={styles.mainTitle}>En cours de préparation</h1>
+        <div style={styles.divElections}>
+          <h2 style={styles.secondTitle}>{election.titreElection}</h2>
+          <p>{election.descriptionElection}</p><br></br>
+          <p>L'élection que vous avez séléctionné n'a pas encore débuté vous pourrez y participer à partir du <strong>{election.dateDebutElection}</strong> jusqu'au <strong>{election.dateFinElection}</strong></p>
         </div>
-      {/* } */}
+      </div>
 
       {(currentUser.idAdmin !== undefined && currentUser.idAdmin !== "") &&
         <div style={styles.divForm}>
