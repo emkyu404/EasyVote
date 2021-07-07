@@ -41,7 +41,7 @@ Pareil que le formulaire de contact, l'administrateur renverra le mot de passe a
 
 
 Contributeurs :
-    -Minh-Quan BUIH
+    -Minh-Quan BUI
     -Antoine CHENG
     -Amaury LIN
     -Thierry ZHANG
