@@ -1,5 +1,8 @@
 EASY VOTE
 
+Plateforme WEB de vote en ligne réalisé dans le cadre du Mastercamp 2021 en équipe de 5.
+Développement avec React/NodeJS
+
 Pré-requis :
     -visual studio code (de préférence)
     -node.js pour le serveur et installer les librairies rapidement
